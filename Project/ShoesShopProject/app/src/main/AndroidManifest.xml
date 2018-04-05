@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="tdc.edu.vn.shoesshop">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity android:name=".Promotions"
+            android:screenOrientation="portrait"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".HomeForClient" />
+        <activity android:name=".HomeForShop" />
+        <activity android:name=".DetailInformationOfProduct" />
+        <activity android:name=".Login" />
+        <activity android:name=".Register" />
+        <activity android:name=".ForgetPassword" />
+        <activity android:name=".ClientInformationAfterOrder" />
+        <activity android:name=".Bills" />
+        <activity android:name=".RatingOfClient" />
+        <activity android:name=".ClientInformation" />
+        <activity android:name=".EdittingClientInformation" />
+        <activity android:name=".ProductInformation" />
+        <activity android:name=".QuantityManagement" />
+        <activity android:name=".SelectionProductToEditting" />
+        <activity android:name=".ChangePassword" />
+        <activity android:name=".ShopInformation" />
+        <activity android:name=".OrderInformationForClient" />
+        <activity android:name=".OrderInformationForShop" />
+        <activity android:name=".EdittingShopInformation" />
+        <activity android:name=".HomeLayout" />
+        <activity android:name=".EdittingPromotions"></activity>
+    </application>
+
+</manifest>
