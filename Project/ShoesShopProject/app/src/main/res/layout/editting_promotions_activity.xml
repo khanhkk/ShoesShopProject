@@ -45,11 +45,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="2"
                 android:gravity="center_vertical">
 
@@ -57,12 +58,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tên chương trình:"
-                    android:textSize="15sp" />
+                    android:textColor="@android:color/holo_green_dark"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="3"
                 android:gravity="center_vertical">
 
@@ -71,7 +73,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nhập tên chương trình"
-                    android:textSize="15sp"/>
+                    android:layout_marginLeft="@dimen/margin_left"
+                    android:textSize="18sp"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -79,11 +82,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="2"
                 android:gravity="center_vertical">
 
@@ -91,18 +95,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Thời gian bắt đầu:"
-                    android:textSize="15sp" />
+                    android:textColor="@android:color/holo_green_dark"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="3"
                 android:gravity="center_vertical">
                 <Controls.DateTimePicker
                     android:id="@+id/dateStart"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"></Controls.DateTimePicker>
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/margin_left"></Controls.DateTimePicker>
 
             </LinearLayout>
         </LinearLayout>
@@ -110,11 +116,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="2"
                 android:gravity="center_vertical">
 
@@ -122,31 +129,34 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Thời gian kết thúc:"
-                    android:textSize="15sp" />
+                    android:textColor="@android:color/holo_green_dark"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="3"
                 android:orientation="vertical"
                 android:gravity="center_vertical">
                 <Controls.DateTimePicker
                     android:id="@+id/dateEnd"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"></Controls.DateTimePicker>
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/margin_left"></Controls.DateTimePicker>
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5">
+            android:layout_weight="2"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center_vertical">
 
@@ -159,24 +169,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Nội dung:"
-                        android:textSize="15sp" />
+                        android:textColor="@android:color/holo_green_dark"
+                        android:textSize="18sp" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="4">
-                    <!--<DatePicker-->
+                <!--<LinearLayout-->
                     <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"></DatePicker>-->
-                </LinearLayout>
+                    <!--android:layout_height="0dp"-->
+                    <!--android:layout_weight="1">-->
+                    <!--&lt;!&ndash;<DatePicker&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_height="match_parent"></DatePicker>&ndash;&gt;-->
+                <!--</LinearLayout>-->
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
                 android:orientation="vertical"
                 android:gravity="center_vertical">
 
@@ -189,6 +200,8 @@
                         android:layout_width="match_parent"
                         android:maxHeight="100dp"
                         android:maxLines="5"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="@dimen/margin_left"
                         android:hint="Nhập nội dung chương trình"
                         android:layout_height="wrap_content"
                         />
@@ -211,7 +224,7 @@
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/holo_green_dark"
+            android:background="@android:color/holo_orange_dark"
             android:text="Lưu"
             android:textColor="@android:color/white"
             android:textSize="18sp" />

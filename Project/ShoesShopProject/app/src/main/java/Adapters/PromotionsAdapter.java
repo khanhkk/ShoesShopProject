@@ -33,6 +33,7 @@ public class PromotionsAdapter  extends ArrayAdapter<Promotion> {
     private AppCompatActivity context = null;
     private ArrayList<Promotion> list = null;
     private int layoutId;
+    Intent intent;
 
     public PromotionsAdapter(@NonNull AppCompatActivity context, @LayoutRes int resource, @NonNull ArrayList<Promotion> objects) {
         super(context, resource, objects);
@@ -72,25 +73,22 @@ public class PromotionsAdapter  extends ArrayAdapter<Promotion> {
         }
         final Promotion member = list.get(position);
 
-//        viewHolder.btnEdit.setTag(member.getId());
-//        viewHolder.btnAdd.setTag(member.getId());
-
         viewHolder.tvNamePromotions.setText(member.getTitle());
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         viewHolder.tvTimeStart.setText(format.format(member.getDateStart()));
         viewHolder.tvTimeEnd.setText(format.format(member.getDateEnd()));
 
+//        intent = new Intent(getContext(), EdittingPromotions.class);
         viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
             }
         });
 
         viewHolder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), EdittingPromotions.class);
+                intent = new Intent(getContext(), EdittingPromotions.class);
                 Bundle bundle = new Bundle();
                 Log.d("id", member.getId() + "");
                 bundle.putString("data",member.getId()+"");

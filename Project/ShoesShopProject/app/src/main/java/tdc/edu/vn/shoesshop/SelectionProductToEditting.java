@@ -77,6 +77,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
         ProductDetail pd4 = new ProductDetail(product,4, 38, "xam nhat", 10);
         ProductDetail pd5 = new ProductDetail(product,5, 39, "xam nhat", 10);
         ProductDetail pd6 = new ProductDetail(product,6, 40, "xam nhat", 10);
+        ProductDetail pd7 = new ProductDetail(product,7, 38, "do nau", 10);
 
         details.add(pd);
         details.add(pd2);
@@ -84,6 +85,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
         details.add(pd4);
         details.add(pd5);
         details.add(pd6);
+        details.add(pd7);
 
         product.setList(details);
 

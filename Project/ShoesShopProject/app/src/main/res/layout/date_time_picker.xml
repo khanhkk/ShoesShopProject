@@ -13,13 +13,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:text="Lựa chọn mốc thời gian"
+        android:textSize="18sp"
+        android:textColor="@android:color/darker_gray"
         android:layout_weight="5"
         />
     <ImageButton
         android:id="@+id/btnSelectTime"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:scaleType="fitXY"
-        android:src="@mipmap/datepicker"/>
+        android:layout_weight="1.5"
+        android:scaleType="fitCenter"
+        android:background="@color/none"
+        android:src="@mipmap/date"/>
 </LinearLayout>
