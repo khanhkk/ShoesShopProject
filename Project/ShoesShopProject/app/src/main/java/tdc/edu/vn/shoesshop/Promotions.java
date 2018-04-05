@@ -38,18 +38,29 @@ public class Promotions extends AppCompatActivity implements SearchView.OnQueryT
         lvPromotions = (ListView) findViewById(R.id.lvListPromotions);
         svSearchPromotions = (SearchView) findViewById(R.id.svSearch);
         svSearchPromotions.setOnQueryTextListener(this);
+
+        intent = getIntent();
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent();
-//                intent.setClass(.this, MainActivity.class);
-//                startActivity(intent);
+
+                intent.setClass(Promotions.this, HomeForClient.class);
+                startActivity(intent);
             }
         });
 
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent();
+                intent.setClass(Promotions.this, EdittingPromotions.class);
+                startActivity(intent);
+            }
+        });
 
-
-        TakeData();
+        if(list.size() == 0)
+            TakeData();
+        listUse.addAll(list);
 
         adapter = new PromotionsAdapter(Promotions.this, R.layout.promotions_layout_item, listUse);
         lvPromotions.setAdapter(adapter);
@@ -64,7 +75,7 @@ public class Promotions extends AppCompatActivity implements SearchView.OnQueryT
         Product product = new Product("SP0001", "giay1dsfđsàdsffsádf", 1290000, 900000, shop, null);
         Product product2 = new Product("SP0002", "giay2dfasdfdsfsadffasd", 175000, 150000, shop, null);
         Product product3 = new Product("SP0003", "giay3dàdsfads", 239000, 200000, shop, null);
-        //Product product4 = new Product("SP0004", "giay4dfadsfsdfasdfsfsafdfdsfffdfdas fsd fdsfdsfdsfdsfsdf", 299000, 250000, shop, null);
+        Product product4 = new Product("SP0004", "giay4dfadsfsdfasdfsfsafdfdsfffdfdas fsd fdsfdsfdsfdsfsdf", 299000, 250000, shop, null);
 
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         try {
@@ -78,10 +89,12 @@ public class Promotions extends AppCompatActivity implements SearchView.OnQueryT
             PromotionsDetail promotionsDetail = new PromotionsDetail(1, 10, promotions, product, "Vớ cao cấp");
             PromotionsDetail promotionsDetail2 = new PromotionsDetail(2, 20, promotions, product2, null);
             PromotionsDetail promotionsDetail3 = new PromotionsDetail(3, 15, promotions, product3, "Miếng lót giày");
+            PromotionsDetail promotionsDetail4 = new PromotionsDetail(4, 0, promotions, product4, "vòng tay thời trang");
 
             promotionsDetailArrayList.add(promotionsDetail);
             promotionsDetailArrayList.add(promotionsDetail2);
             promotionsDetailArrayList.add(promotionsDetail3);
+            promotionsDetailArrayList.add(promotionsDetail4);
 
             promotions.setListDetail(promotionsDetailArrayList);
             list.add(promotions);
@@ -89,11 +102,11 @@ public class Promotions extends AppCompatActivity implements SearchView.OnQueryT
             list.add(promotions3);
             list.add(promotions4);
             list.add(promotions5);
-            listUse.add(promotions);
-            listUse.add(promotions2);
-            listUse.add(promotions3);
-            listUse.add(promotions4);
-            listUse.add(promotions5);
+//            listUse.add(promotions);
+//            listUse.add(promotions2);
+//            listUse.add(promotions3);
+//            listUse.add(promotions4);
+//            listUse.add(promotions5);
         } catch (ParseException e) {
             e.printStackTrace();
         }
