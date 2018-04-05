@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".Promotions"
+        <activity android:name=".MainActivity"
             android:screenOrientation="portrait"
             >
             <intent-filter>
@@ -22,9 +22,6 @@
         <activity android:name=".HomeForClient" />
         <activity android:name=".HomeForShop" />
         <activity android:name=".DetailInformationOfProduct" />
-        <activity android:name=".Login" />
-        <activity android:name=".Register" />
-        <activity android:name=".ForgetPassword" />
         <activity android:name=".ClientInformationAfterOrder" />
         <activity android:name=".Bills" />
         <activity android:name=".RatingOfClient" />
@@ -40,6 +37,10 @@
         <activity android:name=".EdittingShopInformation" />
         <activity android:name=".HomeLayout" />
         <activity android:name=".EdittingPromotions"></activity>
+        <activity android:name=".Promotions" />
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".ResetPasswordActivity" />
+        <activity android:name=".LoginActivity"></activity>
     </application>
 
 </manifest>
