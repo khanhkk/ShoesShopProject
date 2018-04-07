@@ -144,29 +144,28 @@
 
                     <ImageButton
                         android:id="@+id/btnAddElementPromotions"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="20dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitXY"
                         android:src="@mipmap/add" />
 
                     <ImageButton
                         android:id="@+id/btnEditPromotions"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:src="@mipmap/green_edit" />
 
-                    <ImageButton
-                        android:id="@+id/btnViewDetailPromotions"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/view_detail_promotions" />
+                    <!--<ImageButton-->
+                        <!--android:id="@+id/btnViewDetailPromotions"-->
+                        <!--android:layout_width="20dp"-->
+                        <!--android:layout_height="20dp"-->
+                        <!--android:background="@android:color/transparent"-->
+                        <!--android:scaleType="centerInside"-->
+                        <!--android:src="@drawable/view_detail_promotions" />-->
 
                 </LinearLayout>
             </LinearLayout>

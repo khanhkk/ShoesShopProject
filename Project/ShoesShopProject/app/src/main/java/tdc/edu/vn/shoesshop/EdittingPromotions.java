@@ -46,9 +46,9 @@ public class EdittingPromotions extends AppCompatActivity {
             String str = bundle.getString("data");
             for (int i = 0; i < Promotions.list.size() ; i++)
             {
-                if(Promotions.list.get(i).getId() == Integer.parseInt(str))
+                if(Promotions.listParent.get(i).getId() == Integer.parseInt(str))
                 {
-                    promotion = Promotions.list.get(i);
+                    promotion = Promotions.listParent.get(i);
                     break;
                 }
             }
@@ -100,13 +100,13 @@ public class EdittingPromotions extends AppCompatActivity {
                 else
                 {
                     promotion = new Promotion();
-                    int i = Promotions.list.get(Promotions.list.size()-1).getId()+1;
-                    promotion.setId(i);
+                    //int i = Promotions.list.get(Promotions.list.size()-1).getId()+1;
+                    //promotion.setId(i);
                     promotion.setTitle(etName.getText()+"");
                     promotion.setDateStart(dtTimeStart.getDate());
                     promotion.setDateEnd(dtTimeEnd.getDate());
                     promotion.setContent(etContent.getText() + "");
-                    Promotions.list.add(promotion);
+                    //Promotions.list.add(promotion);
                     //intent = getIntent();
                     intent.setClass(EdittingPromotions.this, Promotions.class);
                     startActivity(intent);

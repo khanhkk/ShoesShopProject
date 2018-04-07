@@ -5,14 +5,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
-import android.widget.ListView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import Adapters.PromotionsAdapter;
+import Adapters.ExpandableListAdapter;
 import Models.Product;
 import Models.Promotion;
 import Models.PromotionsDetail;
@@ -20,12 +21,13 @@ import Models.Shop;
 
 public class Promotions extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
-    ListView lvPromotions;
+    ExpandableListView lvPromotions;
     SearchView svSearchPromotions;
     ImageButton btnAdd, btnBack;
-    static ArrayList<Promotion> list = new ArrayList<>();
-    static ArrayList<Promotion> listUse = new ArrayList<>();
-    PromotionsAdapter adapter;
+    static HashMap<Promotion,ArrayList<PromotionsDetail>> list = new HashMap<>();
+    static ArrayList<Promotion> listParent = new ArrayList<>();
+
+    ExpandableListAdapter adapter;
     Intent intent;
 
     @Override
@@ -35,7 +37,7 @@ public class Promotions extends AppCompatActivity implements SearchView.OnQueryT
 
         btnBack = (ImageButton) findViewById(R.id.btnBack);
         btnAdd = (ImageButton)findViewById(R.id.btnAddPromotions);
-        lvPromotions = (ListView) findViewById(R.id.lvListPromotions);
+        lvPromotions = (ExpandableListView) findViewById(R.id.lvListPromotions);
         svSearchPromotions = (SearchView) findViewById(R.id.svSearch);
         svSearchPromotions.setOnQueryTextListener(this);
 
@@ -43,7 +45,6 @@ public class Promotions extends AppCompatActivity implements SearchView.OnQueryT
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 intent.setClass(Promotions.this, HomeForClient.class);
                 startActivity(intent);
             }
@@ -58,18 +59,22 @@ public class Promotions extends AppCompatActivity implements SearchView.OnQueryT
             }
         });
 
-        if(list.size() == 0)
-            TakeData();
-        listUse.addAll(list);
+        TakeData();
 
-        adapter = new PromotionsAdapter(Promotions.this, R.layout.promotions_layout_item, listUse);
+        adapter = new ExpandableListAdapter(Promotions.this, listParent, list);
         lvPromotions.setAdapter(adapter);
+
+        lvPromotions.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+
+                return false;
+            }
+        });
     }
 
     public static void TakeData()
     {
-        list.clear();
-        listUse.clear();
         Shop shop = new Shop("SH0001", "MiuMiu", "01512151211");
 
         Product product = new Product("SP0001", "giay1dsfđsàdsffsádf", 1290000, 900000, shop, null);
@@ -96,17 +101,20 @@ public class Promotions extends AppCompatActivity implements SearchView.OnQueryT
             promotionsDetailArrayList.add(promotionsDetail3);
             promotionsDetailArrayList.add(promotionsDetail4);
 
-            promotions.setListDetail(promotionsDetailArrayList);
-            list.add(promotions);
-            list.add(promotions2);
-            list.add(promotions3);
-            list.add(promotions4);
-            list.add(promotions5);
-//            listUse.add(promotions);
-//            listUse.add(promotions2);
-//            listUse.add(promotions3);
-//            listUse.add(promotions4);
-//            listUse.add(promotions5);
+            //promotions.setListDetail(promotionsDetailArrayList);
+
+
+            list.put(promotions, promotionsDetailArrayList);
+            list.put(promotions2, promotionsDetailArrayList);
+            list.put(promotions3, promotionsDetailArrayList);
+            list.put(promotions4, promotionsDetailArrayList);
+            list.put(promotions5, promotionsDetailArrayList);
+
+            listParent.add(promotions);
+            listParent.add(promotions2);
+            listParent.add(promotions3);
+            listParent.add(promotions4);
+            listParent.add(promotions5);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -120,20 +128,20 @@ public class Promotions extends AppCompatActivity implements SearchView.OnQueryT
     @Override
     public boolean onQueryTextChange(String newText) {
         if(list.size() > 0) {
-            if (newText.isEmpty())
-            {
-                listUse.clear();
-                listUse.addAll(list);
-            }
-            else {
-                listUse.clear();
-                for (int i = 0; i < list.size(); i++) {
-                    if (list.get(i).getTitle().toString().contains(newText)) {
-                        listUse.add(list.get(i));
-                    }
-                }
-            }
-            adapter.notifyDataSetChanged();
+//            if (newText.isEmpty())
+//            {
+//                listParent.clear();
+//                listParent.addAll(list);
+//            }
+//            else {
+//                listUse.clear();
+//                for (int i = 0; i < list.size(); i++) {
+//                    if (list.get(i).getTitle().toString().contains(newText)) {
+//                        listUse.add(list.get(i));
+//                    }
+//                }
+//            }
+//            adapter.notifyDataSetChanged();
         }
         return true;
     }
