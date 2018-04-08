@@ -171,11 +171,11 @@
             </LinearLayout>
         </LinearLayout>
 
-        <ListView
-            android:id="@+id/lvListPromotionsElement"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:visibility="gone"></ListView>
+        <!--<ListView-->
+            <!--android:id="@+id/lvListPromotionsElement"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="400dp"-->
+            <!--android:visibility="gone"></ListView>-->
 
 
     </LinearLayout>

@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <!--Khanh-->
     <color name="money">#FF0000</color>
+    <color name="bg_icon_tabar_item">#B0E2FF</color>
     <color name="unitColor">#9400D3</color>
     <color name="backgroundButton">#FFFFFF</color>
     <color name="none">@android:color/transparent</color>

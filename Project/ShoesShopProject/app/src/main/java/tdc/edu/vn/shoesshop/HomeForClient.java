@@ -9,9 +9,8 @@ import Controls.TabarControl;
 
 public class HomeForClient extends AppCompatActivity {
     private FragmentTransaction fragment;
-     Cart cart = null;
+    Cart cart = null;
     TabarControl tabarControl;
-    //ImageButton ibCart;
     TabarControl.TabarFunctions functions = new TabarControl.TabarFunctions() {
         @Override
         public void onButton1Clicked() {
@@ -42,7 +41,7 @@ public class HomeForClient extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_for_client_activity);
         llContainer = (LinearLayout) findViewById(R.id.llParent);
-        tabarControl = (TabarControl) findViewById(R.id.tcTabar);
+        tabarControl = (TabarControl) findViewById(R.id.tcTabarClient);
         tabarControl.setImageButton1(R.mipmap.home);
         tabarControl.setImageButton2(R.mipmap.notify);
         tabarControl.setImageButton3(R.mipmap.cart2);

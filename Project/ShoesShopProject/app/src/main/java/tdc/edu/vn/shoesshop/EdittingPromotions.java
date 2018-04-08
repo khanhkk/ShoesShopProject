@@ -44,7 +44,7 @@ public class EdittingPromotions extends AppCompatActivity {
         if(bundle != null)
         {
             String str = bundle.getString("data");
-            for (int i = 0; i < Promotions.list.size() ; i++)
+            for (int i = 0; i < Promotions.listParent.size() ; i++)
             {
                 if(Promotions.listParent.get(i).getId() == Integer.parseInt(str))
                 {

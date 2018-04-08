@@ -20,7 +20,7 @@
         android:layout_weight="1"
         >
         <Controls.TabarControl
-            android:id="@+id/tcTabar"
+            android:id="@+id/tcTabarClient"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></Controls.TabarControl>
     </LinearLayout>

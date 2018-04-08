@@ -3,6 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+    <!--<TextView-->
+        <!--android:id="@+id/tvCode"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textColor="#006400"-->
+        <!--android:text="SP0001"/>-->
+    <!--<TextView-->
+        <!--android:id="@+id/tvDiscount"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textColor="@color/money"-->
+        <!--android:text="10"/>-->
+    <!--<TextView-->
+        <!--android:id="@+id/tvGift"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="vớ cao cấp"/>-->
+
 
     <LinearLayout
         android:layout_width="match_parent"

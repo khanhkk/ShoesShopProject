@@ -11,9 +11,8 @@ import android.widget.ImageButton;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import Adapters.ExpandableListAdapter;
+import Adapters.PromotionExpandableListAdapter;
 import Models.Product;
 import Models.Promotion;
 import Models.PromotionsDetail;
@@ -24,10 +23,10 @@ public class Promotions extends AppCompatActivity implements SearchView.OnQueryT
     ExpandableListView lvPromotions;
     SearchView svSearchPromotions;
     ImageButton btnAdd, btnBack;
-    static HashMap<Promotion,ArrayList<PromotionsDetail>> list = new HashMap<>();
+    //static HashMap<Promotion,ArrayList<PromotionsDetail>> list = new HashMap<>();
     static ArrayList<Promotion> listParent = new ArrayList<>();
 
-    ExpandableListAdapter adapter;
+    PromotionExpandableListAdapter adapter;
     Intent intent;
 
     @Override
@@ -61,20 +60,13 @@ public class Promotions extends AppCompatActivity implements SearchView.OnQueryT
 
         TakeData();
 
-        adapter = new ExpandableListAdapter(Promotions.this, listParent, list);
+        adapter = new PromotionExpandableListAdapter(Promotions.this, listParent);
         lvPromotions.setAdapter(adapter);
-
-        lvPromotions.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-
-                return false;
-            }
-        });
     }
 
     public static void TakeData()
     {
+        listParent.clear();
         Shop shop = new Shop("SH0001", "MiuMiu", "01512151211");
 
         Product product = new Product("SP0001", "giay1dsfđsàdsffsádf", 1290000, 900000, shop, null);
@@ -101,20 +93,26 @@ public class Promotions extends AppCompatActivity implements SearchView.OnQueryT
             promotionsDetailArrayList.add(promotionsDetail3);
             promotionsDetailArrayList.add(promotionsDetail4);
 
+            promotions.setListDetail(promotionsDetailArrayList);
+            promotions2.setListDetail(promotionsDetailArrayList);
+            promotions3.setListDetail(promotionsDetailArrayList);
+            promotions4.setListDetail(promotionsDetailArrayList);
+            promotions5.setListDetail(promotionsDetailArrayList);
+
             //promotions.setListDetail(promotionsDetailArrayList);
 
-
-            list.put(promotions, promotionsDetailArrayList);
-            list.put(promotions2, promotionsDetailArrayList);
-            list.put(promotions3, promotionsDetailArrayList);
-            list.put(promotions4, promotionsDetailArrayList);
-            list.put(promotions5, promotionsDetailArrayList);
+            //list.put(promotions, promotionsDetailArrayList);
+            //list.put(promotions2, promotionsDetailArrayList);
+            //list.put(promotions3, promotionsDetailArrayList);
+            //list.put(promotions4, promotionsDetailArrayList);
+            //list.put(promotions5, promotionsDetailArrayList);
 
             listParent.add(promotions);
             listParent.add(promotions2);
             listParent.add(promotions3);
             listParent.add(promotions4);
             listParent.add(promotions5);
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -127,7 +125,7 @@ public class Promotions extends AppCompatActivity implements SearchView.OnQueryT
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        if(list.size() > 0) {
+        if(listParent.size() > 0) {
 //            if (newText.isEmpty())
 //            {
 //                listParent.clear();

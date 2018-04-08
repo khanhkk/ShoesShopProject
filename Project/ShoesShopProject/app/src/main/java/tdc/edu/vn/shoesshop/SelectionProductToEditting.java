@@ -37,18 +37,18 @@ public class SelectionProductToEditting extends AppCompatActivity {
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                intent = new Intent();
-//                intent.setClass(ListProduct.this, MainActivity.class);
-//                startActivity(intent);
+                intent = new Intent();
+                intent.setClass(SelectionProductToEditting.this, HomeForShop.class);
+                startActivity(intent);
             }
         });
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                intent = getIntent();
-//                intent.setClass(ListProduct.this, Cart.class);
-//                startActivity(intent);
+                intent = new Intent();
+                intent.setClass(SelectionProductToEditting.this, HomeForShop.class);
+                startActivity(intent);
             }
         });
 

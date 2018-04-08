@@ -88,7 +88,7 @@ public class TabarControl extends LinearLayout {
                 if(btn.getId() == v.getId())
                 {
                     btn.setSelected(true);
-                    btn.setBackgroundColor(getContext().getResources().getColor(R.color.colorPrimaryDark));
+                    btn.setBackgroundColor(getContext().getResources().getColor(R.color.bg_icon_tabar_item));
                 }
                 else
                 {

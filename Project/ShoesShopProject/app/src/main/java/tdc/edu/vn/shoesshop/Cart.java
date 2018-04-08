@@ -1,6 +1,7 @@
 package tdc.edu.vn.shoesshop;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ public class Cart extends Fragment {
     ArrayList<BillDetail> list = new ArrayList<BillDetail>();
     public static TextView tvMoney;
     Button btnThanhToan;
+    Intent intent;
 
     @Nullable
     @Override
@@ -55,9 +57,9 @@ public class Cart extends Fragment {
         btnThanhToan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent();
-//                intent.setClass(Cart.this, ListProduct.class);
-//                startActivity(intent);
+                intent = new Intent();
+                intent.setClass(getActivity(), ClientInformationAfterOrder.class);
+                startActivity(intent);
             }
         });
         return view;
