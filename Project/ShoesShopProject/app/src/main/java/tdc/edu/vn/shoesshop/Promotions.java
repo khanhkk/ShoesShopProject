@@ -24,7 +24,7 @@ public class Promotions extends AppCompatActivity implements SearchView.OnQueryT
     SearchView svSearchPromotions;
     ImageButton btnAdd, btnBack;
     //static HashMap<Promotion,ArrayList<PromotionsDetail>> list = new HashMap<>();
-    static ArrayList<Promotion> listParent = new ArrayList<>();
+    static ArrayList<Promotion> listParent;
 
     PromotionExpandableListAdapter adapter;
     Intent intent;
@@ -33,6 +33,7 @@ public class Promotions extends AppCompatActivity implements SearchView.OnQueryT
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.promotions_activity);
+
 
         btnBack = (ImageButton) findViewById(R.id.btnBack);
         btnAdd = (ImageButton)findViewById(R.id.btnAddPromotions);
@@ -58,7 +59,9 @@ public class Promotions extends AppCompatActivity implements SearchView.OnQueryT
             }
         });
 
-        TakeData();
+        if(listParent == null) {
+            TakeData();
+        }
 
         adapter = new PromotionExpandableListAdapter(Promotions.this, listParent);
         lvPromotions.setAdapter(adapter);
@@ -66,7 +69,7 @@ public class Promotions extends AppCompatActivity implements SearchView.OnQueryT
 
     public static void TakeData()
     {
-        listParent.clear();
+        listParent = new ArrayList<>();
         Shop shop = new Shop("SH0001", "MiuMiu", "01512151211");
 
         Product product = new Product("SP0001", "giay1dsfđsàdsffsádf", 1290000, 900000, shop, null);

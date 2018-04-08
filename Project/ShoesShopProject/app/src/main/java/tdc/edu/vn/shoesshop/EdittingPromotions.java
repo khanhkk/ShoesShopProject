@@ -31,6 +31,7 @@ public class EdittingPromotions extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editting_promotions_activity);
+
         Promotions.TakeData();
 
         dtTimeEnd = (DateTimePicker)findViewById(R.id.dateEnd);
@@ -109,7 +110,7 @@ public class EdittingPromotions extends AppCompatActivity {
                     promotion.setDateStart(dtTimeStart.getDate());
                     promotion.setDateEnd(dtTimeEnd.getDate());
                     promotion.setContent(etContent.getText() + "");
-                    //Promotions.list.add(promotion);
+                    Promotions.listParent.add(promotion);
                     //intent = getIntent();
                     intent.setClass(EdittingPromotions.this, Promotions.class);
                     startActivity(intent);
