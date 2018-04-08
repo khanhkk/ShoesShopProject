@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import Controls.DateTimePicker;
+import Controls.General;
 import Models.Promotion;
 
 public class EdittingPromotions extends AppCompatActivity {
@@ -38,6 +39,8 @@ public class EdittingPromotions extends AppCompatActivity {
         btnBack = (ImageButton) findViewById(R.id.btnBack);
         etName = (EditText) findViewById(R.id.edtNameProgram);
         etContent = (EditText) findViewById(R.id.edtContent);
+
+        General.setupUI(findViewById(R.id.llPromotionsLayout), EdittingPromotions.this);
 
         intent = getIntent();
         bundle = intent.getBundleExtra("member");
@@ -114,6 +117,8 @@ public class EdittingPromotions extends AppCompatActivity {
             }
         });
     }
+
+
 
     @Override
     protected void onResume() {

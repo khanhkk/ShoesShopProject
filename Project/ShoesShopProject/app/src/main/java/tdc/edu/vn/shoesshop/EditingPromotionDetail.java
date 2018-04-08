@@ -1,4 +1,4 @@
-package tdc.edu.vn.shoesshopproject;
+package tdc.edu.vn.shoesshop;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

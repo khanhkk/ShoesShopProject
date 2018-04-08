@@ -12,6 +12,7 @@
         android:layout_weight="1"
         android:background="@color/none"
         android:clickable="true"
+
         android:scaleType="fitCenter"/>
 
     <ImageView

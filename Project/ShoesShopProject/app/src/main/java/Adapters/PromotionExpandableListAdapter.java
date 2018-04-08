@@ -19,7 +19,7 @@ import Models.Promotion;
 import Models.PromotionsDetail;
 import tdc.edu.vn.shoesshop.EdittingPromotions;
 import tdc.edu.vn.shoesshop.R;
-import tdc.edu.vn.shoesshopproject.EditingPromotionDetail;
+import tdc.edu.vn.shoesshop.EditingPromotionDetail;
 
 public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
     private Context _context;
