@@ -7,39 +7,18 @@
 
     <ImageView
         android:id="@+id/ibButton1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@color/none"
-        android:clickable="true"
-
-        android:scaleType="fitCenter"/>
+        style="@style/image_button_tabar"/>
 
     <ImageView
         android:id="@+id/ibButton2"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@color/none"
-        android:clickable="true"
-        android:scaleType="fitCenter"/>
+        style="@style/image_button_tabar"/>
 
     <ImageView
         android:id="@+id/ibButton3"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@color/none"
-        android:clickable="true"
-        android:scaleType="fitCenter"/>
+        style="@style/image_button_tabar"/>
 
     <ImageView
         android:id="@+id/ibButton4"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@color/none"
-        android:clickable="true"
-        android:scaleType="fitCenter"/>
+        style="@style/image_button_tabar"/>
 
 </LinearLayout>

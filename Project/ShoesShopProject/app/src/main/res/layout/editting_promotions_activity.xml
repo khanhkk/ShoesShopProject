@@ -31,7 +31,7 @@
             android:layout_weight="5"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:text="Thông tin khuyến mãi"
+            android:text="@string/promotion_information"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
     </LinearLayout>
@@ -58,7 +58,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tên chương trình:"
+                    android:text="@string/name_promotions"
                     android:textColor="@android:color/holo_green_dark"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -73,7 +73,7 @@
                     android:id="@+id/edtNameProgram"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nhập tên chương trình"
+                    android:hint="@string/hint_name_promotions"
                     android:layout_marginLeft="@dimen/margin_left"
                     android:textSize="18sp"/>
             </LinearLayout>
@@ -95,7 +95,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Thời gian bắt đầu:"
+                    android:text="@string/start_time"
                     android:textColor="@android:color/holo_green_dark"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -129,7 +129,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Thời gian kết thúc:"
+                    android:text="@string/end_time"
                     android:textColor="@android:color/holo_green_dark"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -169,7 +169,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nội dung:"
+                        android:text="@string/content_promotions"
                         android:textColor="@android:color/holo_green_dark"
                         android:textSize="18sp" />
                 </LinearLayout>
@@ -203,7 +203,7 @@
                         android:maxLines="5"
                         android:textSize="18sp"
                         android:layout_marginLeft="@dimen/margin_left"
-                        android:hint="Nhập nội dung chương trình"
+                        android:hint="@string/hint_content_promotions"
                         android:layout_height="wrap_content"
                         />
                 </LinearLayout>
@@ -226,7 +226,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/holo_orange_dark"
-            android:text="Lưu"
+            android:text="@string/btnSave"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
     </LinearLayout>

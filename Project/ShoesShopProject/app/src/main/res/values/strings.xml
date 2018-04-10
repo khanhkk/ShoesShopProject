@@ -2,6 +2,26 @@
     <string name="app_name">ShoesShop</string>
     <!--Khanh-->
     <string name="unit">đ</string>
+    <string name="promotion_information">Thông tin khuyến mãi</string>
+    <string name="name_promotions">Tên chương trình</string>
+    <string name="hint_name_promotions">Nhập tên chương trình</string>
+    <string name="start_time">Thời gian bắt đầu</string>
+    <string name="end_time">Thời gian kết thúc</string>
+    <string name="content_promotions">Nội dung</string>
+    <string name="hint_content_promotions">Nhập nội dung chương trình</string>
+    <string name="btnSave">Lưu</string>
+    <string name="edit_product_info">Sửa thông tin sản phẩm</string>
+    <string name="btnFinish">Hoàn thành</string>
+    <string name="code_product">Mã sản phẩm:</string>
+    <string name="discount">Giảm giá:</string>
+    <string name="gift">Quà tặng:</string>
+    <string name="start">Bắt đầu:</string>
+    <string name="end">Kết thức:</string>
+    <string name="promotions_program">Chương trình khuyến mãi</string>
+    <string name="Listedprice">Giá niêm yết:</string>
+    <string name="SalePrice">Giá bán:</string>
+
+
     <!--Toan-->
     <string name="action_sign_in_short">Register</string>
     <string name="email">Email</string>

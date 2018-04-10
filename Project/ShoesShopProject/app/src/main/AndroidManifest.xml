@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Khanh.Promotions"
+            android:name=".Khanh.SelectionProductToEditting"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +32,7 @@
         <activity android:name=".Thanh.EdittingClientInformation" />
         <activity android:name=".Toan.ProductInformation" />
         <activity android:name=".Sang.QuantityManagement" />
-        <activity android:name=".Khanh.SelectionProductToEditting" />
+        <activity android:name=".Khanh.Promotions" />
         <activity android:name=".Sang.ChangePassword" />
         <activity android:name=".Bao.ShopInformation" />
         <activity android:name=".Son.OrderInformationForClient" />
