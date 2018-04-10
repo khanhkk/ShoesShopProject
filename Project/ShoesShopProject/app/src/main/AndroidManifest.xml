@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Promotions"
+            android:name=".ListHistoryTransaction"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,7 +44,9 @@
         <activity android:name=".SignupActivity" />
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".EditingPromotionDetail"></activity>
+        <activity android:name=".EditingPromotionDetail">
+        </activity>
+        <activity android:name=".Promotions"></activity>
     </application>
 
 </manifest>

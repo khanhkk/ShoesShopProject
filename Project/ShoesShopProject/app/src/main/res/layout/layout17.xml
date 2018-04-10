@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#D7D0ED">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="100"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="30"
+            android:textColor="#050503"
+            android:gravity="center_vertical"
+            android:text="Sản phẩm :"/>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="70"
+            android:layout_marginRight="10dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal"
+        android:weightSum="100">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="30"
+            android:textColor="#050503"
+            android:gravity="center_vertical"
+            android:text="Màu sắc :"/>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="70"
+            android:layout_marginRight="10dp"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:weightSum="100"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="30"
+            android:textColor="#050503"
+            android:gravity="center_vertical"
+            android:text="Kích thước :"/>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="70"
+            android:layout_marginRight="10dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:weightSum="100"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="30"
+            android:textColor="#050503"
+            android:gravity="center_vertical"
+            android:text="Số lượng nhập :"/>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="70"
+            android:layout_marginRight="10dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:weightSum="100"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="30"
+            android:textColor="#050503"
+            android:gravity="center_vertical"
+            android:text="Số lượng :"/>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="70"
+            android:layout_marginRight="10dp"/>
+
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="100dp"
+        android:weightSum="100">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:background="#F70C0C"
+            android:textColor="#FFEB05"
+            android:text="Lưu thông tin"/>
+        
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>
