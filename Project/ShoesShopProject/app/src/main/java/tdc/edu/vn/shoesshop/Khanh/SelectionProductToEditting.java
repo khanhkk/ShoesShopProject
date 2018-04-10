@@ -1,37 +1,43 @@
-package tdc.edu.vn.shoesshop;
+package tdc.edu.vn.shoesshop.Khanh;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
-import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import Adapters.ProductAdapter;
+import Adapters.ProductExpandListAdapter;
 import Models.Product;
 import Models.ProductDetail;
 import Models.Shop;
+import tdc.edu.vn.shoesshop.Toan.HomeForShop;
+import tdc.edu.vn.shoesshop.R;
 
 public class SelectionProductToEditting extends AppCompatActivity {
 
-    ProductAdapter productAdapter;
-    ListView lvList;
+    ProductExpandListAdapter adapter;
+    ArrayList<Product> products;
+    HashMap<Product, ArrayList<ProductDetail>> children;
+    //LinearLayout linearLayout;
+
+    ExpandableListView lvList;
     Button btnFinish;
     ImageButton btnBack;
-    ArrayList<Product> list = new ArrayList<>();
     Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selection_product_to_editting_activity);
-
-        lvList = (ListView) findViewById(R.id.lvListProduct);
+        lvList = (ExpandableListView) findViewById(R.id.lvListProduct);
         btnFinish = (Button) findViewById(R.id.btnFinishEdition);
         btnBack = (ImageButton) findViewById(R.id.btnBack);
+        //linearLayout = (LinearLayout)findViewById(R.id.llDanhSach);
 
 
         btnFinish.setOnClickListener(new View.OnClickListener() {
@@ -54,17 +60,33 @@ public class SelectionProductToEditting extends AppCompatActivity {
 
         creatList();
 
-        productAdapter = new ProductAdapter(SelectionProductToEditting.this, R.layout.product_item_layout, list);
+        adapter = new ProductExpandListAdapter(SelectionProductToEditting.this, products, children);
 
-        lvList.setAdapter(productAdapter);
+        lvList.setAdapter(adapter);
+
+
+//        lvList.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+//            @Override
+//            public void onGroupExpand(int groupPosition) {
+//                ProductExpandListAdapter.setVisibility(View.VISIBLE);
+//            }
+//        });
+//
+//        lvList.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+//            @Override
+//            public void onGroupCollapse(int groupPosition) {
+//                linearLayout.setVisibility(View.GONE);
+//            }
+//        });
     }
 
     private  void creatList()
     {
+        children = new HashMap<>();
+        products = new ArrayList<>();
+
         Shop shop = new Shop("SH0001", "MiuMiu", "01512151211");
         ArrayList<ProductDetail> details = new ArrayList<>();
-
-
 
         Product product = new Product("SP0001", "giay1dsf Ä‘sÃ dsf fsÃ¡df", 1290000, 900000, shop, null);
         Product product2 = new Product("SP0002", "giay2 dfasd fdsfsa dffasd", 175000, 150000, shop, null);
@@ -87,12 +109,16 @@ public class SelectionProductToEditting extends AppCompatActivity {
         details.add(pd6);
         details.add(pd7);
 
-        product.setList(details);
+        children.put(product, details);
+        children.put(product2, null);
+        children.put(product3, details);
+        children.put(product4, null);
+        //product.setList(details);
 
-        list.add(product);
-        list.add(product2);
-        list.add(product3);
-        list.add(product4);
+        products.add(product);
+        products.add(product2);
+        products.add(product3);
+        products.add(product4);
     }
 
 }

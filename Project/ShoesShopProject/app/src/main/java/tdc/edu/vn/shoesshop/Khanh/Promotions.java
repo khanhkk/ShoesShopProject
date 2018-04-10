@@ -1,8 +1,8 @@
-package tdc.edu.vn.shoesshop;
+package tdc.edu.vn.shoesshop.Khanh;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -11,19 +11,22 @@ import android.widget.ImageButton;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Adapters.PromotionExpandableListAdapter;
 import Models.Product;
 import Models.Promotion;
 import Models.PromotionsDetail;
 import Models.Shop;
+import tdc.edu.vn.shoesshop.Toan.HomeForClient;
+import tdc.edu.vn.shoesshop.R;
 
-public class Promotions extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class Promotions extends Activity implements SearchView.OnQueryTextListener {
 
     ExpandableListView lvPromotions;
     SearchView svSearchPromotions;
     ImageButton btnAdd, btnBack;
-    //static HashMap<Promotion,ArrayList<PromotionsDetail>> list = new HashMap<>();
+    static HashMap<Promotion,ArrayList<PromotionsDetail>> list = new HashMap<>();
     static ArrayList<Promotion> listParent;
 
     PromotionExpandableListAdapter adapter;
@@ -41,7 +44,15 @@ public class Promotions extends AppCompatActivity implements SearchView.OnQueryT
         svSearchPromotions = (SearchView) findViewById(R.id.svSearch);
         svSearchPromotions.setOnQueryTextListener(this);
 
+        if(listParent == null) {
+            TakeData();
+        }
+
+        adapter = new PromotionExpandableListAdapter(Promotions.this, listParent, list);
+        lvPromotions.setAdapter(adapter);
+
         intent = getIntent();
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,12 +70,8 @@ public class Promotions extends AppCompatActivity implements SearchView.OnQueryT
             }
         });
 
-        if(listParent == null) {
-            TakeData();
-        }
 
-        adapter = new PromotionExpandableListAdapter(Promotions.this, listParent);
-        lvPromotions.setAdapter(adapter);
+
     }
 
     public static void TakeData()
@@ -96,19 +103,19 @@ public class Promotions extends AppCompatActivity implements SearchView.OnQueryT
             promotionsDetailArrayList.add(promotionsDetail3);
             promotionsDetailArrayList.add(promotionsDetail4);
 
-            promotions.setListDetail(promotionsDetailArrayList);
-            promotions2.setListDetail(promotionsDetailArrayList);
-            promotions3.setListDetail(promotionsDetailArrayList);
-            promotions4.setListDetail(promotionsDetailArrayList);
-            promotions5.setListDetail(promotionsDetailArrayList);
+//            promotions.setListDetail(promotionsDetailArrayList);
+//            promotions2.setListDetail(promotionsDetailArrayList);
+//            promotions3.setListDetail(promotionsDetailArrayList);
+//            promotions4.setListDetail(promotionsDetailArrayList);
+//            promotions5.setListDetail(promotionsDetailArrayList);
 
             //promotions.setListDetail(promotionsDetailArrayList);
 
-            //list.put(promotions, promotionsDetailArrayList);
-            //list.put(promotions2, promotionsDetailArrayList);
-            //list.put(promotions3, promotionsDetailArrayList);
-            //list.put(promotions4, promotionsDetailArrayList);
-            //list.put(promotions5, promotionsDetailArrayList);
+            list.put(promotions, promotionsDetailArrayList);
+            list.put(promotions2, promotionsDetailArrayList);
+            list.put(promotions3, promotionsDetailArrayList);
+            list.put(promotions4, promotionsDetailArrayList);
+            list.put(promotions5, promotionsDetailArrayList);
 
             listParent.add(promotions);
             listParent.add(promotions2);

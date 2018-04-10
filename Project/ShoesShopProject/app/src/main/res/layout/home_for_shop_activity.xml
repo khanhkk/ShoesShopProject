@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="tdc.edu.vn.shoesshop.HomeForShop">
+    tools:context="tdc.edu.vn.shoesshop.Toan.HomeForShop">
     <LinearLayout
         android:id="@+id/llParent"
         android:layout_width="match_parent"

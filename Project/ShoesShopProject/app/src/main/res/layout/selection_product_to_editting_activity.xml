@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="tdc.edu.vn.shoesshop.SelectionProductToEditting">
+    tools:context="tdc.edu.vn.shoesshop.Khanh.SelectionProductToEditting">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,12 +39,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="8">
-        <ListView
+        <ExpandableListView
             android:id="@+id/lvListProduct"
             android:layout_width="match_parent"
+            android:layout_margin="5dp"
             android:layout_height="match_parent">
 
-        </ListView>
+        </ExpandableListView>
     </LinearLayout>
 
     <LinearLayout

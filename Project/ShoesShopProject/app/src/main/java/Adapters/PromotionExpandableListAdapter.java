@@ -14,28 +14,30 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Models.Promotion;
 import Models.PromotionsDetail;
-import tdc.edu.vn.shoesshop.EdittingPromotions;
+import tdc.edu.vn.shoesshop.Thanh.EditingPromotionDetail;
+import tdc.edu.vn.shoesshop.Khanh.EdittingPromotions;
 import tdc.edu.vn.shoesshop.R;
-import tdc.edu.vn.shoesshop.EditingPromotionDetail;
 
 public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
     private Context _context;
     private ArrayList<Promotion> _listDataHeader; // header titles
-    // child data in format of header title, child title
     private LayoutInflater inflater;
+    HashMap<Promotion,ArrayList<PromotionsDetail>> _childList;
 
-    public PromotionExpandableListAdapter(Context context, ArrayList<Promotion> listDataHeader) {
+    public PromotionExpandableListAdapter(Context context, ArrayList<Promotion> listDataHeader, HashMap<Promotion, ArrayList<PromotionsDetail>> list) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this._childList = list;
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
-        return this._listDataHeader.get(groupPosition).getListDetail().get(childPosititon);
+        return this._childList.get(_listDataHeader.get(groupPosition)).get(childPosititon);
     }
 
     @Override
@@ -43,109 +45,53 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
         return childPosition;
     }
 
-//    public static class ChildViewHolder
-//    {
-//        public TextView tvCode, tvGift, tvDiscount;
-//        public ImageView imageView;
-//    }
+    public static class ChildViewHolder
+    {
+        public TextView tvCode, tvGift, tvDiscount;
+        public ImageView imageView;
+    }
 
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-                //Log.d("child", childPosition + "");
-        if (convertView == null) {
-            //LayoutInflater infalInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.promotions_detail_item_layout, null);
-            //viewHolder = new ChildViewHolder();
-//            viewHolder.tvCode = (TextView) convertView.findViewById(R.id.tvCode);
-//            viewHolder.tvDiscount = (TextView)convertView.findViewById(R.id.tvDiscount);
-//            viewHolder.tvGift = (TextView)convertView.findViewById(R.id.tvGift);
-//            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imgImage);
- //           convertView.setTag(viewHolder);
-        }
-//        else
-//        {
-//            viewHolder = (ChildViewHolder) convertView.getTag();
-//        }
+        ChildViewHolder viewHolder;
+        if(getChildrenCount(groupPosition) > 0) {
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.promotions_detail_item_layout, null);
+                viewHolder = new ChildViewHolder();
+                viewHolder.tvCode = (TextView) convertView.findViewById(R.id.tvCode);
+                viewHolder.tvDiscount = (TextView) convertView.findViewById(R.id.tvDiscount);
+                viewHolder.tvGift = (TextView) convertView.findViewById(R.id.tvGift);
+                viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imgImage);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ChildViewHolder) convertView.getTag();
+            }
 
+            PromotionsDetail member = (PromotionsDetail) getChild(groupPosition, childPosition);
 
-        TextView tvCode = (TextView) convertView.findViewById(R.id.tvCode);
-        TextView tvDiscount = (TextView)convertView.findViewById(R.id.tvDiscount);
-        TextView tvGift = (TextView)convertView.findViewById(R.id.tvGift);
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.imgImage);
+            viewHolder.tvCode.setText(member.getProduct().getId());
+            if (member.getDiscount() == 0) {
+                viewHolder.tvDiscount.setText("Không giảm giá!");
+            } else {
+                viewHolder.tvDiscount.setText(member.getDiscount() + "");
+            }
 
-        PromotionsDetail member = (PromotionsDetail) getChild(groupPosition, childPosition);
-        //PromotionsDetail member = ((Promotion)getGroup(groupPosition)).getListDetail().get(childPosition);
-
-        tvCode.setText(member.getProduct().getId());
-        if(member.getDiscount() == 0) {
-            tvDiscount.setText("Không giảm giá!");
-        }
-        else
-        {
-            tvDiscount.setText(member.getDiscount() + "");
-        }
-
-        if(member.getGift() == null)
-        {
-            tvGift.setText("Không có quà tặng!");
-        }
-        else
-        {
-            tvGift.setText(member.getGift());
+            if (member.getGift() == null) {
+                viewHolder.tvGift.setText("Không có quà tặng!");
+            } else {
+                viewHolder.tvGift.setText(member.getGift());
+            }
         }
         return convertView;
     }
 
-    //@Override
-//    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-//        //ChildViewHolder viewHolder;
-//        //Log.d("child", childPosition + "");
-//        if (convertView == null) {
-//            LayoutInflater infalInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            convertView = infalInflater.inflate(R.layout.promotions_detail_item_layout, null);
-//            //viewHolder = new ChildViewHolder();
-////            viewHolder.tvCode = (TextView) convertView.findViewById(R.id.tvCode);
-////            viewHolder.tvDiscount = (TextView)convertView.findViewById(R.id.tvDiscount);
-////            viewHolder.tvGift = (TextView)convertView.findViewById(R.id.tvGift);
-////            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imgImage);
-// //           convertView.setTag(viewHolder);
-//        }
-////        else
-////        {
-////            viewHolder = (ChildViewHolder) convertView.getTag();
-////        }
-//
-//
-//        TextView tvCode = (TextView) convertView.findViewById(R.id.tvCode);
-//        TextView tvDiscount = (TextView)convertView.findViewById(R.id.tvDiscount);
-//        TextView tvGift = (TextView)convertView.findViewById(R.id.tvGift);
-//        ImageView imageView = (ImageView) convertView.findViewById(R.id.imgImage);
-//        final PromotionsDetail member = (PromotionsDetail) getChild(groupPosition, childPosition);
-//
-//        tvCode.setText(member.getProduct().getId());
-//        if(member.getDiscount() == 0) {
-//            tvDiscount.setText("Không giảm giá!");
-//        }
-//        else
-//        {
-//            tvDiscount.setText(member.getDiscount() + "");
-//        }
-//
-//        if(member.getGift() == null)
-//        {
-//            tvGift.setText("Không có quà tặng!");
-//        }
-//        else
-//        {
-//            tvGift.setText(member.getGift());
-//        }
-//        return convertView;
-//    }
-
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this._listDataHeader.get(groupPosition).getListDetail().size();
+        int quantity = 0;
+        if(this._childList.get(_listDataHeader.get(groupPosition)) != null)
+            quantity = this._childList.get(_listDataHeader.get(groupPosition)).size();
+        return quantity;
     }
 
     @Override
@@ -163,53 +109,43 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
         return groupPosition;
     }
 
-//    public static class ViewHolder {
-//        public TextView tvNamePromotions    ;
-//        public TextView tvTimeStart;
-//        public TextView tvTimeEnd;
-//        //public ImageView imageView;
-//        public ImageButton btnEdit, btnAdd;
-//        //public ListView lvListDetail;
-//    }
+    public static class ViewHolder {
+        public TextView tvNamePromotions    ;
+        public TextView tvTimeStart;
+        public TextView tvTimeEnd;
+        //public ImageView imageView;
+        public ImageButton btnEdit, btnAdd;
+        //public ListView lvListDetail;
+    }
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         Log.d("parent", groupPosition + "");
-        //ViewHolder viewHolder;
+        ViewHolder viewHolder;
         if (convertView == null) {
-            //LayoutInflater infalInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.promotions_layout_item, null);
-            //viewHolder = new ViewHolder();
-//            viewHolder.tvNamePromotions = (TextView) convertView.findViewById(R.id.tvNameProduct);
-//            viewHolder.tvTimeEnd = (TextView) convertView.findViewById(R.id.tvTimeEnd);
-//            //viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imgImagePromotions);
-//            viewHolder.tvTimeStart = (TextView) convertView.findViewById(R.id.tvTimeStart);
-//            viewHolder.btnAdd = (ImageButton) convertView.findViewById(R.id.btnAddElementPromotions);
-//            viewHolder.btnEdit = (ImageButton) convertView.findViewById(R.id.btnEditPromotions);
-//            //viewHolder.lvListDetail = (ListView) convertView.findViewById(R.id.lvListPromotionsElement);
-            //convertView.setTag(viewHolder);
+            viewHolder = new ViewHolder();
+            viewHolder.tvNamePromotions = (TextView) convertView.findViewById(R.id.tvNameProduct);
+            viewHolder.tvTimeEnd = (TextView) convertView.findViewById(R.id.tvTimeEnd);
+            //viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imgImagePromotions);
+            viewHolder.tvTimeStart = (TextView) convertView.findViewById(R.id.tvTimeStart);
+            viewHolder.btnAdd = (ImageButton) convertView.findViewById(R.id.btnAddElementPromotions);
+            viewHolder.btnEdit = (ImageButton) convertView.findViewById(R.id.btnEditPromotions);
+            convertView.setTag(viewHolder);
         }
-//        else
-//        {
-//            viewHolder = (ViewHolder)convertView.getTag();
-//        }
-
-        TextView tvNamePromotions = (TextView) convertView.findViewById(R.id.tvNameProduct);
-        TextView tvTimeEnd = (TextView) convertView.findViewById(R.id.tvTimeEnd);
-        //viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imgImagePromotions);
-        TextView tvTimeStart = (TextView) convertView.findViewById(R.id.tvTimeStart);
-        ImageButton btnAdd = (ImageButton) convertView.findViewById(R.id.btnAddElementPromotions);
-        ImageButton btnEdit = (ImageButton) convertView.findViewById(R.id.btnEditPromotions);
-        //viewHolder.lvListDetail = (ListView) convertView.findViewById(R.id.lvListPromotionsElement);
+        else
+        {
+            viewHolder = (ViewHolder)convertView.getTag();
+        }
 
         final Promotion member = (Promotion) getGroup(groupPosition);
 
-        tvNamePromotions.setText(member.getTitle());
+        viewHolder.tvNamePromotions.setText(member.getTitle());
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        tvTimeStart.setText(format.format(member.getDateStart()));
-        tvTimeEnd.setText(format.format(member.getDateEnd()));
+        viewHolder.tvTimeStart.setText(format.format(member.getDateStart()));
+        viewHolder.tvTimeEnd.setText(format.format(member.getDateEnd()));
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
+        viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(_context, EditingPromotionDetail.class);
@@ -217,7 +153,7 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
             }
         });
 
-        btnEdit.setOnClickListener(new View.OnClickListener() {
+        viewHolder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(_context, EdittingPromotions.class);
@@ -233,7 +169,7 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public boolean hasStableIds() {
-        return false;
+        return true;
     }
 
     @Override

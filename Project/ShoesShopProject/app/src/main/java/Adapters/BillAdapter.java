@@ -15,7 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import Models.BillDetail;
-import tdc.edu.vn.shoesshop.Cart;
+import tdc.edu.vn.shoesshop.Khanh.Cart;
 import tdc.edu.vn.shoesshop.R;
 
 

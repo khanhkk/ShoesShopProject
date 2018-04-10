@@ -1,13 +1,15 @@
-package tdc.edu.vn.shoesshop;
+package tdc.edu.vn.shoesshop.Bao;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class DetailInformationOfProduct extends AppCompatActivity {
+import tdc.edu.vn.shoesshop.R;
+
+public class ClientInformation extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.detail_information_of_product_activity);
+        setContentView(R.layout.client_information_activity);
     }
 }

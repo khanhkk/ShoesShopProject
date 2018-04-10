@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
-    tools:context="tdc.edu.vn.shoesshop.Promotions">
+    tools:context="tdc.edu.vn.shoesshop.Khanh.Promotions">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -89,7 +88,9 @@
             <ExpandableListView
                 android:id="@+id/lvListPromotions"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></ExpandableListView>
+                android:layout_margin="5dp"
+                android:layout_height="wrap_content">
+            </ExpandableListView>
         </LinearLayout>
 
     </LinearLayout>

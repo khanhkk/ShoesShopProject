@@ -1,7 +1,9 @@
-package tdc.edu.vn.shoesshop;
+package tdc.edu.vn.shoesshop.Son;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import tdc.edu.vn.shoesshop.R;
 
 public class OrderInformationForClient extends AppCompatActivity {
 

@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Promotions"
+            android:name=".Khanh.Promotions"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,29 +22,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeForClient" />
-        <activity android:name=".HomeForShop" />
-        <activity android:name=".DetailInformationOfProduct" />
-        <activity android:name=".ClientInformationAfterOrder" />
-        <activity android:name=".Bills" />
-        <activity android:name=".RatingOfClient" />
-        <activity android:name=".ClientInformation" />
-        <activity android:name=".EdittingClientInformation" />
-        <activity android:name=".ProductInformation" />
-        <activity android:name=".QuantityManagement" />
-        <activity android:name=".SelectionProductToEditting" />
-        <activity android:name=".ChangePassword" />
-        <activity android:name=".ShopInformation" />
-        <activity android:name=".OrderInformationForClient" />
-        <activity android:name=".OrderInformationForShop" />
-        <activity android:name=".EdittingShopInformation" />
-        <activity android:name=".HomeLayout" />
-        <activity android:name=".EdittingPromotions" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".SignupActivity" />
-        <activity android:name=".ResetPasswordActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".EditingPromotionDetail"></activity>
+        <activity android:name=".Toan.HomeForClient" />
+        <activity android:name=".Toan.HomeForShop" />
+        <activity android:name=".Thanh.DetailInformationOfProduct" />
+        <activity android:name=".Son.ClientInformationAfterOrder" />
+        <activity android:name=".Sang.Bills" />
+        <activity android:name=".Toan.RatingOfClient" />
+        <activity android:name=".Bao.ClientInformation" />
+        <activity android:name=".Thanh.EdittingClientInformation" />
+        <activity android:name=".Toan.ProductInformation" />
+        <activity android:name=".Sang.QuantityManagement" />
+        <activity android:name=".Khanh.SelectionProductToEditting" />
+        <activity android:name=".Sang.ChangePassword" />
+        <activity android:name=".Bao.ShopInformation" />
+        <activity android:name=".Son.OrderInformationForClient" />
+        <activity android:name=".Son.OrderInformationForShop" />
+        <activity android:name=".Thanh.EdittingShopInformation" />
+        <activity android:name=".Toan.HomeLayout" />
+        <activity android:name=".Khanh.EdittingPromotions" />
+        <activity android:name=".Toan.MainActivity" />
+        <activity android:name=".Toan.SignupActivity" />
+        <activity android:name=".Toan.ResetPasswordActivity" />
+        <activity android:name=".Toan.LoginActivity" />
+        <activity android:name=".Thanh.EditingPromotionDetail"></activity>
     </application>
 
 </manifest>

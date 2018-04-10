@@ -1,13 +1,15 @@
-package tdc.edu.vn.shoesshop;
+package tdc.edu.vn.shoesshop.Sang;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class RatingOfClient extends AppCompatActivity {
+import tdc.edu.vn.shoesshop.R;
+
+public class ChangePassword extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.rating_of_client_activity);
+        setContentView(R.layout.change_password_activity);
     }
 }

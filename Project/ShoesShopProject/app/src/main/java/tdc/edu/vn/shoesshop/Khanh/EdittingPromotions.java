@@ -1,4 +1,4 @@
-package tdc.edu.vn.shoesshop;
+package tdc.edu.vn.shoesshop.Khanh;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import java.util.Calendar;
 import Controls.DateTimePicker;
 import Controls.General;
 import Models.Promotion;
+import tdc.edu.vn.shoesshop.R;
 
 public class EdittingPromotions extends AppCompatActivity {
     Button btnSave;
