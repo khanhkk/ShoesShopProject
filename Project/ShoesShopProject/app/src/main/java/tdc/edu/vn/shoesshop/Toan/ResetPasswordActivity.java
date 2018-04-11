@@ -1,4 +1,4 @@
-package tdc.edu.vn.shoesshop;
+package tdc.edu.vn.shoesshop.Toan;
 
 
 import android.os.Bundle;
@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+
+import tdc.edu.vn.shoesshop.R;
 
 public class ResetPasswordActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package tdc.edu.vn.shoesshop;
+package tdc.edu.vn.shoesshop.Khanh;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -17,6 +17,8 @@ import Adapters.BillAdapter;
 import Models.BillDetail;
 import Models.Product;
 import Models.Shop;
+import tdc.edu.vn.shoesshop.Son.ClientInformationAfterOrder;
+import tdc.edu.vn.shoesshop.R;
 
 /**
  * Created by kk on 05/04/2018.

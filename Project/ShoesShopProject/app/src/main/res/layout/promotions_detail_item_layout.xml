@@ -1,139 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-    <!--<TextView-->
-        <!--android:id="@+id/tvCode"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textColor="#006400"-->
-        <!--android:text="SP0001"/>-->
-    <!--<TextView-->
-        <!--android:id="@+id/tvDiscount"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textColor="@color/money"-->
-        <!--android:text="10"/>-->
-    <!--<TextView-->
-        <!--android:id="@+id/tvGift"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="vớ cao cấp"/>-->
+    style="@style/linerlayout3"
+    android:orientation="horizontal"
+    android:layout_margin="@dimen/margin_item"
+    >
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="10dp">
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="1.5"-->
-            <!--android:gravity="right"-->
-            <!--android:layout_gravity="center_vertical">-->
-            <!--<Button-->
-                <!--android:id="@+id/btnDelete"-->
-                <!--android:layout_width="20dp"-->
-                <!--android:layout_height="20dp"-->
-                <!--android:layout_marginBottom="-50dp"-->
-                <!--android:textColor="@android:color/white"-->
-                <!--android:background="@android:color/holo_red_dark"-->
-                <!--android:text="x"-->
-                <!--/>-->
-        <!--</LinearLayout>-->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="6">
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                style="@style/linerlayout4"
                 android:layout_weight="2"
                 android:gravity="center">
                 <ImageView
                     android:id="@+id/imgImage"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="@dimen/size_image"
+                    android:layout_height="@dimen/size_image"
+                    android:layout_margin="@dimen/margin_item"
+                    android:scaleType="fitCenter"
                     android:src="@mipmap/giay"/>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                style="@style/linerlayout4"
                 android:layout_weight="3"
                 android:layout_gravity="center_vertical"
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:orientation="horizontal"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical">
+                    style="@style/row">
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        style="@style/child"
                         android:gravity="center_vertical">
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Mã sản phẩm:"/>
+                            style="@style/wrapcontent"
+                            android:text="@string/code_product"/>
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        style="@style/child"
                         android:gravity="center_vertical">
                         <TextView
                             android:id="@+id/tvCode"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/wrapcontent"
                             android:textColor="#006400"
                             android:text="SP0001"/>
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_weight="1">
+                   style="@style/row">
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        style="@style/child"
                         android:gravity="center_vertical"
-                        android:layout_weight="1">
+                        >
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Giảm giá:"/>
+                            style="@style/wrapcontent"
+                            android:text="@string/discount"/>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        style="@style/child"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:layout_weight="1">
+                        >
                         <TextView
                             android:id="@+id/tvDiscount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/wrapcontent"
                             android:textColor="@color/money"
                             android:text="10"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
+                            style="@style/wrapcontent"
+                            android:layout_marginLeft="@dimen/margin_parent"
                             android:textColor="@color/unitColor"
                             android:text="%"/>
 
@@ -142,36 +80,23 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_weight="1">
+                    style="@style/row"
+                    >
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
+                        style="@style/child">
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Quà tặng:"/>
+                            style="@style/wrapcontent"
+                            android:text="@string/gift"/>
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_weight="1">
+                        style="@style/child">
                         <TextView
                             android:id="@+id/tvGift"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                           style="@style/wrapcontent"
                             android:text="vớ cao cấp"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-
-    </LinearLayout>
 </LinearLayout>

@@ -38,7 +38,7 @@ public class CustumAdapterHistory extends ArrayAdapter<String> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        convertView = LayoutInflater.from(context).inflate(R.layout.listview_layoutHistoryTransaction22,parent,false);
+        convertView = LayoutInflater.from(context).inflate(R.layout.listview_layouthistorytransaction22,parent,false);
         ImageView imgView = (ImageView) convertView.findViewById(R.id.imgView);
         TextView txtLichSu = (TextView) convertView.findViewById(R.id.txtLichSu);
         ImageButton btnImg = (ImageButton) convertView.findViewById(R.id.btnImg);

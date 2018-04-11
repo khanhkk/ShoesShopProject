@@ -7,7 +7,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="@dimen/activity_horizontal_margin"
-    tools:context="tdc.edu.vn.shoesshop.LoginActivity"
+    tools:context="tdc.edu.vn.shoesshop.Toan.LoginActivity"
     android:background="@color/colorPrimaryDark"
     >
     <EditText

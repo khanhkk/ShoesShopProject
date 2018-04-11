@@ -1,4 +1,4 @@
-package tdc.edu.vn.shoesshop;
+package tdc.edu.vn.shoesshop.Toan;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
 
 import Controls.TabarControl;
+import tdc.edu.vn.shoesshop.R;
 
 public class HomeForShop extends AppCompatActivity {
 

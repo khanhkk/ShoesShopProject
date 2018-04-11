@@ -20,7 +20,7 @@ public class ListOder  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layoutHistoryTransaction22);
+        setContentView(R.layout.layouthistorytransaction22);
         lvContact = (ListView) findViewById(R.id.listview);
         dateTimePicker = (DateTimePicker)findViewById(R.id.dtDatePicker) ;
 

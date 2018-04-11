@@ -1,13 +1,15 @@
-package tdc.edu.vn.shoesshop;
+package tdc.edu.vn.shoesshop.Sang;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class ClientInformation extends AppCompatActivity {
+import tdc.edu.vn.shoesshop.R;
+
+public class QuantityManagement extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.client_information_activity);
+        setContentView(R.layout.quantity_manage_activity);
     }
 }

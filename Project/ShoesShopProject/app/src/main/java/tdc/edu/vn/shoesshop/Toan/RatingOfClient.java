@@ -1,13 +1,15 @@
-package tdc.edu.vn.shoesshop;
+package tdc.edu.vn.shoesshop.Toan;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class ClientInformationAfterOrder extends AppCompatActivity {
+import tdc.edu.vn.shoesshop.R;
+
+public class RatingOfClient extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.client_information_after_order_activity);
+        setContentView(R.layout.rating_of_client_activity);
     }
 }

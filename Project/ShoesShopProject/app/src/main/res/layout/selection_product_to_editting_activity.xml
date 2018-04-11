@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="tdc.edu.vn.shoesshop.SelectionProductToEditting">
+    tools:context="tdc.edu.vn.shoesshop.Khanh.SelectionProductToEditting">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             android:layout_height="match_parent"
             android:layout_weight="5"
             android:gravity="center_vertical"
-            android:text="Sửa thông tin sản phẩm"
+            android:text="@string/edit_product_info"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
     </LinearLayout>
@@ -39,12 +39,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="8">
-        <ListView
+        <ExpandableListView
             android:id="@+id/lvListProduct"
             android:layout_width="match_parent"
+            android:layout_margin="5dp"
             android:layout_height="match_parent">
 
-        </ListView>
+        </ExpandableListView>
     </LinearLayout>
 
     <LinearLayout
@@ -57,6 +58,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/mybutton"
-            android:text="Finish"/>
+            android:text="@string/btnFinish"/>
     </LinearLayout>
 </LinearLayout>

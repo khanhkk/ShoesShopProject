@@ -17,7 +17,7 @@ public class ListHistoryTransaction extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layoutHistoryTransaction22);
+        setContentView(R.layout.layouthistorytransaction22);
         lvContact = (ListView) findViewById(R.id.listview);
 
 //        ArrayList<contactList22>  arrayList = new ArrayList<>();
@@ -37,7 +37,7 @@ public class ListHistoryTransaction extends AppCompatActivity {
         list.add("Đơn hàng đã hủy");
         list.add("đơn hàng chờ xử lí");
 
-        CustumAdapterHistory customAdapter = new CustumAdapterHistory(this,R.layout.listview_layoutHistoryTransaction22,list);
+        CustumAdapterHistory customAdapter = new CustumAdapterHistory(this,R.layout.listview_layouthistorytransaction22,list);
         lvContact.setAdapter(customAdapter);
 
     }

@@ -1,139 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="10dp">
+    android:gravity="center"
+    android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/llInformation"
+            style="@style/linerlayout3"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:orientation="horizontal"
             >
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                style="@style/linerlayout2"
                 android:layout_weight="2"
                 android:gravity="center">
 
                 <ImageView
                     android:id="@+id/imgImageProduct"
-                    android:layout_width="wrap_content"
-                    android:layout_height="80dp"
+                    android:layout_width="@dimen/size_image"
+                    android:layout_height="@dimen/size_image"
+                    android:layout_margin="@dimen/margin_item"
                     android:src="@mipmap/giay"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                style="@style/linerlayout2"
                 android:orientation="vertical"
-                android:layout_margin="2dp"
+                android:layout_margin="@dimen/margin_item"
                 android:layout_weight="3">
 
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:descendantFocusability="blocksDescendants"
+                    style="@style/linerlayout3"
                     android:gravity="right"
                     android:orientation="horizontal">
                     <ImageButton
                         android:id="@+id/btnAddElement"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/size_add_button"
+                        android:layout_height="@dimen/size_add_button"
                         android:src="@mipmap/add"
-                        android:layout_marginRight="10dp"
+                        android:padding="@dimen/margin_item"
+                        android:layout_marginRight="@dimen/margin_item"
                         android:background="@android:color/transparent"
                         android:scaleType="fitXY"/>
 
                     <ImageButton
                         android:id="@+id/btnEditElement"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/size_add_button"
+                        android:layout_height="@dimen/size_add_button"
+                        android:padding="@dimen/margin_item"
                         android:src="@mipmap/green_edit"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="@dimen/begin"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"/>
-
-                    <ImageButton
-                        android:id="@+id/btnView"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/view_detail"
-                        android:background="@android:color/transparent"
-                        android:scaleType="centerInside"/>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/linerlayout3"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical">
-                            <TextView
-                                android:id="@+id/tvNameProduct"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:maxHeight="100dp"
-                                android:maxLines="4"
-                                android:textSize="18sp"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:text="Giày thể thao SS"
-
-                                />
-                        </LinearLayout>
-
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/tvNameProduct"
+                        style="@style/wrapcontent"
+                        android:maxHeight="@dimen/size_image"
+                        android:maxLines="4"
+                        android:textSize="@dimen/textsize"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="Giày thể thao SS"/>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        style="@style/linerlayout"
                         android:orientation="horizontal"
                         android:layout_weight="1">
 
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                           style="@style/child"
                             android:gravity="center_vertical"
                             >
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Giá niêm yết:"/>
+                                style="@style/wrapcontent"
+                                android:text="@string/Listedprice"/>
                         </LinearLayout>
+
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            style="@style/child"
                             android:orientation="horizontal"
                             android:gravity="right">
                             <TextView
                                 android:id="@+id/tvListedPrice"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/wrapcontent"
                                 android:text="299000"
                                 android:textColor="@color/money"
                                 />
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/wrapcontent"
                                 android:text="@string/unit"
                                 android:textColor="@color/unitColor"
                                 android:layout_marginLeft="10dp"
@@ -143,38 +108,29 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:orientation="horizontal"
-                        android:layout_weight="1">
+                       style="@style/row"
+                        android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            style="@style/child"
                             android:gravity="center_vertical"
                             >
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Giá bán:"/>
+                                style="@style/wrapcontent"
+                                android:text="@string/SalePrice"/>
                         </LinearLayout>
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            style="@style/child"
                             android:orientation="horizontal"
                             android:gravity="right">
                             <TextView
                                 android:id="@+id/tvSalePrice"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/wrapcontent"
                                 android:text="199000"
                                 android:textColor="@color/money"
                                 />
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/wrapcontent"
                                 android:text="@string/unit"
                                 android:textColor="@color/unitColor"
                                 android:layout_marginLeft="10dp"
@@ -183,128 +139,45 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:orientation="vertical"-->
-            <!--android:layout_gravity="right"-->
-            <!--android:layout_weight="0.8">-->
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--&lt;!&ndash;<LinearLayout&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_width="0dp"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_weight="1">&ndash;&gt;-->
-
-            <!--<ImageButton-->
-            <!--android:id="@+id/btnAddElement"-->
-            <!--android:layout_width="20dp"-->
-            <!--android:layout_height="20dp"-->
-            <!--android:src="@mipmap/add"-->
-            <!--android:layout_marginRight="5dp"-->
-            <!--android:background="@android:color/transparent"-->
-            <!--android:scaleType="fitXY"/>-->
-
-            <!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->
-
-            <!--&lt;!&ndash;<LinearLayout&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_width="0dp"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_weight="1">&ndash;&gt;-->
-
-            <!--<ImageButton-->
-            <!--android:id="@+id/btnEditElement"-->
-            <!--android:layout_width="20dp"-->
-            <!--android:layout_height="20dp"-->
-            <!--android:src="@mipmap/green_edit"-->
-            <!--android:background="@android:color/transparent"-->
-            <!--android:scaleType="fitCenter"/>-->
-
-            <!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->
-
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="1">-->
-
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center">-->
-
-            <!--<ImageButton-->
-            <!--android:id="@+id/btnView"-->
-            <!--android:layout_width="20dp"-->
-            <!--android:layout_height="20dp"-->
-            <!--android:src="@mipmap/detail"-->
-            <!--android:background="@android:color/transparent"-->
-            <!--android:tooltipText="tap to view detail"-->
-            <!--android:scaleType="centerInside"/>-->
-            <!--</LinearLayout>-->
-
-            <!--</LinearLayout>-->
-
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/llDanhSach"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_below="@id/llInformation"
+            style="@style/linerlayout3"
             android:visibility="gone"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/margin_item"
             android:orientation="vertical">
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                style="@style/linerlayout3">
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    style="@style/child"
                     android:gravity="center">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/wrapcontent"
                         android:textAlignment="center"
                         android:textColor="@android:color/holo_blue_light"
                         android:text="Màu sắc"/>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_weight="1">
+                    style="@style/child"
+                    android:gravity="center">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/wrapcontent"
                         android:textAlignment="center"
                         android:textColor="@android:color/holo_blue_light"
                         android:text="Kích cỡ"/>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_weight="1">
+                   style="@style/child"
+                    android:gravity="center">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/wrapcontent"
                         android:textAlignment="center"
                         android:textColor="@android:color/holo_blue_light"
                         android:text="số lượng"/>
@@ -312,15 +185,14 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <ListView
-                android:id="@+id/lvListElement"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                ></ListView>
+            <!--<ListView-->
+                <!--android:id="@+id/lvListElement"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="300dp"-->
+                <!--&gt;</ListView>-->
         </LinearLayout>
 
 
 
-    </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>
