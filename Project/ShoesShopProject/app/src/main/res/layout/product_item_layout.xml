@@ -57,6 +57,16 @@
                         android:layout_marginRight="@dimen/begin"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"/>
+                    <ImageButton
+                        android:id="@+id/btnDeleteElement"
+                        android:layout_width="@dimen/size_add_button"
+                        android:layout_height="@dimen/size_add_button"
+                        android:padding="@dimen/margin_item"
+                        android:src="@mipmap/green_edit"
+                        android:layout_marginRight="@dimen/begin"
+                        android:contentDescription="delete product"
+                        android:background="@android:color/transparent"
+                        android:scaleType="fitCenter"/>
 
                 </LinearLayout>
 

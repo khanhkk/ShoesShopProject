@@ -18,6 +18,7 @@ import java.util.HashMap;
 
 import Models.Promotion;
 import Models.PromotionsDetail;
+import tdc.edu.vn.shoesshop.Khanh.Promotions;
 import tdc.edu.vn.shoesshop.Thanh.EditingPromotionDetail;
 import tdc.edu.vn.shoesshop.Khanh.EdittingPromotions;
 import tdc.edu.vn.shoesshop.R;
@@ -114,12 +115,12 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
         public TextView tvTimeStart;
         public TextView tvTimeEnd;
         //public ImageView imageView;
-        public ImageButton btnEdit, btnAdd;
+        public ImageButton btnEdit, btnAdd, btnDelete;
         //public ListView lvListDetail;
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+    public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         Log.d("parent", groupPosition + "");
         ViewHolder viewHolder;
         if (convertView == null) {
@@ -131,6 +132,7 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
             viewHolder.tvTimeStart = (TextView) convertView.findViewById(R.id.tvTimeStart);
             viewHolder.btnAdd = (ImageButton) convertView.findViewById(R.id.btnAddElementPromotions);
             viewHolder.btnEdit = (ImageButton) convertView.findViewById(R.id.btnEditPromotions);
+            viewHolder.btnDelete = (ImageButton) convertView.findViewById(R.id.btnDeletePromotions);
             convertView.setTag(viewHolder);
         }
         else
@@ -150,6 +152,15 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(_context, EditingPromotionDetail.class);
                 _context.startActivity(intent);
+            }
+        });
+
+        viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _childList.remove(_listDataHeader.get(groupPosition));
+                _listDataHeader.remove(groupPosition);
+                Promotions.adapter.notifyDataSetChanged();
             }
         });
 

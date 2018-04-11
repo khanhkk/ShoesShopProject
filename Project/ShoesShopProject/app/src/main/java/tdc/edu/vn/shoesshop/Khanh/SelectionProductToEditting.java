@@ -20,7 +20,7 @@ import tdc.edu.vn.shoesshop.R;
 
 public class SelectionProductToEditting extends AppCompatActivity {
 
-    ProductExpandListAdapter adapter;
+    public static ProductExpandListAdapter adapter;
     ArrayList<Product> products;
     HashMap<Product, ArrayList<ProductDetail>> children;
     //LinearLayout linearLayout;

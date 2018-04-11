@@ -52,20 +52,4 @@
     <string name="lbl_forgot_password">Forgot password?</string>
     <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
 
-    <!--Sang-->
-    <string name="edtTen">Tên đăng nhập</string>
-    <string name="edtPassHT">Mật khẩu hiện tại</string>
-    <string name="edtPassM">Mật khẩu mới</string>
-    <string name="edtReturnPass">Nhập lại mật khẩu mới</string>
-    <!--list view-->
-    <string name="imgView">imageView</string>
-    <string name="txtLichSu">lich su</string>
-    <string name="btnImg">imageButtun</string>
-    <!--layout 22-->
-    <string name="txtTenShop">MiniShop</string>
-    <string name="txtThongBao">Thông báo</string>
-    <!--lay out12-->
-    <string name="txtHistoryInfo">mã hàng</string>
-    <string name="btnChiTiet">Chi tiết</string>
-
 </resources>

@@ -29,7 +29,7 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
     static HashMap<Promotion,ArrayList<PromotionsDetail>> list = new HashMap<>();
     static ArrayList<Promotion> listParent;
 
-    PromotionExpandableListAdapter adapter;
+    public static PromotionExpandableListAdapter adapter;
     Intent intent;
 
     @Override

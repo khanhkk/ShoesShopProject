@@ -11,12 +11,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import Models.Product;
 import Models.ProductDetail;
+import tdc.edu.vn.shoesshop.Khanh.SelectionProductToEditting;
 import tdc.edu.vn.shoesshop.Thanh.DetailInformationOfProduct;
 import tdc.edu.vn.shoesshop.R;
 
@@ -50,8 +52,8 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
     public static class ChildViewHolder
     {
         public TextView tvColor, tvSize, tvQuantity;
+        public LinearLayout linearLayout;
     }
-
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
@@ -63,22 +65,21 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
             viewHolder.tvSize = (TextView) convertView.findViewById(R.id.tvSize);
             viewHolder.tvColor = (TextView)convertView.findViewById(R.id.tvColor);
             viewHolder.tvQuantity = (TextView)convertView.findViewById(R.id.tvQuantity);
+            viewHolder.linearLayout = (LinearLayout)convertView.findViewById(R.id.llInformation);
             //viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imgImage);
+
             convertView.setTag(viewHolder);
         }
         else
         {
             viewHolder = (ChildViewHolder) convertView.getTag();
         }
-
-
-
             ProductDetail member = (ProductDetail) getChild(groupPosition, childPosition);
-
             viewHolder.tvColor.setText(member.getColor());
             viewHolder.tvSize.setText(member.getSize() + "");
             viewHolder.tvQuantity.setText(member.getQuantity() + "");
         }
+
         return convertView;
     }
 
@@ -110,12 +111,12 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
         public TextView tvListedPrice;
         public TextView tvSalePrice;
         public ImageView imageView;
-        public ImageButton btnEdit, btnAdd;
+        public ImageButton btnEdit, btnAdd, btnDelete;
         public LinearLayout llListElement;
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+    public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         Log.d("parent", groupPosition + "");
         ViewHolder viewHolder;
         if (convertView == null) {
@@ -127,6 +128,7 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
             viewHolder.tvSalePrice = (TextView) convertView.findViewById(R.id.tvSalePrice);
             viewHolder.btnAdd = (ImageButton) convertView.findViewById(R.id.btnAddElement);
             viewHolder.btnEdit = (ImageButton) convertView.findViewById(R.id.btnEditElement);
+            viewHolder.btnDelete = (ImageButton) convertView.findViewById(R.id.btnDeleteElement);
             viewHolder.llListElement = (LinearLayout)convertView.findViewById(R.id.llDanhSach);
             convertView.setTag(viewHolder);
         }
@@ -146,6 +148,16 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(_context, DetailInformationOfProduct.class);
                 _context.startActivity(intent);
+            }
+        });
+
+        viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(_context,"dsafds",Toast.LENGTH_SHORT).show();
+                _childList.remove(_listDataHeader.get(groupPosition));
+                _listDataHeader.remove(_listDataHeader.get(groupPosition));
+                SelectionProductToEditting.adapter.notifyDataSetChanged();
             }
         });
 
