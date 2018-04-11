@@ -1,24 +1,31 @@
 package tdc.edu.vn.shoesshop;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
+
+    import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+    import java.util.Calendar;
 
-import Adapters.CustumAdapterHistory;
+    import Adapters.CustumAdapterOder;
+    import Controls.DateTimePicker;
 
-
-public class ListHistoryTransaction extends AppCompatActivity {
+public class ListOder  extends AppCompatActivity {
     ListView lvContact;
-    CustumAdapterHistory adapter;
+    CustumAdapterOder adapter;
     ArrayList<String> list = new ArrayList<>();
+    DateTimePicker dateTimePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layoutHistoryTransaction22);
         lvContact = (ListView) findViewById(R.id.listview);
+        dateTimePicker = (DateTimePicker)findViewById(R.id.dtDatePicker) ;
+
+        dateTimePicker.setDate(Calendar.getInstance().getTime());
+
 
 //        ArrayList<contactList22>  arrayList = new ArrayList<>();
 //        contactList22 contact1 = new contactList22(null,"Nguyen Van A",);
@@ -32,14 +39,14 @@ public class ListHistoryTransaction extends AppCompatActivity {
 //        arrayList.add(contact3);
 //        arrayList.add(contact4);
 
-        list.add("Đơn hàng đã giao");
-        list.add("Đơn hàng đang + vận chuyển");
-        list.add("Đơn hàng đã hủy");
-        list.add("đơn hàng chờ xử lí");
+        list.add("dfadfa");
+        list.add("dfadfa");
+        list.add("dfadfa");
+        list.add("dfadfa");
 
-        CustumAdapterHistory customAdapter = new CustumAdapterHistory(this,R.layout.listview_layoutHistoryTransaction22,list);
+        CustumAdapterOder customAdapter = new CustumAdapterOder(this,R.layout.layout_oder,list);
         lvContact.setAdapter(customAdapter);
-
     }
 }
+
 
