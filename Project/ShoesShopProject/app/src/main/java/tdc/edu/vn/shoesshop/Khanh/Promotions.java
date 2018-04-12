@@ -22,6 +22,7 @@ import Models.Promotion;
 import Models.PromotionsDetail;
 import Models.Shop;
 import tdc.edu.vn.shoesshop.R;
+import tdc.edu.vn.shoesshop.Thanh.EditingPromotionDetail;
 import tdc.edu.vn.shoesshop.Toan.HomeForClient;
 
 public class Promotions extends Activity implements SearchView.OnQueryTextListener {
@@ -103,15 +104,29 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
     @Override
     public boolean onContextItemSelected(MenuItem item) {
 
-        switch(item.getItemId())
-        {
-            case R.id.cmSua:
-                Toast.makeText(Promotions.this, "sua", Toast.LENGTH_SHORT).show();
-                break;
+        ExpandableListView.ExpandableListContextMenuInfo info =
+                (ExpandableListView.ExpandableListContextMenuInfo) item.getMenuInfo();
+        int type = ExpandableListView.getPackedPositionType(info.packedPosition);
+        int group = ExpandableListView.getPackedPositionGroup(info.packedPosition);
+        int child =	ExpandableListView.getPackedPositionChild(info.packedPosition);
 
-            case R.id.cmXoa:
-                Toast.makeText(Promotions.this, "xoa", Toast.LENGTH_SHORT).show();
-                break;
+        if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+            PromotionsDetail promotionsDetail = (PromotionsDetail) adapter.getChild(group, child);
+            switch (item.getItemId()) {
+                case R.id.cmSua:
+                    Toast.makeText(Promotions.this, "sua" + promotionsDetail.getProduct().getId(), Toast.LENGTH_SHORT).show();
+                    Intent itent = new Intent(Promotions.this, EditingPromotionDetail.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("detail", promotionsDetail.getId()+ "");
+                    startActivity(itent);
+                    break;
+
+                case R.id.cmXoa:
+                    Toast.makeText(Promotions.this, "xoa" + promotionsDetail.getProduct().getId(), Toast.LENGTH_SHORT).show();
+                    list.get(listParent.get(group)).remove(child);
+                    adapter.notifyDataSetChanged();
+                    break;
+            }
         }
 
         return super.onContextItemSelected(item);

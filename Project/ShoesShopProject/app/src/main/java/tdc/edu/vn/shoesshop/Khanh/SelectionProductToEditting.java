@@ -3,10 +3,13 @@ package tdc.edu.vn.shoesshop.Khanh;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +17,10 @@ import java.util.HashMap;
 import Adapters.ProductExpandListAdapter;
 import Models.Product;
 import Models.ProductDetail;
+import Models.PromotionsDetail;
 import Models.Shop;
+import tdc.edu.vn.shoesshop.Thanh.DetailInformationOfProduct;
+import tdc.edu.vn.shoesshop.Thanh.EditingPromotionDetail;
 import tdc.edu.vn.shoesshop.Toan.HomeForShop;
 import tdc.edu.vn.shoesshop.R;
 
@@ -62,6 +68,60 @@ public class SelectionProductToEditting extends AppCompatActivity {
 
         lvList.setAdapter(adapter);
 
+        registerForContextMenu(lvList);
+    }
+
+
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        ExpandableListView.ExpandableListContextMenuInfo info =
+                (ExpandableListView.ExpandableListContextMenuInfo) menuInfo;
+
+        int type = ExpandableListView.getPackedPositionType(info.packedPosition);
+        int group = ExpandableListView.getPackedPositionGroup(info.packedPosition);
+        int child =	ExpandableListView.getPackedPositionChild(info.packedPosition);
+
+        if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+
+            ProductDetail item = (ProductDetail) adapter.getChild(group, child);
+            menu.setHeaderTitle(item.getProduct().getName());
+            menu.setHeaderIcon(R.mipmap.giay);
+
+            menu.add(0, R.id.cmSua, 0, "Sua");
+            menu.add(0, R.id.cmXoa, 0, "Xoa");
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        ExpandableListView.ExpandableListContextMenuInfo info =
+                (ExpandableListView.ExpandableListContextMenuInfo) item.getMenuInfo();
+        int type = ExpandableListView.getPackedPositionType(info.packedPosition);
+        int group = ExpandableListView.getPackedPositionGroup(info.packedPosition);
+        int child =	ExpandableListView.getPackedPositionChild(info.packedPosition);
+
+        if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+            ProductDetail productDetail = (ProductDetail) adapter.getChild(group, child);
+            switch (item.getItemId()) {
+                case R.id.cmSua:
+                    Toast.makeText(SelectionProductToEditting.this, "sua" + productDetail.getProduct().getId(), Toast.LENGTH_SHORT).show();
+                    Intent itent = new Intent(SelectionProductToEditting.this, DetailInformationOfProduct.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("detail", productDetail.getId()+ "");
+                    startActivity(itent);
+                    break;
+
+                case R.id.cmXoa:
+                    Toast.makeText(SelectionProductToEditting.this, "xoa" + productDetail.getProduct().getId(), Toast.LENGTH_SHORT).show();
+                    children.get(products.get(group)).remove(child);
+                    adapter.notifyDataSetChanged();
+                    break;
+            }
+        }
+
+        return super.onContextItemSelected(item);
     }
 
     private  void creatList()

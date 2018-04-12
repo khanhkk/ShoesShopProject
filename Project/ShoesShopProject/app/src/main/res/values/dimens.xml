@@ -6,8 +6,9 @@
     <dimen name="begin">15dp</dimen>
     <dimen name="behind">20dp</dimen>
     <dimen name="margin_item">5dp</dimen>
-    <dimen name="size_add_button">35dp</dimen>
+    <dimen name="size_add_button">30dp</dimen>
     <dimen name="textsize">18sp</dimen>
+    <dimen name="height_size">80dp</dimen>
 
 
     <!--toan-->
