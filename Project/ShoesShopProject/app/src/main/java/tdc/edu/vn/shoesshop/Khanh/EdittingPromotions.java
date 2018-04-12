@@ -28,10 +28,13 @@ public class EdittingPromotions extends AppCompatActivity {
     Promotion promotion = null;
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editting_promotions_activity);
+
 
         Promotions.TakeData();
 
