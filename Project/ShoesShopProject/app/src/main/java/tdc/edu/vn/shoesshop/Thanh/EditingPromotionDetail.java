@@ -11,5 +11,6 @@ public class EditingPromotionDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editing_promotion_detail_activity);
+
     }
 }
