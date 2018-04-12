@@ -18,10 +18,10 @@ import java.util.HashMap;
 
 import Models.Promotion;
 import Models.PromotionsDetail;
-import tdc.edu.vn.shoesshop.Khanh.Promotions;
-import tdc.edu.vn.shoesshop.Thanh.EditingPromotionDetail;
 import tdc.edu.vn.shoesshop.Khanh.EdittingPromotions;
+import tdc.edu.vn.shoesshop.Khanh.Promotions;
 import tdc.edu.vn.shoesshop.R;
+import tdc.edu.vn.shoesshop.Thanh.EditingPromotionDetail;
 
 public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
     private Context _context;
@@ -52,7 +52,6 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
         public ImageView imageView;
     }
 
-
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         ChildViewHolder viewHolder;
@@ -64,6 +63,7 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
                 viewHolder.tvDiscount = (TextView) convertView.findViewById(R.id.tvDiscount);
                 viewHolder.tvGift = (TextView) convertView.findViewById(R.id.tvGift);
                 viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imgImage);
+
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ChildViewHolder) convertView.getTag();
@@ -116,7 +116,6 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
         public TextView tvTimeEnd;
         //public ImageView imageView;
         public ImageButton btnEdit, btnAdd, btnDelete;
-        //public ListView lvListDetail;
     }
 
     @Override

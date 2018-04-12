@@ -23,7 +23,6 @@ public class SelectionProductToEditting extends AppCompatActivity {
     public static ProductExpandListAdapter adapter;
     ArrayList<Product> products;
     HashMap<Product, ArrayList<ProductDetail>> children;
-    //LinearLayout linearLayout;
 
     ExpandableListView lvList;
     Button btnFinish;
@@ -37,7 +36,6 @@ public class SelectionProductToEditting extends AppCompatActivity {
         lvList = (ExpandableListView) findViewById(R.id.lvListProduct);
         btnFinish = (Button) findViewById(R.id.btnFinishEdition);
         btnBack = (ImageButton) findViewById(R.id.btnBack);
-        //linearLayout = (LinearLayout)findViewById(R.id.llDanhSach);
 
 
         btnFinish.setOnClickListener(new View.OnClickListener() {
@@ -64,20 +62,6 @@ public class SelectionProductToEditting extends AppCompatActivity {
 
         lvList.setAdapter(adapter);
 
-
-//        lvList.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-//            @Override
-//            public void onGroupExpand(int groupPosition) {
-//                ProductExpandListAdapter.setVisibility(View.VISIBLE);
-//            }
-//        });
-//
-//        lvList.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-//            @Override
-//            public void onGroupCollapse(int groupPosition) {
-//                linearLayout.setVisibility(View.GONE);
-//            }
-//        });
     }
 
     private  void creatList()
@@ -113,7 +97,6 @@ public class SelectionProductToEditting extends AppCompatActivity {
         children.put(product2, null);
         children.put(product3, details);
         children.put(product4, null);
-        //product.setList(details);
 
         products.add(product);
         products.add(product2);

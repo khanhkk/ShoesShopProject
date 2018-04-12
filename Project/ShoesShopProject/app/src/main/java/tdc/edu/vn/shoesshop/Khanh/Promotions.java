@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,8 +21,8 @@ import Models.Product;
 import Models.Promotion;
 import Models.PromotionsDetail;
 import Models.Shop;
-import tdc.edu.vn.shoesshop.Toan.HomeForClient;
 import tdc.edu.vn.shoesshop.R;
+import tdc.edu.vn.shoesshop.Toan.HomeForClient;
 
 public class Promotions extends Activity implements SearchView.OnQueryTextListener {
 
@@ -27,7 +30,8 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
     SearchView svSearchPromotions;
     ImageButton btnAdd, btnBack;
     static HashMap<Promotion,ArrayList<PromotionsDetail>> list = new HashMap<>();
-    static ArrayList<Promotion> listParent;
+    static ArrayList<Promotion> listParent, listCopy;
+
 
     public static PromotionExpandableListAdapter adapter;
     Intent intent;
@@ -46,9 +50,10 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
 
         if(listParent == null) {
             TakeData();
+            listCopy.addAll(listParent);
         }
 
-        adapter = new PromotionExpandableListAdapter(Promotions.this, listParent, list);
+        adapter = new PromotionExpandableListAdapter(Promotions.this, listCopy, list);
         lvPromotions.setAdapter(adapter);
 
         intent = getIntent();
@@ -70,13 +75,52 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
             }
         });
 
+        registerForContextMenu(lvPromotions);
+    }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
 
+        ExpandableListView.ExpandableListContextMenuInfo info =
+                (ExpandableListView.ExpandableListContextMenuInfo) menuInfo;
+
+        int type = ExpandableListView.getPackedPositionType(info.packedPosition);
+        int group = ExpandableListView.getPackedPositionGroup(info.packedPosition);
+        int child =	ExpandableListView.getPackedPositionChild(info.packedPosition);
+
+        if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+
+            PromotionsDetail item = (PromotionsDetail) adapter.getChild(group, child);
+            menu.setHeaderTitle(item.getProduct().getName());
+            menu.setHeaderIcon(R.mipmap.giay);
+
+            menu.add(0, R.id.cmSua, 0, "Sua");
+            menu.add(0, R.id.cmXoa, 0, "Xoa");
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        switch(item.getItemId())
+        {
+            case R.id.cmSua:
+                Toast.makeText(Promotions.this, "sua", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.cmXoa:
+                Toast.makeText(Promotions.this, "xoa", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        return super.onContextItemSelected(item);
     }
 
     public static void TakeData()
     {
         listParent = new ArrayList<>();
+        listCopy = new ArrayList<>();
         Shop shop = new Shop("SH0001", "MiuMiu", "01512151211");
 
         Product product = new Product("SP0001", "giay1dsfđsàdsffsádf", 1290000, 900000, shop, null);
@@ -136,20 +180,20 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
     @Override
     public boolean onQueryTextChange(String newText) {
         if(listParent.size() > 0) {
-//            if (newText.isEmpty())
-//            {
-//                listParent.clear();
-//                listParent.addAll(list);
-//            }
-//            else {
-//                listUse.clear();
-//                for (int i = 0; i < list.size(); i++) {
-//                    if (list.get(i).getTitle().toString().contains(newText)) {
-//                        listUse.add(list.get(i));
-//                    }
-//                }
-//            }
-//            adapter.notifyDataSetChanged();
+            if (newText.isEmpty())
+            {
+                listCopy.clear();
+                listCopy.addAll(listParent);
+            }
+            else {
+                listCopy.clear();
+                for (int i = 0; i < listParent.size(); i++) {
+                    if (listParent.get(i).getTitle().toString().contains(newText)) {
+                        listCopy.add(listParent.get(i));
+                    }
+                }
+            }
+            adapter.notifyDataSetChanged();
         }
         return true;
     }

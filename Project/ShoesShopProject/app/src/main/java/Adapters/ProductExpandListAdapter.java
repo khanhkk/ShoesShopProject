@@ -11,7 +11,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,8 +18,8 @@ import java.util.HashMap;
 import Models.Product;
 import Models.ProductDetail;
 import tdc.edu.vn.shoesshop.Khanh.SelectionProductToEditting;
-import tdc.edu.vn.shoesshop.Thanh.DetailInformationOfProduct;
 import tdc.edu.vn.shoesshop.R;
+import tdc.edu.vn.shoesshop.Thanh.DetailInformationOfProduct;
 
 /**
  * Created by ITLAB on 4/10/2018.
@@ -52,7 +51,6 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
     public static class ChildViewHolder
     {
         public TextView tvColor, tvSize, tvQuantity;
-        public LinearLayout linearLayout;
     }
 
     @Override
@@ -65,9 +63,6 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
             viewHolder.tvSize = (TextView) convertView.findViewById(R.id.tvSize);
             viewHolder.tvColor = (TextView)convertView.findViewById(R.id.tvColor);
             viewHolder.tvQuantity = (TextView)convertView.findViewById(R.id.tvQuantity);
-            viewHolder.linearLayout = (LinearLayout)convertView.findViewById(R.id.llInformation);
-            //viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imgImage);
-
             convertView.setTag(viewHolder);
         }
         else
