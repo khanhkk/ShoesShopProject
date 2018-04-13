@@ -4,20 +4,23 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
+import android.view.*;
 
 import Controls.TabarControl;
 import tdc.edu.vn.shoesshop.Khanh.Cart;
 import tdc.edu.vn.shoesshop.R;
-
 public class HomeForClient extends AppCompatActivity {
     private FragmentTransaction fragment;
     Cart cart = null;
+    BFragment b = null;
     TabarControl tabarControl;
     TabarControl.TabarFunctions functions = new TabarControl.TabarFunctions() {
         @Override
         public void onButton1Clicked() {
-
-        }
+            fragment = getFragmentManager().beginTransaction();
+            b = new BFragment();
+            fragment.replace(R.id.llParent, b);
+            fragment.commit();        }
 
         @Override
         public void onButton2Clicked() {

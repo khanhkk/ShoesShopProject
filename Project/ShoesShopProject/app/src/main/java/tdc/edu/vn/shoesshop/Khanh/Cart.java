@@ -37,7 +37,7 @@ public class Cart extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = null;
-        view = inflater.inflate(R.layout.cart_fragment, container, false);
+        view = inflater.inflate(R.layout.frg_cart, container, false);
 
         tvMoney = (TextView) view.findViewById(R.id.tvMoney);
         btnThanhToan = (Button) view.findViewById(R.id.btnPay);
