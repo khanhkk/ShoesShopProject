@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -48,8 +48,9 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
 
     public static class ChildViewHolder
     {
-        public TextView tvCode, tvGift, tvDiscount;
+        public TextView tvCode, tvGift, tvDiscount, tvPoint;
         public ImageView imageView;
+        public LinearLayout llGift, llDiscount, llPoint;
     }
 
     @Override
@@ -63,6 +64,11 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
                 viewHolder.tvDiscount = (TextView) convertView.findViewById(R.id.tvDiscount);
                 viewHolder.tvGift = (TextView) convertView.findViewById(R.id.tvGift);
                 viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imgImage);
+                viewHolder.tvPoint = (TextView) convertView.findViewById(R.id.tvPoint);
+
+                viewHolder.llGift = (LinearLayout) convertView.findViewById(R.id.llGift);
+                viewHolder.llDiscount = (LinearLayout) convertView. findViewById(R.id.llDiscount);
+                viewHolder.llPoint = (LinearLayout) convertView.findViewById(R.id.llPoint);
 
                 convertView.setTag(viewHolder);
             } else {
@@ -71,17 +77,35 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
 
             PromotionsDetail member = (PromotionsDetail) getChild(groupPosition, childPosition);
 
-            viewHolder.tvCode.setText(member.getProduct().getId());
-            if (member.getDiscount() == 0) {
-                viewHolder.tvDiscount.setText("Không giảm giá!");
-            } else {
+            viewHolder.tvCode.setText(member.getProduct());
+            if (member.getDiscount() <= 0) {
+                //viewHolder.tvDiscount.setText("Không giảm giá!");
+                viewHolder.llDiscount.setVisibility(View.GONE);
+            }
+            else
+            {
+                viewHolder.llDiscount.setVisibility(View.VISIBLE);
                 viewHolder.tvDiscount.setText(member.getDiscount() + "");
             }
 
             if (member.getGift() == null) {
-                viewHolder.tvGift.setText("Không có quà tặng!");
-            } else {
+                //viewHolder.tvGift.setText("Không có quà tặng!");
+                viewHolder.llGift.setVisibility(View.GONE);
+            }
+            else
+            {
+                viewHolder.llGift.setVisibility(View.VISIBLE);
                 viewHolder.tvGift.setText(member.getGift());
+            }
+
+            if(member.getPoint() <= 0)
+            {
+                viewHolder.llPoint.setVisibility(View.GONE);
+            }
+            else
+            {
+                viewHolder.llPoint.setVisibility(View.VISIBLE);
+                viewHolder.tvPoint.setText(member.getPoint()+"");
             }
         }
         return convertView;
@@ -142,9 +166,9 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
         final Promotion member = (Promotion) getGroup(groupPosition);
 
         viewHolder.tvNamePromotions.setText(member.getTitle());
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        viewHolder.tvTimeStart.setText(format.format(member.getDateStart()));
-        viewHolder.tvTimeEnd.setText(format.format(member.getDateEnd()));
+        //SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        viewHolder.tvTimeStart.setText(member.getDateStart());
+        viewHolder.tvTimeEnd.setText(member.getDateEnd());
 
         viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
