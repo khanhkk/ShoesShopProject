@@ -211,10 +211,10 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
         listCopy = new ArrayList<>();
         Shop shop = new Shop("SH0001", "MiuMiu", "01512151211");
 
-        Product product = new Product("SP0001", "giay1dsfđsàdsffsádf", 1290000, 900000, shop, null);
-        Product product2 = new Product("SP0002", "giay2dfasdfdsfsadffasd", 175000, 150000, shop, null);
-        Product product3 = new Product("SP0003", "giay3dàdsfads", 239000, 200000, shop, null);
-        Product product4 = new Product("SP0004", "giay4dfadsfsdfasdfsfsafdfdsfffdfdas fsd fdsfdsfdsfdsfsdf", 299000, 250000, shop, null);
+        Product product = new Product("SP0001", "giay1dsfđsàdsffsádf", 1290000, 900000, shop.getId(), null);
+        Product product2 = new Product("SP0002", "giay2dfasdfdsfsadffasd", 175000, 150000, shop.getId(), null);
+        Product product3 = new Product("SP0003", "giay3dàdsfads", 239000, 200000, shop.getId(), null);
+        Product product4 = new Product("SP0004", "giay4dfadsfsdfasdfsfsafdfdsfffdfdas fsd fdsfdsfdsfdsfsdf", 299000, 250000, shop.getId(), null);
 
 
 

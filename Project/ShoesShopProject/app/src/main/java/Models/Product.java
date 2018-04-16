@@ -10,18 +10,18 @@ public class Product {
     private String id, name, trademark, description;
     private int guarantee, accumulatedPoint, image1, imag2, image3;
     private double listedPrice, salePrice;
-    private Shop shop;
+    private String shop_id;
     private ArrayList<ProductDetail> list;
 
     public Product() {
     }
 
-    public Product(String id, String name, String trademark, String description, Shop shop, int guarantee, int accumulatedPoint, int image1, int imag2, int image3, double listedPrice, double salePrice, ArrayList<ProductDetail> details) {
+    public Product(String id, String name, String trademark, String description, String shop, int guarantee, int accumulatedPoint, int image1, int imag2, int image3, double listedPrice, double salePrice, ArrayList<ProductDetail> details) {
         this.id = id;
         this.name = name;
         this.trademark = trademark;
         this.description = description;
-        this.shop = shop;
+        this.shop_id = shop;
         this.guarantee = guarantee;
         this.accumulatedPoint = accumulatedPoint;
         this.image1 = image1;
@@ -32,19 +32,19 @@ public class Product {
         this.list = details;
     }
 
-    public Product(String id, String name, double salePrice, Shop shop) {
+    public Product(String id, String name, double salePrice, String shop) {
         this.id = id;
         this.name = name;
         this.salePrice = salePrice;
-        this.shop = shop;
+        this.shop_id = shop;
     }
 
-    public Product(String id, String name, double listedPrice, double salePrice, Shop shop, ArrayList<ProductDetail> details) {
+    public Product(String id, String name, double listedPrice, double salePrice, String shop, ArrayList<ProductDetail> details) {
         this.id = id;
         this.name = name;
         this.listedPrice = listedPrice;
         this.salePrice = salePrice;
-        this.shop = shop;
+        this.shop_id = shop;
         this.list = details;
     }
 
@@ -89,12 +89,12 @@ public class Product {
         this.description = description;
     }
 
-    public Shop getShop() {
-        return shop;
+    public String getShop() {
+        return shop_id;
     }
 
-    public void setShop(Shop shop) {
-        this.shop = shop;
+    public void setShop(String shop) {
+        this.shop_id = shop;
     }
 
     public int getGuarantee() {

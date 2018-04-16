@@ -14,14 +14,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Thanh.DetailInformationOfProduct"
+            android:name=".Khanh.SelectionProductToEditting"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Khanh.SelectionProductToEditting" />
+        <activity android:name=".Toan.LoginActivity" />
         <activity android:name=".Toan.HomeForShop" />
         <activity android:name=".Thanh.EdittingShopInformation" />
         <activity android:name=".Son.ClientInformationAfterOrder" />
@@ -42,7 +42,7 @@
         <activity android:name=".Toan.MainActivity" />
         <activity android:name=".Toan.SignupActivity" />
         <activity android:name=".Toan.ResetPasswordActivity" />
-        <activity android:name=".Toan.LoginActivity" />
+        <activity android:name=".Thanh.DetailInformationOfProduct" />
         <activity android:name=".Thanh.EditingPromotionDetail"/>
     </application>
 </manifest>
