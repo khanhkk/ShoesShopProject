@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:id="@+id/promotion_detail"
     tools:context=".Thanh.EditingPromotionDetail">
     <LinearLayout
         android:layout_width="match_parent"

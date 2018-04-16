@@ -35,6 +35,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import Controls.General;
+import tdc.edu.vn.shoesshop.Khanh.EdittingPromotions;
 import tdc.edu.vn.shoesshop.R;
 
 public class DetailInformationOfProduct extends AppCompatActivity {
@@ -63,6 +65,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         ImageButton btn_chooseImg = (ImageButton) dialog.findViewById(R.id.img_choosenGallery);
         ImageButton btn_takeaphoto = (ImageButton) dialog.findViewById(R.id.img_choosenTakephoto);
 
+        General.setupUI(findViewById(R.id.information_of_product), DetailInformationOfProduct.this);
 
         btn_chooseImg.setOnClickListener(new View.OnClickListener() {
             @Override

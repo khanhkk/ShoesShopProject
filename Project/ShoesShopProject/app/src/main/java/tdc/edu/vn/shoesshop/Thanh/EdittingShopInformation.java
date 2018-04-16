@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.FileNotFoundException;
+
+import Controls.General;
 import tdc.edu.vn.shoesshop.R;
 
 public class EdittingShopInformation extends AppCompatActivity {
@@ -42,7 +44,7 @@ public class EdittingShopInformation extends AppCompatActivity {
 
         btn_chooseImg = (ImageButton) dialog.findViewById(R.id.img_choosenGallery);
         btn_takeaphoto = (ImageButton) dialog.findViewById(R.id.img_choosenTakephoto);
-
+        General.setupUI(findViewById(R.id.information_of_shop), EdittingShopInformation.this);
 
         btn_chooseImg.setOnClickListener(new View.OnClickListener() {
             @Override

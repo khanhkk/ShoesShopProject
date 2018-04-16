@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:id="@+id/information_of_shop"
     tools:context="tdc.edu.vn.shoesshop.Thanh.EdittingShopInformation">
 
     <LinearLayout
