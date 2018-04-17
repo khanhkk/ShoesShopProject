@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import Controls.General;
+import tdc.edu.vn.shoesshop.Khanh.SelectionProductToEditting;
 import tdc.edu.vn.shoesshop.R;
 
 public class DetailInformationOfProduct extends AppCompatActivity {
@@ -32,6 +33,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
     final int CROP_PIC = 2;
     private Uri picUri;
     private Button btn_getimage;
+    private Button btnSave;
 
     ImageView img_ava_patient1;
     ImageView img_ava_patient2;
@@ -49,6 +51,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
 
         ImageButton btn_chooseImg = (ImageButton) dialog.findViewById(R.id.img_choosenGallery);
         ImageButton btn_takeaphoto = (ImageButton) dialog.findViewById(R.id.img_choosenTakephoto);
+        btnSave = (Button) findViewById(R.id.btnSaveProductInformation) ;
 
         General.setupUI(findViewById(R.id.information_of_product), DetailInformationOfProduct.this);
 
@@ -79,6 +82,14 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                 Toast.makeText(DetailInformationOfProduct.this
                         ,"Clicked",Toast.LENGTH_SHORT).show();
                 dialog.show();
+            }
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                startActivity(intent);
             }
         });
     }

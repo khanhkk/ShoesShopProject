@@ -36,7 +36,6 @@ public class OrderInformationForClient extends AppCompatActivity {
         arritem.add(new OrderClient(R.mipmap.giay1,"0035",199000,599000,2));
         arritem.add(new OrderClient(R.mipmap.giay,"0035",229000,599000,1));
 
-
         OrderClientAdapter adapter = new OrderClientAdapter(OrderInformationForClient.this,R.layout.order_information_for_client_activity_custom,arritem);
         listView.setAdapter(adapter);
 
@@ -44,7 +43,7 @@ public class OrderInformationForClient extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(OrderInformationForClient.this,ListOder.class);
+                Intent intent = new Intent(OrderInformationForClient.this, ListOder.class);
                 startActivity(intent);
             }
         });

@@ -14,11 +14,12 @@ import tdc.edu.vn.shoesshop.Toan.HomeForClient;
 public class ClientInformationAfterOrder extends AppCompatActivity {
 
     ImageButton back;
-    Button datHang;
+    Button btnOrder;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_information_after_order_activity);
 
+        btnOrder = (Button) findViewById(R.id.btnDatHang);
         back = (ImageButton) findViewById(R.id.btnBack);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,7 +32,13 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
             }
         });
 
-
+        btnOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ClientInformationAfterOrder.this,HomeForClient.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }
