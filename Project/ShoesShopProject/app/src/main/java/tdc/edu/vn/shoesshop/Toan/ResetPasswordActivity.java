@@ -15,6 +15,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+import Controls.General;
+import tdc.edu.vn.shoesshop.Khanh.EdittingPromotions;
 import tdc.edu.vn.shoesshop.R;
 
 public class ResetPasswordActivity extends AppCompatActivity {
@@ -33,7 +35,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         btnReset = (Button) findViewById(R.id.btn_reset_password);
         btnBack = (Button) findViewById(R.id.btn_back);
         auth = FirebaseAuth.getInstance();
-
+        General.setupUI(findViewById(R.id.reset_pass), ResetPasswordActivity.this);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

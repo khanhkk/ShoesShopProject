@@ -54,4 +54,28 @@
     <!--SON-->
     <string name="order_information">Thông tin khuyến mãi</string>
 
+
+
+    <!--Toan update-->
+    <string name="filter_name">Choose a name</string>
+    <string-array name="filter_name_arrays">
+        <item>Nike</item>
+        <item>Adidas</item>
+        <item>Bitits</item>
+        <item>Puma</item>
+        <item>Jordan</item>
+    </string-array>
+
+    <string name="Filter_Price">Choose price</string>
+    <string-array name="price_arrays">
+        <item>1 tr</item>
+        <item>Dưới 1 tr</item>
+        <item>Trên 1 tr</item>
+    </string-array>
+    <string name="Filter_Size">Choose price</string>
+    <string-array name="size_arrays">
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+    </string-array>
 </resources>
