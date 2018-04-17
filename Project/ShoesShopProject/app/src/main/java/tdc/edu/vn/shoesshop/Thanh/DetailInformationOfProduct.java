@@ -24,7 +24,7 @@ import android.widget.Toast;
 import Controls.General;
 import tdc.edu.vn.shoesshop.R;
 
-public class QuantityInformationOfProduct extends AppCompatActivity {
+public class DetailInformationOfProduct extends AppCompatActivity {
 
     private static final int CAM_REQUEST = 1313;
     private Dialog dialog;
@@ -50,7 +50,7 @@ public class QuantityInformationOfProduct extends AppCompatActivity {
         ImageButton btn_chooseImg = (ImageButton) dialog.findViewById(R.id.img_choosenGallery);
         ImageButton btn_takeaphoto = (ImageButton) dialog.findViewById(R.id.img_choosenTakephoto);
 
-        General.setupUI(findViewById(R.id.information_of_product), QuantityInformationOfProduct.this);
+        General.setupUI(findViewById(R.id.information_of_product), DetailInformationOfProduct.this);
 
         btn_chooseImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +76,7 @@ public class QuantityInformationOfProduct extends AppCompatActivity {
         btn_getimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(QuantityInformationOfProduct.this
+                Toast.makeText(DetailInformationOfProduct.this
                         ,"Clicked",Toast.LENGTH_SHORT).show();
                 dialog.show();
             }
