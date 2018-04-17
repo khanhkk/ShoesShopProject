@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "tdc.edu.vn.shoesshopproject"
-        minSdkVersion 16
+        minSdkVersion 15
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -31,6 +31,29 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    //recyclerview
+    compile "com.android.support:recyclerview-v7:27.0.2"
+
+    //cardview
+    compile 'com.android.support:cardview-v7:27.0.2'
+
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.4.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
+
+    //circle imageview
+    compile 'de.hdodenhof:circleimageview:2.2.0' //recyclerview
+    compile "com.android.support:recyclerview-v7:27.0.2"
+
+    //cardview
+    compile 'com.android.support:cardview-v7:27.0.2'
+
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.4.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
+
+    //circle imageview
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +16,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+import Controls.General;
+import tdc.edu.vn.shoesshop.Khanh.EdittingPromotions;
 import tdc.edu.vn.shoesshop.R;
 
 /**
@@ -23,11 +27,10 @@ import tdc.edu.vn.shoesshop.R;
  */
 public class SignupActivity extends AppCompatActivity {
 
-    private EditText inputEmail, inputPassword;
+    private EditText inputEmail, inputPassword, inpuRe_pass, inputName, inputPhone_number, inputAddress;
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +41,16 @@ public class SignupActivity extends AppCompatActivity {
 
         btnSignIn = (Button) findViewById(R.id.sign_in_button);
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
+        btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
+//        EditText
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
-        btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
+        inpuRe_pass = (EditText) findViewById(R.id.pre_password);
+        inputName = (EditText) findViewById(R.id.name);
+        inputPhone_number = (EditText) findViewById(R.id.phone_number);
+        inputAddress = (EditText) findViewById(R.id.address);
+//        Custom editText
+        General.setupUI(findViewById(R.id.sign_up), SignupActivity.this);
 
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,9 +71,23 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                String name_ac = inputName.getText().toString().trim();
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
-
+                String pre_pass = inpuRe_pass.getText().toString().trim();
+                String phone_number_ac = inputPhone_number.getText().toString().trim();
+                String address_ac = inputAddress.getText().toString().trim();
+                if(!password.equals(pre_pass)){
+                    Toast.makeText(getApplicationContext(), "Please enter password!", Toast.LENGTH_SHORT).show();
+                    inpuRe_pass.setText("");
+                    inputPassword.setText("");
+                    inputPassword.requestFocus();
+                    return;
+                }
+                if (TextUtils.isEmpty(name_ac)) {
+                    Toast.makeText(getApplicationContext(), "Enter name!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
                     return;
@@ -73,8 +97,24 @@ public class SignupActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                if (password.length() < 6) {
+                if (TextUtils.isEmpty(pre_pass)) {
+                    Toast.makeText(getApplicationContext(), "Enter pre_password!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(phone_number_ac)) {
+                    Toast.makeText(getApplicationContext(), "Enter phone number!", Toast.LENGTH_SHORT).show();
+                    return;
+                } if (TextUtils.isEmpty(address_ac)) {
+                    Toast.makeText(getApplicationContext(), "Enter address!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (phone_number_ac.length() < 10 || phone_number_ac.length() > 11) {
+                    Toast.makeText(getApplicationContext(), "Please enter phone number!", Toast.LENGTH_SHORT).show();
+                    inputPhone_number.setText("");
+                    inputPhone_number.requestFocus();
+                    return;
+                }
+                if (password.length() < 8) {
                     Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -92,7 +132,13 @@ public class SignupActivity extends AppCompatActivity {
                                     Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
-                                    startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                    user.sendEmailVerification();
+                                                        Toast.makeText(SignupActivity.this, "Verify in your email." + task.getException(),
+                                                                Toast.LENGTH_SHORT).show();
+
+
+                                    startActivity(new Intent(SignupActivity.this, LoginActivity.class));
                                     finish();
                                 }
                             }

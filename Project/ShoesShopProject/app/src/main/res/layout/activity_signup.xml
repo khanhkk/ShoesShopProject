@@ -8,7 +8,8 @@
     android:orientation="vertical"
     android:padding="@dimen/activity_horizontal_margin"
     tools:context="tdc.edu.vn.shoesshop.Toan.LoginActivity"
-    android:background="@color/colorPrimaryDark"
+    android:background="@drawable/anh"
+    android:id="@+id/sign_up"
     >
     <EditText
         android:id="@+id/name"
@@ -18,8 +19,9 @@
         android:hint="Họ tên"
         android:inputType="textEmailAddress"
         android:maxLines="1"
-        android:textColor="@android:color/white"
-       />
+        android:textColor="#000"
+
+        />
 
 
     <EditText
@@ -30,7 +32,7 @@
         android:hint="@string/email"
         android:inputType="textEmailAddress"
         android:maxLines="1"
-        android:textColor="@android:color/white" />
+        android:textColor="#000" />
 
     <EditText
         android:id="@+id/password"
@@ -43,7 +45,7 @@
         android:imeOptions="actionUnspecified"
         android:inputType="textPassword"
         android:maxLines="1"
-        android:textColor="@android:color/white"
+        android:textColor="#000"
         tools:ignore="InvalidImeActionId" />
 
     <EditText
@@ -57,18 +59,18 @@
         android:imeOptions="actionUnspecified"
         android:inputType="textPassword"
         android:maxLines="1"
-        android:textColor="@android:color/white"
+        android:textColor="#000"
         tools:ignore="InvalidImeActionId" />
 
     <EditText
-        android:id="@+id/sdt"
+        android:id="@+id/phone_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="Số điện thoại"
         android:inputType="textEmailAddress"
         android:maxLines="1"
-        android:textColor="@android:color/white" />
+        android:textColor="#000" />
 
     <EditText
         android:id="@+id/address"
@@ -78,7 +80,7 @@
         android:hint="Địa chỉ"
         android:inputType="textEmailAddress"
         android:maxLines="1"
-        android:textColor="@android:color/white" />
+        android:textColor="#000" />
 
     <RadioGroup
         android:layout_width="match_parent"
@@ -102,7 +104,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@color/colorAccent"
+        android:background="#d0f7eb04"
         android:text="Đăng ký"
         android:textColor="@android:color/black"
         android:textStyle="bold" />
@@ -110,7 +112,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimaryDark"
+
         android:fitsSystemWindows="true"
         android:gravity="center"
         android:orientation="horizontal"
@@ -128,7 +130,7 @@
             android:background="@null"
             android:text="Đăng nhập"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="#d11c248f"
             android:textSize="15dp" />
 
         <Button
