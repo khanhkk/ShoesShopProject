@@ -10,6 +10,6 @@ public class QuantityManagement extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.quantity_manage_activity);
+        setContentView(R.layout.layoutquantitymanagement17);
     }
 }

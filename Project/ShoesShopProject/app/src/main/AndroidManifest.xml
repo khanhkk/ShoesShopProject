@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Khanh.SelectionProductToEditting"
+
+            android:name=".Sang.ListHistoryTransaction"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,5 +45,8 @@
         <activity android:name=".Toan.ResetPasswordActivity" />
         <activity android:name=".Thanh.DetailInformationOfProduct" />
         <activity android:name=".Thanh.EditingPromotionDetail"/>
+        <activity android:name=".Sang.ListOder"/>
+        <activity android:name=".Khanh.SelectionProductToEditting"/>
+
     </application>
 </manifest>
