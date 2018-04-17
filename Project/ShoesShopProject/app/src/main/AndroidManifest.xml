@@ -28,6 +28,9 @@
         <activity android:name=".Sang.Bills" />
         <activity android:name=".Toan.RatingOfClient" />
         <activity android:name=".Bao.ClientInformation" />
+        <activity android:name=".Bao.MainCustomer" />
+        <activity android:name=".Bao.MainInfoCilent" />
+        <activity android:name=".Bao.MainInfoShop" />
         <activity android:name=".Thanh.EdittingClientInformation" />
         <activity android:name=".Toan.ProductInformation" />
         <activity android:name=".Sang.QuantityManagement" />
