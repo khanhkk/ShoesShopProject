@@ -105,14 +105,14 @@ public class DateTimePicker extends LinearLayout implements  DatePickerDialog.On
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
         fNam = i;
-        fThang = i1 + 1;
-        fNgay = i2 + 2;
+        fThang = i1;
+        fNgay = i2;
 
         Calendar c = Calendar.getInstance();
         gio = c.get(Calendar.HOUR_OF_DAY);
         phut = c.get(Calendar.MINUTE);
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), DateTimePicker.this, gio, phut, android.text.format.DateFormat.is24HourFormat(getContext()));
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), DateTimePicker.this, gio - 1 , phut, android.text.format.DateFormat.is24HourFormat(getContext()));
         timePickerDialog.show();
     }
 
@@ -125,5 +125,6 @@ public class DateTimePicker extends LinearLayout implements  DatePickerDialog.On
         calendar.set(fNam, fThang, fNgay, fGio, fPhut);
         setDate(calendar.getTime());
         tvTime.setText(simpleDateFormat.format(calendar.getTime()));
+        return;
     }
 }

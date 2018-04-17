@@ -19,7 +19,7 @@ import Models.Product;
 import Models.ProductDetail;
 import tdc.edu.vn.shoesshop.Khanh.SelectionProductToEditting;
 import tdc.edu.vn.shoesshop.R;
-import tdc.edu.vn.shoesshop.Thanh.DetailInformationOfProduct;
+import tdc.edu.vn.shoesshop.Thanh.QuantityInformationOfProduct;
 
 /**
  * Created by ITLAB on 4/10/2018.
@@ -141,7 +141,7 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
         viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(_context, DetailInformationOfProduct.class);
+                Intent intent = new Intent(_context, QuantityInformationOfProduct.class);
                 _context.startActivity(intent);
             }
         });
@@ -169,7 +169,7 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
         viewHolder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(_context, DetailInformationOfProduct.class);
+                Intent intent = new Intent(_context, QuantityInformationOfProduct.class);
                 _context.startActivity(intent);
             }
         });

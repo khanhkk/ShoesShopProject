@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
         <activity
 
-            android:name=".Son.OrderInformationForClient"
+            android:name=".Khanh.Promotions"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,21 +35,19 @@
         <activity android:name=".Thanh.EdittingClientInformation" />
         <activity android:name=".Toan.ProductInformation" />
         <activity android:name=".Sang.QuantityManagement" />
-        <activity android:name=".Son.ClientInformationAfterOrder" />
         <activity android:name=".Sang.ChangePassword" />
         <activity android:name=".Bao.ShopInformation" />
         <activity android:name=".Toan.HomeForClient" />
         <activity android:name=".Son.OrderInformationForShop" />
-        <activity android:name=".Khanh.Promotions" />
+        <activity android:name=".Son.ClientInformationAfterOrder" />
         <activity android:name=".Toan.HomeLayout" />
         <activity android:name=".Khanh.EdittingPromotions" />
         <activity android:name=".Toan.MainActivity" />
         <activity android:name=".Toan.SignupActivity" />
         <activity android:name=".Toan.ResetPasswordActivity" />
-        <activity android:name=".Thanh.DetailInformationOfProduct" />
+        <activity android:name=".Thanh.QuantityInformationOfProduct" />
         <activity android:name=".Thanh.EditingPromotionDetail"/>
         <activity android:name=".Sang.ListOder"/>
         <activity android:name=".Khanh.SelectionProductToEditting"/>
-
     </application>
 </manifest>
