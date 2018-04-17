@@ -165,12 +165,13 @@
         android:layout_weight="2"
         android:text="Xem bình luận"
         android:layout_gravity="right"/>
+
     <Button
         android:id="@+id/btnBinhLuan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Mua ngay"
-        android:layout_gravity="bottom"
-        />
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Mua ngay" />
 </LinearLayout>
 </ScrollView>
