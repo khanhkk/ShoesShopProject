@@ -1,5 +1,6 @@
 package tdc.edu.vn.shoesshop.Bao;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,6 +16,7 @@ import java.util.List;
 import Adapters.CustomAdapterCilent;
 import Models.Contact;
 import tdc.edu.vn.shoesshop.R;
+import tdc.edu.vn.shoesshop.Toan.LoginActivity;
 
 public class MainCustomer extends AppCompatActivity {
     @Override
@@ -25,6 +27,8 @@ public class MainCustomer extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(MainCustomer.this, LoginActivity.class);
+                startActivity(intent);
 
             }
         });

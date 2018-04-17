@@ -22,6 +22,8 @@ import android.widget.Toast;
 import java.io.FileNotFoundException;
 
 import Controls.General;
+import tdc.edu.vn.shoesshop.Bao.MainInfoCilent;
+import tdc.edu.vn.shoesshop.Bao.MainInfoShop;
 import tdc.edu.vn.shoesshop.R;
 
 public class EdittingShopInformation extends AppCompatActivity {
@@ -37,6 +39,18 @@ public class EdittingShopInformation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editting_shop_information_activity);
+
+
+        Button save = (Button) findViewById(R.id.btnluuShop);
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EdittingShopInformation.this, MainInfoShop.class);
+                startActivity(intent);
+
+            }
+        });
 
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog);
