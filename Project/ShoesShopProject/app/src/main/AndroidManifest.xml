@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
         <activity
 
-            android:name=".Sang.ListHistoryTransaction"
+            android:name=".Son.OrderInformationForClient"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,7 @@
         <activity android:name=".Toan.LoginActivity" />
         <activity android:name=".Toan.HomeForShop" />
         <activity android:name=".Thanh.EdittingShopInformation" />
-        <activity android:name=".Son.ClientInformationAfterOrder" />
+        <activity android:name=".Sang.ListHistoryTransaction" />
         <activity android:name=".Sang.Bills" />
         <activity android:name=".Toan.RatingOfClient" />
         <activity android:name=".Bao.ClientInformation" />
@@ -35,7 +35,7 @@
         <activity android:name=".Thanh.EdittingClientInformation" />
         <activity android:name=".Toan.ProductInformation" />
         <activity android:name=".Sang.QuantityManagement" />
-        <activity android:name=".Son.OrderInformationForClient" />
+        <activity android:name=".Son.ClientInformationAfterOrder" />
         <activity android:name=".Sang.ChangePassword" />
         <activity android:name=".Bao.ShopInformation" />
         <activity android:name=".Toan.HomeForClient" />
