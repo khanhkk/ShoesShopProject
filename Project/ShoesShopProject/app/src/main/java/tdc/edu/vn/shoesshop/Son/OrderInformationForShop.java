@@ -33,7 +33,7 @@ public class OrderInformationForShop extends AppCompatActivity {
         arritem.add(new OrderShop(R.mipmap.giay,"0035",199000,349000,2));
         arritem.add(new OrderShop(R.mipmap.giay,"0035",199000,249000,1));
         arritem.add(new OrderShop(R.mipmap.giay,"0035",199000,249000,2));
-        OrderShopAdapter adapter = new OrderShopAdapter(OrderInformationForShop.this, R.layout.order_infomation_for_shop_activity_custom,arritem);
+        OrderShopAdapter adapter = new OrderShopAdapter(OrderInformationForShop.this, R.layout.order_information_for_shop_activity_custom,arritem);
         listView.setAdapter(adapter);
 
         back.setOnClickListener(new View.OnClickListener() {
