@@ -7,9 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
 
+import Controls.General;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
 import Controls.TabarControl;
 import tdc.edu.vn.shoesshop.Khanh.Cart;
 import tdc.edu.vn.shoesshop.R;
@@ -21,46 +21,6 @@ public class HomeForClient extends AppCompatActivity {
     TabarControl tabarControl;
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_for_client_activity);
-        //get firebase auth instance
-        auth = FirebaseAuth.getInstance();
-
-        //get current user
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        authListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user == null) {
-                    // user auth state is changed - user is null
-                    // launch login activity
-                    startActivity(new Intent(HomeForClient.this, LoginActivity.class));
-                    finish();
-                }
-            }
-        };
-        llContainer = (LinearLayout) findViewById(R.id.llParent);
-        tabarControl = (TabarControl) findViewById(R.id.tcTabarClient);
-        tabarControl.setImageButton1(R.mipmap.home);
-        tabarControl.setImageButton2(R.mipmap.notify);
-        tabarControl.setImageButton3(R.mipmap.cart2);
-        tabarControl.setImageButton4(R.mipmap.personal);
-        tabarControl.setTabarFunctions(functions);
-
-
-//        ibCart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //Toast.makeText(HomeForClient.this,"fff",Toast.LENGTH_SHORT).show();
-//                fragment.replace(R.id.llParent, cart);
-//                fragment.commit();
-//            }
-//        });
-    }
     TabarControl.TabarFunctions functions = new TabarControl.TabarFunctions() {
         @Override
         public void onButton1Clicked() {
@@ -89,22 +49,47 @@ public class HomeForClient extends AppCompatActivity {
         }
     };
     LinearLayout llContainer;
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        auth.addAuthStateListener(authListener);
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.home_for_client_activity);
+        auth = FirebaseAuth.getInstance();
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (authListener != null) {
-            auth.removeAuthStateListener(authListener);
+        //get current user
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user == null) {
+                    // user auth state is changed - user is null
+                    // launch login activity
+                    startActivity(new Intent(HomeForClient.this, LoginActivity.class));
+                    finish();
+                }
+            }
+        };
+
+        llContainer = (LinearLayout) findViewById(R.id.llParent);
+        tabarControl = (TabarControl) findViewById(R.id.tcTabarClient);
+        tabarControl.setImageButton1(General.loadSampleResource(this, R.mipmap.home, 80, 80));
+        tabarControl.setImageButton2(General.loadSampleResource(this, R.mipmap.notify, 80, 80));
+        tabarControl.setImageButton3(General.loadSampleResource(this, R.mipmap.cart, 80, 80));
+        tabarControl.setImageButton4(General.loadSampleResource(this, R.mipmap.personal, 80, 80));
+        tabarControl.setTabarFunctions(functions);
+
+        Intent intent = getIntent();
+
+        Bundle bundle = intent.getBundleExtra("chuyen");
+        if (bundle != null) {
+            if (bundle.getInt("chuyen") == 1) {
+                fragment = getFragmentManager().beginTransaction();
+                cart = new Cart();
+                fragment.replace(R.id.llParent, cart);
+                fragment.commit();
+            }
         }
     }
 }

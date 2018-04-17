@@ -21,7 +21,7 @@
             <LinearLayout
                 style="@style/linerlayout4"
                 android:layout_weight="3"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="center_vertical|center_horizontal"
                 android:orientation="vertical">
 
                 <LinearLayout

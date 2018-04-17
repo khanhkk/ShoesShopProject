@@ -106,6 +106,7 @@ public class EdittingPromotions extends AppCompatActivity {
                     //intent = getIntent();
                     intent.setClass(EdittingPromotions.this, Promotions.class);
                     //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent);
                 }
                 else
@@ -120,6 +121,7 @@ public class EdittingPromotions extends AppCompatActivity {
                     Promotions.listParent.add(promotion);
                     //intent = getIntent();
                     intent.setClass(EdittingPromotions.this, Promotions.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent);
                 }
             }

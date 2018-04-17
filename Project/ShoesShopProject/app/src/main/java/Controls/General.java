@@ -1,6 +1,9 @@
 package Controls;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -34,5 +37,24 @@ public class General {
                 setupUI(innerView, activity);
             }
         }
+    }
+
+    public static Bitmap loadSampleResource(Context context, int imageId, int targetHeight, int targetWidth)
+    {
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(context.getResources(), imageId, options);
+
+        final int orifinalHeight = options.outHeight;
+        final int orifinalWidth = options.outWidth;
+
+        int sampleSize = 1;
+        while((orifinalHeight/(sampleSize*2))> targetHeight && (orifinalWidth/(sampleSize*2)> targetWidth))
+        {
+            sampleSize *= 2;
+        }
+        options.inSampleSize = sampleSize;
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(context.getResources(), imageId, options);
     }
 }
