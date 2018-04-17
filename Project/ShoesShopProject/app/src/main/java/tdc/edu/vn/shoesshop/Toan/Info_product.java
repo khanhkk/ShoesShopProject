@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -18,6 +19,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import Adapters.Adapter_info_product;
+import tdc.edu.vn.shoesshop.Bao.ShopInformation;
 import tdc.edu.vn.shoesshop.R;
 
 public class Info_product extends AppCompatActivity {
@@ -28,10 +30,24 @@ public class Info_product extends AppCompatActivity {
     private ImageView[] dots;
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
+    Button btnXemThem, btnBinhLuan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info_product);
+
+// //////       Button
+        btnBinhLuan = (Button) findViewById(R.id.btnBinhLuan) ;
+        btnXemThem = (Button) findViewById(R.id.btnXemThem);
+        btnXemThem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Info_product.this,tdc.edu.vn.shoesshop.Bao.MainInfoShop.class);
+                startActivity(intent);
+            }
+        });
+        ////
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
 

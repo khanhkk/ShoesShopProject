@@ -47,7 +47,7 @@
         <activity android:name=".Toan.SignupActivity" />
         <activity android:name=".Toan.ResetPasswordActivity" />
         <activity android:name=".Toan.HomeForClient" />
-
+<activity android:name=".Toan.Info_product"/>
 
         <activity android:name=".Thanh.DetailInformationOfProduct" />
         <activity android:name=".Thanh.EditingPromotionDetail"/>
