@@ -70,11 +70,11 @@ public class Cart extends Fragment {
     public void createData()
     {
         Shop shop = new Shop("SH0001", "MiuMiu", "01512151211");
-        Product product = new Product("SP0001", "giay1", 100000, shop);
-        Product product2 = new Product("SP0002", "giay2", 150000, shop);
-        Product product3 = new Product("SP0003", "giay3", 200000, shop);
-        Product product4 = new Product("SP0004", "giay4", 250000, shop);
-        Product product5 = new Product("SP0005", "giay5", 300000, shop);
+        Product product = new Product("SP0001", "giay1", 100000, shop.getId());
+        Product product2 = new Product("SP0002", "giay2", 150000, shop.getId());
+        Product product3 = new Product("SP0003", "giay3", 200000, shop.getId());
+        Product product4 = new Product("SP0004", "giay4", 250000, shop.getId());
+        Product product5 = new Product("SP0005", "giay5", 300000, shop.getId());
 
         BillDetail bd = new BillDetail(1,"HD0001", product, 1);
         BillDetail bd2 = new BillDetail(1,"HD0001", product2, 1);

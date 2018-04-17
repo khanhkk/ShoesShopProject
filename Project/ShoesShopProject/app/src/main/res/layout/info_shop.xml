@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtnameshop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="Miumiu Shop"
+            android:textSize="40sp" />
+
+        <ImageView
+            android:id="@+id/imginfoshop"
+            android:layout_width="400dp"
+            android:layout_height="174dp"
+            app:srcCompat="@mipmap/a1" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:id="@+id/txtsdt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Số điện thoại: 01675562567" />
+
+            <TextView
+                android:id="@+id/txtndd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:text="Người đại diện: Vũ Đình Khánh" />
+            <TextView
+                android:id="@+id/txtemail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:text="Email: miumiushop@gmail.com" />
+
+            <TextView
+                android:id="@+id/txtfb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:text="FB: https://www.facebook.com/vi.vo.50159?ref=br_rs
+" />
+
+            <TextView
+                android:id="@+id/txtdc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:text="Địa chỉ: 46 Võ Văn Ngân - Phường Linh Chiểu - Quận Thủ Đức - TP. HCM." />
+
+            <TextView
+                android:id="@+id/txtstk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:text="Số tài khoản: 97215451250211" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <ImageButton
+        android:id="@+id/btneditshop"
+        android:layout_width="50dp"
+        android:layout_height="70dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+
+        app:srcCompat="@mipmap/a2" />
+
+
+
+</LinearLayout>

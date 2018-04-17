@@ -46,6 +46,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/llDiscount"
                    style="@style/row">
                     <LinearLayout
                         style="@style/child"
@@ -53,6 +54,7 @@
                         >
 
                         <TextView
+                            android:id="@+id/tvTitleDiscount"
                             style="@style/wrapcontent"
                             android:text="@string/discount"/>
 
@@ -80,11 +82,11 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    style="@style/row"
-                    >
-
+                    android:id="@+id/llGift"
+                    style="@style/row">
                     <LinearLayout
-                        style="@style/child">
+                        style="@style/child"
+                        android:layout_gravity="top">
                         <TextView
                             style="@style/wrapcontent"
                             android:text="@string/gift"/>
@@ -96,6 +98,27 @@
                             android:id="@+id/tvGift"
                            style="@style/wrapcontent"
                             android:text="vớ cao cấp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llPoint"
+                    style="@style/row">
+                    <LinearLayout
+                        style="@style/child"
+                        android:layout_gravity="top">
+                        <TextView
+                            style="@style/wrapcontent"
+                            android:text="@string/point"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/child">
+                        <TextView
+                            android:id="@+id/tvPoint"
+                            style="@style/wrapcontent"
+                            android:textColor="@color/bg_main"
+                            android:text="10"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

@@ -27,7 +27,7 @@
                 android:scaleType="centerCrop"
                 android:layout_centerHorizontal="true"
                 android:id="@+id/image_view"
-                android:src="@drawable/ic_launcher_background"/>
+                android:src="@mipmap/ic_launcher"/>
 
             <RatingBar
                 android:id="@+id/rating"

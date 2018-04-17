@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:background="@android:color/holo_blue_dark"
         android:orientation="horizontal">
 
@@ -29,26 +29,25 @@
             android:layout_weight="5"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:text="@string/order_information"
+            android:text="@string/client_information"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="3"
         android:layout_margin="10dp"
-        android:layout_weight="4"
         android:orientation="horizontal"
         >
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="5"
+            android:layout_weight="4"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="20dp"
                 android:orientation="horizontal"
                 >
                 <TextView
@@ -64,8 +63,7 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="20dp"
                 android:orientation="horizontal"
                 >
                 <TextView
@@ -80,8 +78,7 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="50dp"
                 android:orientation="horizontal"
                 >
                 <TextView
@@ -89,15 +86,15 @@
                     android:layout_height="wrap_content"
                     android:text="Địa chỉ nhận hàng: "
                     android:textColor="@android:color/holo_blue_light"/>
+
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="30 Võ Văn Ngân, p.Linh Chiểu, quận Thủ Đức, TP.HCM."/>
+                    android:layout_height="match_parent"
+                    android:text="30 Võ Văn Ngân, p.Linh Chiểu, quận Thủ Đức, TP.HCM." />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="20dp"
                 android:orientation="horizontal"
                 >
                 <TextView
@@ -112,8 +109,7 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="20dp"
                 android:orientation="horizontal"
                 >
                 <TextView
@@ -133,7 +129,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
             <Button
-                android:id="@+id/btnhuy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Hủy"/>
@@ -144,9 +139,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"
         android:layout_margin="10dp"
-        >
+        android:layout_weight="4">
 
         <ListView
             android:id="@+id/lv_item"
@@ -171,7 +165,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/textsize"
                 android:text="Tổng tiền:"/>
         </LinearLayout>
         <LinearLayout
@@ -188,8 +181,7 @@
                 android:layout_weight="5"
                 android:gravity="right"
                 android:text="0"
-                android:textSize="@dimen/textsize"
-                android:textColor="@color/money" />
+                android:textColor="@android:color/holo_red_light" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

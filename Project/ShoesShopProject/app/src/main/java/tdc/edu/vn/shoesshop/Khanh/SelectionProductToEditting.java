@@ -17,12 +17,10 @@ import java.util.HashMap;
 import Adapters.ProductExpandListAdapter;
 import Models.Product;
 import Models.ProductDetail;
-import Models.PromotionsDetail;
 import Models.Shop;
-import tdc.edu.vn.shoesshop.Thanh.DetailInformationOfProduct;
-import tdc.edu.vn.shoesshop.Thanh.EditingPromotionDetail;
-import tdc.edu.vn.shoesshop.Toan.HomeForShop;
 import tdc.edu.vn.shoesshop.R;
+import tdc.edu.vn.shoesshop.Thanh.DetailInformationOfProduct;
+import tdc.edu.vn.shoesshop.Toan.HomeForShop;
 
 public class SelectionProductToEditting extends AppCompatActivity {
 
@@ -132,10 +130,10 @@ public class SelectionProductToEditting extends AppCompatActivity {
         Shop shop = new Shop("SH0001", "MiuMiu", "01512151211");
         ArrayList<ProductDetail> details = new ArrayList<>();
 
-        Product product = new Product("SP0001", "giay1dsf Ä‘sÃ dsf fsÃ¡df", 1290000, 900000, shop, null);
-        Product product2 = new Product("SP0002", "giay2 dfasd fdsfsa dffasd", 175000, 150000, shop, null);
-        Product product3 = new Product("SP0003", "giay3dÃ dsfad sfdfd fdfdsfsf fdfsdf", 239000, 200000, shop, null);
-        Product product4 = new Product("SP0004", "giay4d fadsfs dfa sdfsfsaf dfdsfff dfdas fsd dsfssfewfefEFQEFqefqwfdsfd sfds fdsfsdf", 299000, 250000, shop, null);
+        Product product = new Product("SP0001", "giay1dsf Ä‘sÃ dsf fsÃ¡df", 1290000, 900000, shop.getId(), null);
+        Product product2 = new Product("SP0002", "giay2 dfasd fdsfsa dffasd", 175000, 150000, shop.getId(), null);
+        Product product3 = new Product("SP0003", "giay3dÃ dsfad sfdfd fdfdsfsf fdfsdf", 239000, 200000, shop.getId(), null);
+        Product product4 = new Product("SP0004", "giay4d fadsfs dfa sdfsfsaf dfdsfff dfdas fsd dsfssfewfefEFQEFqefqwfdsfd sfds fdsfsdf", 299000, 250000, shop.getId(), null);
 
         ProductDetail pd = new ProductDetail(product,1, 38, "xanh la cay", 10);
         ProductDetail pd2 = new ProductDetail(product,2, 39, "xanh la cay", 10);
