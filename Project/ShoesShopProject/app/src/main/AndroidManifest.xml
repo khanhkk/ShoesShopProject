@@ -46,12 +46,6 @@
         <activity android:name=".Toan.ResetPasswordActivity" />
         <activity android:name=".Thanh.QuantityInformationOfProduct" />
         <activity android:name=".Toan.HomeForClient" />
-<<<<<<< HEAD
-<activity android:name=".Toan.Info_product"/>
-
-        <activity android:name=".Thanh.DetailInformationOfProduct" />
-=======
->>>>>>> feca34d6f722936831c35406910b9f90daf390aa
         <activity android:name=".Thanh.EditingPromotionDetail"/>
         <activity android:name=".Sang.ListOder"/>
         <activity android:name=".Khanh.SelectionProductToEditting"/>
