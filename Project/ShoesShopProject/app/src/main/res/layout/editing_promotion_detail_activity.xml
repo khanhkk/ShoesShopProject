@@ -107,9 +107,11 @@
                 android:gravity="center_vertical"
                 android:text="Giá ưu đãi: "/>
             <EditText
+
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
+                android:editable="false"
                 android:layout_marginRight="10dp"/>
 
         </LinearLayout>
@@ -124,6 +126,7 @@
 
         >
         <Button
+            android:id="@+id/btnSavePromotionsDetail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

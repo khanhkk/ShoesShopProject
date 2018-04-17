@@ -29,8 +29,8 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
     SearchView svSearchPromotions;
     ImageButton btnAdd, btnBack;
     static HashMap<Promotion,ArrayList<PromotionsDetail>> list = new HashMap<>();
-    static ArrayList<Promotion> listParent, listCopy;
-    static ArrayList<PromotionsDetail> promotionsDetailArrayList;
+    static ArrayList<Promotion> listParent = new ArrayList<>(), listCopy = new ArrayList<>();
+    static ArrayList<PromotionsDetail> promotionsDetailArrayList = new ArrayList<>();
 
     //public static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
@@ -52,8 +52,13 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
         svSearchPromotions = (SearchView) findViewById(R.id.svSearch);
         svSearchPromotions.setOnQueryTextListener(this);
 
-        if(listParent == null) {
+        if(listParent.size() == 0) {
             TakeData();
+            listCopy.addAll(listParent);
+        }
+        else
+        {
+            listCopy.clear();
             listCopy.addAll(listParent);
         }
 //
@@ -207,8 +212,8 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
     //tao du lieu cho activity
     public static void TakeData()
     {
-        listParent = new ArrayList<>();
-        listCopy = new ArrayList<>();
+        listParent.clear();
+        listCopy.clear();
         Shop shop = new Shop("SH0001", "MiuMiu", "01512151211");
 
         Product product = new Product("SP0001", "giay1dsfđsàdsffsádf", 1290000, 900000, shop.getId(), null);
@@ -224,7 +229,7 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
             Promotion promotions4 = new Promotion(4,"Chương trình khuyến mãi 4", null, "13/04/2018 07:00","23/04/2018 17:30", null);
             Promotion promotions5 = new Promotion(5,"Chương trình khuyến mãi 5", null,"14/04/2018 08:00", "24/04/2018 18:30", null);
 
-            promotionsDetailArrayList = new ArrayList<>();
+            promotionsDetailArrayList.clear();
             PromotionsDetail promotionsDetail = new PromotionsDetail(1, 10, promotions.getId(), product.getId(), "Vớ cao cấp",0);
             PromotionsDetail promotionsDetail2 = new PromotionsDetail(2, 20, promotions.getId(), product2.getId(), null, 0);
             PromotionsDetail promotionsDetail3 = new PromotionsDetail(3, 15, promotions.getId(), product3.getId(), "Miếng lót giày", 0);

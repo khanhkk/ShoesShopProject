@@ -1,12 +1,15 @@
 package Controls;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import java.util.BitSet;
 
 import tdc.edu.vn.shoesshop.R;
 
@@ -19,24 +22,24 @@ public class TabarControl extends LinearLayout {
     private ViewGroup group;
     TabarFunctions tabarFunctions;
 
-    public void setImageButton1(int image)
+    public void setImageButton1(Bitmap image)
     {
-        button1.setImageResource(image);
+        button1.setImageBitmap(image);
     }
 
-    public void setImageButton2(int image)
+    public void setImageButton2(Bitmap image)
     {
-        button2.setImageResource(image);
+        button2.setImageBitmap(image);
     }
 
-    public void setImageButton3(int image)
+    public void setImageButton3(Bitmap image)
     {
-        button3.setImageResource(image);
+        button3.setImageBitmap(image);
     }
 
-    public void setImageButton4(int image)
+    public void setImageButton4(Bitmap image)
     {
-        button4.setImageResource(image);
+        button4.setImageBitmap(image);
     }
 
     public TabarControl(Context context) {
