@@ -23,6 +23,7 @@ import java.io.FileNotFoundException;
 
 import Controls.General;
 import tdc.edu.vn.shoesshop.R;
+import tdc.edu.vn.shoesshop.Toan.HomeForShop;
 
 public class EdittingShopInformation extends AppCompatActivity {
     private static final int CAM_REQUEST = 1313;
@@ -31,6 +32,8 @@ public class EdittingShopInformation extends AppCompatActivity {
     final int CROP_PIC = 2;
     private Uri picUri;
     private Button btn_getimage;
+    private Button btnSave;
+    Intent intent;
 
     ImageView img_ava_patient;
     @Nullable
@@ -42,6 +45,7 @@ public class EdittingShopInformation extends AppCompatActivity {
         dialog.setContentView(R.layout.dialog);
         dialog.setTitle("Choose Avatar Image");
 
+        btnSave = (Button) findViewById(R.id.btnSaveShopInformation);
         btn_chooseImg = (ImageButton) dialog.findViewById(R.id.img_choosenGallery);
         btn_takeaphoto = (ImageButton) dialog.findViewById(R.id.img_choosenTakephoto);
         General.setupUI(findViewById(R.id.information_of_shop), EdittingShopInformation.this);
@@ -69,6 +73,15 @@ public class EdittingShopInformation extends AppCompatActivity {
                 Toast.makeText(EdittingShopInformation.this
                         ,"Clicked",Toast.LENGTH_SHORT).show();
                 dialog.show();
+            }
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent = getIntent();
+                intent.setClass(EdittingShopInformation.this, HomeForShop.class);
+                startActivity(intent);
             }
         });
     }

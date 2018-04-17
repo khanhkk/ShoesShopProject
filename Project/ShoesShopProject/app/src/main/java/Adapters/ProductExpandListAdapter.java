@@ -19,6 +19,7 @@ import Models.Product;
 import Models.ProductDetail;
 import tdc.edu.vn.shoesshop.Khanh.SelectionProductToEditting;
 import tdc.edu.vn.shoesshop.R;
+import tdc.edu.vn.shoesshop.Sang.QuantityManagement;
 import tdc.edu.vn.shoesshop.Thanh.DetailInformationOfProduct;
 
 /**
@@ -141,7 +142,7 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
         viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(_context, DetailInformationOfProduct.class);
+                Intent intent = new Intent(_context, QuantityManagement.class);
                 _context.startActivity(intent);
             }
         });

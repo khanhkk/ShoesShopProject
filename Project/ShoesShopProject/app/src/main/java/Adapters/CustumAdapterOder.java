@@ -1,6 +1,7 @@
 package Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import tdc.edu.vn.shoesshop.R;
+import tdc.edu.vn.shoesshop.Son.OrderInformationForClient;
 
 public class CustumAdapterOder extends ArrayAdapter<String> {
     private AppCompatActivity context;
@@ -33,6 +35,7 @@ public class CustumAdapterOder extends ArrayAdapter<String> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
         LayoutInflater inflater = context.getLayoutInflater();
         //convertView = LayoutInflater.from(context).inflate(R.layout.layout_oder,parent,false);
         convertView = inflater.inflate(resource, parent, false);
@@ -48,6 +51,8 @@ public class CustumAdapterOder extends ArrayAdapter<String> {
             @Override
             public void onClick(View v) {
                 //toi mang hinh 23
+                Intent intent = new Intent(context, OrderInformationForClient.class);
+                context.startActivity(intent);
             }
         });
 

@@ -19,6 +19,7 @@ import Models.Product;
 import Models.ProductDetail;
 import Models.Shop;
 import tdc.edu.vn.shoesshop.R;
+import tdc.edu.vn.shoesshop.Sang.QuantityManagement;
 import tdc.edu.vn.shoesshop.Thanh.DetailInformationOfProduct;
 import tdc.edu.vn.shoesshop.Toan.HomeForShop;
 
@@ -105,7 +106,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.cmSua:
                     Toast.makeText(SelectionProductToEditting.this, "sua" + productDetail.getProduct().getId(), Toast.LENGTH_SHORT).show();
-                    Intent itent = new Intent(SelectionProductToEditting.this, DetailInformationOfProduct.class);
+                    Intent itent = new Intent(SelectionProductToEditting.this, QuantityManagement.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("detail", productDetail.getId()+ "");
                     startActivity(itent);
