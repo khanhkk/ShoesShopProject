@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,8 +38,8 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
     SearchView svSearchPromotions;
     ImageButton btnAdd, btnBack;
     static HashMap<Promotion,ArrayList<PromotionsDetail>> list = new HashMap<>();
-    static ArrayList<Promotion> listParent = new ArrayList<>(), listCopy = new ArrayList<>();
-    static ArrayList<PromotionsDetail> promotionsDetailArrayList = new ArrayList<>();
+    ArrayList<Promotion> listParent = new ArrayList<>(), listCopy = new ArrayList<>();
+    ArrayList<PromotionsDetail> promotionsDetailArrayList = new ArrayList<>();
 
     //public static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
@@ -72,42 +74,99 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
 //        for(int i = 0; i < promotionsDetailArrayList.size(); i++)
 //        {
 //            PromotionsDetail promotionsDetail = promotionsDetailArrayList.get(i);
-//            myRef.child("PromotionsDetail").child(promotionsDetail.getId()+"").setValue(promotionsDetail);
+//            myRef.child("PromotionsDetail").push().setValue(promotionsDetail);
 //        }
 //
 //        for(int i = 0; i< listParent.size(); i++)
 //        {
 //            Promotion promotion = listParent.get(i);
-//            myRef.child("Promotions").child(promotion.getId()+"").setValue(promotion);
+//            myRef.child("Promotions").push().setValue(promotion);
 //        }
 
-
         Query allPromtions = myRef.child("Promotions");
-        listParent = new ArrayList<>();
-        listCopy = new ArrayList<>();
+        listParent.clear();
         list.clear();
 
-        allPromtions.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+       myRef.child("PromotionsDetail").addChildEventListener(new ChildEventListener() {
+           @Override
+           public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+               PromotionsDetail promotionsDetail = dataSnapshot.getValue(PromotionsDetail.class);
+               promotionsDetailArrayList.add(promotionsDetail);
+//               if(list.size() > 0) {
+//                   for(int i  = 0; i < listParent.size(); i++)
+//                   {
+//                       listParent.get(i).getListDetail()
+//                   }
+//               }
+           }
+
+           @Override
+           public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+           }
+
+           @Override
+           public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+           }
+
+           @Override
+           public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+           }
+
+           @Override
+           public void onCancelled(DatabaseError databaseError) {
+
+           }
+
+       });
+
+
+        allPromtions.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot item : dataSnapshot.getChildren())
-                {
-                    Promotion post = item.getValue(Promotion.class);
-                    listParent.add(post);
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Promotion por = dataSnapshot.getValue(Promotion.class);
+                listParent.add(por);
+                list.put(por, null);
+                //Log.d("key", listParent.size() + "");
+
+               String a[] = por.getListDetail().split("#");
+                for (String str: a
+                     ) {
+                    ArrayList<PromotionsDetail> arr = new ArrayList<>();
+                    for (PromotionsDetail p : promotionsDetailArrayList
+                         ) {
+                        if(p.getId() == Integer.parseInt(str))
+                        {
+                            arr.add(p);
+                        }
+                    }
+                    list.put(por, arr);
                 }
 
-//                 Promotion pro = dataSnapshot.getValue(Promotion.class);
-//                 listParent.add(pro);
-//
-//                 if(pro.getDetails().size() > 0)
-//                 {
-//                     HashMap<String, String> col = pro.getDetails();
-//                     for(int i = 0; i < col.size(); i++)
-//                     {
-//                         String s = col.get(i+"");
-//
-//                     }
-//                 }
+
+
+
+
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
             }
 
             @Override
@@ -116,27 +175,7 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
             }
         });
 
-//        for(int i = 0; i < listParent.size(); i++) {
-//            Promotion promotion = listParent.get(i);
-//            myRef.child("Promotions").child(promotion.getId() + "").child("Title").setValue(promotion.getTitle());
-//            myRef.child("Promotions").child(promotion.getId() + "").child("Time start").setValue(DateTimePicker.simpleDateFormat.format(promotion.getDateStart()));
-//            myRef.child("Promotions").child(promotion.getId() + "").child("Time end").setValue(DateTimePicker.simpleDateFormat.format(promotion.getDateEnd()));
-//            myRef.child("Promotions").child(promotion.getId() + "").child("Content").setValue(promotion.getContent());
-//
-//            if(list.get(promotion).size()>0) {
-//                for (int j = 0; j < list.get(promotion).size(); j++) {
-//                    PromotionsDetail promotionsDetail = list.get(promotion).get(j);
-//                    myRef.child("Promotions").child(promotion.getId() + "").child("Details").child(promotionsDetail.getId() + "").child("Product").setValue(promotionsDetail.getProduct().getId() + "");
-//                    myRef.child("Promotions").child(promotion.getId() + "").child("Details").child(promotionsDetail.getId() + "").child("Discount").setValue(promotionsDetail.getDiscount() + "%");
-//                    myRef.child("Promotions").child(promotion.getId() + "").child("Details").child(promotionsDetail.getId() + "").child("Gift").setValue(promotionsDetail.getGift());
-//                    myRef.child("Promotions").child(promotion.getId() + "").child("Details").child(promotionsDetail.getId() + "").child("Point").setValue(promotionsDetail.getPoint() + "");
-//                }
-//            }
-//        }
-
-        listCopy.clear();
-        listCopy.addAll(listParent);
-        adapter = new PromotionExpandableListAdapter(Promotions.this, listCopy, list);
+        adapter = new PromotionExpandableListAdapter(Promotions.this, listParent, list);
         lvPromotions.setAdapter(adapter);
 
         intent = getIntent();
@@ -218,7 +257,7 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
     }
 
     //tao du lieu cho activity
-    public static void TakeData()
+    void TakeData()
     {
         listParent.clear();
         listCopy.clear();
@@ -231,57 +270,68 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
 
 
 
-            Promotion promotions = new Promotion(1,"Chương trình khuyến mãi 1", "fjds hgfds fhasjfd jfhads jndsjfdsajfdsh jda hjfd hds fd hd","10/04/2018 07:00", "20/04/2018 10:00", null);
-            Promotion promotions2 = new Promotion(2,"Chương trình khuyến mãi 2", null,"11/04/2018 10:00","21/04/2018 17:00", null);
-            Promotion promotions3 = new Promotion(3,"Chương trình khuyến mãi 3", null, "12/04/2018 11:00","22/04/2018 18:00", null);
-            Promotion promotions4 = new Promotion(4,"Chương trình khuyến mãi 4", null, "13/04/2018 07:00","23/04/2018 17:30", null);
-            Promotion promotions5 = new Promotion(5,"Chương trình khuyến mãi 5", null,"14/04/2018 08:00", "24/04/2018 18:30", null);
+        Promotion promotions = new Promotion(1,"Chương trình khuyến mãi 1", "fjds hgfds fhasjfd jfhads jndsjfdsajfdsh jda hjfd hds fd hd","10/04/2018 07:00", "20/04/2018 10:00", null);
+        Promotion promotions2 = new Promotion(2,"Chương trình khuyến mãi 2", null,"11/04/2018 10:00","21/04/2018 17:00", null);
+        Promotion promotions3 = new Promotion(3,"Chương trình khuyến mãi 3", null, "12/04/2018 11:00","22/04/2018 18:00", null);
+        Promotion promotions4 = new Promotion(4,"Chương trình khuyến mãi 4", null, "13/04/2018 07:00","23/04/2018 17:30", null);
+        Promotion promotions5 = new Promotion(5,"Chương trình khuyến mãi 5", null,"14/04/2018 08:00", "24/04/2018 18:30", null);
 
-            promotionsDetailArrayList.clear();
-            PromotionsDetail promotionsDetail = new PromotionsDetail(1, 10, promotions.getId(), product.getId(), "Vớ cao cấp",0);
-            PromotionsDetail promotionsDetail2 = new PromotionsDetail(2, 20, promotions.getId(), product2.getId(), null, 0);
-            PromotionsDetail promotionsDetail3 = new PromotionsDetail(3, 15, promotions.getId(), product3.getId(), "Miếng lót giày", 0);
-            PromotionsDetail promotionsDetail4 = new PromotionsDetail(4, 0, promotions.getId(), product4.getId(), "vòng tay thời trang",10);
+//
+        promotionsDetailArrayList.clear();
+        PromotionsDetail promotionsDetail = new PromotionsDetail(1, 10, promotions.getId(), product.getId(), "Vớ cao cấp",0);
+        PromotionsDetail promotionsDetail2 = new PromotionsDetail(2, 20, promotions.getId(), product2.getId(), null, 0);
+        PromotionsDetail promotionsDetail3 = new PromotionsDetail(3, 15, promotions.getId(), product3.getId(), "Miếng lót giày", 0);
+        PromotionsDetail promotionsDetail4 = new PromotionsDetail(4, 0, promotions.getId(), product4.getId(), "vòng tay thời trang",10);
 
-        //HashMap<String,String> list = new HashMap<>();
-        //list.put(promotionsDetail.getId()+"", promotionsDetail.getId()+"");
-        //list.put(promotionsDetail2.getId()+"", promotionsDetail2.getId()+"");
-        //list.put(promotionsDetail3.getId()+"", promotionsDetail3.getId()+"");
-        //list.put(promotionsDetail4.getId()+"", promotionsDetail4.getId()+"");
+//        HashMap<String,Integer> list = new HashMap<>();
+//        list.put(promotionsDetail.getId()+"", promotionsDetail.getId());
+//        list.put(promotionsDetail2.getId()+"", promotionsDetail2.getId());
+//        list.put(promotionsDetail3.getId()+"", promotionsDetail3.getId());
+//        list.put(promotionsDetail4.getId()+"", promotionsDetail4.getId());
 
 
-        //promotions.setDetails(list);
-        //promotions2.setDetails(list);
-        //promotions3.setDetails(list);
-        //promotions4.setDetails(list);
-        //promotions5.setDetails(list);
+//        promotions.setDetails(list);
+//        promotions2.setDetails(list);
+//        promotions3.setDetails(list);
+//        promotions4.setDetails(list);
+//        promotions5.setDetails(list);
 
             promotionsDetailArrayList.add(promotionsDetail);
             promotionsDetailArrayList.add(promotionsDetail2);
             promotionsDetailArrayList.add(promotionsDetail3);
             promotionsDetailArrayList.add(promotionsDetail4);
 
-            //promotions.setListDetail(promotionsDetailArrayList);
-            //promotions2.setListDetail(promotionsDetailArrayList);
-            //promotions3.setListDetail(promotionsDetailArrayList);
-            //promotions4.setListDetail(promotionsDetailArrayList);
-            //promotions5.setListDetail(promotionsDetailArrayList);
+//            promotions.setListDetail(promotionsDetailArrayList);
+//            promotions2.setListDetail(promotionsDetailArrayList);
+//            promotions3.setListDetail(promotionsDetailArrayList);
+//            promotions4.setListDetail(promotionsDetailArrayList);
+//            promotions5.setListDetail(promotionsDetailArrayList);
+//
+//            promotions.setListDetail(promotionsDetailArrayList);
 
-            //promotions.setListDetail(promotionsDetailArrayList);
+//            list.put(promotions, promotionsDetailArrayList);
+//            list.put(promotions2, promotionsDetailArrayList);
+//            list.put(promotions3, promotionsDetailArrayList);
+//           list.put(promotions4, promotionsDetailArrayList);
+//           list.put(promotions5, promotionsDetailArrayList);
 
-            list.put(promotions, promotionsDetailArrayList);
-            list.put(promotions2, promotionsDetailArrayList);
-            list.put(promotions3, promotionsDetailArrayList);
-           list.put(promotions4, promotionsDetailArrayList);
-           list.put(promotions5, promotionsDetailArrayList);
+        String s = "";
+        for(int i = 0; i < promotionsDetailArrayList.size(); i++)
+        {
+            s += promotionsDetailArrayList.get(i).getId() + "#";
+        }
 
-            listParent.add(promotions);
-            listParent.add(promotions2);
-            listParent.add(promotions3);
-            listParent.add(promotions4);
-            listParent.add(promotions5);
+        promotions.setListDetail(s);
+        promotions2.setListDetail(s);
+        promotions3.setListDetail(s);
+        promotions4.setListDetail(s);
+        promotions5.setListDetail(s);
 
-
+        listParent.add(promotions);
+        listParent.add(promotions2);
+        listParent.add(promotions3);
+        listParent.add(promotions4);
+        listParent.add(promotions5);
     }
 
     @Override

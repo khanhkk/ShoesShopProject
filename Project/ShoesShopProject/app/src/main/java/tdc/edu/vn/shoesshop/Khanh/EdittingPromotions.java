@@ -33,14 +33,14 @@ public class EdittingPromotions extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editting_promotions_activity);
 
-        Promotions.TakeData();
-
-        dtTimeEnd = (DateTimePicker)findViewById(R.id.dateEnd);
-        dtTimeStart = (DateTimePicker)findViewById(R.id.dateStart);
-        btnSave = (Button) findViewById(R.id.btnSave);
-        btnBack = (ImageButton) findViewById(R.id.btnBack);
-        etName = (EditText) findViewById(R.id.edtNameProgram);
-        etContent = (EditText) findViewById(R.id.edtContent);
+//        Promotions.TakeData();
+//
+//        dtTimeEnd = (DateTimePicker)findViewById(R.id.dateEnd);
+//        dtTimeStart = (DateTimePicker)findViewById(R.id.dateStart);
+//        btnSave = (Button) findViewById(R.id.btnSave);
+//        btnBack = (ImageButton) findViewById(R.id.btnBack);
+//        etName = (EditText) findViewById(R.id.edtNameProgram);
+//        etContent = (EditText) findViewById(R.id.edtContent);
 
         General.setupUI(findViewById(R.id.llPromotionsLayout), EdittingPromotions.this);
 
@@ -48,15 +48,15 @@ public class EdittingPromotions extends AppCompatActivity {
         bundle = intent.getBundleExtra("member");
         if(bundle != null)
         {
-            String str = bundle.getString("data");
-            for (int i = 0; i < Promotions.listParent.size() ; i++)
-            {
-                if(Promotions.listParent.get(i).getId() == Integer.parseInt(str))
-                {
-                    promotion = Promotions.listParent.get(i);
-                    break;
-                }
-            }
+//            String str = bundle.getString("data");
+//            for (int i = 0; i < Promotions.listParent.size() ; i++)
+//            {
+//                if(Promotions.listParent.get(i).getId() == Integer.parseInt(str))
+//                {
+//                    promotion = Promotions.listParent.get(i);
+//                    break;
+//                }
+//            }
         }
         if(promotion != null)
         {
@@ -118,7 +118,7 @@ public class EdittingPromotions extends AppCompatActivity {
                     promotion.setDateStart(DateTimePicker.simpleDateFormat.format(dtTimeStart.getDate()));
                     promotion.setDateEnd(DateTimePicker.simpleDateFormat.format(dtTimeEnd.getDate()));
                     promotion.setContent(etContent.getText() + "");
-                    Promotions.listParent.add(promotion);
+                    //Promotions.listParent.add(promotion);
                     //intent = getIntent();
                     intent.setClass(EdittingPromotions.this, Promotions.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
