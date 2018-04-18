@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ShoesShop</string>
+    <string name="app_name"></string>
     <!--Khanh-->
     <string name="unit">đ</string>
     <string name="promotion_information">Thông tin khuyến mãi</string>

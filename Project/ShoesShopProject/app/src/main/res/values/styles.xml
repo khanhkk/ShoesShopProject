@@ -28,8 +28,8 @@
 
     <style name="row">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <!--<item name="android:layout_weight">1</item>-->
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:gravity">center_vertical</item>
     </style>
@@ -67,5 +67,18 @@
         <item name="android:padding">@dimen/margin_item</item>
         <item name="android:scaleType">fitCenter</item>
     </style>
+    <!-- style of Toolbar-->
+    <style name="toolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">#ab1f42b3</item>
+    </style>
 
+    <!--TextView of toolbar-->
+    <style name="textOftoolbar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">25dp</item>
+        <item name="android:textSize">20sp</item>
+    </style>
 </resources>

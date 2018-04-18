@@ -74,7 +74,8 @@ public class Info_product extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(Info_product.this, HomeForClient.class);
+                startActivity(intent);
             }
         });
         //View Pager
