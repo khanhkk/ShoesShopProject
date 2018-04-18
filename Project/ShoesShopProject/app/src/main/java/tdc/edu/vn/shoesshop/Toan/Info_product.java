@@ -19,7 +19,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import Adapters.Adapter_info_product;
-import tdc.edu.vn.shoesshop.Bao.ShopInformation;
 import tdc.edu.vn.shoesshop.R;
 
 public class Info_product extends AppCompatActivity {

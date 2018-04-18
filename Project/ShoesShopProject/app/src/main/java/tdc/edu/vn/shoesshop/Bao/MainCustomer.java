@@ -4,58 +4,49 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
-
-
-import java.util.ArrayList;
-import java.util.List;
-
-import Adapters.CustomAdapterCilent;
-import Models.Contact;
 import tdc.edu.vn.shoesshop.R;
+import tdc.edu.vn.shoesshop.Thanh.EdittingClientInformation;
 import tdc.edu.vn.shoesshop.Toan.LoginActivity;
 
+
 public class MainCustomer extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cilent);
-        final Button button = (Button) findViewById(R.id.btnlogin);
-        button.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.layout_customer);
+
+        Button btndangnhap = (Button) findViewById(R.id.btnlogin);
+        btndangnhap.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Intent intent = new Intent(MainCustomer.this, LoginActivity.class);
-                startActivity(intent);
-
+                startActivity (intent);
+                Toast.makeText(MainCustomer.this, " Đăng nhập ", Toast.LENGTH_SHORT).show();
             }
         });
-        List<Contact> image_details = getListData();
-        final ListView listView = (ListView) findViewById(R.id.lv_cilent);
-        listView.setAdapter(new CustomAdapterCilent(MainCustomer.this, image_details));
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+        ImageView imgthognbao = (ImageView) findViewById(R.id.imgthongbao);
+        TextView txtthongbao = (TextView) findViewById(R.id.txtthongbao);
+        txtthongbao.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                Object o = listView.getItemAtPosition(position);
-                Contact country = (Contact) o;
-                Toast.makeText(MainCustomer.this, " " + " " + country, Toast.LENGTH_SHORT).show();
+            public void onClick(View view) {
+                Toast.makeText(MainCustomer.this, " Thông báo ", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-    private List<Contact> getListData() {
-        List<Contact> list = new ArrayList<>();
-        Contact nofi = new Contact(R.mipmap.notification, "Thông báo");
-        Contact donhang = new Contact(R.mipmap.donhang, "Đơn hàng của tôi");
+
+        ImageView imgdonhang = (ImageView) findViewById(R.id.imgdonhang);
+        TextView txtdonhang = (TextView) findViewById(R.id.txtdonhang);
+        txtdonhang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainCustomer.this, " Đơn hàng của tôi ", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
-        list.add(nofi);
-        list.add(donhang);
-
-        return list;
     }
 }
