@@ -8,8 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import tdc.edu.vn.shoesshop.Khanh.Promotions;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Sang.ChangePassword;
+import tdc.edu.vn.shoesshop.Toan.LoginActivity;
 
 public class MainShop extends AppCompatActivity {
 
@@ -32,6 +34,8 @@ public class MainShop extends AppCompatActivity {
         txtkhuyenmai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainShop.this, Promotions.class);
+                startActivity (intent);
                 Toast.makeText(MainShop.this, " Chương trình khuyến mãi " , Toast.LENGTH_SHORT).show();
             }
         });
@@ -63,6 +67,8 @@ public class MainShop extends AppCompatActivity {
         txtlogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainShop.this, LoginActivity.class);
+                startActivity (intent);
                 Toast.makeText(MainShop.this, " Đăng xuất " , Toast.LENGTH_SHORT).show();
             }
         });

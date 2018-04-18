@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Khanh.SelectionProductToEditting"
+            android:name=".Bao.MainCilent"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,15 +28,10 @@
         <activity android:name=".Sang.ListHistoryTransaction" />
         <activity android:name=".Sang.Bills" />
         <activity android:name=".Toan.RatingOfClient" />
-        <activity android:name=".Bao.ClientInformation" />
-        <activity android:name=".Bao.MainCustomer" />
-        <activity android:name=".Bao.MainInfoCilent" />
-        <activity android:name=".Bao.MainInfoShop" />
         <activity android:name=".Thanh.EdittingClientInformation" />
         <activity android:name=".Toan.ProductInformation" />
         <activity android:name=".Sang.QuantityManagement" />
         <activity android:name=".Sang.ChangePassword" />
-        <activity android:name=".Bao.ShopInformation" />
         <activity android:name=".Son.OrderInformationForClient" />
         <activity android:name=".Son.OrderInformationForShop" />
         <activity android:name=".Son.ClientInformationAfterOrder" />
@@ -51,6 +46,10 @@
         <activity android:name=".Thanh.EditingPromotionDetail"/>
         <activity android:name=".Sang.ListOder"/>
         <activity android:name=".Toan.LoginActivity"/>
+        <activity android:name=".Bao.MainCustomer"/>
+        <activity android:name=".Bao.MainShop"/>
+        <activity android:name=".Bao.MainInfoShop"/>
+        <activity android:name=".Bao.MainInfoCilent"/>
 
     </application>
 </manifest>

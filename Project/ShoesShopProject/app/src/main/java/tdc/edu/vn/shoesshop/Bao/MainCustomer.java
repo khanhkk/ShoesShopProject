@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import tdc.edu.vn.shoesshop.R;
-import tdc.edu.vn.shoesshop.Thanh.EdittingClientInformation;
 import tdc.edu.vn.shoesshop.Toan.LoginActivity;
 
 

@@ -8,6 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import tdc.edu.vn.shoesshop.R;
+import tdc.edu.vn.shoesshop.Sang.ChangePassword;
+import tdc.edu.vn.shoesshop.Sang.ListHistoryTransaction;
+import tdc.edu.vn.shoesshop.Toan.LoginActivity;
 
 
 public class MainCilent extends AppCompatActivity {
@@ -31,6 +34,8 @@ public class MainCilent extends AppCompatActivity {
         txtlichsu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainCilent.this, ListHistoryTransaction.class);
+                startActivity (intent);
                 Toast.makeText(MainCilent.this, " Lịch sử mua hàng " , Toast.LENGTH_SHORT).show();
             }
         });
@@ -51,6 +56,8 @@ public class MainCilent extends AppCompatActivity {
         txtdoimk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainCilent.this, ChangePassword.class);
+                startActivity (intent);
                 Toast.makeText(MainCilent.this, " Đổi mật khẩu " , Toast.LENGTH_SHORT).show();
             }
         });
@@ -60,6 +67,8 @@ public class MainCilent extends AppCompatActivity {
         txtlogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainCilent.this, LoginActivity.class);
+                startActivity (intent);
                 Toast.makeText(MainCilent.this, " Đăng xuất " , Toast.LENGTH_SHORT).show();
             }
         });
