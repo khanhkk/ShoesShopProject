@@ -11,6 +11,13 @@ import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -43,8 +50,8 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
         setContentView(R.layout.promotions_activity);
 
         // Write data to the database
-        //FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //final DatabaseReference myRef = database.getReference();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference();
 
         btnBack = (ImageButton) findViewById(R.id.btnBack);
         btnAdd = (ImageButton)findViewById(R.id.btnAddPromotions);
@@ -52,15 +59,15 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
         svSearchPromotions = (SearchView) findViewById(R.id.svSearch);
         svSearchPromotions.setOnQueryTextListener(this);
 
-        if(listParent.size() == 0) {
-            TakeData();
-            listCopy.addAll(listParent);
-        }
-        else
-        {
-            listCopy.clear();
-            listCopy.addAll(listParent);
-        }
+//        if(listParent.size() == 0) {
+//            TakeData();
+//            listCopy.addAll(listParent);
+//        }
+//        else
+//        {
+//            listCopy.clear();
+//            listCopy.addAll(listParent);
+//        }
 //
 //        for(int i = 0; i < promotionsDetailArrayList.size(); i++)
 //        {
@@ -75,40 +82,39 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
 //        }
 
 
-//        Query allPromtions = myRef.child("Promotions");
-//        listParent = new ArrayList<>();
-//        listCopy = new ArrayList<>();
-//        list.clear();
+        Query allPromtions = myRef.child("Promotions");
+        listParent = new ArrayList<>();
+        listCopy = new ArrayList<>();
+        list.clear();
 
-//        allPromtions.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-////                for (DataSnapshot item : dataSnapshot.getChildren())
-////                {
-////                    Promotion post = item.getValue(Promotion.class);
-////                    listParent.add(post);
-////                }
+        allPromtions.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot item : dataSnapshot.getChildren())
+                {
+                    Promotion post = item.getValue(Promotion.class);
+                    listParent.add(post);
+                }
+
+//                 Promotion pro = dataSnapshot.getValue(Promotion.class);
+//                 listParent.add(pro);
 //
-//                 //Promotion pro = dataSnapshot.getValue(Promotion.class);
-//                 //listParent.add(pro);
+//                 if(pro.getDetails().size() > 0)
+//                 {
+//                     HashMap<String, String> col = pro.getDetails();
+//                     for(int i = 0; i < col.size(); i++)
+//                     {
+//                         String s = col.get(i+"");
 //
-////                 if(pro.getDetails().size() > 0)
-////                 {
-////                     HashMap<String, String> col = pro.getDetails();
-////                     for(int i = 0; i < col.size(); i++)
-////                     {
-////                         String s = col.
-////                     }
-////                 }
-//
-//                //listParent.add();
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
+//                     }
+//                 }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 //        for(int i = 0; i < listParent.size(); i++) {
 //            Promotion promotion = listParent.get(i);
@@ -128,6 +134,8 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
 //            }
 //        }
 
+        listCopy.clear();
+        listCopy.addAll(listParent);
         adapter = new PromotionExpandableListAdapter(Promotions.this, listCopy, list);
         lvPromotions.setAdapter(adapter);
 
