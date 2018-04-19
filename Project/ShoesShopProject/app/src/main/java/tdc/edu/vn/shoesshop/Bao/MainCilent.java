@@ -7,6 +7,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.lang.reflect.Field;
+
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Sang.ChangePassword;
 import tdc.edu.vn.shoesshop.Sang.ListHistoryTransaction;
@@ -19,7 +24,7 @@ public class MainCilent extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_cilent);
-
+        final FirebaseAuth auth = FirebaseAuth.getInstance();
         ImageView imgthognbao = (ImageView) findViewById(R.id.imgthongbao);
         TextView txtthongbao = (TextView) findViewById(R.id.txtthongbao);
         txtthongbao.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +72,7 @@ public class MainCilent extends AppCompatActivity {
         txtlogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                auth.signOut();
                 Intent intent = new Intent(MainCilent.this, LoginActivity.class);
                 startActivity (intent);
                 Toast.makeText(MainCilent.this, " Đăng xuất " , Toast.LENGTH_SHORT).show();

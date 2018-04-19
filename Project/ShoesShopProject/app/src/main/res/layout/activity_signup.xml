@@ -3,14 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:fitsSystemWindows="true"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="@dimen/activity_horizontal_margin"
-    tools:context="tdc.edu.vn.shoesshop.Toan.LoginActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/anh"
     android:id="@+id/sign_up"
-    >
+    android:orientation="vertical">
+    <!--Toolbar-->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark"
+        tools:ignore="MissingPrefix" >
+        <TextView
+            style="@style/textOftoolbar"
+            android:text="Đăng ký"/>
+    </android.support.v7.widget.Toolbar>
+    <!--main-->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fitsSystemWindows="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_horizontal_margin"
+        >
     <EditText
         android:id="@+id/name"
         android:layout_width="match_parent"
@@ -83,16 +99,20 @@
         android:textColor="#000" />
 
     <RadioGroup
+        android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="10dp">
+
         <RadioButton
+            android:id="@+id/level_client"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Khách hàng"
-            android:paddingRight="60dp"/>
+            android:paddingRight="60dp"
+            android:text="Khách hàng" />
         <RadioButton
+            android:id="@+id/level_shop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Shop"/>
@@ -142,6 +162,7 @@
             android:text="Quên mật khẩu?"
             android:textAllCaps="false"
             android:textColor="@color/colorAccent" />
+    </LinearLayout>
     </LinearLayout>
 </LinearLayout>
 

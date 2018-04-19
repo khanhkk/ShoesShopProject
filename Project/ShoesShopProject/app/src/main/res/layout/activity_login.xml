@@ -3,18 +3,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/anh"
-    android:fitsSystemWindows="true"
-    android:gravity="center"
     android:orientation="vertical"
-    android:padding="@dimen/activity_horizontal_margin"
-    tools:context="tdc.edu.vn.shoesshop.Toan.LoginActivity"
     android:id="@+id/login">
 
+    <!--Toolbar-->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark"
+        tools:ignore="MissingPrefix" >
+        <TextView
+            style="@style/textOftoolbar"
+            android:text="Đăng nhập"/>
+    </android.support.v7.widget.Toolbar>
+    <!--main-->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fitsSystemWindows="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_horizontal_margin">
     <ImageView
         android:layout_width="@dimen/logo_w_h"
         android:layout_height="@dimen/logo_w_h"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="30dp"
         android:src="@drawable/run" />
 
@@ -80,4 +97,6 @@
         <!-- Link to Login Screen -->
 
     </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
+
