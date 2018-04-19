@@ -63,6 +63,8 @@ public class SelectionProductToEditting extends AppCompatActivity {
 
         creatList();
 
+
+
         adapter = new ProductExpandListAdapter(SelectionProductToEditting.this, products, children);
 
         lvList.setAdapter(adapter);
@@ -84,7 +86,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
         if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
 
             ProductDetail item = (ProductDetail) adapter.getChild(group, child);
-            menu.setHeaderTitle(item.getProduct().getName());
+            menu.setHeaderTitle(item.getProduct());
             menu.setHeaderIcon(R.mipmap.giay);
 
             menu.add(0, R.id.cmSua, 0, "Sua");
@@ -105,7 +107,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
             ProductDetail productDetail = (ProductDetail) adapter.getChild(group, child);
             switch (item.getItemId()) {
                 case R.id.cmSua:
-                    Toast.makeText(SelectionProductToEditting.this, "sua" + productDetail.getProduct().getId(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SelectionProductToEditting.this, "sua" + productDetail.getProduct(), Toast.LENGTH_SHORT).show();
                     Intent itent = new Intent(SelectionProductToEditting.this, QuantityManagement.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("detail", productDetail.getId()+ "");
@@ -113,7 +115,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
                     break;
 
                 case R.id.cmXoa:
-                    Toast.makeText(SelectionProductToEditting.this, "xoa" + productDetail.getProduct().getId(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SelectionProductToEditting.this, "xoa" + productDetail.getProduct(), Toast.LENGTH_SHORT).show();
                     children.get(products.get(group)).remove(child);
                     adapter.notifyDataSetChanged();
                     break;
@@ -131,18 +133,18 @@ public class SelectionProductToEditting extends AppCompatActivity {
         Shop shop = new Shop("SH0001", "MiuMiu", "01512151211");
         ArrayList<ProductDetail> details = new ArrayList<>();
 
-        Product product = new Product("SP0001", "giay1dsf Ä‘sÃ dsf fsÃ¡df", 1290000, 900000, shop.getId(), null);
-        Product product2 = new Product("SP0002", "giay2 dfasd fdsfsa dffasd", 175000, 150000, shop.getId(), null);
-        Product product3 = new Product("SP0003", "giay3dÃ dsfad sfdfd fdfdsfsf fdfsdf", 239000, 200000, shop.getId(), null);
-        Product product4 = new Product("SP0004", "giay4d fadsfs dfa sdfsfsaf dfdsfff dfdas fsd dsfssfewfefEFQEFqefqwfdsfd sfds fdsfsdf", 299000, 250000, shop.getId(), null);
+        Product product = new Product("SP0001", "giay hang hieu 1", 1290000, 900000, shop.getId(), null);
+        Product product2 = new Product("SP0002", "giay di phuot 2", 175000, 150000, shop.getId(), null);
+        Product product3 = new Product("SP0003", "giay thoi trang 3", 239000, 200000, shop.getId(), null);
+        Product product4 = new Product("SP0004", "giay the thao 4", 299000, 250000, shop.getId(), null);
 
-        ProductDetail pd = new ProductDetail(product,1, 38, "xanh la cay", 10);
-        ProductDetail pd2 = new ProductDetail(product,2, 39, "xanh la cay", 10);
-        ProductDetail pd3 = new ProductDetail(product,3, 40, "xanh la cay", 10);
-        ProductDetail pd4 = new ProductDetail(product,4, 38, "xam nhat", 10);
-        ProductDetail pd5 = new ProductDetail(product,5, 39, "xam nhat", 10);
-        ProductDetail pd6 = new ProductDetail(product,6, 40, "xam nhat", 10);
-        ProductDetail pd7 = new ProductDetail(product,7, 38, "do nau", 10);
+        ProductDetail pd = new ProductDetail(product.getId(),1, 38, "xanh la cay", 10);
+        ProductDetail pd2 = new ProductDetail(product.getId(),2, 39, "xanh la cay", 10);
+        ProductDetail pd3 = new ProductDetail(product.getId(),3, 40, "xanh la cay", 10);
+        ProductDetail pd4 = new ProductDetail(product.getId(),4, 38, "xam nhat", 10);
+        ProductDetail pd5 = new ProductDetail(product.getId(),5, 39, "xam nhat", 10);
+        ProductDetail pd6 = new ProductDetail(product.getId(),6, 40, "xam nhat", 10);
+        ProductDetail pd7 = new ProductDetail(product.getId(),7, 38, "do nau", 10);
 
         details.add(pd);
         details.add(pd2);

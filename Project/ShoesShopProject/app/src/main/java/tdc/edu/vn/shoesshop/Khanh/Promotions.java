@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,8 +40,13 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
     HashMap<Promotion,ArrayList<PromotionsDetail>> list = new HashMap<>();
     static ArrayList<Promotion> listParent = new ArrayList<>(), listCopy = new ArrayList<>();
     ArrayList<PromotionsDetail> promotionsDetailArrayList = new ArrayList<>();
+    Promotion pro = new Promotion();
 
     //public static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+    // Write data to the database
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    final DatabaseReference myRef = database.getReference();
 
     public static PromotionExpandableListAdapter adapter;
     Intent intent;
@@ -49,9 +56,8 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.promotions_activity);
 
-        // Write data to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference();
+
+
 
         btnBack = (ImageButton) findViewById(R.id.btnBack);
         btnAdd = (ImageButton)findViewById(R.id.btnAddPromotions);
@@ -84,6 +90,9 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
         Query allPromtions = myRef.child("Promotions");
         listParent.clear();
         list.clear();
+        listCopy.clear();
+
+        promotionsDetailArrayList.clear();
 
        myRef.child("PromotionsDetail").addChildEventListener(new ChildEventListener() {
            @Override
@@ -120,7 +129,9 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Promotion por = dataSnapshot.getValue(Promotion.class);
                 listParent.add(por);
+                listCopy.add(por);
                 list.put(por, null);
+
                 //Log.d("key", listParent.size() + "");
                 if(por.getListDetail() != null) {
                     String a[] = por.getListDetail().split("#");
@@ -129,8 +140,8 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
                         for (PromotionsDetail p : promotionsDetailArrayList) {
                             if (p.getId() == Integer.parseInt(str)) {
                                 arr.add(p);
-                            }
 
+                            }
                         }
                     }
                     list.put(por, arr);
@@ -160,7 +171,7 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
             }
         });
 
-        adapter = new PromotionExpandableListAdapter(Promotions.this, listParent, list);
+        adapter = new PromotionExpandableListAdapter(Promotions.this, listCopy, list);
         lvPromotions.setAdapter(adapter);
 
         intent = getIntent();
@@ -224,15 +235,57 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
             switch (item.getItemId()) {
                 case R.id.cmSua:
                     Toast.makeText(Promotions.this, "sua" + promotionsDetail.getProduct(), Toast.LENGTH_SHORT).show();
-                    Intent itent = new Intent(Promotions.this, EditingPromotionDetail.class);
+                    Intent intent = new Intent(Promotions.this, EditingPromotionDetail.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("detail", promotionsDetail.getId()+ "");
-                    startActivity(itent);
+                    startActivity(intent);
                     break;
 
                 case R.id.cmXoa:
                     Toast.makeText(Promotions.this, "xoa" + promotionsDetail.getProduct(), Toast.LENGTH_SHORT).show();
                     list.get(listParent.get(group)).remove(child);
+
+                    myRef.child("PromotionsDetail").orderByChild("id").equalTo(promotionsDetailArrayList.get(child).getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                child.getRef().setValue(null);
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                    int key = promotionsDetailArrayList.get(child).getPromotions();
+
+                    String s[]=listParent.get(key-1).getListDetail().split("#");
+                    String list = "";
+                    for (String a:s) {
+                        Log.d("a",a + " " + promotionsDetailArrayList.get(child).getId());
+                        if(Integer.parseInt(a) != (promotionsDetailArrayList.get(child).getId())){
+                            list = list + a +"#";
+                        }
+                    }
+                    Log.d("ab",list);
+
+                    pro = listParent.get(key-1);
+                    pro.setListDetail(list);
+                    Log.d("aa",pro.getListDetail());
+
+                    myRef.child("Promotions").orderByChild("id").equalTo(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                child.getRef().setValue(pro);
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                     adapter.notifyDataSetChanged();
                     break;
             }
