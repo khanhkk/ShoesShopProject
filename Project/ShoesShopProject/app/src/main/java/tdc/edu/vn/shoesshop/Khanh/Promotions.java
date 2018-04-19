@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +17,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,8 +35,8 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
     ExpandableListView lvPromotions;
     SearchView svSearchPromotions;
     ImageButton btnAdd, btnBack;
-    static HashMap<Promotion,ArrayList<PromotionsDetail>> list = new HashMap<>();
-    ArrayList<Promotion> listParent = new ArrayList<>(), listCopy = new ArrayList<>();
+    HashMap<Promotion,ArrayList<PromotionsDetail>> list = new HashMap<>();
+    static ArrayList<Promotion> listParent = new ArrayList<>(), listCopy = new ArrayList<>();
     ArrayList<PromotionsDetail> promotionsDetailArrayList = new ArrayList<>();
 
     //public static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -87,19 +85,11 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
         listParent.clear();
         list.clear();
 
-
-
        myRef.child("PromotionsDetail").addChildEventListener(new ChildEventListener() {
            @Override
            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                PromotionsDetail promotionsDetail = dataSnapshot.getValue(PromotionsDetail.class);
                promotionsDetailArrayList.add(promotionsDetail);
-//               if(list.size() > 0) {
-//                   for(int i  = 0; i < listParent.size(); i++)
-//                   {
-//                       listParent.get(i).getListDetail()
-//                   }
-//               }
            }
 
            @Override
@@ -132,24 +122,19 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
                 listParent.add(por);
                 list.put(por, null);
                 //Log.d("key", listParent.size() + "");
-
-               String a[] = por.getListDetail().split("#");
-                for (String str: a
-                     ) {
+                if(por.getListDetail() != null) {
+                    String a[] = por.getListDetail().split("#");
                     ArrayList<PromotionsDetail> arr = new ArrayList<>();
-                    for (PromotionsDetail p : promotionsDetailArrayList
-                         ) {
-                        if(p.getId() == Integer.parseInt(str))
-                        {
-                            arr.add(p);
+                    for (String str : a) {
+                        for (PromotionsDetail p : promotionsDetailArrayList) {
+                            if (p.getId() == Integer.parseInt(str)) {
+                                arr.add(p);
+                            }
+
                         }
                     }
                     list.put(por, arr);
                 }
-
-
-
-
 
                 adapter.notifyDataSetChanged();
             }
@@ -322,10 +307,10 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
         }
 
         promotions.setListDetail(s);
-        promotions2.setListDetail(s);
-        promotions3.setListDetail(s);
-        promotions4.setListDetail(s);
-        promotions5.setListDetail(s);
+//        promotions2.setListDetail(s);
+//        promotions3.setListDetail(s);
+//        promotions4.setListDetail(s);
+//        promotions5.setListDetail(s);
 
         listParent.add(promotions);
         listParent.add(promotions2);

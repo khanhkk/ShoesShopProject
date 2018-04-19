@@ -29,6 +29,7 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
+                android:id="@+id/sanpham"
                 android:layout_marginRight="10dp"/>
 
         </LinearLayout>
@@ -49,6 +50,7 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
+                android:id="@+id/quatang"
                 android:layout_marginRight="10dp"/>
 
 
@@ -70,6 +72,7 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
+                android:id="@+id/giamgia"
                 android:layout_marginRight="10dp"/>
 
         </LinearLayout>
@@ -90,6 +93,7 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
+                android:id="@+id/giaban_promotion"
                 android:layout_marginRight="10dp"/>
 
         </LinearLayout>
@@ -111,7 +115,7 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
-                android:editable="false"
+                android:id="@+id/giauudai"
                 android:layout_marginRight="10dp"/>
 
         </LinearLayout>

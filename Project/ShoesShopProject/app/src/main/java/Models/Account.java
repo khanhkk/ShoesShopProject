@@ -1,7 +1,7 @@
 package Models;
 
 public class Account {
-    private String name, email, address, phone, bankAccount, representative;
+    private String name, email, address, phone;
     private int level, images;
 
     public Account() {
@@ -14,7 +14,6 @@ public class Account {
         this.phone = phone;
         this.level = level;
     }
-
     public String getName() {
         return name;
     }
@@ -45,22 +44,6 @@ public class Account {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getBankAccount() {
-        return bankAccount;
-    }
-
-    public void setBankAccount(String bankAccount) {
-        this.bankAccount = bankAccount;
-    }
-
-    public String getRepresentative() {
-        return representative;
-    }
-
-    public void setRepresentative(String representative) {
-        this.representative = representative;
     }
 
     public int getLevel() {
