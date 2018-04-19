@@ -75,6 +75,7 @@ public class Cart extends Fragment {
         Product product3 = new Product("SP0003", "giay3", 200000, shop.getId());
         Product product4 = new Product("SP0004", "giay4", 250000, shop.getId());
         Product product5 = new Product("SP0005", "giay5", 300000, shop.getId());
+        Product product6 = new Product("SP0005", "giay5", 300000, shop.getId());
 
         BillDetail bd = new BillDetail(1,"HD0001", product, 1);
         BillDetail bd2 = new BillDetail(1,"HD0001", product2, 1);

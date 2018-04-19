@@ -36,7 +36,6 @@ public class EdittingShopInformation extends AppCompatActivity {
     private Uri picUri;
     private Button btn_getimage;
     private Button btnSave;
-    private Button btnSaveShopInformation;
     Intent intent;
     private EditText edttenshop, edtsdt, edtdiachi, edtemail, edtnguoidaidien, edtfacebook, edtsotaikhoan;
 
