@@ -11,18 +11,20 @@ public class Promotion {
     private String title, content;
     private String dateStart, dateEnd;
     //private ArrayList<PromotionsDetail> listDetail;
-    private HashMap<String,String> details;
+    //private HashMap<String, Integer> details;
+    String listDetail;
 
     public Promotion() {
     }
 
-    public Promotion(int id, String title, String content, String dateStart, String dateEnd, HashMap<String,String> listDetail) {
+    public Promotion(int id, String title, String content, String dateStart, String dateEnd, String listDetail) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
-        this.details = listDetail;
+        this.listDetail = listDetail;
+        //this.details = listDetail;
     }
 
     public int getId() {
@@ -65,13 +67,21 @@ public class Promotion {
         this.dateEnd = dateEnd;
     }
 
-    public HashMap<String, String> getDetails() {
-        return details;
+    public String getListDetail() {
+        return listDetail;
     }
 
-    public void setDetails(HashMap<String, String> details) {
-        this.details = details;
+    public void setListDetail(String listDetail) {
+        this.listDetail = listDetail;
     }
+
+    //    public HashMap<String, Integer> getDetails() {
+//        return details;
+//    }
+//
+//    public void setDetails(HashMap<String, Integer> details) {
+//        this.details = details;
+//    }
 
     //    public ArrayList<PromotionsDetail> getListDetail() {
 //        return listDetail;

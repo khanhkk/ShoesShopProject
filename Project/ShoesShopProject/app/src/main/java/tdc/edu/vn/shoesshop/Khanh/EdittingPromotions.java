@@ -9,6 +9,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.text.ParseException;
 import java.util.Calendar;
 
@@ -33,7 +36,9 @@ public class EdittingPromotions extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editting_promotions_activity);
 
-        Promotions.TakeData();
+        // Write data to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference();
 
         dtTimeEnd = (DateTimePicker)findViewById(R.id.dateEnd);
         dtTimeStart = (DateTimePicker)findViewById(R.id.dateStart);
@@ -103,23 +108,28 @@ public class EdittingPromotions extends AppCompatActivity {
                     promotion.setDateStart(DateTimePicker.simpleDateFormat.format(dtTimeStart.getDate()));
                     promotion.setDateEnd(DateTimePicker.simpleDateFormat.format(dtTimeEnd.getDate()));
                     promotion.setContent(etContent.getText() + "");
-                    //intent = getIntent();
+                    myRef.child("Promotions").child("id").equalTo(promotion.getId());
+
                     intent.setClass(EdittingPromotions.this, Promotions.class);
-                    //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent);
                 }
                 else
                 {
                     promotion = new Promotion();
-                    //int i = Promotions.list.get(Promotions.list.size()-1).getId()+1;
-                    //promotion.setId(i);
                     promotion.setTitle(etName.getText()+"");
                     promotion.setDateStart(DateTimePicker.simpleDateFormat.format(dtTimeStart.getDate()));
                     promotion.setDateEnd(DateTimePicker.simpleDateFormat.format(dtTimeEnd.getDate()));
                     promotion.setContent(etContent.getText() + "");
-                    Promotions.listParent.add(promotion);
-                    //intent = getIntent();
+                    if(Promotions.listParent.size()>0) {
+                        promotion.setId(Promotions.listParent.get(Promotions.listParent.size() - 1).getId() + 1);
+                    }
+                    else
+                    {
+                        promotion.setId(0);
+                    }
+
+                    myRef.child("Promotions").push().setValue(promotion);
                     intent.setClass(EdittingPromotions.this, Promotions.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent);
