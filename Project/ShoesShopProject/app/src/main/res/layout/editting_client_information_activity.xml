@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:id="@+id/editting_client_information"
     tools:context="tdc.edu.vn.shoesshop.Thanh.EdittingClientInformation">
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,6 +29,7 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
+                android:id="@+id/ten"
                 android:layout_marginRight="10dp"/>
 
         </LinearLayout>
@@ -48,6 +50,7 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
+                android:id="@+id/sdt"
                 android:layout_marginRight="10dp"/>
 
 
@@ -69,6 +72,7 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
+                android:id="@+id/diachi"
                 android:layout_marginRight="10dp"/>
 
         </LinearLayout>
@@ -89,6 +93,7 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
+                android:id="@+id/email"
                 android:layout_marginRight="10dp"/>
 
         </LinearLayout>
@@ -103,7 +108,7 @@
 
         >
         <Button
-            android:id="@+id/btnluu"
+            android:id="@+id/btnLuu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

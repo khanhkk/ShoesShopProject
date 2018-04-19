@@ -15,8 +15,11 @@ import android.support.annotation.Nullable;
 
 import java.io.FileNotFoundException;
 
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -24,6 +27,7 @@ import android.widget.Toast;
 import Controls.General;
 import tdc.edu.vn.shoesshop.Khanh.SelectionProductToEditting;
 import tdc.edu.vn.shoesshop.R;
+import tdc.edu.vn.shoesshop.Toan.HomeForShop;
 
 public class DetailInformationOfProduct extends AppCompatActivity {
 
@@ -34,7 +38,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
     private Uri picUri;
     private Button btn_getimage;
     private Button btnSave;
-
+    private EditText edttensanpham, edtthuonghieu, edtbaohanh, edtgianiemyet, edtgiaban, edtdiemtichluy, edtmota;
     ImageView img_ava_patient1;
     ImageView img_ava_patient2;
     ImageView img_ava_patient3;
@@ -52,6 +56,15 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         ImageButton btn_chooseImg = (ImageButton) dialog.findViewById(R.id.img_choosenGallery);
         ImageButton btn_takeaphoto = (ImageButton) dialog.findViewById(R.id.img_choosenTakephoto);
         btnSave = (Button) findViewById(R.id.btnSaveProductInformation) ;
+
+
+        edttensanpham = (EditText) findViewById(R.id.tensanpham);
+        edtthuonghieu = (EditText) findViewById(R.id.thuonghieu);
+        edtbaohanh = (EditText) findViewById(R.id.baohanh);
+        edtgianiemyet = (EditText) findViewById(R.id.gianiemyet);
+        edtgiaban = (EditText) findViewById(R.id.giaban);
+        edtdiemtichluy = (EditText) findViewById(R.id.diemtichluy);
+        edtmota = (EditText) findViewById(R.id.mota);
 
         General.setupUI(findViewById(R.id.information_of_product), DetailInformationOfProduct.this);
 
@@ -88,6 +101,51 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String tensanpham = edttensanpham.getText().toString().trim();
+                String thuonghieu = edtthuonghieu.getText().toString().trim();
+                String baohanh = edtbaohanh.getText().toString().trim();
+                int gianiemyet = Integer.parseInt(edtgianiemyet.getText().toString().trim());
+                int giaban = Integer.parseInt(edtgiaban.getText().toString().trim());
+                String diemtichluy = edtdiemtichluy.toString().trim();
+                String mota = edtmota.toString().trim();
+                if (TextUtils.isEmpty(tensanpham)){
+                    Toast.makeText(getApplicationContext(), "Please enter product name!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(TextUtils.isEmpty(thuonghieu)){
+                    Toast.makeText(getApplicationContext(),"Please enter trademark!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(TextUtils.isEmpty(baohanh)){
+                    Toast.makeText(getApplicationContext(), "Please enter guarantee!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(TextUtils.isEmpty(edtgianiemyet.getText() +"")){
+                    Toast.makeText(getApplicationContext(), "Please email Listed price!", Toast.LENGTH_LONG).show();
+                    return;}
+                if(TextUtils.isEmpty(edtgiaban.getText() +"")){
+                    Toast.makeText(getApplicationContext(), "Please Enter price!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(TextUtils.isEmpty(diemtichluy)){
+                    Toast.makeText(getApplicationContext(), "Please Enter cumulative point!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(TextUtils.isEmpty(mota)){
+                    Toast.makeText(getApplicationContext(), "Please Enter describe!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+               if ((gianiemyet < 100000) || (gianiemyet > 300000)){
+                  Toast.makeText(getApplicationContext(), "Please Characters Between 100000-300000", Toast.LENGTH_LONG).show();
+                   edtgianiemyet.setText("");
+                    edtgianiemyet.requestFocus();
+                    return;
+                }
+                if (giaban <  100000 || giaban > 200000){
+                    Toast.makeText(getApplicationContext(), "Please Characters Between 10-11", Toast.LENGTH_LONG).show();                    edtgiaban.setText("");
+                    edtgiaban.requestFocus();
+                    return;
+                }
                 Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
                 startActivity(intent);
             }

@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Bao.MainCilent"
+            android:name=".Thanh.EditingPromotionDetail"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,14 +38,15 @@
         <activity android:name=".Toan.HomeLayout" />
         <activity android:name=".Khanh.Promotions"/>
         <activity android:name=".Khanh.EdittingPromotions" />
+        <activity android:name=".Khanh.SelectionProductToEditting" />
         <activity android:name=".Toan.Comment_Activity" />
         <activity android:name=".Toan.SignupActivity" />
         <activity android:name=".Toan.ResetPasswordActivity" />
-        <activity android:name=".Thanh.DetailInformationOfProduct" />
+        <activity android:name=".Toan.LoginActivity" />
         <activity android:name=".Toan.HomeForClient" />
-        <activity android:name=".Thanh.EditingPromotionDetail"/>
+        <activity android:name=".Thanh.DetailInformationOfProduct"/>
         <activity android:name=".Sang.ListOder"/>
-        <activity android:name=".Toan.LoginActivity"/>
+        <activity android:name=".Bao.MainCilent"/>
         <activity android:name=".Bao.MainCustomer"/>
         <activity android:name=".Bao.MainShop"/>
         <activity android:name=".Bao.MainInfoShop"/>

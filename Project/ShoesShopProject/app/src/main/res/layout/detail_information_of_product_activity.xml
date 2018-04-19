@@ -29,6 +29,7 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
+                android:id="@+id/tensanpham"
                 android:layout_marginRight="10dp"/>
 
         </LinearLayout>
@@ -48,6 +49,7 @@
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
+                android:id="@+id/thuonghieu"
                 android:layout_weight="70"
                 android:layout_marginRight="10dp"/>
 
@@ -70,6 +72,7 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
+                android:id="@+id/baohanh"
 
                 />
 
@@ -90,6 +93,7 @@
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
+                android:id="@+id/gianiemyet"
                 android:layout_weight="70"
                 android:layout_marginRight="10dp"/>
 
@@ -111,6 +115,7 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
+                android:id="@+id/giaban"
                 android:layout_marginRight="10dp"/>
 
         </LinearLayout>
@@ -131,6 +136,7 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
+                android:id="@+id/diemtichluy"
                 android:layout_marginRight="10dp"/>
 
         </LinearLayout>
@@ -151,6 +157,7 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
+                android:id="@+id/mota"
                 android:layout_marginRight="10dp"/>
 
         </LinearLayout>
