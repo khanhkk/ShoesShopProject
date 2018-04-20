@@ -71,7 +71,7 @@
     <style name="toolbar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">#ab1f42b3</item>
+        <item name="android:background">#1929d7</item>
     </style>
 
     <!--TextView of toolbar-->
@@ -81,4 +81,6 @@
         <item name="android:layout_marginLeft">25dp</item>
         <item name="android:textSize">20sp</item>
     </style>
+
+
 </resources>

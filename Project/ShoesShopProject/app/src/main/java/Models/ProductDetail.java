@@ -5,14 +5,14 @@ package Models;
  */
 
 public class ProductDetail {
-    private Product product;
+    private String product;
     private int id, size, quantity;
     private String color;
 
     public ProductDetail() {
     }
 
-    public ProductDetail(Product product, int id, int size, String color, int quantity) {
+    public ProductDetail(String product, int id, int size, String color, int quantity) {
         this.product = product;
         this.id = id;
         this.size = size;
@@ -20,11 +20,11 @@ public class ProductDetail {
         this.color = color;
     }
 
-    public Product getProduct() {
+    public String getProduct() {
         return product;
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(String product) {
         this.product = product;
     }
 

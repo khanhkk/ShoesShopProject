@@ -1,6 +1,7 @@
 package tdc.edu.vn.shoesshop.Toan;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -23,7 +24,8 @@ public class Comment_Activity extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(Comment_Activity.this, HomeForClient.class);
+                startActivity(intent);
             }
         });
 

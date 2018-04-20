@@ -5,13 +5,13 @@ package Models;
  */
 
 public class Shop {
-    private String id, name, phone, email, bankAccount, representative;
+    private String id, name, phone, email, bankAccount, representative, address, listPromotions;
     private int image;
 
     public Shop() {
     }
 
-    public Shop(String id, String name, String phone, String email, String bankAccount, String representative, int image) {
+    public Shop(String id, String name, String address, String phone, String email, String bankAccount, String representative, int image, String list) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -19,6 +19,8 @@ public class Shop {
         this.bankAccount = bankAccount;
         this.representative = representative;
         this.image = image;
+        this.address = address;
+        this.listPromotions = list;
     }
 
     public Shop(String id, String name, String bankAccount) {
@@ -81,5 +83,21 @@ public class Shop {
 
     public void setImage(int image) {
         this.image = image;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getListPromotions() {
+        return listPromotions;
+    }
+
+    public void setListPromotions(String listPromotions) {
+        this.listPromotions = listPromotions;
     }
 }

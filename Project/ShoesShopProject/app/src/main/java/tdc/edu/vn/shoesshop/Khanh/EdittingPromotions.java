@@ -9,11 +9,16 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import Controls.DateTimePicker;
 import Controls.General;
@@ -108,10 +113,22 @@ public class EdittingPromotions extends AppCompatActivity {
                     promotion.setDateStart(DateTimePicker.simpleDateFormat.format(dtTimeStart.getDate()));
                     promotion.setDateEnd(DateTimePicker.simpleDateFormat.format(dtTimeEnd.getDate()));
                     promotion.setContent(etContent.getText() + "");
-                    myRef.child("Promotions").child("id").equalTo(promotion.getId());
+                    myRef.child("Promotions").orderByChild("id").equalTo(promotion.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot child: dataSnapshot.getChildren()) {
+                                child.getRef().setValue(promotion);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
 
                     intent.setClass(EdittingPromotions.this, Promotions.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent);
                 }
                 else
@@ -131,7 +148,7 @@ public class EdittingPromotions extends AppCompatActivity {
 
                     myRef.child("Promotions").push().setValue(promotion);
                     intent.setClass(EdittingPromotions.this, Promotions.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent);
                 }
             }

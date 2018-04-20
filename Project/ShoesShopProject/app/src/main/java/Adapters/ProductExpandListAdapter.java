@@ -2,6 +2,7 @@ package Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -138,6 +139,8 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
         viewHolder.tvNameproduct.setText(member.getName()+"");
         viewHolder.tvSalePrice.setText(member.getSalePrice() + "");
         viewHolder.tvListedPrice.setText(member.getListedPrice() + "");
+        viewHolder.tvListedPrice.setTextColor(_context.getResources().getColor(R.color.bg_register));
+        viewHolder.tvListedPrice.setPaintFlags(viewHolder.tvListedPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override

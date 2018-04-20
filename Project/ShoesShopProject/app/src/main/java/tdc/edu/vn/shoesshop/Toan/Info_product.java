@@ -30,25 +30,26 @@ public class Info_product extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
     Button btnXemThem, btnBinhLuan;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info_product);
-
-// //////       Button
-        btnBinhLuan = (Button) findViewById(R.id.btnBinhLuan) ;
+//get firebase auth instance
+        auth = FirebaseAuth.getInstance();
+//Button
+        btnBinhLuan = (Button) findViewById(R.id.btnBinhLuan);
         btnXemThem = (Button) findViewById(R.id.btnXemThem);
         btnXemThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(Info_product.this,tdc.edu.vn.shoesshop.Bao.MainInfoShop.class);
+                Intent intent = new Intent(Info_product.this, tdc.edu.vn.shoesshop.Bao.MainInfoShop.class);
                 startActivity(intent);
             }
         });
         ////
-        //get firebase auth instance
-        auth = FirebaseAuth.getInstance();
+
 
         //get current user
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -74,6 +75,7 @@ public class Info_product extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                auth.signOut();
                 Intent intent = new Intent(Info_product.this, HomeForClient.class);
                 startActivity(intent);
             }
@@ -90,7 +92,7 @@ public class Info_product extends AppCompatActivity {
         dotscount = viewPagerAdapter.getCount();
         dots = new ImageView[dotscount];
 
-        for(int i = 0; i < dotscount; i++){
+        for (int i = 0; i < dotscount; i++) {
 
             dots[i] = new ImageView(this);
             dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot));
@@ -114,7 +116,7 @@ public class Info_product extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
 
-                for(int i = 0; i< dotscount; i++){
+                for (int i = 0; i < dotscount; i++) {
                     dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot));
                 }
 
@@ -134,7 +136,7 @@ public class Info_product extends AppCompatActivity {
     }
 
 
-    public class MyTimerTask extends TimerTask{
+    public class MyTimerTask extends TimerTask {
 
         @Override
         public void run() {
@@ -143,9 +145,9 @@ public class Info_product extends AppCompatActivity {
                 @Override
                 public void run() {
 
-                    if(viewPager.getCurrentItem() == 0){
+                    if (viewPager.getCurrentItem() == 0) {
                         viewPager.setCurrentItem(1);
-                    } else if(viewPager.getCurrentItem() == 1){
+                    } else if (viewPager.getCurrentItem() == 1) {
                         viewPager.setCurrentItem(2);
                     } else {
                         viewPager.setCurrentItem(0);

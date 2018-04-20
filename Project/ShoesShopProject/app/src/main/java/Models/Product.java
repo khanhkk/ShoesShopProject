@@ -39,6 +39,7 @@ public class Product {
         this.shop_id = shop;
     }
 
+
     public Product(String id, String name, double listedPrice, double salePrice, String shop, ArrayList<ProductDetail> details) {
         this.id = id;
         this.name = name;
