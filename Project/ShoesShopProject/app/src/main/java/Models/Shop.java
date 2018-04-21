@@ -11,24 +11,30 @@ public class Shop {
     public Shop() {
     }
 
-    public Shop(String id, String name, String address, String phone, String email, String bankAccount, String representative, int image, String list) {
+    public Shop(String id, String name, String phone, String email, String bankAccount, String representative, String address, String listPromotions, int image) {
         this.id = id;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.bankAccount = bankAccount;
         this.representative = representative;
-        this.image = image;
         this.address = address;
-        this.listPromotions = list;
+        this.listPromotions = listPromotions;
+        this.image = image;
     }
 
-    public Shop(String id, String name, String bankAccount) {
+    public Shop(String name, String email, String phone, String address, String bankAccount) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.bankAccount = bankAccount;
+        this.address = address;
+    }
+    public Shop(String id, String name,String bankAccount) {
         this.id = id;
         this.name = name;
         this.bankAccount = bankAccount;
     }
-
     public String getId() {
         return id;
     }
@@ -77,14 +83,6 @@ public class Shop {
         this.representative = representative;
     }
 
-    public int getImage() {
-        return image;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -100,4 +98,13 @@ public class Shop {
     public void setListPromotions(String listPromotions) {
         this.listPromotions = listPromotions;
     }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
+    }
+
 }

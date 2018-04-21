@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/anh"
-    android:id="@+id/sign_up"
-    android:orientation="vertical">
+    android:id="@+id/sign_up">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <!--Toolbar-->
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -27,33 +30,36 @@
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin"
         >
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:hint="Họ tên"
-        android:inputType="textEmailAddress"
-        android:maxLines="1"
-        android:textColor="#000"
 
-        />
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:hint="Họ tên"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:text="Toàn"
+            android:textColor="#000" />
 
 
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2"
         android:layout_marginTop="8dp"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
         android:maxLines="1"
-        android:textColor="#000" />
+        android:textColor="#000"
+        android:text="xuantoan125@gmail.com"/>
 
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2"
         android:layout_marginTop="8dp"
         android:focusableInTouchMode="true"
         android:hint="Mật khẩu"
@@ -62,46 +68,65 @@
         android:inputType="textPassword"
         android:maxLines="1"
         android:textColor="#000"
-        tools:ignore="InvalidImeActionId" />
+        tools:ignore="InvalidImeActionId"
+        android:text="123456789"/>
 
-    <EditText
-        android:id="@+id/pre_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:focusableInTouchMode="true"
-        android:hint="Nhập lại mật khẩu"
-        android:imeActionId="@+id/login"
-        android:imeOptions="actionUnspecified"
-        android:inputType="textPassword"
-        android:maxLines="1"
-        android:textColor="#000"
-        tools:ignore="InvalidImeActionId" />
+        <EditText
+            android:id="@+id/pre_password"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="2"
+            android:focusableInTouchMode="true"
+            android:hint="Nhập lại mật khẩu"
+            android:imeActionId="@+id/login"
+            android:imeOptions="actionUnspecified"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:text="123456789"
+            android:textColor="#000"
+            tools:ignore="InvalidImeActionId" />
 
     <EditText
         android:id="@+id/phone_number"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2"
         android:layout_marginTop="8dp"
         android:hint="Số điện thoại"
         android:inputType="textEmailAddress"
         android:maxLines="1"
-        android:textColor="#000" />
+        android:textColor="#000"
+        android:text="1023456789"/>
 
     <EditText
         android:id="@+id/address"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2"
         android:layout_marginTop="8dp"
         android:hint="Địa chỉ"
         android:inputType="textEmailAddress"
         android:maxLines="1"
-        android:textColor="#000" />
+        android:textColor="#000"
+        android:text="hcm"/>
+        <EditText
+            android:id="@+id/bank_account"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_marginTop="8dp"
+            android:hint="Tài khoản ngân hàng"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:text="711aa3835086"/>
 
     <RadioGroup
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="horizontal"
         android:layout_marginTop="10dp">
 
@@ -110,6 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="60dp"
+            android:checked="true"
             android:text="Khách hàng" />
         <RadioButton
             android:id="@+id/level_shop"
@@ -122,8 +148,9 @@
         android:id="@+id/sign_up_button"
         style="?android:textAppearanceSmall"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_marginTop="10dp"
         android:background="#d0f7eb04"
         android:text="Đăng ký"
         android:textColor="@android:color/black"
@@ -131,8 +158,8 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-
+        android:layout_height="0dp"
+        android:layout_weight="3"
         android:fitsSystemWindows="true"
         android:gravity="center"
         android:orientation="horizontal"
@@ -146,7 +173,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="50dp"
-            android:layout_marginTop="10dip"
             android:background="@null"
             android:text="Đăng nhập"
             android:textAllCaps="false"
@@ -157,12 +183,12 @@
             android:id="@+id/btn_reset_password"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
             android:background="@null"
             android:text="Quên mật khẩu?"
             android:textAllCaps="false"
             android:textColor="@color/colorAccent" />
     </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
 
