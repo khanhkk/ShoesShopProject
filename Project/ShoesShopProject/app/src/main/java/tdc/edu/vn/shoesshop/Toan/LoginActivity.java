@@ -17,8 +17,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import Controls.General;
+import Models.Account;
+import Models.Shop;
 import tdc.edu.vn.shoesshop.Khanh.EdittingPromotions;
 import tdc.edu.vn.shoesshop.R;
 
@@ -28,6 +36,13 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private ProgressBar progressBar;
     private Button btnSignup, btnLogin, btnReset;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    final DatabaseReference myRef = database.getReference();
+    Query allAccount = myRef.child("Accounts");
+    Query allClient = myRef.child("Clients");
+    Query allShop = myRef.child("Shops");
+    public static final String BUNDLE = "bundel";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,18 +115,51 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 } else {
 
-                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                    if(user.isEmailVerified()) {
+                                    final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                    if (user.isEmailVerified()) {
+                                        myRef.child("Accounts").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                Intent intent;
+                                                final Bundle bundle = new Bundle();
+                                                Account account = dataSnapshot.getValue(Account.class);
+                                                if (account.getLevel() == 0) {
+//                                                    myRef.child("Shops").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+//                                                        @Override
+//                                                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                                                            Shop shop = dataSnapshot.getValue(Shop.class);
+//                                                            bundle.put
+//                                                        }
+//
+//                                                        @Override
+//                                                        public void onCancelled(DatabaseError databaseError) {
+//
+//                                                        }
+//                                                    });
+                                                    bundle.putString("key", user.getUid());
+                                                    intent = new Intent(LoginActivity.this, HomeForShop.class);
+                                                    intent.putExtra(BUNDLE,bundle);
+                                                    startActivity(intent);
+                                                } else {
+                                                    bundle.putString("key", user.getUid());
+                                                    intent = new Intent(LoginActivity.this, HomeForClient.class);
+                                                    intent.putExtra(BUNDLE,bundle);
+                                                    startActivity(intent);
+                                                }
+                                            }
 
-                                        Intent intent = new Intent(LoginActivity.this, HomeForClient.class);
-                                        startActivity(intent);
-                                    }
-                                    else {
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+                                    } else {
                                         Toast.makeText(LoginActivity.this, "Check your emails", Toast.LENGTH_LONG).show();
 
 
                                     }
-                                   // finish();
+                                    // finish();
                                 }
                             }
                         });

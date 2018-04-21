@@ -2,11 +2,10 @@ package tdc.edu.vn.shoesshop.Toan;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,9 +26,8 @@ import java.util.HashMap;
 
 import Controls.General;
 import Models.Account;
-import Models.Promotion;
-import Models.PromotionsDetail;
-import tdc.edu.vn.shoesshop.Khanh.EdittingPromotions;
+import Models.Client;
+import Models.Shop;
 import tdc.edu.vn.shoesshop.R;
 
 /**
@@ -37,14 +35,14 @@ import tdc.edu.vn.shoesshop.R;
  */
 public class SignupActivity extends AppCompatActivity {
 
-    private EditText inputEmail, inputPassword, inpuRe_pass, inputName, inputPhone_number, inputAddress;
+    private EditText inputEmail, inputPassword, inpuRe_pass, inputName, inputPhone_number, inputAddress, input_bankAc;
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private RadioButton client, shop;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
 
-    static HashMap<Account, ArrayList<Account>> list = new HashMap<>();
-    ArrayList<Account> listParent = new ArrayList<>(), listCopy = new ArrayList<>();
+    static HashMap<Client, ArrayList<Client>> list = new HashMap<>();
+    ArrayList<Client> listParent = new ArrayList<>(), listCopy = new ArrayList<>();
     int level = 1;
 
 
@@ -52,7 +50,17 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+// Action bar back
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("");
+        mToolbar.setNavigationIcon(R.drawable.ic_chevron_left_black_24dp);
 
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+            }
+        });
 // Write data to the database
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference();
@@ -69,6 +77,8 @@ public class SignupActivity extends AppCompatActivity {
         inputName = (EditText) findViewById(R.id.name);
         inputPhone_number = (EditText) findViewById(R.id.phone_number);
         inputAddress = (EditText) findViewById(R.id.address);
+        input_bankAc = (EditText) findViewById(R.id.bank_account);
+       input_bankAc.setVisibility(View.GONE);
 // Radio
         client = (RadioButton) findViewById(R.id.level_client);
         shop = (RadioButton) findViewById(R.id.level_shop);
@@ -94,6 +104,19 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
+//  RadioButton
+        shop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                input_bankAc.setVisibility(View.VISIBLE);
+            }
+        });
+        client.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                input_bankAc.setVisibility(View.GONE);
+            }
+        });
 // Button Sign up
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,10 +127,11 @@ public class SignupActivity extends AppCompatActivity {
                 final String pre_pass = inpuRe_pass.getText().toString().trim();
                 final String phone_number_ac = inputPhone_number.getText().toString().trim();
                 final String address_ac = inputAddress.getText().toString().trim();
-                if(client.isChecked()){
+                final String bank_account = input_bankAc.getText().toString().trim();
+                if (client.isChecked()) {
                     level = 1;
                 }
-                if(shop.isChecked()){
+                if (shop.isChecked()) {
                     level = 0;
                 }
 //  Test
@@ -174,15 +198,28 @@ public class SignupActivity extends AppCompatActivity {
                                     user.sendEmailVerification();
                                     Toast.makeText(SignupActivity.this, "Verify in your email." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
-//firebase dat
-                                    Account account = new Account(name_ac, email, address_ac, phone_number_ac, level);
-                                    myRef.child("Accounts").push().setValue(account);
+//firebase data
+                                    if (level == 1) {
+                                        Account account = new Account(name_ac, email, level);
+                                        myRef.child("Accounts").child(user.getUid()).setValue(account);
+                                        Client client = new Client(name_ac, email, phone_number_ac, address_ac);
+                                        myRef.child("Clients").child(user.getUid()).setValue(client);
+                                    }
+                                    if (level == 0) {
+                                        Account account = new Account(name_ac, email, level);
+                                        myRef.child("Accounts").child(user.getUid()).setValue(account);
+                                        Shop shop = new Shop(name_ac, email, phone_number_ac , address_ac, bank_account);
+                                        myRef.child("Shops").child(user.getUid()).setValue(shop);
+                                    }
+//                                    Client client = new Client(name_ac, email, phone_number_ac, address_ac, level);
+//                                    myRef.child("Clients").push().setValue(client);
+//                                    Shop shop = new Shop(name_ac, email, phone_number_ac , address_ac , level, bank_account);
+//                                    myRef.child("Shops").push().setValue(shop);
                                 }
-
-                                    /////////
-                                    startActivity(new Intent(SignupActivity.this, LoginActivity.class));
-                                    finish();
-                                }
+                                auth.signOut();
+                                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                                finish();
+                            }
                         });
             }
         });
@@ -199,6 +236,7 @@ public class SignupActivity extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.editing_promotion_detail_activity);
+
         }
     }
 }

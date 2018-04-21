@@ -396,5 +396,6 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
             adapter.notifyDataSetChanged();
         }
         return true;
+
     }
 }
