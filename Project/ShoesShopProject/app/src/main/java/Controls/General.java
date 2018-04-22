@@ -2,10 +2,13 @@ package Controls;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -15,20 +18,24 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Calendar;
 
 public class General {
+
+    public static final int CAM_REQUEST = 1313;
+    public static final int REQUEST_IMAGE_CAPTURE = 111;
+
     public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        android.app.Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(
-                activity.getCurrentFocus().getWindowToken(), 0);
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(android.app.Activity.INPUT_METHOD_SERVICE);
+        if(inputMethodManager.isAcceptingText())
+            inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
 
     public static void setupUI(View view, final Activity activity) {
@@ -71,6 +78,57 @@ public class General {
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(context.getResources(), imageId, options);
     }
+
+    public void uploadImage(Uri uri) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference()
+                .child("users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        storageRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).putFile(uri);
+    }
+
+    public static String encodeBitmap(Bitmap bitmap) {
+        String image = null;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        String imageEncoded = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+        //FirebaseStorage storage = FirebaseStorage.getInstance();
+//        DatabaseReference ref = FirebaseDatabase.getInstance()
+//                .getReference()
+//                .child("Images")
+//                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//        ref.setValue(imageEncoded);
+        if(imageEncoded.length() > 0)
+            image = imageEncoded;
+        return image;
+    }
+
+    public static Bitmap decodeFromFirebaseBase64(String image) throws IOException {
+        byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
+    }
+
+    public static void chooseFromGallery(Activity activity) {
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        if (intent.resolveActivity(activity.getPackageManager()) != null) {
+            activity.startActivityForResult(intent, CAM_REQUEST);
+        }
+    }
+
+    public static void chooseFromCamera(Activity activity) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
+            activity.startActivityForResult(takePictureIntent,  REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+//    public static void takeNewProfilePicture(Activity activity){
+//        //Activity profileFrag = activity;
+//        Intent cameraintent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        if (cameraintent.resolveActivity(activity.getPackageManager()) != null) {
+//            activity.startActivityForResult(cameraintent, CAM_REQUEST);
+//        }
+//    }
 
     public void uploadImageFirebase(final ImageView imageView)
     {

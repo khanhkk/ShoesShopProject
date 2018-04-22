@@ -80,8 +80,6 @@
     <string name="btnChiTiet">Chi tiết</string>
 
 
-
-
     <!--Toan update-->
     <string name="filter_name">Choose a name</string>
     <string-array name="filter_name_arrays">
@@ -104,4 +102,7 @@
         <item>39</item>
         <item>40</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

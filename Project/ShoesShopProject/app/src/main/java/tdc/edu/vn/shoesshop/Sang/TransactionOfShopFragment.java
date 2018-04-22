@@ -1,7 +1,10 @@
 package tdc.edu.vn.shoesshop.Sang;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
+import android.app.Fragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -10,16 +13,20 @@ import Adapters.CustumAdapterHistory;
 import tdc.edu.vn.shoesshop.R;
 
 
-public class ListHistoryTransaction extends AppCompatActivity {
+public class TransactionOfShopFragment extends Fragment {
+
     ListView lvContact;
     CustumAdapterHistory adapter;
     ArrayList<String> list = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.layouthistorytransaction22);
-        lvContact = (ListView) findViewById(R.id.listview);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = null;
+        view = inflater.inflate(R.layout.transaction_of_shop_fragment, container, false);
+
+        lvContact = (ListView) view.findViewById(R.id.listview);
 
 //        ArrayList<contactList22>  arrayList = new ArrayList<>();
 //        contactList22 contact1 = new contactList22(null,"Nguyen Van A",);
@@ -38,9 +45,10 @@ public class ListHistoryTransaction extends AppCompatActivity {
         list.add("Đơn hàng đã hủy");
         list.add("đơn hàng chờ xử lí");
 
-        CustumAdapterHistory customAdapter = new CustumAdapterHistory(ListHistoryTransaction.this,R.layout.listview_layout_history_transaction22,list);
+        CustumAdapterHistory customAdapter = new CustumAdapterHistory(getActivity(), R.layout.listview_layout_history_transaction22,list);
         lvContact.setAdapter(customAdapter);
 
+        return view;
     }
-}
 
+}

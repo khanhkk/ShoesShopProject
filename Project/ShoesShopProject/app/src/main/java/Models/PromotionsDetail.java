@@ -5,11 +5,10 @@ package Models;
  */
 
 public class PromotionsDetail {
-    private int id, discount;
+    private int id, discount, point;
     private int promotions;
-    private String product;
-    private String gift;
-    private int point;
+    private String product, gift;
+
 
     public PromotionsDetail() {
     }

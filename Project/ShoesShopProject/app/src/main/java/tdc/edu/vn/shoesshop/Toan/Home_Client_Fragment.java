@@ -15,8 +15,6 @@ import java.util.HashMap;
 
 import Adapters.RecyclerViewAdapter;
 import Models.Product;
-import Models.Promotion;
-import Models.PromotionsDetail;
 import tdc.edu.vn.shoesshop.R;
 
 /**

@@ -6,24 +6,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-    import java.util.Calendar;
 
-    import Adapters.CustumAdapterOder;
-    import Controls.DateTimePicker;
-    import tdc.edu.vn.shoesshop.R;
+import Adapters.CustumAdapterOder;
+import Controls.DatePickerCustom;
+import tdc.edu.vn.shoesshop.R;
 
 public class ListOder  extends AppCompatActivity {
     ListView lvContact;
     CustumAdapterOder adapter;
     ArrayList<String> list = new ArrayList<>();
-    DateTimePicker dateTimePicker;
+    DatePickerCustom dateTimePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_oder);
         lvContact = (ListView) findViewById(R.id.ListOrder);
-        dateTimePicker = (DateTimePicker)findViewById(R.id.dtDatePicker) ;
+        dateTimePicker = (DatePickerCustom)findViewById(R.id.dtDatePicker) ;
 
         //dateTimePicker.setDate(Calendar.getInstance().getTime());
 

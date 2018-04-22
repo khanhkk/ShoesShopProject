@@ -7,7 +7,6 @@ public class OrderShop {
     private int GiaGoc;
     private int soLuong;
 
-
     public int getHinh() {
         return Hinh;
     }

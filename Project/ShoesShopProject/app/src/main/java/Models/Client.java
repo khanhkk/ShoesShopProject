@@ -1,23 +1,23 @@
 package Models;
 
 public class Client {
-    private String name, email, address, phone;
-    private int images;
+    private String name, email, address, phone, image;
+    //private int images;
 
     public Client() {
     }
-    public Client(String name, String email, String phone, String address) {
+//    public Client(String name, String email, String phone, String address) {
+//        this.name = name;
+//        this.email = email;
+//        this.address = address;
+//        this.phone = phone;
+//    }
+    public Client(String name, String email, String address, String phone, String image) {
         this.name = name;
         this.email = email;
         this.address = address;
         this.phone = phone;
-    }
-    public Client(String name, String email, String address, String phone, int images) {
-        this.name = name;
-        this.email = email;
-        this.address = address;
-        this.phone = phone;
-        this.images = images;
+        this.image = image;
     }
 
     public String getName() {
@@ -52,11 +52,11 @@ public class Client {
         this.phone = phone;
     }
 
-    public int getImages() {
-        return images;
+    public String getImages() {
+        return image;
     }
 
-    public void setImages(int images) {
-        this.images = images;
+    public void setImages(String images) {
+        this.image = images;
     }
 }

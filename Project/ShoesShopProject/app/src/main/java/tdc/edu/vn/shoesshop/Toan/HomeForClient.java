@@ -1,6 +1,5 @@
 package tdc.edu.vn.shoesshop.Toan;
 
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,21 +8,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import Controls.General;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import Controls.General;
 import Controls.TabarControl;
+import tdc.edu.vn.shoesshop.Bao.PersonalOfClientLoginedFragment;
 import tdc.edu.vn.shoesshop.Khanh.Cart;
 import tdc.edu.vn.shoesshop.R;
+import tdc.edu.vn.shoesshop.Son.NotificationFragment;
 
 public class HomeForClient extends AppCompatActivity {
-    private FragmentTransaction fragment;
-    private Fragment currentFragment;
+    private FragmentTransaction fragment = null;
+    //private Fragment currentFragment;
+    TabarControl tabarControl;
+
+    NotificationFragment notify = null;
     Cart cart = null;
     Home_Client_Fragment b = null;
-    TabarControl tabarControl;
+    PersonalOfClientLoginedFragment clientLoginedFragment = null;
+
+
     private FirebaseAuth.AuthStateListener authListener;
     //private FirebaseAuth auth;
 
@@ -39,7 +44,10 @@ public class HomeForClient extends AppCompatActivity {
 
         @Override
         public void onButton2Clicked() {
-
+            fragment = getFragmentManager().beginTransaction();
+            notify = new NotificationFragment();
+            fragment.replace(R.id.llParent, notify);
+            fragment.commit();
         }
 
         @Override
@@ -53,7 +61,10 @@ public class HomeForClient extends AppCompatActivity {
 
         @Override
         public void onButton4Clicked() {
-
+            fragment = getFragmentManager().beginTransaction();
+            clientLoginedFragment = new PersonalOfClientLoginedFragment();
+            fragment.replace(R.id.llParent, clientLoginedFragment);
+            fragment.commit();
         }
     };
 
