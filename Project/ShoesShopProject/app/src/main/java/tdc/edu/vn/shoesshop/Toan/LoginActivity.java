@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -15,8 +16,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import Controls.General;
+import Models.Account;
+import Models.Shop;
 import tdc.edu.vn.shoesshop.Khanh.EdittingPromotions;
 import tdc.edu.vn.shoesshop.R;
 
@@ -26,11 +36,17 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private ProgressBar progressBar;
     private Button btnSignup, btnLogin, btnReset;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    final DatabaseReference myRef = database.getReference();
+    Query allAccount = myRef.child("Accounts");
+    Query allClient = myRef.child("Clients");
+    Query allShop = myRef.child("Shops");
+    public static final String BUNDLE = "bundel";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
@@ -49,7 +65,6 @@ public class LoginActivity extends AppCompatActivity {
         btnReset = (Button) findViewById(R.id.btn_reset_password);
         General.setupUI(findViewById(R.id.login), LoginActivity.this);
         //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                                 // If sign in fails, display a message to the user. If sign in succeeds
                                 // the auth state listener will be notified and logic to handle the
                                 // signed in user can be handled in the listener.
+
                                 if (!task.isSuccessful()) {
                                     // there was an error
                                     if (password.length() < 8) {
@@ -98,12 +114,68 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                     }
                                 } else {
-                                    Intent intent = new Intent(LoginActivity.this, HomeForClient.class);
-                                    startActivity(intent);
-                                   // finish();
+
+                                    final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                    if (user.isEmailVerified()) {
+                                        myRef.child("Accounts").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                Intent intent;
+                                                final Bundle bundle = new Bundle();
+                                                Account account = dataSnapshot.getValue(Account.class);
+                                                if (account.getLevel() == 0) {
+//                                                    myRef.child("Shops").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+//                                                        @Override
+//                                                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                                                            Shop shop = dataSnapshot.getValue(Shop.class);
+//                                                            bundle.put
+//                                                        }
+//
+//                                                        @Override
+//                                                        public void onCancelled(DatabaseError databaseError) {
+//
+//                                                        }
+//                                                    });
+                                                    bundle.putString("key", user.getUid());
+                                                    intent = new Intent(LoginActivity.this, HomeForShop.class);
+                                                    intent.putExtra(BUNDLE,bundle);
+                                                    startActivity(intent);
+                                                } else {
+                                                    bundle.putString("key", user.getUid());
+                                                    intent = new Intent(LoginActivity.this, HomeForClient.class);
+                                                    intent.putExtra(BUNDLE,bundle);
+                                                    startActivity(intent);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "Check your emails", Toast.LENGTH_LONG).show();
+
+
+                                    }
+                                    // finish();
                                 }
                             }
                         });
+            }
+        });
+        //  Action bar back
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("");
+        mToolbar.setNavigationIcon(R.drawable.ic_chevron_left_black_24dp);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auth.signOut();
+                Intent intent = new Intent(LoginActivity.this, HomeForClient.class);
+                startActivity(intent);
             }
         });
     }

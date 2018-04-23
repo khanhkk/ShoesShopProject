@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Adapters.RecyclerViewAdapter;
+import Models.Product;
 import tdc.edu.vn.shoesshop.R;
 
 /**
@@ -21,6 +23,9 @@ import tdc.edu.vn.shoesshop.R;
 public class Home_Client_Fragment extends Fragment {
 
     private static final String TAG = "MainActivity";
+
+    static HashMap<Product,ArrayList<Product>> list = new HashMap<>();
+    ArrayList<Product> listParent = new ArrayList<>(), listCopy = new ArrayList<>();
 
     //vars
     private ArrayList<String> mNames = new ArrayList<>();

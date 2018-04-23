@@ -11,13 +11,13 @@
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
-        <Controls.DateTimePicker
+        <Controls.DatePickerCustom
             android:id="@+id/dtDatePicker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
-        </Controls.DateTimePicker>
+        </Controls.DatePickerCustom>
         <!--<TextView-->
             <!--android:text="date"-->
             <!--android:gravity="center"-->
@@ -34,7 +34,8 @@
         <SearchView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_gravity="right"/>
 
     </LinearLayout>
     <LinearLayout

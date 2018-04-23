@@ -56,6 +56,10 @@
     <string name="order_information">Thông tin khuyến mãi</string>
     <string name="client_information">Thông tin khách hàng</string>
     <string name="notifi_information">Thông báo</string>
+    <string name="hint_hoten">Họ tên</string>
+    <string name="hint_sdt">Số điện thoại</string>
+    <string name="hint_diachi">Địa chỉ</string>
+    <string name="dathang">Đặt hàng</string>
 
 
     <!--Sang-->
@@ -74,8 +78,6 @@
     <!--lay out12-->
     <string name="txtHistoryInfo">mã hàng</string>
     <string name="btnChiTiet">Chi tiết</string>
-
-
 
 
     <!--Toan update-->
@@ -100,4 +102,7 @@
         <item>39</item>
         <item>40</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

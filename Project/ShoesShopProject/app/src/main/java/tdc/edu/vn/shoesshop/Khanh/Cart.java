@@ -11,14 +11,15 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 
 import Adapters.BillAdapter;
 import Models.BillDetail;
-import Models.Product;
-import Models.Shop;
-import tdc.edu.vn.shoesshop.Son.ClientInformationAfterOrder;
 import tdc.edu.vn.shoesshop.R;
+import tdc.edu.vn.shoesshop.Son.ClientInformationAfterOrder;
 
 /**
  * Created by kk on 05/04/2018.
@@ -32,6 +33,8 @@ public class Cart extends Fragment {
     public static TextView tvMoney;
     Button btnThanhToan;
     Intent intent;
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Nullable
     @Override
@@ -69,23 +72,24 @@ public class Cart extends Fragment {
 
     public void createData()
     {
-        Shop shop = new Shop("SH0001", "MiuMiu", "01512151211");
-        Product product = new Product("SP0001", "giay1", 100000, shop.getId());
-        Product product2 = new Product("SP0002", "giay2", 150000, shop.getId());
-        Product product3 = new Product("SP0003", "giay3", 200000, shop.getId());
-        Product product4 = new Product("SP0004", "giay4", 250000, shop.getId());
-        Product product5 = new Product("SP0005", "giay5", 300000, shop.getId());
+        //Shop shop = new Shop("SH0001", "MiuMiu", "01512151211");
+//        Product product = new Product("SP0001", "giay1", 100000, user.getUid());
+//        Product product2 = new Product("SP0002", "giay2", 150000, shop.getId());
+//        Product product3 = new Product("SP0003", "giay3", 200000, shop.getId());
+//        Product product4 = new Product("SP0004", "giay4", 250000, shop.getId());
+//        Product product5 = new Product("SP0005", "giay5", 300000, shop.getId());
+//        Product product6 = new Product("SP0005", "giay5", 300000, shop.getId());
+//
+//        BillDetail bd = new BillDetail(1,"HD0001", product, 1);
+//        BillDetail bd2 = new BillDetail(1,"HD0001", product2, 1);
+//        BillDetail bd3 = new BillDetail(1,"HD0001", product3, 1);
+//        BillDetail bd4 = new BillDetail(1,"HD0001", product4, 1);
+//        BillDetail bd5 = new BillDetail(1,"HD0001", product5, 1);
 
-        BillDetail bd = new BillDetail(1,"HD0001", product, 1);
-        BillDetail bd2 = new BillDetail(1,"HD0001", product2, 1);
-        BillDetail bd3 = new BillDetail(1,"HD0001", product3, 1);
-        BillDetail bd4 = new BillDetail(1,"HD0001", product4, 1);
-        BillDetail bd5 = new BillDetail(1,"HD0001", product5, 1);
-
-        list.add(bd);
-        list.add(bd2);
-        list.add(bd3);
-        list.add(bd4);
-        list.add(bd5);
+//        list.add(bd);
+//        list.add(bd2);
+//        list.add(bd3);
+//        list.add(bd4);
+//        list.add(bd5);
     }
 }

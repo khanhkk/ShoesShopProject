@@ -1,114 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--Toolbar-->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark"
+        tools:ignore="MissingPrefix">
 
+        <TextView
+            style="@style/textOftoolbar"
+            android:text="Thông tin của tôi" />
+    </android.support.v7.widget.Toolbar>
+    <!--main-->
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fitsSystemWindows="true"
         android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/txtname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif"
-            android:text="Nguyễn Đình Bảo"
-            android:textSize="30sp" />
-
-        <ImageView
-            android:id="@+id/imginfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@mipmap/a1" />
-        <TextView
-            android:id="@+id/txtthanhvien"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Thành viên VIP"
-            android:textSize="20dp"
-            android:gravity="center"
-            android:layout_marginTop="20dp"/>
-
-        <TextView
-            android:id="@+id/txtinfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="(Giảm 10% cho mỗi đơn hàng)
-
-"
-
-            android:gravity="center"/>
+        android:orientation="horizontal"
+        android:padding="@dimen/activity_horizontal_margin">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtsdt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Số điện thoại: 01675562567
-
-" />
-
-            <TextView
-                android:id="@+id/txtemail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginTop="10dp"
-                android:text="Email: nguyenxuantoan125@gmail.com
-
-" />
-
-            <TextView
-                android:id="@+id/txtfb"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginTop="10dp"
-                android:text="FB: https://www.facebook.com/vi.vo.50159?ref=br_rs
-" />
-
-            <TextView
-                android:id="@+id/txtdc"
+                android:id="@+id/txtname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginTop="10dp"
-                android:text="Địa chỉ: 284 Cống Quỳnh - Phường Phạm Ngũ Lão 		- Quận 1 - TP. HCM
-" />
+                android:fontFamily="sans-serif"
+                android:text="Nguyễn Đình Bảo"
+                android:textSize="30sp" />
 
-            <TextView
-                android:id="@+id/txtpoint"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/imginfo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginTop="10dp"
-                android:text="Điểm tích lũy : 20 point
+                app:srcCompat="@mipmap/a1" />
+
+            <TextView
+                android:id="@+id/txtthanhvien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="Thành viên VIP"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/txtinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+
+                android:text="(Giảm 10% cho mỗi đơn hàng)" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtsdt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Số điện thoại: 01675562567
+
 " />
+
+                <TextView
+                    android:id="@+id/txtemail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="Email: nguyenxuantoan125@gmail.com
+
+" />
+
+                <TextView
+                    android:id="@+id/txtfb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="FB: https://www.facebook.com/vi.vo.50159?ref=br_rs
+" />
+
+                <TextView
+                    android:id="@+id/txtdc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="Địa chỉ: 284 Cống Quỳnh - Phường Phạm Ngũ Lão 		- Quận 1 - TP. HCM
+" />
+
+                <TextView
+                    android:id="@+id/txtpoint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="Điểm tích lũy : 20 point
+" />
+            </LinearLayout>
         </LinearLayout>
+
+
+        <ImageButton
+            android:id="@+id/btnedit"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            android:layout_gravity="top"
+            android:layout_marginRight="10dp"
+            app:srcCompat="@mipmap/a2" />
+
+
     </LinearLayout>
-
-
-    <ImageButton
-        android:id="@+id/btnedit"
-        android:layout_width="30dp"
-        android:layout_height="50dp"
-        android:layout_marginRight="10dp"
-
-        app:srcCompat="@mipmap/a2" />
-
-
-
 </LinearLayout>
