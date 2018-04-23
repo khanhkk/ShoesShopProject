@@ -46,12 +46,8 @@ public class HomeForShop extends AppCompatActivity {
 
         llContainer = (LinearLayout) findViewById(R.id.llParent);
         tabarControl = (TabarControl) findViewById(R.id.tcTabarShop);
-
-        tabarControl.setImageButton1(General.loadSampleResource(this, R.mipmap.product, 80, 80));
-        tabarControl.setImageButton2(General.loadSampleResource(this, R.mipmap.history_icon, 80, 80));
-        tabarControl.setImageButton3(General.loadSampleResource(this, R.mipmap.notify, 80, 80));
-        tabarControl.setImageButton4(General.loadSampleResource(this, R.mipmap.shop, 80, 80));
         tabarControl.setTabarFunctions(functions);
+
         Intent intent1 = getIntent();
         Bundle bundle1 = intent1.getBundleExtra(LoginActivity.BUNDLE);
         if(bundle1!=null){

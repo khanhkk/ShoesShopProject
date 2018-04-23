@@ -20,27 +20,8 @@ import tdc.edu.vn.shoesshop.R;
 public class TabarControl extends LinearLayout {
     private ImageView button1, button2, button3, button4;
     private ViewGroup group;
-    TabarFunctions tabarFunctions;
+    TabarFunctions tabarFunctions = null;
 
-    public void setImageButton1(Bitmap image)
-    {
-        button1.setImageBitmap(image);
-    }
-
-    public void setImageButton2(Bitmap image)
-    {
-        button2.setImageBitmap(image);
-    }
-
-    public void setImageButton3(Bitmap image)
-    {
-        button3.setImageBitmap(image);
-    }
-
-    public void setImageButton4(Bitmap image)
-    {
-        button4.setImageBitmap(image);
-    }
 
     public TabarControl(Context context) {
         super(context);
@@ -57,69 +38,13 @@ public class TabarControl extends LinearLayout {
         init();
     }
 
-//    public Tabar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-//        super(context, attrs, defStyleAttr, defStyleRes);
-//        init();
-//    }
-
-
-    private OnClickListener itemClicked = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            int child = group.getChildCount();
-            for(int i = 0; i < child; i++)
-            {
-                if(tabarFunctions == null)
-                    return;
-                switch(v.getId())
-                {
-                    case R.id.ibButton1:
-                        tabarFunctions.onButton1Clicked();
-                        break;
-                    case R.id.ibButton2:
-                        tabarFunctions.onButton2Clicked();
-                        break;
-                    case R.id.ibButton3:
-                        tabarFunctions.onButton3Clicked();
-                        break;
-                    case R.id.ibButton4:
-                        tabarFunctions.onButton4Clicked();
-                        break;
-                }
-
-                View btn = group.getChildAt(i);
-                if(btn.getId() == v.getId())
-                {
-                    btn.setSelected(true);
-                    btn.setBackgroundColor(getContext().getResources().getColor(R.color.bg_icon_tabar_item));
-                }
-                else
-                {
-                    btn.setSelected(false);
-                    btn.setBackgroundColor(getContext().getResources().getColor(R.color.none));
-                }
-            }
-        }
-    };
-
-    public interface TabarFunctions{
-        void onButton1Clicked();
-        void onButton2Clicked();
-        void onButton3Clicked();
-        void onButton4Clicked();
-    }
-
-    public void setTabarFunctions(TabarFunctions tabarFunctions) {
-        this.tabarFunctions = tabarFunctions;
-    }
-
-    private void init()
-    {
+    private void init() {
         ViewGroup viewGroup = (ViewGroup) inflate(getContext(), R.layout.tabar_control, this);
         group = (ViewGroup) viewGroup.getChildAt(0);
 
         button1 = (ImageView) group.findViewById(R.id.ibButton1);
         button1.setOnClickListener(itemClicked);
+        button1.setSelected(true);
 
         button2 = (ImageView) group.findViewById(R.id.ibButton2);
         button2.setOnClickListener(itemClicked);
@@ -130,4 +55,58 @@ public class TabarControl extends LinearLayout {
         button4 = (ImageView) group.findViewById(R.id.ibButton4);
         button4.setOnClickListener(itemClicked);
     }
+
+//    public Tabar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+//        super(context, attrs, defStyleAttr, defStyleRes);
+//        init();
+//    }
+
+
+    private OnClickListener itemClicked = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (tabarFunctions == null)
+                return;
+            switch (v.getId()) {
+                case R.id.ibButton1:
+                    tabarFunctions.onButton1Clicked();
+                    break;
+                case R.id.ibButton2:
+                    tabarFunctions.onButton2Clicked();
+                    break;
+                case R.id.ibButton3:
+                    tabarFunctions.onButton3Clicked();
+                    break;
+                case R.id.ibButton4:
+                    tabarFunctions.onButton4Clicked();
+                    break;
+            }
+
+            int child = group.getChildCount();
+            for (int i = 0; i < child; i++) {
+                View btn = group.getChildAt(i);
+                if (btn.getId() == v.getId()) {
+                    btn.setSelected(true);
+                } else {
+                    btn.setSelected(false);
+                }
+            }
+        }
+    };
+
+    public interface TabarFunctions {
+        void onButton1Clicked();
+
+        void onButton2Clicked();
+
+        void onButton3Clicked();
+
+        void onButton4Clicked();
+    }
+
+    public void setTabarFunctions(TabarFunctions tabarFunctions) {
+        this.tabarFunctions = tabarFunctions;
+    }
+
+
 }
