@@ -25,14 +25,12 @@
         <activity android:name=".Toan.HomeForShop" />
         <activity android:name=".Thanh.EdittingShopInformation" />
         <activity android:name=".Toan.Info_product"/>
-        <activity android:name=".Sang.ListHistoryTransaction" />
         <activity android:name=".Sang.Bills" />
         <activity android:name=".Toan.RatingOfClient" />
         <activity android:name=".Thanh.EdittingClientInformation" />
         <activity android:name=".Toan.ProductInformation" />
         <activity android:name=".Sang.QuantityManagement" />
         <activity android:name=".Sang.ChangePassword" />
-        <activity android:name=".Bao.MainCilent" />
         <activity android:name=".Son.OrderInformationForShop" />
         <activity android:name=".Son.ClientInformationAfterOrder" />
         <activity android:name=".Toan.HomeLayout" />
@@ -47,9 +45,7 @@
         <activity android:name=".Sang.ListOder"/>
         <activity android:name=".Son.OrderInformationForClient"/>
         <activity android:name=".Bao.MainCustomer"/>
-        <activity android:name=".Bao.MainShop"/>
         <activity android:name=".Bao.MainInfoShop"/>
         <activity android:name=".Bao.MainInfoCilent"/>
-
     </application>
 </manifest>
