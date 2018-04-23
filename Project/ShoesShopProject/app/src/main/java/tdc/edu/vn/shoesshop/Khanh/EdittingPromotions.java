@@ -1,6 +1,11 @@
 package tdc.edu.vn.shoesshop.Khanh;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,10 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 import Controls.DateTimePicker;
 import Controls.General;
@@ -26,15 +30,20 @@ import Models.Promotion;
 import tdc.edu.vn.shoesshop.R;
 
 public class EdittingPromotions extends AppCompatActivity {
+
+
     Button btnSave;
-    ImageButton btnBack;
+    ImageButton btnBack, btnChange;
     DateTimePicker dtTimeStart;
     DateTimePicker dtTimeEnd;
     EditText etName, etContent;
+
     Intent intent;
     Bundle bundle = null;
     Promotion promotion = null;
-    //SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private Dialog dialog;
+
+    String image = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +60,11 @@ public class EdittingPromotions extends AppCompatActivity {
         btnBack = (ImageButton) findViewById(R.id.btnBack);
         etName = (EditText) findViewById(R.id.edtNameProgram);
         etContent = (EditText) findViewById(R.id.edtContent);
+        btnChange = (ImageButton) findViewById(R.id.btnChangeImage);
+
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog);
+        dialog.setTitle("Choose Avatar Image");
 
         General.setupUI(findViewById(R.id.llPromotionsLayout), EdittingPromotions.this);
 
@@ -153,6 +167,40 @@ public class EdittingPromotions extends AppCompatActivity {
                 }
             }
         });
+
+        btnChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                General.chooseFromGallery(EdittingPromotions.this);
+                //General.chooseFromCamera(EdittingPromotions.this);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == General.REQUEST_IMAGE_CAPTURE && resultCode == EdittingPromotions.this.RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            btnChange.setImageBitmap(imageBitmap);
+            image = General.encodeBitmap(imageBitmap);
+        }
+
+        if (resultCode == EdittingPromotions.this.RESULT_OK && requestCode == General.CAM_REQUEST) {
+            Uri picUri = data.getData();
+            Bitmap bitmap;
+            try {
+                Context applicationContext = dialog.getContext();
+                bitmap = BitmapFactory.decodeStream(applicationContext.getContentResolver().openInputStream(picUri));
+                btnChange.setImageBitmap(bitmap);
+                image = General.encodeBitmap(bitmap);
+                dialog.dismiss();
+            } catch (FileNotFoundException e){
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

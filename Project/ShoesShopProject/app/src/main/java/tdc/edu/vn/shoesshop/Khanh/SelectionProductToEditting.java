@@ -11,16 +11,17 @@ import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import Adapters.ProductExpandListAdapter;
 import Models.Product;
 import Models.ProductDetail;
-import Models.Shop;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Sang.QuantityManagement;
-import tdc.edu.vn.shoesshop.Thanh.DetailInformationOfProduct;
 import tdc.edu.vn.shoesshop.Toan.HomeForShop;
 
 public class SelectionProductToEditting extends AppCompatActivity {
@@ -33,6 +34,8 @@ public class SelectionProductToEditting extends AppCompatActivity {
     Button btnFinish;
     ImageButton btnBack;
     Intent intent;
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,13 +133,17 @@ public class SelectionProductToEditting extends AppCompatActivity {
         children = new HashMap<>();
         products = new ArrayList<>();
 
-        Shop shop = new Shop("SH0001", "MiuMiu", "01512151211");
+        //Shop shop = new Shop("SH0001", "MiuMiu", "01512151211");
         ArrayList<ProductDetail> details = new ArrayList<>();
 
-        Product product = new Product("SP0001", "giay hang hieu 1", 1290000, 900000, shop.getId(), null);
-        Product product2 = new Product("SP0002", "giay di phuot 2", 175000, 150000, shop.getId(), null);
-        Product product3 = new Product("SP0003", "giay thoi trang 3", 239000, 200000, shop.getId(), null);
-        Product product4 = new Product("SP0004", "giay the thao 4", 299000, 250000, shop.getId(), null);
+//        Product product = new Product("SP0001", "giay hang hieu 1", 1290000, 900000, shop.getId(), null);
+//        Product product2 = new Product("SP0002", "giay di phuot 2", 175000, 150000, shop.getId(), null);
+//        Product product3 = new Product("SP0003", "giay thoi trang 3", 239000, 200000, shop.getId(), null);
+//        Product product4 = new Product("SP0004", "giay the thao 4", 299000, 250000, shop.getId(), null);
+        Product product = new Product("SP0001", "giay the thao","Nike", null, user.getUid(), "1 thang", 0, null, null, null , 1290000, 900000, 3, null);
+        Product product2 = new Product("SP0002", "giay thoi trang","Bittis", null, user.getUid(), "1 thang", 0, null, null, null , 1290000, 900000, 3, null);
+        Product product3 = new Product("SP0003", "giay di phuot","", null, user.getUid(), "1 thang", 0, null, null, null , 1290000, 900000, 3, null);
+        Product product4 = new Product("SP0004", "giay bao ho","Nike", null, user.getUid(), "1 thang", 0, null, null, null , 1290000, 900000, 3, null);
 
         ProductDetail pd = new ProductDetail(product.getId(),1, 38, "xanh la cay", 10);
         ProductDetail pd2 = new ProductDetail(product.getId(),2, 39, "xanh la cay", 10);

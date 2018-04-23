@@ -12,6 +12,8 @@ import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +29,6 @@ import Adapters.PromotionExpandableListAdapter;
 import Models.Product;
 import Models.Promotion;
 import Models.PromotionsDetail;
-import Models.Shop;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Thanh.EditingPromotionDetail;
 import tdc.edu.vn.shoesshop.Toan.HomeForClient;
@@ -47,6 +48,7 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
     // Write data to the database
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     final DatabaseReference myRef = database.getReference();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public static PromotionExpandableListAdapter adapter;
     Intent intent;
@@ -299,20 +301,19 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
     {
         listParent.clear();
         listCopy.clear();
-        Shop shop = new Shop("SH0001", "MiuMiu", "01512151211");
+        //Shop shop = new Shop("SH0001", "MiuMiu", "01512151211");
 
-        Product product = new Product("SP0001", "giay1dsfđsàdsffsádf", 1290000, 900000, shop.getId(), null);
-        Product product2 = new Product("SP0002", "giay2dfasdfdsfsadffasd", 175000, 150000, shop.getId(), null);
-        Product product3 = new Product("SP0003", "giay3dàdsfads", 239000, 200000, shop.getId(), null);
-        Product product4 = new Product("SP0004", "giay4dfadsfsdfasdfsfsafdfdsfffdfdas fsd fdsfdsfdsfdsfsdf", 299000, 250000, shop.getId(), null);
+        Product product = new Product("SP0001", "giay the thao","Nike", null, user.getUid(), "1 thang", 0, null, null, null , 1290000, 900000, 3, null);
+        Product product2 = new Product("SP0002", "giay thoi trang","Bittis", null, user.getUid(), "1 thang", 0, null, null, null , 1290000, 900000, 3, null);
+        Product product3 = new Product("SP0003", "giay di phuot","", null, user.getUid(), "1 thang", 0, null, null, null , 1290000, 900000, 3, null);
+        Product product4 = new Product("SP0004", "giay bao ho","Nike", null, user.getUid(), "1 thang", 0, null, null, null , 1290000, 900000, 3, null);
 
 
-
-        Promotion promotions = new Promotion(1,"Chương trình khuyến mãi 1", "fjds hgfds fhasjfd jfhads jndsjfdsajfdsh jda hjfd hds fd hd","10/04/2018 07:00", "20/04/2018 10:00", null);
-        Promotion promotions2 = new Promotion(2,"Chương trình khuyến mãi 2", null,"11/04/2018 10:00","21/04/2018 17:00", null);
-        Promotion promotions3 = new Promotion(3,"Chương trình khuyến mãi 3", null, "12/04/2018 11:00","22/04/2018 18:00", null);
-        Promotion promotions4 = new Promotion(4,"Chương trình khuyến mãi 4", null, "13/04/2018 07:00","23/04/2018 17:30", null);
-        Promotion promotions5 = new Promotion(5,"Chương trình khuyến mãi 5", null,"14/04/2018 08:00", "24/04/2018 18:30", null);
+        Promotion promotions = new Promotion(1,"Chương trình khuyến mãi 1", user.getUid(), "fjds hgfds fhasjfd jfhads jndsjfdsajfdsh jda hjfd hds fd hd","10/04/2018 07:00", "20/04/2018 10:00", null, null);
+        Promotion promotions2 = new Promotion(2,"Chương trình khuyến mãi 2", user.getUid(), null,"11/04/2018 10:00","21/04/2018 17:00", null, null);
+        Promotion promotions3 = new Promotion(3,"Chương trình khuyến mãi 3", user.getUid(), null, "12/04/2018 11:00","22/04/2018 18:00", null, null);
+        Promotion promotions4 = new Promotion(4,"Chương trình khuyến mãi 4", user.getUid(), null, "13/04/2018 07:00","23/04/2018 17:30", null, null);
+        Promotion promotions5 = new Promotion(5,"Chương trình khuyến mãi 5", user.getUid(), null,"14/04/2018 08:00", "24/04/2018 18:30", null, null);
 
 //
         promotionsDetailArrayList.clear();

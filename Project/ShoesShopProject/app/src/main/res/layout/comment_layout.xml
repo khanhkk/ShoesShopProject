@@ -14,7 +14,8 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         app:theme="@style/ThemeOverlay.AppCompat.Dark"
-        tools:ignore="MissingPrefix" >
+        tools:ignore="MissingPrefix">
+
         <TextView
             style="@style/textOftoolbar"
             android:text="Viết đánh giá"/>

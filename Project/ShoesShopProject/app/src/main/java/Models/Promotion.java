@@ -1,30 +1,25 @@
 package Models;
 
-import java.util.HashMap;
-
 /**
  * Created by kk on 01/04/2018.
  */
 
 public class Promotion {
     private int id;
-    private String title, content;
-    private String dateStart, dateEnd;
-    //private ArrayList<PromotionsDetail> listDetail;
-    //private HashMap<String, Integer> details;
-    String listDetail;
+    private String dateStart, dateEnd, shop, title, content, image, listDetail;
 
     public Promotion() {
     }
 
-    public Promotion(int id, String title, String content, String dateStart, String dateEnd, String listDetail) {
+    public Promotion(int id, String title , String shop, String content, String dateStart, String dateEnd,String image, String listDetail) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
         this.listDetail = listDetail;
-        //this.details = listDetail;
+        this.shop = shop;
+        this.image = image;
     }
 
     public int getId() {
@@ -73,6 +68,22 @@ public class Promotion {
 
     public void setListDetail(String listDetail) {
         this.listDetail = listDetail;
+    }
+
+    public String getShop() {
+        return shop;
+    }
+
+    public void setShop(String shop) {
+        this.shop = shop;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     //    public HashMap<String, Integer> getDetails() {
