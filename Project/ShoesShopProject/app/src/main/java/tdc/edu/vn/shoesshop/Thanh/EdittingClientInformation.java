@@ -22,10 +22,10 @@ public class EdittingClientInformation extends AppCompatActivity {
         setContentView(R.layout.editting_client_information_activity);
 
         Button save = (Button) findViewById(R.id.btnLuu);
-        EditText ten = (EditText) findViewById(R.id.ten);
-        EditText sdt = (EditText) findViewById(R.id.sdt);
-        EditText diachi = (EditText) findViewById(R.id.diachi);
-        EditText email = (EditText) findViewById(R.id.email);
+        edtten = (EditText) findViewById(R.id.ten);
+         edtsdt = (EditText) findViewById(R.id.sdt);
+         edtdiachi = (EditText) findViewById(R.id.diachi);
+         edtemail = (EditText) findViewById(R.id.email);
 
         General.setupUI(findViewById(R.id.editting_client_information), EdittingClientInformation.this);
         save.setOnClickListener(new View.OnClickListener() {
@@ -35,7 +35,7 @@ public class EdittingClientInformation extends AppCompatActivity {
                 int sdt = Integer.parseInt(edtsdt.getText().toString().trim());
                 String diachi = edtdiachi.getText().toString().trim();
                 String email = edtemail.getText().toString().trim();
-                if(TextUtils.isEmpty(ten)){
+                if (TextUtils.isEmpty(ten)){
                     Toast.makeText(getApplicationContext(), "Please enter name!", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -51,7 +51,7 @@ public class EdittingClientInformation extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please enter Email", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if ((edtsdt.getText()+" ").length() < 10 || (edtsdt.getText()+ "").length()>11){
+                if ((edtsdt.getText()+" ").length() <= 10 || (edtsdt.getText()+ "").length() >= 11){
                     Toast.makeText(getApplicationContext(), "Please Characters Between 10-11", Toast.LENGTH_LONG).show();
                     edtsdt.setText("");
                     edtsdt.findFocus();
