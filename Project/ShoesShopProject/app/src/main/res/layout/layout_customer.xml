@@ -31,7 +31,7 @@
                 android:id="@+id/imgthongbao"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                app:srcCompat="@mipmap/notification"
+                app:srcCompat="@mipmap/thongbao"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="5dp" />

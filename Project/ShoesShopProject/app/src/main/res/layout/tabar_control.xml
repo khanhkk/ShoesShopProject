@@ -7,18 +7,22 @@
 
     <ImageView
         android:id="@+id/ibButton1"
-        style="@style/image_button_tabar"/>
+        style="@style/image_button_tabar"
+        android:src="@drawable/home"/>
 
     <ImageView
         android:id="@+id/ibButton2"
-        style="@style/image_button_tabar"/>
+        style="@style/image_button_tabar"
+        android:src="@drawable/notification"/>
 
     <ImageView
         android:id="@+id/ibButton3"
-        style="@style/image_button_tabar"/>
+        style="@style/image_button_tabar"
+        android:src="@drawable/cart"/>
 
     <ImageView
         android:id="@+id/ibButton4"
-        style="@style/image_button_tabar"/>
+        style="@style/image_button_tabar"
+        android:src="@drawable/account"/>
 
 </LinearLayout>
