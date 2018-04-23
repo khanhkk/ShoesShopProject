@@ -46,6 +46,6 @@
         <activity android:name=".Bao.MainCustomer"/>
         <activity android:name=".Bao.MainInfoShop"/>
         <activity android:name=".Bao.MainInfoCilent"/>
-
+        <activity android:name=".Khanh.SelectionProductToEditting"/>
     </application>
 </manifest>
