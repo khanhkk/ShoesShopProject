@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import Controls.General;
 import tdc.edu.vn.shoesshop.Khanh.Promotions;
-import tdc.edu.vn.shoesshop.Khanh.SelectionProductToEditting;
 import tdc.edu.vn.shoesshop.R;
 
 public class EditingPromotionDetail extends AppCompatActivity {
@@ -37,12 +36,9 @@ public class EditingPromotionDetail extends AppCompatActivity {
         if(bundle != null)
         {}
 
-
-
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String sanpham = edtsanpham.getText().toString().trim();
                 String quatang = edtquatang.getText().toString().trim();
                 String giamgia = edtgiamgia.getText().toString().trim();
@@ -60,12 +56,12 @@ public class EditingPromotionDetail extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please enter sale", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (giaban <  100000 || giaban > 200000){
+                if (giaban <=  0 ){
                     Toast.makeText(getApplicationContext(), "Please Characters Between 100000-200000", Toast.LENGTH_LONG).show();                    edtgiaban.setText("");
                     edtgiaban.requestFocus();
                     return;
                 }
-                if(giauudai < 100000 || giauudai > 200000){
+                if(giauudai <= 0 || giauudai > giaban){
                     Toast.makeText(getApplicationContext(), "Please Characters Between 100000-200000", Toast.LENGTH_SHORT).show();
                     edtgiauudai.setText("");
                     edtgiauudai.requestFocus();
@@ -74,7 +70,6 @@ public class EditingPromotionDetail extends AppCompatActivity {
                 intent.setClass(EditingPromotionDetail.this, Promotions.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
-
             }
         });
     }
