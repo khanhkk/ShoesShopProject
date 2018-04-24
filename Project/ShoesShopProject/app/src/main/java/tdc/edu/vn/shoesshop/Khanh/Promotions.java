@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -39,8 +40,9 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
     SearchView svSearchPromotions;
     ImageButton btnAdd, btnBack;
     HashMap<Promotion,ArrayList<PromotionsDetail>> list = new HashMap<>();
-    static ArrayList<Promotion> listParent = new ArrayList<>(), listCopy = new ArrayList<>();
-    ArrayList<PromotionsDetail> promotionsDetailArrayList = new ArrayList<>();
+    public static ArrayList<Promotion> listParent = new ArrayList<>();
+    ArrayList<Promotion> listCopy = new ArrayList<>();
+     ArrayList<PromotionsDetail> promotionsDetailArrayList = new ArrayList<>();
     Promotion pro = new Promotion();
 
     //public static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -57,9 +59,6 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.promotions_activity);
-
-
-
 
         btnBack = (ImageButton) findViewById(R.id.btnBack);
         btnAdd = (ImageButton)findViewById(R.id.btnAddPromotions);
@@ -89,7 +88,7 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
 //            myRef.child("Promotions").push().setValue(promotion);
 //        }
 
-        Query allPromtions = myRef.child("Promotions");
+        Query allPromtions = myRef.child("Promotions").orderByChild("shop").equalTo(user.getUid());
         listParent.clear();
         list.clear();
         listCopy.clear();
@@ -134,18 +133,14 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
                 listCopy.add(por);
                 list.put(por, null);
 
-                //Log.d("key", listParent.size() + "");
-                if(por.getListDetail() != null) {
-                    String a[] = por.getListDetail().split("#");
+                Log.d("key", listParent.size() + "");
+                if(promotionsDetailArrayList.size() > 0) {
                     ArrayList<PromotionsDetail> arr = new ArrayList<>();
-                    for (String str : a) {
                         for (PromotionsDetail p : promotionsDetailArrayList) {
-                            if (p.getId() == Integer.parseInt(str)) {
+                            if (p.getPromotions() == por.getId()) {
                                 arr.add(p);
-
                             }
                         }
-                    }
                     list.put(por, arr);
                 }
 
@@ -238,8 +233,7 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
                 case R.id.cmSua:
                     Toast.makeText(Promotions.this, "sua" + promotionsDetail.getProduct(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(Promotions.this, EditingPromotionDetail.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("detail", promotionsDetail.getId()+ "");
+                    intent.putExtra("detail", (Serializable) promotionsDetail);
                     startActivity(intent);
                     break;
 
@@ -260,34 +254,34 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
                         }
                     });
 
-                    int key = promotionsDetailArrayList.get(child).getPromotions();
-
-                    String s[]=listParent.get(key-1).getListDetail().split("#");
-                    String list = "";
-                    for (String a:s) {
-                        Log.d("a",a + " " + promotionsDetailArrayList.get(child).getId());
-                        if(Integer.parseInt(a) != (promotionsDetailArrayList.get(child).getId())){
-                            list = list + a +"#";
-                        }
-                    }
-                    Log.d("ab",list);
-
-                    pro = listParent.get(key-1);
-                    pro.setListDetail(list);
-                    Log.d("aa",pro.getListDetail());
-
-                    myRef.child("Promotions").orderByChild("id").equalTo(key).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                child.getRef().setValue(pro);
-                            }
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
+//                    int key = promotionsDetailArrayList.get(child).getPromotions();
+//
+//                    String s[]=listParent.get(key-1).getListDetail().split("#");
+//                    String list = "";
+//                    for (String a:s) {
+//                        Log.d("a",a + " " + promotionsDetailArrayList.get(child).getId());
+//                        if(Integer.parseInt(a) != (promotionsDetailArrayList.get(child).getId())){
+//                            list = list + a +"#";
+//                        }
+//                    }
+//                    Log.d("ab",list);
+//
+//                    pro = listParent.get(key-1);
+//                    pro.setListDetail(list);
+//                    Log.d("aa",pro.getListDetail());
+//
+//                    myRef.child("Promotions").orderByChild("id").equalTo(key).addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            for (DataSnapshot child : dataSnapshot.getChildren()) {
+//                                child.getRef().setValue(pro);
+//                            }
+//                        }
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
                     adapter.notifyDataSetChanged();
                     break;
             }
@@ -309,18 +303,18 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
         Product product4 = new Product("SP0004", "giay bao ho","Nike", null, user.getUid(), "1 thang", 0, null, null, null , 1290000, 900000, 3, null);
 
 
-        Promotion promotions = new Promotion(1,"Chương trình khuyến mãi 1", user.getUid(), "fjds hgfds fhasjfd jfhads jndsjfdsajfdsh jda hjfd hds fd hd","10/04/2018 07:00", "20/04/2018 10:00", null, null);
-        Promotion promotions2 = new Promotion(2,"Chương trình khuyến mãi 2", user.getUid(), null,"11/04/2018 10:00","21/04/2018 17:00", null, null);
-        Promotion promotions3 = new Promotion(3,"Chương trình khuyến mãi 3", user.getUid(), null, "12/04/2018 11:00","22/04/2018 18:00", null, null);
-        Promotion promotions4 = new Promotion(4,"Chương trình khuyến mãi 4", user.getUid(), null, "13/04/2018 07:00","23/04/2018 17:30", null, null);
-        Promotion promotions5 = new Promotion(5,"Chương trình khuyến mãi 5", user.getUid(), null,"14/04/2018 08:00", "24/04/2018 18:30", null, null);
+//        Promotion promotions = new Promotion(1,"Chương trình khuyến mãi 1", user.getUid(), "fjds hgfds fhasjfd jfhads jndsjfdsajfdsh jda hjfd hds fd hd","10/04/2018 07:00", "20/04/2018 10:00", null, null);
+//        Promotion promotions2 = new Promotion(2,"Chương trình khuyến mãi 2", user.getUid(), null,"11/04/2018 10:00","21/04/2018 17:00", null, null);
+//        Promotion promotions3 = new Promotion(3,"Chương trình khuyến mãi 3", user.getUid(), null, "12/04/2018 11:00","22/04/2018 18:00", null, null);
+//        Promotion promotions4 = new Promotion(4,"Chương trình khuyến mãi 4", user.getUid(), null, "13/04/2018 07:00","23/04/2018 17:30", null, null);
+//        Promotion promotions5 = new Promotion(5,"Chương trình khuyến mãi 5", user.getUid(), null,"14/04/2018 08:00", "24/04/2018 18:30", null, null);
 
 //
         promotionsDetailArrayList.clear();
-        PromotionsDetail promotionsDetail = new PromotionsDetail(1, 10, promotions.getId(), product.getId(), "Vớ cao cấp",0);
-        PromotionsDetail promotionsDetail2 = new PromotionsDetail(2, 20, promotions.getId(), product2.getId(), null, 0);
-        PromotionsDetail promotionsDetail3 = new PromotionsDetail(3, 15, promotions.getId(), product3.getId(), "Miếng lót giày", 0);
-        PromotionsDetail promotionsDetail4 = new PromotionsDetail(4, 0, promotions.getId(), product4.getId(), "vòng tay thời trang",10);
+//        PromotionsDetail promotionsDetail = new PromotionsDetail(1, 10, promotions.getId(), product.getId(), "Vớ cao cấp",0);
+//        PromotionsDetail promotionsDetail2 = new PromotionsDetail(2, 20, promotions.getId(), product2.getId(), null, 0);
+//        PromotionsDetail promotionsDetail3 = new PromotionsDetail(3, 15, promotions.getId(), product3.getId(), "Miếng lót giày", 0);
+//        PromotionsDetail promotionsDetail4 = new PromotionsDetail(4, 0, promotions.getId(), product4.getId(), "vòng tay thời trang",10);
 
 //        HashMap<String,Integer> list = new HashMap<>();
 //        list.put(promotionsDetail.getId()+"", promotionsDetail.getId());
@@ -335,10 +329,10 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
 //        promotions4.setDetails(list);
 //        promotions5.setDetails(list);
 
-            promotionsDetailArrayList.add(promotionsDetail);
-            promotionsDetailArrayList.add(promotionsDetail2);
-            promotionsDetailArrayList.add(promotionsDetail3);
-            promotionsDetailArrayList.add(promotionsDetail4);
+//            promotionsDetailArrayList.add(promotionsDetail);
+//            promotionsDetailArrayList.add(promotionsDetail2);
+//            promotionsDetailArrayList.add(promotionsDetail3);
+//            promotionsDetailArrayList.add(promotionsDetail4);
 
 //            promotions.setListDetail(promotionsDetailArrayList);
 //            promotions2.setListDetail(promotionsDetailArrayList);
@@ -360,17 +354,17 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
             s += promotionsDetailArrayList.get(i).getId() + "#";
         }
 
-        promotions.setListDetail(s);
+        //promotions.setListDetail(s);
 //        promotions2.setListDetail(s);
 //        promotions3.setListDetail(s);
 //        promotions4.setListDetail(s);
 //        promotions5.setListDetail(s);
 
-        listParent.add(promotions);
-        listParent.add(promotions2);
-        listParent.add(promotions3);
-        listParent.add(promotions4);
-        listParent.add(promotions5);
+//        listParent.add(promotions);
+//        listParent.add(promotions2);
+//        listParent.add(promotions3);
+//        listParent.add(promotions4);
+//        listParent.add(promotions5);
     }
 
     @Override

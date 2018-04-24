@@ -180,6 +180,9 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(_context, EditingPromotionDetail.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("key", String.valueOf(member.getId()));
+                intent.putExtra("data", bundle);
                 _context.startActivity(intent);
             }
         });
@@ -217,8 +220,6 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
 
                     }
                 });
-
-
 
                 _childList.remove(_listDataHeader.get(groupPosition));
                 _listDataHeader.remove(groupPosition);

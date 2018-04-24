@@ -167,7 +167,6 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
         else
         {
             viewHolder.llListElement.setVisibility(View.GONE);
-
         }
 
         viewHolder.btnEdit.setOnClickListener(new View.OnClickListener() {

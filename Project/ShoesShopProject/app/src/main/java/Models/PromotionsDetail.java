@@ -6,14 +6,13 @@ package Models;
 
 public class PromotionsDetail {
     private int id, discount, point;
-    private int promotions;
-    private String product, gift;
+    private String product, gift,promotions;
 
 
     public PromotionsDetail() {
     }
 
-    public PromotionsDetail(int id, int discount, int promotions, String product, String gift, int point) {
+    public PromotionsDetail(int id, int discount, String promotions, String product, String gift, int point) {
         this.id = id;
         this.discount = discount;
         this.promotions = promotions;
@@ -38,11 +37,11 @@ public class PromotionsDetail {
         this.discount = discount;
     }
 
-    public int getPromotions() {
+    public String getPromotions() {
         return promotions;
     }
 
-    public void setPromotions(int promotions) {
+    public void setPromotions(String promotions) {
         this.promotions = promotions;
     }
 

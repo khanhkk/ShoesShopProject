@@ -11,12 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="8"
+        android:layout_margin="10dp"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:weightSum="100"
-            android:layout_marginLeft="10dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="0dp"
@@ -25,18 +25,17 @@
                 android:textColor="#050503"
                 android:gravity="center_vertical"
                 android:text="Sản phẩm :"/>
-            <EditText
+            <Spinner
                 android:layout_width="0dp"
-                android:layout_height="fill_parent"
+                android:layout_height="50dp"
                 android:layout_weight="70"
-                android:id="@+id/sanpham"
+                android:id="@+id/spnSanPham"
                 android:layout_marginRight="10dp"/>
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:orientation="horizontal"
             android:weightSum="100">
             <TextView
@@ -58,7 +57,6 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:weightSum="100"
             android:orientation="horizontal">
             <TextView
@@ -79,7 +77,6 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:weightSum="100"
             android:orientation="horizontal">
             <TextView
@@ -100,7 +97,6 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:weightSum="100"
             android:orientation="horizontal">
             <TextView

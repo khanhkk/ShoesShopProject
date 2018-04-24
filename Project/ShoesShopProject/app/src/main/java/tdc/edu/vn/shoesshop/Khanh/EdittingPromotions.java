@@ -8,12 +8,15 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,14 +48,17 @@ public class EdittingPromotions extends AppCompatActivity {
 
     String image = null;
 
+    // Write data to the database
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    final DatabaseReference myRef = database.getReference();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editting_promotions_activity);
 
-        // Write data to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference();
+
 
         dtTimeEnd = (DateTimePicker)findViewById(R.id.dateEnd);
         dtTimeStart = (DateTimePicker)findViewById(R.id.dateStart);
@@ -73,10 +79,12 @@ public class EdittingPromotions extends AppCompatActivity {
         if(bundle != null)
         {
             String str = bundle.getString("data");
+            Log.d("aaa", str);
             for (int i = 0; i < Promotions.listParent.size() ; i++)
             {
-                if(Promotions.listParent.get(i).getId() == Integer.parseInt(str))
+                if(Promotions.listParent.get(i).getId().equals(str))
                 {
+
                     promotion = Promotions.listParent.get(i);
                     break;
                 }
@@ -127,12 +135,20 @@ public class EdittingPromotions extends AppCompatActivity {
                     promotion.setDateStart(DateTimePicker.simpleDateFormat.format(dtTimeStart.getDate()));
                     promotion.setDateEnd(DateTimePicker.simpleDateFormat.format(dtTimeEnd.getDate()));
                     promotion.setContent(etContent.getText() + "");
+                    promotion.setShop(user.getUid());
+                    if(image != null)
+                    {
+                        promotion.setImage(image);
+                    }
                     myRef.child("Promotions").orderByChild("id").equalTo(promotion.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for (DataSnapshot child: dataSnapshot.getChildren()) {
                                 child.getRef().setValue(promotion);
                             }
+                            Toast.makeText(EdittingPromotions.this, "Sua thanh cong!", Toast.LENGTH_SHORT).show();
+                            intent.setClass(EdittingPromotions.this, Promotions.class);
+                            startActivity(intent);
                         }
 
                         @Override
@@ -141,9 +157,6 @@ public class EdittingPromotions extends AppCompatActivity {
                         }
                     });
 
-                    intent.setClass(EdittingPromotions.this, Promotions.class);
-                    //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    startActivity(intent);
                 }
                 else
                 {
@@ -152,18 +165,19 @@ public class EdittingPromotions extends AppCompatActivity {
                     promotion.setDateStart(DateTimePicker.simpleDateFormat.format(dtTimeStart.getDate()));
                     promotion.setDateEnd(DateTimePicker.simpleDateFormat.format(dtTimeEnd.getDate()));
                     promotion.setContent(etContent.getText() + "");
-                    if(Promotions.listParent.size()>0) {
-                        promotion.setId(Promotions.listParent.get(Promotions.listParent.size() - 1).getId() + 1);
-                    }
-                    else
+                    promotion.setShop(user.getUid());
+                    if(image != null)
                     {
-                        promotion.setId(0);
+                        promotion.setImage(image);
                     }
-
+                    String s = myRef.child("Promotions").push().getKey();
+                    promotion.setId(s);
                     myRef.child("Promotions").push().setValue(promotion);
+
+                    Toast.makeText(EdittingPromotions.this, "Them thanh cong!", Toast.LENGTH_SHORT).show();
                     intent.setClass(EdittingPromotions.this, Promotions.class);
-                    //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent);
+
                 }
             }
         });
