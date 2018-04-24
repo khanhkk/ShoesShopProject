@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Toan.LoginActivity">
+            android:name=".Thanh.DetailInformationOfProduct">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -38,7 +38,7 @@
         <activity android:name=".Toan.Comment_Activity" />
         <activity android:name=".Toan.SignupActivity" />
         <activity android:name=".Toan.ResetPasswordActivity" />
-        <activity android:name=".Thanh.DetailInformationOfProduct" />
+        <activity android:name=".Toan.LoginActivity" />
         <activity android:name=".Toan.HomeForClient" />
         <activity android:name=".Khanh.EdittingPromotions"/>
         <activity android:name=".Sang.ListOder"/>

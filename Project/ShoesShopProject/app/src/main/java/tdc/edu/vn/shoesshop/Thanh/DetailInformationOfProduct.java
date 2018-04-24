@@ -1,5 +1,6 @@
 package tdc.edu.vn.shoesshop.Thanh;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,16 +28,15 @@ import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Toan.HomeForShop;
 
 public class DetailInformationOfProduct extends AppCompatActivity {
+    private static final int CAM_REQUEST = 1313;
     private Dialog dialog;
-
+    ImageButton btn_chooseImg,btn_takeaphoto;
     final int CROP_PIC = 2;
     private Uri picUri;
     private Button btn_getimage;
     private Button btnSave;
     private EditText edttensanpham, edtthuonghieu, edtbaohanh, edtgianiemyet, edtgiaban, edtdiemtichluy, edtmota;
     ImageView img_ava_patient1;
-    ImageView img_ava_patient2;
-    ImageView img_ava_patient3;
 
     @Nullable
     @Override
@@ -64,8 +65,8 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         dialog.setContentView(R.layout.dialog);
         dialog.setTitle("Choose Avatar Image");
 
-        ImageButton btn_chooseImg = (ImageButton) dialog.findViewById(R.id.img_choosenGallery);
-        ImageButton btn_takeaphoto = (ImageButton) dialog.findViewById(R.id.img_choosenTakephoto);
+        btn_chooseImg = (ImageButton) dialog.findViewById(R.id.img_choosenGallery);
+        btn_takeaphoto = (ImageButton) dialog.findViewById(R.id.img_choosenTakephoto);
         btnSave = (Button) findViewById(R.id.btnSaveProductInformation) ;
 
 
@@ -82,21 +83,17 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         btn_chooseImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                General.chooseFromGallery(DetailInformationOfProduct.this);
+                chooseFromGallery();
             }
         });
-
         btn_takeaphoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                profilepictureOnClick();
+                takeNewProfilePicture();
             }
         });
-
         img_ava_patient1 = (ImageView) findViewById(R.id.imgView_info1);
-        img_ava_patient2 = (ImageView) findViewById(R.id.imgView_info2);
-        img_ava_patient3 = (ImageView) findViewById(R.id.imgView_info3);
+
 
 
         btn_getimage = (Button) findViewById(R.id.btn_infor);
@@ -166,38 +163,43 @@ public class DetailInformationOfProduct extends AppCompatActivity {
     public void profilepictureOnClick(){
         General.chooseFromCamera(DetailInformationOfProduct.this);
     }
+    public void chooseFromGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, 0);
+    }
 
+
+    private void takeNewProfilePicture(){
+        Activity profileFrag = this;
+        Intent cameraintent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        profileFrag.startActivityForResult(cameraintent, CAM_REQUEST);
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK && requestCode == General.CAM_REQUEST) {
-            if (requestCode == General.CAM_REQUEST) {
-                Bitmap thumbnail1 = (Bitmap) data.getExtras().get("data");
-                Bitmap thumbnail2 = (Bitmap) data.getExtras().get("data");
-                Bitmap thumbnail3 = (Bitmap) data.getExtras().get("data");
+        if(resultCode == RESULT_OK && requestCode == CAM_REQUEST) {
+            if(requestCode == CAM_REQUEST){
+                Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
                 //  picUri = data.getData();
-                img_ava_patient1.setImageBitmap(thumbnail1);
-                img_ava_patient2.setImageBitmap(thumbnail2);
-                img_ava_patient3.setImageBitmap(thumbnail3);
+                img_ava_patient1.setImageBitmap(thumbnail);
                 dialog.dismiss();
             }
-        } else if (resultCode == RESULT_OK) {
+        }
+        else if (resultCode == RESULT_OK){
             picUri = data.getData();
 
             // Uri targetUri = data.getData();
             //  textTargetUri.setText(targetUri.toString());
-            Bitmap bitmap1, bitmap2, bitmap3;
+            Bitmap bitmap;
             try {
                 Context applicationContext = dialog.getContext();
-                bitmap1 = BitmapFactory.decodeStream(applicationContext.getContentResolver().openInputStream(picUri));
-                bitmap2 = BitmapFactory.decodeStream(applicationContext.getContentResolver().openInputStream(picUri));
-                bitmap3 = BitmapFactory.decodeStream(applicationContext.getContentResolver().openInputStream(picUri));
-                img_ava_patient1.setImageBitmap(bitmap1);
-                img_ava_patient2.setImageBitmap(bitmap2);
-                img_ava_patient3.setImageBitmap(bitmap3);
+                bitmap = BitmapFactory.decodeStream( applicationContext.getContentResolver().openInputStream(picUri));
+                img_ava_patient1.setImageBitmap(bitmap);
+
                 dialog.dismiss();
-            } catch (FileNotFoundException e){
+            } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }

@@ -124,10 +124,9 @@
 
         <Button
             android:id="@+id/btnLuu"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="#000000"
+            android:textColor="#000"
             android:background="#5082bd"
             android:text="Lưu"
             android:layout_gravity="bottom"/>
