@@ -13,6 +13,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,8 +32,9 @@ import tdc.edu.vn.shoesshop.Toan.HomeForShop;
 public class SelectionProductToEditting extends AppCompatActivity {
 
     public static ProductExpandListAdapter adapter;
-    ArrayList<Product> products;
-    HashMap<Product, ArrayList<ProductDetail>> children;
+    ArrayList<Product> products = new ArrayList<>();
+    HashMap<Product, ArrayList<ProductDetail>> children = new HashMap<>();
+    ArrayList<ProductDetail> details = new ArrayList<>();
 
     ExpandableListView lvList;
     Button btnFinish;
@@ -41,6 +47,9 @@ public class SelectionProductToEditting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selection_product_to_editting_activity);
+
+        final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+
         lvList = (ExpandableListView) findViewById(R.id.lvListProduct);
         btnFinish = (Button) findViewById(R.id.btnFinishEdition);
         btnBack = (ImageButton) findViewById(R.id.btnBack);
@@ -64,7 +73,91 @@ public class SelectionProductToEditting extends AppCompatActivity {
             }
         });
 
-        creatList();
+//        creatList();
+//
+//        for(Product product: products)
+//        {
+//            database.child("Products").push().setValue(product);
+//        }
+//
+//        for (ProductDetail productDetail : details)
+//        {
+//            database.child("ProductDetails").push().setValue(productDetail);
+//        }
+
+        children.clear();
+        details.clear();
+        products.clear();
+
+        database.child("ProductDetails").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
+                details.add(productDetail);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        database.child("Products").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Product product = dataSnapshot.getValue(Product.class);
+                products.add(product);
+                if(details.size() > 0)
+                {
+                    ArrayList<ProductDetail> list = new ArrayList<>();
+                    for(ProductDetail productDetail : details)
+                    {
+                        if(productDetail.getProduct().equals(product.getId()))
+                        {
+                            list.add(productDetail);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                    children.put(product, list);
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
 
@@ -132,18 +225,19 @@ public class SelectionProductToEditting extends AppCompatActivity {
     {
         children = new HashMap<>();
         products = new ArrayList<>();
+        details = new ArrayList<>();
 
         //Shop shop = new Shop("SH0001", "MiuMiu", "01512151211");
-        ArrayList<ProductDetail> details = new ArrayList<>();
+
 
 //        Product product = new Product("SP0001", "giay hang hieu 1", 1290000, 900000, shop.getId(), null);
 //        Product product2 = new Product("SP0002", "giay di phuot 2", 175000, 150000, shop.getId(), null);
 //        Product product3 = new Product("SP0003", "giay thoi trang 3", 239000, 200000, shop.getId(), null);
 //        Product product4 = new Product("SP0004", "giay the thao 4", 299000, 250000, shop.getId(), null);
-        Product product = new Product("SP0001", "giay the thao","Nike", null, user.getUid(), "1 thang", 0, null, null, null , 1290000, 900000, 3, null);
-        Product product2 = new Product("SP0002", "giay thoi trang","Bittis", null, user.getUid(), "1 thang", 0, null, null, null , 1290000, 900000, 3, null);
-        Product product3 = new Product("SP0003", "giay di phuot","", null, user.getUid(), "1 thang", 0, null, null, null , 1290000, 900000, 3, null);
-        Product product4 = new Product("SP0004", "giay bao ho","Nike", null, user.getUid(), "1 thang", 0, null, null, null , 1290000, 900000, 3, null);
+        Product product = new Product("SP0001", "giay the thao","Nike", null, user.getUid(), "3 thang", 0, null, null, null , 1290000, 900000, 3, null);
+        Product product2 = new Product("SP0002", "giay thoi trang","Bittis", null, user.getUid(), "12 thang", 0, null, null, null , 149000, 90000, 3, null);
+        Product product3 = new Product("SP0003", "giay di phuot","Adidas", null, user.getUid(), "1 thang", 0, null, null, null , 499000, 300000, 3, null);
+        Product product4 = new Product("SP0004", "giay bao ho","Nike", null, user.getUid(), "2 thang", 0, null, null, null , 299000, 250000, 3, null);
 
         ProductDetail pd = new ProductDetail(product.getId(),1, 38, "xanh la cay", 10);
         ProductDetail pd2 = new ProductDetail(product.getId(),2, 39, "xanh la cay", 10);

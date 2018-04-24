@@ -31,7 +31,7 @@ import Models.Promotion;
 import Models.PromotionsDetail;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Thanh.EditingPromotionDetail;
-import tdc.edu.vn.shoesshop.Toan.HomeForClient;
+import tdc.edu.vn.shoesshop.Toan.HomeForShop;
 
 public class Promotions extends Activity implements SearchView.OnQueryTextListener {
 
@@ -181,7 +181,7 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent.setClass(Promotions.this, HomeForClient.class);
+                intent.setClass(Promotions.this, HomeForShop.class);
                 startActivity(intent);
             }
         });

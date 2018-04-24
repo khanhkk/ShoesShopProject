@@ -7,9 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import Controls.General;
 import Controls.TabarControl;
 import tdc.edu.vn.shoesshop.Bao.PersonalOfShopFragment;
+import tdc.edu.vn.shoesshop.Khanh.SelectionProductToEditting;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Sang.TransactionOfShopFragment;
 import tdc.edu.vn.shoesshop.Son.NotificationFragment;
@@ -26,7 +26,8 @@ public class HomeForShop extends AppCompatActivity {
     TabarControl.TabarFunctions functions = new TabarControl.TabarFunctions() {
         @Override
         public void onButton1Clicked() {
-
+            Intent intent = new Intent(HomeForShop.this, SelectionProductToEditting.class);
+            startActivity(intent);
         }
 
         @Override
@@ -60,7 +61,7 @@ public class HomeForShop extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_for_shop_activity);
         // show home shop fragment
-        functions.onButton1Clicked();
+        //functions.onButton1Clicked();
 
         llContainer = (LinearLayout) findViewById(R.id.llParentShop);
         tabarControl = (TabarControl) findViewById(R.id.tcTabarShop);
