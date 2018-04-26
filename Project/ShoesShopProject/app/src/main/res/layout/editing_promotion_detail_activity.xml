@@ -21,12 +21,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="8"
+        android:layout_margin="10dp"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:weightSum="100"
-            android:layout_marginLeft="10dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="0dp"
@@ -35,18 +35,16 @@
                 android:textColor="#050503"
                 android:gravity="center_vertical"
                 android:text="Sản phẩm :"/>
-            <EditText
+            <Spinner
                 android:layout_width="0dp"
-                android:layout_height="fill_parent"
+                android:layout_height="50dp"
                 android:layout_weight="70"
-                android:id="@+id/sanpham"
-                android:layout_marginRight="10dp"/>
+                android:id="@+id/spnSanPham"/>
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:orientation="horizontal"
             android:weightSum="100">
             <TextView
@@ -60,15 +58,12 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
-                android:id="@+id/quatang"
-                android:layout_marginRight="10dp"/>
-
-
+                android:id="@+id/quatang"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:weightSum="100"
             android:orientation="horizontal">
             <TextView
@@ -82,14 +77,12 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
-                android:id="@+id/giamgia"
-                android:layout_marginRight="10dp"/>
+                android:id="@+id/giamgia"/>
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:weightSum="100"
             android:orientation="horizontal">
             <TextView
@@ -103,14 +96,13 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
-                android:id="@+id/giaban_promotion"
-                android:layout_marginRight="10dp"/>
+                android:editable="false"
+                android:id="@+id/giaban_promotion"/>
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:weightSum="100"
             android:orientation="horizontal">
             <TextView
@@ -121,12 +113,11 @@
                 android:gravity="center_vertical"
                 android:text="Giá ưu đãi: "/>
             <EditText
-
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
-                android:id="@+id/giauudai"
-                android:layout_marginRight="10dp"/>
+                android:editable="false"
+                android:id="@+id/giauudai"/>
 
         </LinearLayout>
     </LinearLayout>
