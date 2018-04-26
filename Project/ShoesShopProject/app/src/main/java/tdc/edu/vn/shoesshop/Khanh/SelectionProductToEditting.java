@@ -18,6 +18,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +42,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
     ImageButton btnBack;
     Intent intent;
 
+    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
@@ -48,7 +50,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selection_product_to_editting_activity);
 
-        final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+
 
         lvList = (ExpandableListView) findViewById(R.id.lvListProduct);
         btnFinish = (Button) findViewById(R.id.btnFinishEdition);
@@ -75,16 +77,22 @@ public class SelectionProductToEditting extends AppCompatActivity {
 
 //        creatList();
 //
-//        for(Product product: products)
-//        {
-//            database.child("Products").push().setValue(product);
-//        }
+//            for(Product product: products)
+//            {
+//                String s = database.child("Products").push().getKey();
+//                product.setId(s);
+//                database.child("Products").push().setValue(product);
 //
-//        for (ProductDetail productDetail : details)
-//        {
-//            database.child("ProductDetails").push().setValue(productDetail);
+//                for (ProductDetail productDetail : details)
+//                {
+//                    String s2 = database.child("ProductDetails").push().getKey();
+//                    productDetail.setId(s2);
+//                    productDetail.setProduct(s);
+//                    database.child("ProductDetails").push().setValue(productDetail);
+//                }
 //        }
 
+        children.clear();
         children.clear();
         details.clear();
         products.clear();
@@ -159,8 +167,6 @@ public class SelectionProductToEditting extends AppCompatActivity {
             }
         });
 
-
-
         adapter = new ProductExpandListAdapter(SelectionProductToEditting.this, products, children);
 
         lvList.setAdapter(adapter);
@@ -212,6 +218,23 @@ public class SelectionProductToEditting extends AppCompatActivity {
 
                 case R.id.cmXoa:
                     Toast.makeText(SelectionProductToEditting.this, "xoa" + productDetail.getProduct(), Toast.LENGTH_SHORT).show();
+
+                    database.child("ProductDetails").orderByChild("id").equalTo(productDetail.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            //dataSnapshot.getRef().setValue(null);
+
+                            for (DataSnapshot child: dataSnapshot.getChildren()) {
+                                child.getRef().setValue(null);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
                     children.get(products.get(group)).remove(child);
                     adapter.notifyDataSetChanged();
                     break;
@@ -234,18 +257,18 @@ public class SelectionProductToEditting extends AppCompatActivity {
 //        Product product2 = new Product("SP0002", "giay di phuot 2", 175000, 150000, shop.getId(), null);
 //        Product product3 = new Product("SP0003", "giay thoi trang 3", 239000, 200000, shop.getId(), null);
 //        Product product4 = new Product("SP0004", "giay the thao 4", 299000, 250000, shop.getId(), null);
-        Product product = new Product("SP0001", "giay the thao","Nike", null, user.getUid(), "3 thang", 0, null, null, null , 1290000, 900000, 3, null);
-        Product product2 = new Product("SP0002", "giay thoi trang","Bittis", null, user.getUid(), "12 thang", 0, null, null, null , 149000, 90000, 3, null);
-        Product product3 = new Product("SP0003", "giay di phuot","Adidas", null, user.getUid(), "1 thang", 0, null, null, null , 499000, 300000, 3, null);
-        Product product4 = new Product("SP0004", "giay bao ho","Nike", null, user.getUid(), "2 thang", 0, null, null, null , 299000, 250000, 3, null);
+        Product product = new Product(null, "giay the thao","Nike", null, user.getUid(), "3 thang", 0, null, null, null , 1290000, 900000, 3, null);
+        Product product2 = new Product(null, "giay thoi trang","Bittis", null, user.getUid(), "12 thang", 0, null, null, null , 149000, 90000, 3, null);
+        Product product3 = new Product(null, "giay di phuot","Adidas", null, user.getUid(), "1 thang", 0, null, null, null , 499000, 300000, 3, null);
+        Product product4 = new Product(null, "giay bao ho","Nike", null, user.getUid(), "2 thang", 0, null, null, null , 299000, 250000, 3, null);
 
-        ProductDetail pd = new ProductDetail(product.getId(),1, 38, "xanh la cay", 10);
-        ProductDetail pd2 = new ProductDetail(product.getId(),2, 39, "xanh la cay", 10);
-        ProductDetail pd3 = new ProductDetail(product.getId(),3, 40, "xanh la cay", 10);
-        ProductDetail pd4 = new ProductDetail(product.getId(),4, 38, "xam nhat", 10);
-        ProductDetail pd5 = new ProductDetail(product.getId(),5, 39, "xam nhat", 10);
-        ProductDetail pd6 = new ProductDetail(product.getId(),6, 40, "xam nhat", 10);
-        ProductDetail pd7 = new ProductDetail(product.getId(),7, 38, "do nau", 10);
+        ProductDetail pd = new ProductDetail(null, null, 38, "xanh la cay", 10);
+        ProductDetail pd2 = new ProductDetail(null,null, 39, "xanh la cay", 10);
+        ProductDetail pd3 = new ProductDetail(null,null, 40, "xanh la cay", 10);
+        ProductDetail pd4 = new ProductDetail(null,null, 38, "xam nhat", 10);
+        ProductDetail pd5 = new ProductDetail(null,null, 39, "xam nhat", 10);
+        ProductDetail pd6 = new ProductDetail(null,null, 40, "xam nhat", 10);
+        ProductDetail pd7 = new ProductDetail(null,null, 38, "do nau", 10);
 
         details.add(pd);
         details.add(pd2);

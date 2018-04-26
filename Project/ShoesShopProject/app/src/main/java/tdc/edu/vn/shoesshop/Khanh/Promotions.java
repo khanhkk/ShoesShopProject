@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,7 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -95,7 +93,7 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
 
         promotionsDetailArrayList.clear();
 
-       myRef.child("PromotionsDetail").addChildEventListener(new ChildEventListener() {
+       myRef.child("PromotionsDetails").addChildEventListener(new ChildEventListener() {
            @Override
            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                PromotionsDetail promotionsDetail = dataSnapshot.getValue(PromotionsDetail.class);
@@ -137,14 +135,15 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
                 if(promotionsDetailArrayList.size() > 0) {
                     ArrayList<PromotionsDetail> arr = new ArrayList<>();
                         for (PromotionsDetail p : promotionsDetailArrayList) {
-                            if (p.getPromotions() == por.getId()) {
+                            if (p.getPromotions().equals(por.getId())) {
                                 arr.add(p);
                             }
                         }
                     list.put(por, arr);
+                    adapter.notifyDataSetChanged();
                 }
 
-                adapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -228,26 +227,35 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
         int child =	ExpandableListView.getPackedPositionChild(info.packedPosition);
 
         if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
-            PromotionsDetail promotionsDetail = (PromotionsDetail) adapter.getChild(group, child);
+            final PromotionsDetail promotionsDetail = (PromotionsDetail) adapter.getChild(group, child);
             switch (item.getItemId()) {
                 case R.id.cmSua:
-                    Toast.makeText(Promotions.this, "sua" + promotionsDetail.getProduct(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(Promotions.this, "sua" + promotionsDetail.getProduct(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(Promotions.this, EditingPromotionDetail.class);
-                    intent.putExtra("detail", (Serializable) promotionsDetail);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("detail", promotionsDetail);
+                    intent.putExtra("sua", bundle);
                     startActivity(intent);
                     break;
 
                 case R.id.cmXoa:
-                    Toast.makeText(Promotions.this, "xoa" + promotionsDetail.getProduct(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(Promotions.this, "xoa" + promotionsDetail.getProduct(), Toast.LENGTH_SHORT).show();
                     list.get(listParent.get(group)).remove(child);
 
-                    myRef.child("PromotionsDetail").orderByChild("id").equalTo(promotionsDetailArrayList.get(child).getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    myRef.child("PromotionsDetails").orderByChild("id").equalTo(promotionsDetail.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot child : dataSnapshot.getChildren()) {
+//                            PromotionsDetail pro = dataSnapshot.getValue(PromotionsDetail.class);
+//                            Log.d("tag", pro.getPromotions() + "123" + promotionsDetail.getPromotions());
+//                            if(pro.getPromotions().equals(promotionsDetail.getPromotions())) {
+//                                dataSnapshot.getRef().setValue(null);
+//                            }
+
+                            for (DataSnapshot child: dataSnapshot.getChildren()) {
                                 child.getRef().setValue(null);
                             }
                         }
+
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
 
@@ -348,11 +356,11 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
 //           list.put(promotions4, promotionsDetailArrayList);
 //           list.put(promotions5, promotionsDetailArrayList);
 
-        String s = "";
-        for(int i = 0; i < promotionsDetailArrayList.size(); i++)
-        {
-            s += promotionsDetailArrayList.get(i).getId() + "#";
-        }
+//        String s = "";
+//        for(int i = 0; i < promotionsDetailArrayList.size(); i++)
+//        {
+//            s += promotionsDetailArrayList.get(i).getId() + "#";
+//        }
 
         //promotions.setListDetail(s);
 //        promotions2.setListDetail(s);

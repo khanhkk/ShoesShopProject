@@ -29,8 +29,7 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="70"
-                android:id="@+id/spnSanPham"
-                android:layout_marginRight="10dp"/>
+                android:id="@+id/spnSanPham"/>
 
         </LinearLayout>
         <LinearLayout
@@ -49,11 +48,9 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
-                android:id="@+id/quatang"
-                android:layout_marginRight="10dp"/>
-
-
+                android:id="@+id/quatang"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -70,8 +67,7 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
-                android:id="@+id/giamgia"
-                android:layout_marginRight="10dp"/>
+                android:id="@+id/giamgia"/>
 
         </LinearLayout>
         <LinearLayout
@@ -90,8 +86,8 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
-                android:id="@+id/giaban_promotion"
-                android:layout_marginRight="10dp"/>
+                android:editable="false"
+                android:id="@+id/giaban_promotion"/>
 
         </LinearLayout>
         <LinearLayout
@@ -107,12 +103,11 @@
                 android:gravity="center_vertical"
                 android:text="Giá ưu đãi: "/>
             <EditText
-
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
-                android:id="@+id/giauudai"
-                android:layout_marginRight="10dp"/>
+                android:editable="false"
+                android:id="@+id/giauudai"/>
 
         </LinearLayout>
     </LinearLayout>

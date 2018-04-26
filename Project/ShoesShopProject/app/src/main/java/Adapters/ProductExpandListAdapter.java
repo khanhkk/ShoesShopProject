@@ -13,6 +13,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -32,6 +40,8 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
     private ArrayList<Product> _listDataHeader; // header titles
     private LayoutInflater inflater;
     HashMap<Product,ArrayList<ProductDetail>> _childList;
+    DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public ProductExpandListAdapter(Context context, ArrayList<Product> listDataHeader, HashMap<Product, ArrayList<ProductDetail>> list) {
         this._context = context;
@@ -109,7 +119,7 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
         public TextView tvSalePrice;
         public ImageView imageView;
         public ImageButton btnEdit, btnAdd, btnDelete;
-        public LinearLayout llListElement;
+        public LinearLayout llListElement, llTitle;
     }
 
     @Override
@@ -127,6 +137,7 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
             viewHolder.btnEdit = (ImageButton) convertView.findViewById(R.id.btnEditElement);
             viewHolder.btnDelete = (ImageButton) convertView.findViewById(R.id.btnDeleteElement);
             viewHolder.llListElement = (LinearLayout)convertView.findViewById(R.id.llDanhSach);
+            viewHolder.llTitle = (LinearLayout)convertView.findViewById(R.id.llTitle);
             convertView.setTag(viewHolder);
         }
         else
@@ -146,6 +157,7 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(_context, QuantityManagement.class);
+                intent.putExtra("product", member.getId());
                 _context.startActivity(intent);
             }
         });
@@ -154,6 +166,39 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(_context,"dsafds",Toast.LENGTH_SHORT).show();
+                myRef.child("Products").orderByChild("id").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                        myRef.child("ProductDetails").orderByChild("product").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                //dataSnapshot.getRef().setValue(null);
+
+                                for (DataSnapshot child: dataSnapshot.getChildren()) {
+                                    child.getRef().setValue(null);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+                        //dataSnapshot.getRef().setValue(null);
+                        for (DataSnapshot child: dataSnapshot.getChildren()) {
+                            child.getRef().setValue(null);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
                 _childList.remove(_listDataHeader.get(groupPosition));
                 _listDataHeader.remove(_listDataHeader.get(groupPosition));
                 SelectionProductToEditting.adapter.notifyDataSetChanged();
@@ -167,12 +212,14 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
         else
         {
             viewHolder.llListElement.setVisibility(View.GONE);
+            viewHolder.llTitle.setVisibility(View.GONE);
         }
 
         viewHolder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(_context, DetailInformationOfProduct.class);
+                intent.putExtra("product", member.getId());
                 _context.startActivity(intent);
             }
         });

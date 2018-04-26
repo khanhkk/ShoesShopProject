@@ -1,7 +1,9 @@
 package tdc.edu.vn.shoesshop.Khanh;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -58,8 +60,7 @@ public class EdittingPromotions extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editting_promotions_activity);
 
-
-
+        //anh xa
         dtTimeEnd = (DateTimePicker)findViewById(R.id.dateEnd);
         dtTimeStart = (DateTimePicker)findViewById(R.id.dateStart);
         btnSave = (Button) findViewById(R.id.btnSave);
@@ -68,12 +69,9 @@ public class EdittingPromotions extends AppCompatActivity {
         etContent = (EditText) findViewById(R.id.edtContent);
         btnChange = (ImageButton) findViewById(R.id.btnChangeImage);
 
-        dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog);
-        dialog.setTitle("Choose Avatar Image");
-
         General.setupUI(findViewById(R.id.llPromotionsLayout), EdittingPromotions.this);
 
+        //nhan du lieu tu activity truoc
         intent = getIntent();
         bundle = intent.getBundleExtra("member");
         if(bundle != null)
@@ -84,7 +82,6 @@ public class EdittingPromotions extends AppCompatActivity {
             {
                 if(Promotions.listParent.get(i).getId().equals(str))
                 {
-
                     promotion = Promotions.listParent.get(i);
                     break;
                 }
@@ -92,6 +89,7 @@ public class EdittingPromotions extends AppCompatActivity {
         }
         if(promotion != null)
         {
+            //hien thi du lieu cua chuong trinh khuyen mai hien tai
             try {
                 etName.setText(promotion.getTitle());
                 dtTimeStart.setDate(DateTimePicker.simpleDateFormat.parse(promotion.getDateStart()));
@@ -104,6 +102,7 @@ public class EdittingPromotions extends AppCompatActivity {
             }
         }
 
+        //quay tro lai trang truoc
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,6 +115,8 @@ public class EdittingPromotions extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //catch erro
                 if(dtTimeStart.getDate() == null || dtTimeEnd.getDate() == null) {
                     Toast.makeText(EdittingPromotions.this, "Chưa chọn thời gian!", Toast.LENGTH_SHORT).show();
                     return;
@@ -123,7 +124,7 @@ public class EdittingPromotions extends AppCompatActivity {
                 String s1 = DateTimePicker.simpleDateFormat.format(dtTimeStart.getDate());
                 String s2 = DateTimePicker.simpleDateFormat.format(dtTimeEnd.getDate());
                 try {
-                    if(etName.getText().length() == 0 || dtTimeStart.getDate().compareTo(Calendar.getInstance().getTime()) <= 0 || DateTimePicker.simpleDateFormat.parse(s1).compareTo(DateTimePicker.simpleDateFormat.parse(s2)) >= 0 ) {
+                    if(etName.getText().length() == 0 || DateTimePicker.simpleDateFormat.parse(s1).compareTo(DateTimePicker.simpleDateFormat.parse(s2)) >= 0 || dtTimeEnd.getDate().compareTo(Calendar.getInstance().getTime()) <= 0){
                         Toast.makeText(EdittingPromotions.this, "Thông tin nhập chưa đúng!", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -131,9 +132,11 @@ public class EdittingPromotions extends AppCompatActivity {
                 catch (Exception ex){}
                 if(promotion != null)
                 {
+                    //sua thong tin cua chuong trinh khuyen mai
+
                     promotion.setTitle(etName.getText()+"");
-                    promotion.setDateStart(DateTimePicker.simpleDateFormat.format(dtTimeStart.getDate()));
-                    promotion.setDateEnd(DateTimePicker.simpleDateFormat.format(dtTimeEnd.getDate()));
+                    //promotion.setDateStart(s1);
+                    promotion.setDateEnd(s2);
                     promotion.setContent(etContent.getText() + "");
                     promotion.setShop(user.getUid());
                     if(image != null)
@@ -156,14 +159,24 @@ public class EdittingPromotions extends AppCompatActivity {
 
                         }
                     });
-
                 }
                 else
                 {
+                    //them mot chuong trinh khuyen mai moi
+                    try {
+                        if (dtTimeStart.getDate().compareTo(Calendar.getInstance().getTime()) <= 0)
+                        {
+                            Toast.makeText(EdittingPromotions.this, "Check time of the promotions program!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }catch (Exception ex)
+                    {
+                        Toast.makeText(EdittingPromotions.this, "Time error!!!", Toast.LENGTH_SHORT).show();
+                    }
                     promotion = new Promotion();
                     promotion.setTitle(etName.getText()+"");
-                    promotion.setDateStart(DateTimePicker.simpleDateFormat.format(dtTimeStart.getDate()));
-                    promotion.setDateEnd(DateTimePicker.simpleDateFormat.format(dtTimeEnd.getDate()));
+                    promotion.setDateStart(s1);
+                    promotion.setDateEnd(s2);
                     promotion.setContent(etContent.getText() + "");
                     promotion.setShop(user.getUid());
                     if(image != null)
@@ -182,15 +195,36 @@ public class EdittingPromotions extends AppCompatActivity {
             }
         });
 
+        //thay doi avatar của chuong trinh khuyen mai
         btnChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                General.chooseFromGallery(EdittingPromotions.this);
-                //General.chooseFromCamera(EdittingPromotions.this);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(EdittingPromotions.this);
+                alertDialog.setTitle("Notification");
+                alertDialog.setIcon(R.mipmap.ic_launcher);
+                alertDialog.setMessage("Do you want to get image from camera or library?");
+
+                alertDialog.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        General.chooseFromCamera(EdittingPromotions.this);
+                    }
+                });
+
+                alertDialog.setNegativeButton("Library", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        General.chooseFromGallery(EdittingPromotions.this);
+                    }
+                });
+
+                alertDialog.show();
             }
         });
     }
 
+
+    //nhan image tu camera/thu vien
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -217,9 +251,4 @@ public class EdittingPromotions extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
 }
