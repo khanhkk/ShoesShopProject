@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import Controls.General;
 import Controls.TabarControl;
 import tdc.edu.vn.shoesshop.Bao.PersonalOfClientLoginedFragment;
 import tdc.edu.vn.shoesshop.Khanh.Cart;
@@ -26,20 +25,31 @@ public class HomeForClient extends AppCompatActivity {
     NotificationFragment notify = null;
     Cart cart = null;
     Home_Client_Fragment b = null;
+    Home_User_Fragment user = null;
     PersonalOfClientLoginedFragment clientLoginedFragment = null;
 
 
     private FirebaseAuth.AuthStateListener authListener;
     //private FirebaseAuth auth;
 
-//TabarControl
+    //TabarControl
+    FirebaseUser users = FirebaseAuth.getInstance().getCurrentUser();
     TabarControl.TabarFunctions functions = new TabarControl.TabarFunctions() {
         @Override
         public void onButton1Clicked() {
-            fragment = getFragmentManager().beginTransaction();
-            b = new Home_Client_Fragment();
-            fragment.replace(R.id.llParent, b);
-            fragment.commit();
+
+            if (users == null) {
+                fragment = getFragmentManager().beginTransaction();
+                b = new Home_Client_Fragment();
+                fragment.replace(R.id.llParent, b);
+                fragment.commit();
+            } else {
+                fragment = getFragmentManager().beginTransaction();
+                user = new Home_User_Fragment();
+                fragment.replace(R.id.llParent, user);
+                fragment.commit();
+            }
+
         }
 
         @Override
@@ -68,7 +78,7 @@ public class HomeForClient extends AppCompatActivity {
         }
     };
 
-//    main
+    //    main
     LinearLayout llContainer;
 
     @Override
@@ -105,8 +115,8 @@ public class HomeForClient extends AppCompatActivity {
         //Intent intent = getIntent();
         Intent intent1 = getIntent();
         Bundle bundle1 = intent1.getBundleExtra(LoginActivity.BUNDLE);
-        if(bundle1!=null){
-            Toast.makeText(getApplicationContext(),"key: "+ bundle1.getString("key"),Toast.LENGTH_LONG).show();
+        if (bundle1 != null) {
+            Toast.makeText(getApplicationContext(), "key: " + bundle1.getString("key"), Toast.LENGTH_LONG).show();
         }
         Bundle bundle = intent1.getBundleExtra("chuyen");
         if (bundle != null) {

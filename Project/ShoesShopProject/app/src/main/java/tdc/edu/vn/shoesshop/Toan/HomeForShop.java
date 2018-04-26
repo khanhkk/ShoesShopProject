@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import Controls.TabarControl;
 import tdc.edu.vn.shoesshop.Bao.PersonalOfShopFragment;
-import tdc.edu.vn.shoesshop.Khanh.SelectionProductToEditting;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Sang.TransactionOfShopFragment;
 import tdc.edu.vn.shoesshop.Son.NotificationFragment;
@@ -22,12 +21,17 @@ public class HomeForShop extends AppCompatActivity {
     NotificationFragment notify = null;
     PersonalOfShopFragment shopFragment = null;
     TransactionOfShopFragment transaction = null;
-
-    TabarControl.TabarFunctions functions = new TabarControl.TabarFunctions() {
+    Home_ProductFilter_Fragment productFilter = null;
+    final TabarControl.TabarFunctions functions = new TabarControl.TabarFunctions() {
         @Override
         public void onButton1Clicked() {
-            Intent intent = new Intent(HomeForShop.this, SelectionProductToEditting.class);
-            startActivity(intent);
+
+            fragment = getFragmentManager().beginTransaction();
+            productFilter = new Home_ProductFilter_Fragment();
+            fragment.replace(R.id.llParentShop, productFilter);
+            fragment.commit();
+//            Intent intent = new Intent(HomeForShop.this, SelectionProductToEditting.class);
+//            startActivity(intent);
         }
 
         @Override
@@ -61,7 +65,7 @@ public class HomeForShop extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_for_shop_activity);
         // show home shop fragment
-        //functions.onButton1Clicked();
+        functions.onButton1Clicked();
 
         llContainer = (LinearLayout) findViewById(R.id.llParentShop);
         tabarControl = (TabarControl) findViewById(R.id.tcTabarShop);
@@ -69,8 +73,8 @@ public class HomeForShop extends AppCompatActivity {
 
         Intent intent1 = getIntent();
         Bundle bundle1 = intent1.getBundleExtra(LoginActivity.BUNDLE);
-        if(bundle1!=null){
-            Toast.makeText(getApplicationContext(),"key: "+ bundle1.getString("key"),Toast.LENGTH_LONG).show();
+        if (bundle1 != null) {
+            Toast.makeText(getApplicationContext(), "key: " + bundle1.getString("key"), Toast.LENGTH_LONG).show();
         }
     }
 }
