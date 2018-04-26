@@ -1,12 +1,15 @@
 package tdc.edu.vn.shoesshop.Khanh;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -24,20 +27,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Calendar;
 
 import Controls.DateTimePicker;
 import Controls.General;
 import Models.Promotion;
-import de.hdodenhof.circleimageview.CircleImageView;
 import tdc.edu.vn.shoesshop.R;
 
 public class EdittingPromotions extends AppCompatActivity {
 
 
     Button btnSave;
-    ImageButton btnBack;
+    ImageButton btnBack, btnChange;
     DateTimePicker dtTimeStart;
     DateTimePicker dtTimeEnd;
     EditText etName, etContent;
@@ -46,7 +49,7 @@ public class EdittingPromotions extends AppCompatActivity {
     Bundle bundle = null;
     Promotion promotion = null;
     private Dialog dialog;
-    CircleImageView btnChange;
+    //CircleImageView btnChange;
 
     String image = null;
 
@@ -67,10 +70,9 @@ public class EdittingPromotions extends AppCompatActivity {
         btnBack = (ImageButton) findViewById(R.id.btnBack);
         etName = (EditText) findViewById(R.id.edtNameProgram);
         etContent = (EditText) findViewById(R.id.edtContent);
-        //btnChange = (ImageButton) findViewById(R.id.btnChangeImage);
+        btnChange = (ImageButton) findViewById(R.id.btnChangeImage);
 
         //btnChange = (CircleImageView) findViewById(R.id.btnChangeImage);
-
 
         General.setupUI(findViewById(R.id.llPromotionsLayout), EdittingPromotions.this);
 
@@ -98,6 +100,20 @@ public class EdittingPromotions extends AppCompatActivity {
                 dtTimeStart.setDate(DateTimePicker.simpleDateFormat.parse(promotion.getDateStart()));
                 dtTimeEnd.setDate(DateTimePicker.simpleDateFormat.parse(promotion.getDateEnd()));
                 etContent.setText(promotion.getContent());
+                if(promotion.getImage() != null)
+                {
+                    try {
+                        image = promotion.getImage();
+                        Bitmap bitmap = General.decodeFromFirebaseBase64(promotion.getImage());
+//                        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+//                        roundedBitmapDrawable.setCircular(true);
+                        RoundedBitmapDrawable roundedBitmapDrawable = General.setCircleImage(bitmap);
+
+                        btnChange.setImageDrawable(roundedBitmapDrawable);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
             catch (ParseException ex)
             {
@@ -199,31 +215,31 @@ public class EdittingPromotions extends AppCompatActivity {
         });
 
         //thay doi avatar của chuong trinh khuyen mai
-//        btnChange.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                AlertDialog.Builder alertDialog = new AlertDialog.Builder(EdittingPromotions.this);
-//                alertDialog.setTitle("Notification");
-//                alertDialog.setIcon(R.mipmap.ic_launcher);
-//                alertDialog.setMessage("Do you want to get image from camera or library?");
-//
-//                alertDialog.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        General.chooseFromCamera(EdittingPromotions.this);
-//                    }
-//                });
-//
-//                alertDialog.setNegativeButton("Library", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        General.chooseFromGallery(EdittingPromotions.this);
-//                    }
-//                });
-//
-//                alertDialog.show();
-//            }
-//        });
+        btnChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(EdittingPromotions.this);
+                alertDialog.setTitle("Notification");
+                alertDialog.setIcon(R.mipmap.ic_launcher);
+                alertDialog.setMessage("Do you want to get image from camera or library?");
+
+                alertDialog.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        General.chooseFromCamera(EdittingPromotions.this);
+                    }
+                });
+
+                alertDialog.setNegativeButton("Library", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        General.chooseFromGallery(EdittingPromotions.this);
+                    }
+                });
+
+                alertDialog.show();
+            }
+        });
     }
 
 
@@ -235,17 +251,30 @@ public class EdittingPromotions extends AppCompatActivity {
         if (requestCode == General.REQUEST_IMAGE_CAPTURE && resultCode == EdittingPromotions.this.RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            btnChange.setImageBitmap(imageBitmap);
+
+//            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), imageBitmap);
+//            roundedBitmapDrawable.setCircular(true);
+
+            RoundedBitmapDrawable roundedBitmapDrawable = General.setCircleImage(imageBitmap);
+
+            btnChange.setImageDrawable(roundedBitmapDrawable);
             image = General.encodeBitmap(imageBitmap);
         }
-
-        if (resultCode == EdittingPromotions.this.RESULT_OK && requestCode == General.CAM_REQUEST) {
+        else if (resultCode == EdittingPromotions.this.RESULT_OK && requestCode == General.CAM_REQUEST) {
             Uri picUri = data.getData();
             Bitmap bitmap;
             try {
+                dialog = new Dialog(this);
+                dialog.setContentView(R.layout.dialog);
+                dialog.setTitle("Choose Avatar Image");
                 Context applicationContext = dialog.getContext();
                 bitmap = BitmapFactory.decodeStream(applicationContext.getContentResolver().openInputStream(picUri));
-                btnChange.setImageBitmap(bitmap);
+
+//                RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+//                roundedBitmapDrawable.setCircular(true);
+                RoundedBitmapDrawable roundedBitmapDrawable = General.setCircleImage(bitmap);
+
+                btnChange.setImageDrawable(roundedBitmapDrawable);
                 image = General.encodeBitmap(bitmap);
                 dialog.dismiss();
             } catch (FileNotFoundException e){

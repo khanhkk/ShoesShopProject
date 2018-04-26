@@ -2,6 +2,7 @@ package Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,9 +23,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import Controls.General;
 import Models.Product;
 import Models.Promotion;
 import Models.PromotionsDetail;
@@ -183,7 +186,7 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
         public TextView tvNamePromotions    ;
         public TextView tvTimeStart;
         public TextView tvTimeEnd;
-        //public ImageView imageView;
+        public ImageView imageView;
         public ImageButton btnEdit, btnAdd, btnDelete;
     }
 
@@ -196,7 +199,7 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
             viewHolder = new ViewHolder();
             viewHolder.tvNamePromotions = (TextView) convertView.findViewById(R.id.tvNameProduct);
             viewHolder.tvTimeEnd = (TextView) convertView.findViewById(R.id.tvTimeEnd);
-            //viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imgImagePromotions);
+            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imgImagePromotions);
             viewHolder.tvTimeStart = (TextView) convertView.findViewById(R.id.tvTimeStart);
             viewHolder.btnAdd = (ImageButton) convertView.findViewById(R.id.btnAddElementPromotions);
             viewHolder.btnEdit = (ImageButton) convertView.findViewById(R.id.btnEditPromotions);
@@ -214,6 +217,17 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
         //SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         viewHolder.tvTimeStart.setText(member.getDateStart());
         viewHolder.tvTimeEnd.setText(member.getDateEnd());
+        if(member.getImage() != null)
+        {
+            try {
+                Bitmap bitmap = General.decodeFromFirebaseBase64(member.getImage());
+                //RoundedBitmapDrawable roundedBitmapDrawable = General.setCircleImage(bitmap);
+                viewHolder.imageView.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
 
         viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override

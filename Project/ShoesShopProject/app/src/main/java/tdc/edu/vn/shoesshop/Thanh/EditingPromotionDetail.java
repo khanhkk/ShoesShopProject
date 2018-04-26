@@ -84,8 +84,8 @@ public class EditingPromotionDetail extends AppCompatActivity {
                 listProduct.add(product.getName());
                 products.add(product);
 
-                if(product != null) {
-                    if (product.getId().equals(product.getId())) {
+                if(promotionsDetail != null) {
+                    if (product.getId().equals(promotionsDetail.getProduct())) {
                         spnSanPham.setSelection(listProduct.indexOf(product.getName()));
                     }
                 }
@@ -158,7 +158,7 @@ public class EditingPromotionDetail extends AppCompatActivity {
 //                }
 //                else
 //                {
-                    product =  products.get(0);
+                    product =  products.get(i);
                     edtgiaban.setText(product.getSalePrice() + "");
                     edtgiauudai.setText(product.getSalePrice() + "");
                 //}
@@ -201,7 +201,7 @@ public class EditingPromotionDetail extends AppCompatActivity {
 //                    Toast.makeText(getApplicationContext(), "Please enter product", Toast.LENGTH_SHORT).show();
 //                    return;
 //                }
-                if(TextUtils.isEmpty(quatang) && TextUtils.isEmpty(giamgia)){
+                if(TextUtils.isEmpty(quatang) && TextUtils.isEmpty(giamgia) && TextUtils.isEmpty(edtDiemTichLuy.getText().toString().trim())){
                     Toast.makeText(getApplicationContext(), "Please enter promotion", Toast.LENGTH_SHORT).show();
                     return;
                 }

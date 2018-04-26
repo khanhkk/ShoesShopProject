@@ -40,10 +40,8 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
     HashMap<Promotion,ArrayList<PromotionsDetail>> list = new HashMap<>();
     public static ArrayList<Promotion> listParent = new ArrayList<>();
     ArrayList<Promotion> listCopy = new ArrayList<>();
-     ArrayList<PromotionsDetail> promotionsDetailArrayList = new ArrayList<>();
+    ArrayList<PromotionsDetail> promotionsDetailArrayList = new ArrayList<>();
     Promotion pro = new Promotion();
-
-    //public static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
     // Write data to the database
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -196,7 +194,7 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
 
     //khoi tao contextmenu
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    public void onCreateContextMenu(final ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
         ExpandableListView.ExpandableListContextMenuInfo info =
@@ -209,8 +207,38 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
         if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
 
             PromotionsDetail item = (PromotionsDetail) adapter.getChild(group, child);
-            menu.setHeaderTitle(item.getProduct());
-            menu.setHeaderIcon(R.mipmap.giay);
+            //menu.setHeaderTitle(item.getProduct());
+            menu.setHeaderTitle("Select to action");
+//            DatabaseReference myRef  = FirebaseDatabase.getInstance().getReference();
+//            myRef.child("Products").orderByChild("id").equalTo(item.getProduct()).addChildEventListener(new ChildEventListener() {
+//                @Override
+//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                    Product pro = dataSnapshot.getValue(Product.class);
+//                    menu.setHeaderTitle(pro.getName());
+//                }
+//
+//                @Override
+//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                }
+//
+//                @Override
+//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
+
+            //menu.setHeaderIcon(R.mipmap.promotions);
 
             menu.add(0, R.id.cmSua, 0, "Sua");
             menu.add(0, R.id.cmXoa, 0, "Xoa");
