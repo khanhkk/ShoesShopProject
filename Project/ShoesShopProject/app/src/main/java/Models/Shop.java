@@ -5,43 +5,43 @@ package Models;
  */
 
 public class Shop {
-    private String id, name, phone, email, bankAccount, representative, address, listPromotions;
-    private int image;
+    private String name, phone, email, bankAccount, address, image;
+    //private int image;
 
     public Shop() {
     }
 
-    public Shop(String id, String name, String phone, String email, String bankAccount, String representative, String address, String listPromotions, int image) {
-        this.id = id;
+    public Shop(String name, String phone, String email, String bankAccount, String address, String image) {
+        //this.id = id;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.bankAccount = bankAccount;
-        this.representative = representative;
+        //this.representative = representative;
         this.address = address;
-        this.listPromotions = listPromotions;
+        //this.listPromotions = listPromotions;
         this.image = image;
     }
 
-    public Shop(String name, String email, String phone, String address, String bankAccount) {
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.bankAccount = bankAccount;
-        this.address = address;
-    }
-    public Shop(String id, String name,String bankAccount) {
-        this.id = id;
-        this.name = name;
-        this.bankAccount = bankAccount;
-    }
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+//    public Shop(String name, String email, String phone, String address, String bankAccount) {
+//        this.name = name;
+//        this.phone = phone;
+//        this.email = email;
+//        this.bankAccount = bankAccount;
+//        this.address = address;
+//    }
+//    public Shop(String id, String name,String bankAccount) {
+//        this.id = id;
+//        this.name = name;
+//        this.bankAccount = bankAccount;
+//    }
+//    public String getId() {
+//        return id;
+//    }
+//
+//    public void setId(String id) {
+//        this.id = id;
+//    }
 
     public String getName() {
         return name;
@@ -75,13 +75,13 @@ public class Shop {
         this.bankAccount = bankAccount;
     }
 
-    public String getRepresentative() {
-        return representative;
-    }
-
-    public void setRepresentative(String representative) {
-        this.representative = representative;
-    }
+//    public String getRepresentative() {
+//        return representative;
+//    }
+//
+//    public void setRepresentative(String representative) {
+//        this.representative = representative;
+//    }
 
     public String getAddress() {
         return address;
@@ -91,19 +91,19 @@ public class Shop {
         this.address = address;
     }
 
-    public String getListPromotions() {
-        return listPromotions;
-    }
+//    public String getListPromotions() {
+//        return listPromotions;
+//    }
+//
+//    public void setListPromotions(String listPromotions) {
+//        this.listPromotions = listPromotions;
+//    }
 
-    public void setListPromotions(String listPromotions) {
-        this.listPromotions = listPromotions;
-    }
-
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

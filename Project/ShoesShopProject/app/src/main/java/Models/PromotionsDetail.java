@@ -1,20 +1,20 @@
 package Models;
 
+import java.io.Serializable;
+
 /**
  * Created by kk on 01/04/2018.
  */
 
-public class PromotionsDetail {
-    private int id, discount;
-    private int promotions;
-    private String product;
-    private String gift;
-    private int point;
+public class PromotionsDetail implements Serializable {
+    private int discount, point;
+    private String id, product, gift,promotions;
+
 
     public PromotionsDetail() {
     }
 
-    public PromotionsDetail(int id, int discount, int promotions, String product, String gift, int point) {
+    public PromotionsDetail(String id, int discount, String promotions, String product, String gift, int point) {
         this.id = id;
         this.discount = discount;
         this.promotions = promotions;
@@ -23,11 +23,11 @@ public class PromotionsDetail {
         this.point = point;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -39,11 +39,11 @@ public class PromotionsDetail {
         this.discount = discount;
     }
 
-    public int getPromotions() {
+    public String getPromotions() {
         return promotions;
     }
 
-    public void setPromotions(int promotions) {
+    public void setPromotions(String promotions) {
         this.promotions = promotions;
     }
 

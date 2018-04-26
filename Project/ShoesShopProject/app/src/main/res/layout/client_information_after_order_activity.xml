@@ -42,59 +42,27 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="20dp"
-                    android:layout_marginTop="10sp"
-                    android:layout_marginBottom="10sp"
-                    android:layout_marginLeft="10sp"
-                    android:layout_marginRight="10sp"
-                    android:hint="Họ tên"
-                    android:background="@drawable/edittext_style"/>
+                    android:id="@+id/edt_hoten"
+                    android:hint="@string/hint_hoten"
+                    style="@style/edit_1"/>
 
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="20dp"
-                    android:layout_marginTop="10sp"
-                    android:layout_marginBottom="10sp"
-                    android:layout_marginLeft="10sp"
-                    android:layout_marginRight="10sp"
-                    android:hint="Email"
-                    android:background="@drawable/edittext_style"/>
+                   android:id="@+id/edt_email"
+                    android:hint="@string/email"
+                    style="@style/edit_1"
+                    />
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="20dp"
-                    android:layout_marginTop="10sp"
-                    android:layout_marginBottom="10sp"
-                    android:layout_marginLeft="10sp"
-                    android:layout_marginRight="10sp"
-                    android:hint="Số điện thoại"
-                    android:background="@drawable/edittext_style"/>
+                    android:id="@+id/edt_sdt"
+                    android:hint="@string/hint_sdt"
+                    style="@style/edit_1"/>
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="20dp"
-                    android:layout_marginTop="10sp"
-                    android:layout_marginBottom="10sp"
-                    android:layout_marginLeft="10sp"
-                    android:layout_marginRight="10sp"
-                    android:hint="Địa chỉ"
-                    android:background="@drawable/edittext_style"/>
+                    android:id="@+id/edt_diachi"
+                    android:hint="@string/hint_diachi"
+                    style="@style/edit_1"/>
                 <Button
                     android:id="@+id/btnDatHang"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Đặt hàng"
-                    android:layout_marginTop="10dp"
-                    android:paddingLeft="50dp"
-                    android:paddingRight="50dp"
-                    android:textAllCaps="false"
-                    android:textColor="#ffff"
-                    android:background="@drawable/button_style"
-                    android:layout_gravity="center"
-                    android:textSize="20sp"/>
+                    android:text="@string/dathang"
+                    style="@style/btn_dathang"/>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

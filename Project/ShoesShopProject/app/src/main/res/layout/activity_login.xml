@@ -43,6 +43,7 @@
         android:hint="@string/hint_email"
         android:inputType="textEmailAddress"
         android:textColor="#000"
+        android:text="vudinhkhanh2810@gmail.com"
         android:textColorHint="#e9686565" />
 
     <EditText
@@ -53,6 +54,7 @@
         android:hint="Mật khẩu"
         android:inputType="textPassword"
         android:textColor="#000"
+        android:text="123456789"
         android:textColorHint="#e9686565" />
     <!-- Login Button -->
 
