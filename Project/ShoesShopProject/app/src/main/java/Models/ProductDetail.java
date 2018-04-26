@@ -1,10 +1,12 @@
 package Models;
 
+import java.io.Serializable;
+
 /**
  * Created by kk on 31/03/2018.
  */
 
-public class ProductDetail {
+public class ProductDetail implements Serializable {
     private String product, id;
     private int size, quantity;
     private String color;

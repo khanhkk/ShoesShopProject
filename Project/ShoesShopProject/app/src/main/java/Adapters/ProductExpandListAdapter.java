@@ -157,7 +157,7 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(_context, QuantityManagement.class);
-                intent.putExtra("product", member.getId());
+                intent.putExtra("product", member);
                 _context.startActivity(intent);
             }
         });
@@ -219,7 +219,7 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(_context, DetailInformationOfProduct.class);
-                intent.putExtra("product", member.getId());
+                intent.putExtra("product", member);
                 _context.startActivity(intent);
             }
         });

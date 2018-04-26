@@ -32,6 +32,7 @@
                 android:id="@+id/spnSanPham"/>
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,6 +51,26 @@
                 android:layout_weight="70"
                 android:id="@+id/quatang"/>
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="100">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="30"
+                android:textColor="#050503"
+                android:gravity="center_vertical"
+                android:text="Điểm tích lũy:"/>
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="70"
+                android:id="@+id/diemTichLuy"/>
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="fill_parent"

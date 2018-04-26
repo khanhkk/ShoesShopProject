@@ -48,13 +48,18 @@
             android:layout_height="0dp"
             android:gravity="center"
             android:layout_weight="2">
-            <ImageButton
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/btnChangeImage"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:scaleType="fitCenter"
                 android:src="@mipmap/promotions2"
-                android:background="@drawable/border_radius"/>
+                android:clickable="true"
+                app:civ_border_color="@color/colorAccent"
+                app:civ_border_width="2dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                />
         </LinearLayout>
 
         <LinearLayout

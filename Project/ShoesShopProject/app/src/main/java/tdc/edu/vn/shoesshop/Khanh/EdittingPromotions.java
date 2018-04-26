@@ -1,9 +1,7 @@
 package tdc.edu.vn.shoesshop.Khanh;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,13 +30,14 @@ import java.util.Calendar;
 import Controls.DateTimePicker;
 import Controls.General;
 import Models.Promotion;
+import de.hdodenhof.circleimageview.CircleImageView;
 import tdc.edu.vn.shoesshop.R;
 
 public class EdittingPromotions extends AppCompatActivity {
 
 
     Button btnSave;
-    ImageButton btnBack, btnChange;
+    ImageButton btnBack;
     DateTimePicker dtTimeStart;
     DateTimePicker dtTimeEnd;
     EditText etName, etContent;
@@ -47,6 +46,7 @@ public class EdittingPromotions extends AppCompatActivity {
     Bundle bundle = null;
     Promotion promotion = null;
     private Dialog dialog;
+    CircleImageView btnChange;
 
     String image = null;
 
@@ -67,7 +67,10 @@ public class EdittingPromotions extends AppCompatActivity {
         btnBack = (ImageButton) findViewById(R.id.btnBack);
         etName = (EditText) findViewById(R.id.edtNameProgram);
         etContent = (EditText) findViewById(R.id.edtContent);
-        btnChange = (ImageButton) findViewById(R.id.btnChangeImage);
+        //btnChange = (ImageButton) findViewById(R.id.btnChangeImage);
+
+        //btnChange = (CircleImageView) findViewById(R.id.btnChangeImage);
+
 
         General.setupUI(findViewById(R.id.llPromotionsLayout), EdittingPromotions.this);
 
@@ -196,31 +199,31 @@ public class EdittingPromotions extends AppCompatActivity {
         });
 
         //thay doi avatar của chuong trinh khuyen mai
-        btnChange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(EdittingPromotions.this);
-                alertDialog.setTitle("Notification");
-                alertDialog.setIcon(R.mipmap.ic_launcher);
-                alertDialog.setMessage("Do you want to get image from camera or library?");
-
-                alertDialog.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        General.chooseFromCamera(EdittingPromotions.this);
-                    }
-                });
-
-                alertDialog.setNegativeButton("Library", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        General.chooseFromGallery(EdittingPromotions.this);
-                    }
-                });
-
-                alertDialog.show();
-            }
-        });
+//        btnChange.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                AlertDialog.Builder alertDialog = new AlertDialog.Builder(EdittingPromotions.this);
+//                alertDialog.setTitle("Notification");
+//                alertDialog.setIcon(R.mipmap.ic_launcher);
+//                alertDialog.setMessage("Do you want to get image from camera or library?");
+//
+//                alertDialog.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        General.chooseFromCamera(EdittingPromotions.this);
+//                    }
+//                });
+//
+//                alertDialog.setNegativeButton("Library", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        General.chooseFromGallery(EdittingPromotions.this);
+//                    }
+//                });
+//
+//                alertDialog.show();
+//            }
+//        });
     }
 
 
