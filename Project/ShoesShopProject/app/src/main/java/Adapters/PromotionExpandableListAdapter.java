@@ -41,12 +41,46 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
     private ArrayList<Promotion> _listDataHeader; // header titles
     private LayoutInflater inflater;
     HashMap<Promotion,ArrayList<PromotionsDetail>> _childList;
+    private ArrayList<Product> listProduct;
+
+    DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public PromotionExpandableListAdapter(Context context, ArrayList<Promotion> listDataHeader, HashMap<Promotion, ArrayList<PromotionsDetail>> list) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this._childList = list;
+
+        listProduct = new ArrayList<>();
+        myRef.child("Products").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Product product = dataSnapshot.getValue(Product.class);
+                listProduct.add(product);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override
@@ -92,39 +126,47 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
 
             //viewHolder.tvCode.setText(member.getProduct());
 
-            DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            myRef.child("Products").orderByChild("id").equalTo(member.getProduct()).addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    Product product = dataSnapshot.getValue(Product.class);
-                    //Log.d("name", product.getId() + "123" + member.getProduct());
-                    //if(product.getId().equals(member.getProduct()))
-                    //{
-                        viewHolder.tvCode.setText(product.getName());
-                    //}
+            if(listProduct.size() > 0)
+            {
+                for ( Product p : listProduct) {
+                    if(p.getId().equals(member.getProduct()))
+                    {
+                        viewHolder.tvCode.setText(p.getName());
+                    }
                 }
+            }
 
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
+//            myRef.child("Products").orderByChild("id").equalTo(member.getProduct()).addChildEventListener(new ChildEventListener() {
+//                @Override
+//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                    Product product = dataSnapshot.getValue(Product.class);
+//                    //Log.d("name", product.getId() + "123" + member.getProduct());
+//                    //if(product.getId().equals(member.getProduct()))
+//                    //{
+//                        viewHolder.tvCode.setText(product.getName());
+//                    //}
+//                }
+//
+//                @Override
+//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                }
+//
+//                @Override
+//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
 
             if (member.getDiscount() <= 0) {
                 //viewHolder.tvDiscount.setText("Không giảm giá!");
@@ -227,6 +269,10 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
                 e.printStackTrace();
             }
         }
+        else
+        {
+            viewHolder.imageView.setImageAlpha(R.mipmap.promotions2);
+        }
 
 
         viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -243,8 +289,7 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
         viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                final DatabaseReference myRef = database.getReference();
+
 
                 myRef.child("PromotionsDetail").orderByChild("promotions").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

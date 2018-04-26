@@ -26,8 +26,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import Controls.General;
 import Models.Account;
-import Models.Shop;
-import tdc.edu.vn.shoesshop.Khanh.EdittingPromotions;
 import tdc.edu.vn.shoesshop.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -42,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
     Query allClient = myRef.child("Clients");
     Query allShop = myRef.child("Shops");
     public static final String BUNDLE = "bundel";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
