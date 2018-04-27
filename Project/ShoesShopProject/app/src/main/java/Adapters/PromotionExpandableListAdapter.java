@@ -2,6 +2,7 @@ package Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,15 +14,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import Controls.General;
+import Models.Product;
 import Models.Promotion;
 import Models.PromotionsDetail;
 import tdc.edu.vn.shoesshop.Khanh.EdittingPromotions;
@@ -34,12 +41,46 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
     private ArrayList<Promotion> _listDataHeader; // header titles
     private LayoutInflater inflater;
     HashMap<Promotion,ArrayList<PromotionsDetail>> _childList;
+    private ArrayList<Product> listProduct;
+
+    DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public PromotionExpandableListAdapter(Context context, ArrayList<Promotion> listDataHeader, HashMap<Promotion, ArrayList<PromotionsDetail>> list) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this._childList = list;
+
+        listProduct = new ArrayList<>();
+        myRef.child("Products").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Product product = dataSnapshot.getValue(Product.class);
+                listProduct.add(product);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override
@@ -61,7 +102,7 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        ChildViewHolder viewHolder;
+        final ChildViewHolder viewHolder;
         if(getChildrenCount(groupPosition) > 0) {
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.promotions_detail_item_layout, null);
@@ -81,9 +122,52 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
                 viewHolder = (ChildViewHolder) convertView.getTag();
             }
 
-            PromotionsDetail member = (PromotionsDetail) getChild(groupPosition, childPosition);
+            final PromotionsDetail member = (PromotionsDetail) getChild(groupPosition, childPosition);
 
-            viewHolder.tvCode.setText(member.getProduct());
+            //viewHolder.tvCode.setText(member.getProduct());
+
+            if(listProduct.size() > 0)
+            {
+                for ( Product p : listProduct) {
+                    if(p.getId().equals(member.getProduct()))
+                    {
+                        viewHolder.tvCode.setText(p.getName());
+                    }
+                }
+            }
+
+//            myRef.child("Products").orderByChild("id").equalTo(member.getProduct()).addChildEventListener(new ChildEventListener() {
+//                @Override
+//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                    Product product = dataSnapshot.getValue(Product.class);
+//                    //Log.d("name", product.getId() + "123" + member.getProduct());
+//                    //if(product.getId().equals(member.getProduct()))
+//                    //{
+//                        viewHolder.tvCode.setText(product.getName());
+//                    //}
+//                }
+//
+//                @Override
+//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                }
+//
+//                @Override
+//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
+
             if (member.getDiscount() <= 0) {
                 //viewHolder.tvDiscount.setText("Không giảm giá!");
                 viewHolder.llDiscount.setVisibility(View.GONE);
@@ -94,7 +178,7 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
                 viewHolder.tvDiscount.setText(member.getDiscount() + "");
             }
 
-            if (member.getGift() == null) {
+            if (member.getGift().length() == 0) {
                 //viewHolder.tvGift.setText("Không có quà tặng!");
                 viewHolder.llGift.setVisibility(View.GONE);
             }
@@ -144,7 +228,7 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
         public TextView tvNamePromotions    ;
         public TextView tvTimeStart;
         public TextView tvTimeEnd;
-        //public ImageView imageView;
+        public ImageView imageView;
         public ImageButton btnEdit, btnAdd, btnDelete;
     }
 
@@ -157,7 +241,7 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
             viewHolder = new ViewHolder();
             viewHolder.tvNamePromotions = (TextView) convertView.findViewById(R.id.tvNameProduct);
             viewHolder.tvTimeEnd = (TextView) convertView.findViewById(R.id.tvTimeEnd);
-            //viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imgImagePromotions);
+            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imgImagePromotions);
             viewHolder.tvTimeStart = (TextView) convertView.findViewById(R.id.tvTimeStart);
             viewHolder.btnAdd = (ImageButton) convertView.findViewById(R.id.btnAddElementPromotions);
             viewHolder.btnEdit = (ImageButton) convertView.findViewById(R.id.btnEditPromotions);
@@ -175,11 +259,29 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
         //SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         viewHolder.tvTimeStart.setText(member.getDateStart());
         viewHolder.tvTimeEnd.setText(member.getDateEnd());
+        if(member.getImage() != null)
+        {
+            try {
+                Bitmap bitmap = General.decodeFromFirebaseBase64(member.getImage());
+                //RoundedBitmapDrawable roundedBitmapDrawable = General.setCircleImage(bitmap);
+                viewHolder.imageView.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            viewHolder.imageView.setImageAlpha(R.mipmap.promotions2);
+        }
+
 
         viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(_context, EditingPromotionDetail.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("key", String.valueOf(member.getId()));
+                intent.putExtra("data", bundle);
                 _context.startActivity(intent);
             }
         });
@@ -187,8 +289,7 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
         viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                final DatabaseReference myRef = database.getReference();
+
 
                 myRef.child("PromotionsDetail").orderByChild("promotions").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -207,6 +308,22 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
                 myRef.child("Promotions").orderByChild("id").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        myRef.child("PromotionsDetails").orderByChild("promotions").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                for (DataSnapshot child: dataSnapshot.getChildren()) {
+                                    child.getRef().setValue(null);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
                         for (DataSnapshot child: dataSnapshot.getChildren()) {
                             child.getRef().setValue(null);
                         }
@@ -217,8 +334,6 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
 
                     }
                 });
-
-
 
                 _childList.remove(_listDataHeader.get(groupPosition));
                 _listDataHeader.remove(groupPosition);

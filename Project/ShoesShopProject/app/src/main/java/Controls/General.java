@@ -3,11 +3,14 @@ package Controls;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,6 +104,13 @@ public class General {
         if(imageEncoded.length() > 0)
             image = imageEncoded;
         return image;
+    }
+
+    public static RoundedBitmapDrawable setCircleImage(Bitmap bitmap)
+    {
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create( Resources.getSystem(), bitmap);
+        roundedBitmapDrawable.setCircular(true);
+        return roundedBitmapDrawable;
     }
 
     public static Bitmap decodeFromFirebaseBase64(String image) throws IOException {

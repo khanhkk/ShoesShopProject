@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#b7b4b4"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/all"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:scaleType="centerInside"
+            android:src="@drawable/gender" />
+
+        <ImageButton
+            android:id="@+id/male"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:scaleType="centerInside"
+            android:src="@drawable/man" />
+
+        <ImageButton
+            android:id="@+id/female"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:scaleType="centerInside"
+            android:src="@drawable/woman" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/spin_name"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:backgroundTint="#000"
+            android:entries="@array/filter_name_arrays"
+            android:paddingRight="30dp"
+            android:prompt="@string/filter_name" />
+
+        <Spinner
+            android:id="@+id/spin_price"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#000"
+            android:entries="@array/price_arrays"
+            android:prompt="@string/Filter_Price" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10">
+
+        <GridView
+            android:id="@+id/grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="2"
+            android:padding="5dp"></GridView>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -5,28 +5,28 @@ package Models;
  */
 
 public class Promotion {
-    private int id;
-    private String dateStart, dateEnd, shop, title, content, image, listDetail;
+    private String id;
+    private String dateStart, dateEnd, shop, title, content, image;
 
     public Promotion() {
     }
 
-    public Promotion(int id, String title , String shop, String content, String dateStart, String dateEnd,String image, String listDetail) {
+    public Promotion(String id, String title , String shop, String content, String dateStart, String dateEnd,String image) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
-        this.listDetail = listDetail;
+        //this.listDetail = listDetail;
         this.shop = shop;
         this.image = image;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -62,13 +62,13 @@ public class Promotion {
         this.dateEnd = dateEnd;
     }
 
-    public String getListDetail() {
-        return listDetail;
-    }
-
-    public void setListDetail(String listDetail) {
-        this.listDetail = listDetail;
-    }
+//    public String getListDetail() {
+//        return listDetail;
+//    }
+//
+//    public void setListDetail(String listDetail) {
+//        this.listDetail = listDetail;
+//    }
 
     public String getShop() {
         return shop;

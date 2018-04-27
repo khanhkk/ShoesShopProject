@@ -1,18 +1,20 @@
 package Models;
 
+import java.io.Serializable;
+
 /**
  * Created by kk on 31/03/2018.
  */
 
-public class ProductDetail {
-    private String product;
-    private int id, size, quantity;
+public class ProductDetail implements Serializable {
+    private String product, id;
+    private int size, quantity;
     private String color;
 
     public ProductDetail() {
     }
 
-    public ProductDetail(String product, int id, int size, String color, int quantity) {
+    public ProductDetail(String product, String id, int size, String color, int quantity) {
         this.product = product;
         this.id = id;
         this.size = size;
@@ -28,11 +30,11 @@ public class ProductDetail {
         this.product = product;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

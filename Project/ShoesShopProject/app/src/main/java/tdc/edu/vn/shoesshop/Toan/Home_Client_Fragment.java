@@ -1,8 +1,7 @@
 package tdc.edu.vn.shoesshop.Toan;
 
-
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -66,8 +65,6 @@ public class Home_Client_Fragment extends Fragment {
     }
 
     private void getImages() {
-
-
         Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
 
         mImageUrls.add("https://c1.staticflickr.com/5/4636/25316407448_de5fbf183d_o.jpg");

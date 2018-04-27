@@ -26,13 +26,12 @@
 
                 <LinearLayout
                     style="@style/row">
-                    <LinearLayout
-                        style="@style/child"
-                        android:gravity="center_vertical">
-                        <TextView
-                            style="@style/wrapcontent"
-                            android:text="@string/code_product"/>
-                    </LinearLayout>
+                    <!--<LinearLayout-->
+                        <!--style="@style/child">-->
+                        <!--<TextView-->
+                            <!--style="@style/wrapcontent"-->
+                            <!--android:text="@string/code_product"/>-->
+                    <!--</LinearLayout>-->
 
                     <LinearLayout
                         style="@style/child"
@@ -41,6 +40,7 @@
                             android:id="@+id/tvCode"
                             style="@style/wrapcontent"
                             android:textColor="#006400"
+                            android:textSize="18sp"
                             android:text="SP0001"/>
                     </LinearLayout>
                 </LinearLayout>

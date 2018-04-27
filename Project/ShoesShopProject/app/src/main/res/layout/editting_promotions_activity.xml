@@ -52,9 +52,9 @@
                 android:id="@+id/btnChangeImage"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/promotions2"
-                android:background="@drawable/border_radius"/>
+                android:scaleType="centerCrop"
+                android:background="@color/none"
+                android:src="@mipmap/promotions2"/>
         </LinearLayout>
 
         <LinearLayout
