@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Toan.HomeForShop"
+            android:name=".Toan.HomeForClient"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,7 +39,7 @@
         <activity android:name=".Toan.SignupActivity" />
         <activity android:name=".Toan.ResetPasswordActivity" />
         <activity android:name=".Thanh.DetailInformationOfProduct" />
-        <activity android:name=".Toan.HomeForClient" />
+        <activity android:name=".Toan.HomeForShop" />
         <activity android:name=".Thanh.EditingPromotionDetail"/>
         <activity android:name=".Sang.ListOder"/>
         <activity android:name=".Son.OrderInformationForClient"/>
