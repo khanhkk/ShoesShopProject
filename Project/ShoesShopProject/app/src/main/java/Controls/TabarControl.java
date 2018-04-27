@@ -2,6 +2,7 @@ package Controls;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -22,6 +23,26 @@ public class TabarControl extends LinearLayout {
     private ViewGroup group;
     TabarFunctions tabarFunctions = null;
 
+
+    public void setImageButton1(int image)
+    {
+        button1.setImageResource(image);
+    }
+
+    public void setImageButton2(int image)
+    {
+        button2.setImageResource(image);
+    }
+
+    public void setImageButton3(int image)
+    {
+        button3.setImageResource(image);
+    }
+
+    public void setImageButton4(int image)
+    {
+        button4.setImageResource(image);
+    }
 
     public TabarControl(Context context) {
         super(context);

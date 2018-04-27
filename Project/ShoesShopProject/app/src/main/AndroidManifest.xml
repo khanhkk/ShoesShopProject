@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Toan.HomeForClient"
+            android:name=".Toan.HomeForShop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Toan.MainActivity" />
-        <activity android:name=".Toan.HomeForShop" />
+        <activity android:name=".Toan.LoginActivity" />
         <activity android:name=".Thanh.EdittingShopInformation" />
         <activity android:name=".Toan.Info_product"/>
         <activity android:name=".Sang.Bills" />
@@ -33,14 +33,13 @@
         <activity android:name=".Sang.ChangePassword" />
         <activity android:name=".Son.OrderInformationForShop" />
         <activity android:name=".Son.ClientInformationAfterOrder" />
-        <activity android:name=".Toan.HomeLayout" />
         <activity android:name=".Khanh.Promotions"/>
         <activity android:name=".Khanh.EdittingPromotions" />
         <activity android:name=".Toan.Comment_Activity" />
         <activity android:name=".Toan.SignupActivity" />
         <activity android:name=".Toan.ResetPasswordActivity" />
         <activity android:name=".Thanh.DetailInformationOfProduct" />
-        <activity android:name=".Toan.LoginActivity" />
+        <activity android:name=".Toan.HomeForClient" />
         <activity android:name=".Thanh.EditingPromotionDetail"/>
         <activity android:name=".Sang.ListOder"/>
         <activity android:name=".Son.OrderInformationForClient"/>
