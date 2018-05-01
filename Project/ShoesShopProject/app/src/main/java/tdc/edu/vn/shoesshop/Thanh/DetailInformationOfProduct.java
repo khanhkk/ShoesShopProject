@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
@@ -48,6 +49,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
     ImageView img_ava_patient2;
     ImageView img_ava_patient3;
     RatingBar ratingBar;
+    RadioButton rbtBoth, rbtNam, rbtNu;
 
     Product product = null;
     String img1 = null;
@@ -106,6 +108,10 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         img_ava_patient2 = (ImageView) findViewById(R.id.imgView_info2);
         img_ava_patient3 = (ImageView) findViewById(R.id.imgView_info3);
 
+        rbtBoth = (RadioButton) findViewById(R.id.rbtAll);
+        rbtNam = (RadioButton) findViewById(R.id.rbtMan);
+        rbtNu = (RadioButton) findViewById(R.id.rbtWoman);
+
         General.setupUI(findViewById(R.id.information_of_product), DetailInformationOfProduct.this);
 
         //chon anh tu thu vien
@@ -151,6 +157,21 @@ public class DetailInformationOfProduct extends AppCompatActivity {
             edtgianiemyet.setText(product.getListedPrice()+"");
             edtmota.setText(product.getDescription());
             edtthuonghieu.setText(product.getTrademark());
+
+            if(product.getSex() == 0)
+            {
+                rbtNu.setChecked(true);
+            }
+            else if(product.getSex() == 1)
+            {
+                rbtNam.setChecked(true);
+            }
+            else
+            {
+                rbtBoth.setChecked(true);
+            }
+
+
             if(product.getImage1() != null)
             {
                 try {
@@ -227,6 +248,20 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                     double giaban = Double.parseDouble(edtgiaban.getText().toString().trim());
                     ///int tichluy = Integer.parseInt(edtdiemtichluy.getText().toString().trim());
                     String mota = edtmota.getText().toString().trim();
+                    int gioiTinh = -1;
+
+                    if(rbtBoth.isChecked())
+                    {
+                        gioiTinh = 2;
+                    }
+                    else if(rbtNam.isChecked())
+                    {
+                        gioiTinh = 1;
+                    }
+                    else
+                    {
+                        gioiTinh = 0;
+                    }
 
                     if (gianiemyet <= 0) {
                         Toast.makeText(getApplicationContext(), "Please check listed price!", Toast.LENGTH_LONG).show();
@@ -241,7 +276,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                         return;
                     }
 
-                    if(ratingBar.getRating() <= 1)
+                    if(ratingBar.getRating() < 1)
                     {
                         Toast.makeText(getApplicationContext(), "Please rate the product!", Toast.LENGTH_LONG).show();
                         return;
@@ -249,6 +284,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
 
                     if(product == null)
                     {
+                        product = new Product();
                         product.setName(tensanpham);
                         product.setRating(ratingBar.getRating());
                         if(edtdiemtichluy.getText().length() > 0) {
@@ -258,10 +294,13 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                         product.setGuarantee(baohanh);
                         product.setListedPrice(gianiemyet);
                         product.setSalePrice(giaban);
+                        product.setSex(gioiTinh);
                         product.setTrademark(thuonghieu);
                         product.setShop(user.getUid());
                         product.setId(database.child("Products").push().getKey());
                         database.child("Products").push().setValue(product);
+                        Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                        startActivity(intent);
                     }
                     else
                     {
@@ -275,6 +314,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                         product.setListedPrice(gianiemyet);
                         product.setSalePrice(giaban);
                         product.setTrademark(thuonghieu);
+                        product.setSex(gioiTinh);
 
                         database.child("Products").orderByChild("id").equalTo(product.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -282,6 +322,8 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                                 for (DataSnapshot child: dataSnapshot.getChildren()) {
                                     child.getRef().setValue(product);
                                 }
+                                Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                                startActivity(intent);
                             }
 
                             @Override
@@ -290,9 +332,6 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                             }
                         });
                     }
-
-                    Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
-                    startActivity(intent);
                 } catch (Exception ex)
                 {
                     Toast.makeText(getApplicationContext(), "Check data input", Toast.LENGTH_LONG).show();

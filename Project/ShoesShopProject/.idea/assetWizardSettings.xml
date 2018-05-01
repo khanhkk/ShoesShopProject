@@ -34,8 +34,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\kk\Documents\GitHub\ShoesShopProject\Project\ShoesShopProject\app\src\main\res\mipmap-mdpi\delete.png" />
-                                      <entry key="outputName" value="delete_icon" />
+                                      <entry key="imageAsset" value="C:\Users\kk\Documents\GitHub\ShoesShopProject\Project\ShoesShopProject\app\src\main\res\drawable\setting2.png" />
+                                      <entry key="outputName" value="setting_icon" />
                                       <entry key="theme" value="HOLO_DARK" />
                                     </map>
                                   </option>

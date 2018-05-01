@@ -15,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-
 import Adapters.BillAdapter;
 import Models.BillDetail;
 import tdc.edu.vn.shoesshop.R;
