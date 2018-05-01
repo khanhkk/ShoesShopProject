@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class Product implements Serializable {
     private String guarantee, id, name, trademark, description , image1, image2, image3, shop;
-    private int accumulatedPoint;
+    private int accumulatedPoint, sex;
     private float rating;
     private double listedPrice, salePrice;
     //private ArrayList<ProductDetail> list;
@@ -16,7 +16,7 @@ public class Product implements Serializable {
     public Product() {
     }
 
-    public Product(String id, String name, String trademark, String description, String shop, String guarantee, int accumulatedPoint, String image1, String image2, String image3, double listedPrice, double salePrice, float stars) {
+    public Product(String id, String name, String trademark, int sex, String description, String shop, String guarantee, int accumulatedPoint, String image1, String image2, String image3, double listedPrice, double salePrice, float stars) {
         this.id = id;
         this.name = name;
         this.trademark = trademark;
@@ -30,6 +30,7 @@ public class Product implements Serializable {
         this.listedPrice = listedPrice;
         this.salePrice = salePrice;
         this.rating = stars;
+        this.sex = sex;
         //this.list = details;
     }
 
@@ -161,5 +162,13 @@ public class Product implements Serializable {
 
     public void setRating(float rating) {
         this.rating = rating;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
     }
 }

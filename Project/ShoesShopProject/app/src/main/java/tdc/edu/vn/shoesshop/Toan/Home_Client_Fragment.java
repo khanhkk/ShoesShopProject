@@ -8,10 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import Adapters.RecyclerViewAdapter;
 import Models.Product;
 import tdc.edu.vn.shoesshop.R;
@@ -43,9 +41,10 @@ public class Home_Client_Fragment extends Fragment {
         View view;
 
         view = inflater.inflate(R.layout.home_layout_activity, container, false);
-     RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         RecyclerView recyclerView1 = view.findViewById(R.id.recyclerView1);
         RecyclerView recyclerView2 = view.findViewById(R.id.recyclerView2);
+
 //        //recyclerView.setLayoutManager(layoutManager);
 //
 //        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), mNames, mImageUrls);
@@ -55,13 +54,14 @@ public class Home_Client_Fragment extends Fragment {
 //        recyclerView.setLayoutManager(llm);
 //        getImages();
 //        adapter.notifyDataSetChanged();
-       getImages();
+        getImages();
+
         initRecyclerView(view, recyclerView);
         initRecyclerView(view, recyclerView1);
         initRecyclerView(view, recyclerView2);
+
+
         return view;
-
-
     }
 
     private void getImages() {

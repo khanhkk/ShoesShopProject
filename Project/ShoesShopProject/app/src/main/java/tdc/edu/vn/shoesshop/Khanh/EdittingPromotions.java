@@ -135,82 +135,75 @@ public class EdittingPromotions extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //catch erro
-                if(dtTimeStart.getDate() == null || dtTimeEnd.getDate() == null) {
-                    Toast.makeText(EdittingPromotions.this, "Chưa chọn thời gian!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String s1 = DateTimePicker.simpleDateFormat.format(dtTimeStart.getDate());
-                String s2 = DateTimePicker.simpleDateFormat.format(dtTimeEnd.getDate());
                 try {
-                    if(etName.getText().length() == 0 || DateTimePicker.simpleDateFormat.parse(s1).compareTo(DateTimePicker.simpleDateFormat.parse(s2)) >= 0 || dtTimeEnd.getDate().compareTo(Calendar.getInstance().getTime()) <= 0){
-                        Toast.makeText(EdittingPromotions.this, "Thông tin nhập chưa đúng!", Toast.LENGTH_SHORT).show();
+                    //catch erro
+                    if (dtTimeStart.getDate() == null || dtTimeEnd.getDate() == null) {
+                        Toast.makeText(EdittingPromotions.this, "Chưa chọn thời gian!", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                }
-                catch (Exception ex){}
-                if(promotion != null)
-                {
-                    //sua thong tin cua chuong trinh khuyen mai
-
-                    promotion.setTitle(etName.getText()+"");
-                    //promotion.setDateStart(s1);
-                    promotion.setDateEnd(s2);
-                    promotion.setContent(etContent.getText() + "");
-                    promotion.setShop(user.getUid());
-                    if(image != null)
-                    {
-                        promotion.setImage(image);
-                    }
-                    myRef.child("Promotions").orderByChild("id").equalTo(promotion.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot child: dataSnapshot.getChildren()) {
-                                child.getRef().setValue(promotion);
-                            }
-                            Toast.makeText(EdittingPromotions.this, "Sua thanh cong!", Toast.LENGTH_SHORT).show();
-                            intent.setClass(EdittingPromotions.this, Promotions.class);
-                            startActivity(intent);
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-                else
-                {
-                    //them mot chuong trinh khuyen mai moi
+                    String s1 = DateTimePicker.simpleDateFormat.format(dtTimeStart.getDate());
+                    String s2 = DateTimePicker.simpleDateFormat.format(dtTimeEnd.getDate());
                     try {
-                        if (dtTimeStart.getDate().compareTo(Calendar.getInstance().getTime()) <= 0)
-                        {
-                            Toast.makeText(EdittingPromotions.this, "Check time of the promotions program!", Toast.LENGTH_SHORT).show();
+                        if (etName.getText().length() == 0 || DateTimePicker.simpleDateFormat.parse(s1).compareTo(DateTimePicker.simpleDateFormat.parse(s2)) >= 0 || dtTimeEnd.getDate().compareTo(Calendar.getInstance().getTime()) <= 0) {
+                            Toast.makeText(EdittingPromotions.this, "Thông tin nhập chưa đúng!", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                    }catch (Exception ex)
-                    {
-                        Toast.makeText(EdittingPromotions.this, "Time error!!!", Toast.LENGTH_SHORT).show();
+                    } catch (Exception ex) {
                     }
-                    promotion = new Promotion();
-                    promotion.setTitle(etName.getText()+"");
-                    promotion.setDateStart(s1);
-                    promotion.setDateEnd(s2);
-                    promotion.setContent(etContent.getText() + "");
-                    promotion.setShop(user.getUid());
-                    if(image != null)
-                    {
-                        promotion.setImage(image);
+                    if (promotion != null) {
+                        //sua thong tin cua chuong trinh khuyen mai
+                        promotion.setTitle(etName.getText() + "");
+                        //promotion.setDateStart(s1);
+                        promotion.setDateEnd(s2);
+                        promotion.setContent(etContent.getText() + "");
+                        promotion.setShop(user.getUid());
+                        if (image != null) {
+                            promotion.setImage(image);
+                        }
+                        myRef.child("Promotions").orderByChild("id").equalTo(promotion.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                    child.getRef().setValue(promotion);
+                                }
+                                Toast.makeText(EdittingPromotions.this, "Sửa thành công!", Toast.LENGTH_SHORT).show();
+                                intent.setClass(EdittingPromotions.this, Promotions.class);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    } else {
+                        //them mot chuong trinh khuyen mai moi
+                        try {
+                            if (dtTimeStart.getDate().compareTo(Calendar.getInstance().getTime()) <= 0) {
+                                Toast.makeText(EdittingPromotions.this, "Kiểm tra thời gian bắt đầu!", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        } catch (Exception ex) {
+                            Toast.makeText(EdittingPromotions.this, "Lỗi thời gian!!!", Toast.LENGTH_SHORT).show();
+                        }
+                        promotion = new Promotion();
+                        promotion.setTitle(etName.getText() + "");
+                        promotion.setDateStart(s1);
+                        promotion.setDateEnd(s2);
+                        promotion.setContent(etContent.getText() + "");
+                        promotion.setShop(user.getUid());
+                        if (image != null) {
+                            promotion.setImage(image);
+                        }
+                        String s = myRef.child("Promotions").push().getKey();
+                        promotion.setId(s);
+                        myRef.child("Promotions").push().setValue(promotion);
+
+                        Toast.makeText(EdittingPromotions.this, "Thêm thành công!", Toast.LENGTH_SHORT).show();
+                        intent.setClass(EdittingPromotions.this, Promotions.class);
+                        startActivity(intent);
                     }
-                    String s = myRef.child("Promotions").push().getKey();
-                    promotion.setId(s);
-                    myRef.child("Promotions").push().setValue(promotion);
-
-                    Toast.makeText(EdittingPromotions.this, "Them thanh cong!", Toast.LENGTH_SHORT).show();
-                    intent.setClass(EdittingPromotions.this, Promotions.class);
-                    startActivity(intent);
-
-                }
+                }catch(Exception ex){ Toast.makeText(EdittingPromotions.this, "Lỗi!",Toast.LENGTH_SHORT).show();}
             }
         });
 
@@ -272,6 +265,7 @@ public class EdittingPromotions extends AppCompatActivity {
 
 //                RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
 //                roundedBitmapDrawable.setCircular(true);
+
                 RoundedBitmapDrawable roundedBitmapDrawable = General.setCircleImage(bitmap);
 
                 btnChange.setImageDrawable(roundedBitmapDrawable);

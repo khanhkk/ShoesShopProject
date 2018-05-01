@@ -87,6 +87,4 @@
             android:numColumns="2"
             android:padding="5dp"></GridView>
     </LinearLayout>
-
-
 </LinearLayout>
