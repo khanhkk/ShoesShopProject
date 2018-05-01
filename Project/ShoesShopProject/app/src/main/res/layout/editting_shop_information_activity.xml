@@ -2,217 +2,205 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:id="@+id/information_of_shop"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:id="@+id/information_of_shop"
+    android:orientation="vertical"
     tools:context="tdc.edu.vn.shoesshop.Thanh.EdittingShopInformation">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark"
+        tools:ignore="MissingPrefix">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Sửa thông tin Shop"
+            android:textColor="#fff"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+        />
+    </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="100"
-            android:layout_marginLeft="10dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
+        android:layout_weight="5">
 
-                android:layout_height="fill_parent"
-                android:layout_weight="30"
-                android:textColor="#050503"
-                android:gravity="center_vertical"
-                android:text="Tên shop:"/>
-            <EditText
-                android:id="@+id/ten_shop"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="70"
-                android:layout_marginRight="10dp"/>
-
-        </LinearLayout>
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:orientation="horizontal"
-            android:weightSum="100">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="30"
-                android:textColor="#050503"
-                android:gravity="center_vertical"
-                android:text="SĐT: "/>
-            <EditText
-                android:layout_width="0dp"
-                android:id="@+id/sdt"
-                android:layout_height="fill_parent"
-                android:layout_weight="70"
-                android:layout_marginRight="10dp"/>
+            android:layout_height="wrap_content">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:weightSum="100"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="30"
-                android:textColor="#050503"
-                android:gravity="center_vertical"
-                android:text="Địa chỉ:"/>
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="70"
-                android:id="@+id/dia_chi"
-                />
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/id_hoten"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="30dp"
+                    app:errorEnabled="true"
+                    app:hintTextAppearance="@style/TextLabel">
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:weightSum="100"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="30"
-                android:textColor="#050503"
-                android:gravity="center_vertical"
-                android:text="Email: "/>
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="70"
-                android:id="@+id/email"
-                android:layout_marginRight="10dp"/>
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Tên Shop"
+                        android:inputType="text"
+                        android:text="Miumiu Shop" />
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:weightSum="100"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="30"
-                android:textColor="#050503"
-                android:gravity="center_vertical"
-                android:text="Người đại diện: "/>
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="70"
-                android:id="@+id/nguoidaidien_shop"
-                android:layout_marginRight="10dp"/>
+                </android.support.design.widget.TextInputLayout>
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:weightSum="100"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="30"
-                android:textColor="#050503"
-                android:gravity="center_vertical"
-                android:text="Số tài khoản: "/>
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="70"
-                android:id="@+id/sotaikhoan"
-                android:layout_marginRight="10dp"/>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/id_sdt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="30dp"
+                    app:errorEnabled="true"
+                    app:hintTextAppearance="@style/TextLabel">
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:weightSum="100"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="30"
-                android:textColor="#050503"
-                android:gravity="center_vertical"
-                android:text="Facebook: "/>
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="70"
-                android:id="@+id/facebook"
-                android:layout_marginRight="10dp"/>
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Số điện thoại"
+                        android:inputType="phone"
+                        android:text="01675562567" />
 
-        </LinearLayout>
+                </android.support.design.widget.TextInputLayout>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="172dp"
-            android:layout_margin="10dp"
-            android:orientation="horizontal"
-            android:weightSum="100">
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/id_diachi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="30dp"
+                    app:errorEnabled="true"
+                    app:hintTextAppearance="@style/TextLabel">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="30"
-                android:gravity="center_vertical"
-                android:text="Hình ảnh: "
-                android:textColor="#050503" />
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Địa chỉ"
+                        android:inputType="text"
+                        android:text="46 Võ Văn Ngân - Phường Linh Chiểu - Quận Thủ Đức - TP. HCM" />
 
-            <ImageView
-                android:id="@+id/imgView_info"
-                android:layout_width="180dp"
-                android:layout_height="138dp"
-                android:layout_marginLeft="50dp"
-                />
-            <Button
-                android:id="@+id/btn_infor"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:text="..."
-                android:textSize="20dp"
-                android:textAlignment="center"
-                android:background="#c09c9797"
-                />
+                </android.support.design.widget.TextInputLayout>
 
-        </LinearLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/id_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="30dp"
+                    app:errorEnabled="true"
+                    app:hintTextAppearance="@style/TextLabel">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress"
+                        android:text="miumiushop@gmail.com" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/id_nguoidaidien"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="30dp"
+                    app:errorEnabled="true"
+                    app:hintTextAppearance="@style/TextLabel">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Người đại diện"
+                        android:inputType="textEmailAddress"
+                        android:text="Vũ Đình Khánh" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/id_soTk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="30dp"
+                    app:errorEnabled="true"
+                    app:hintTextAppearance="@style/TextLabel">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Số tài khoản"
+                        android:inputType="number"
+                        android:text="9721545125021" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/id_Facebook"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="30dp"
+                    app:errorEnabled="true"
+                    app:hintTextAppearance="@style/TextLabel">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Địa chỉ Facebook"
+                        android:inputType="textPostalAddress"
+                        android:text="https://www.facebook.com/vi.vo.50159?ref=br_rs" />
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:gravity="center_vertical"
+                        android:text="Hình ảnh:"
+                        android:textColor="#050503"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/imgView_info"
+                        android:layout_width="180dp"
+                        android:layout_height="180dp"
+                        android:layout_marginLeft="50dp" />
+
+                    <ImageButton
+                        android:id="@+id/btn_infor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#ffff"
+                        android:src="@drawable/ic_add_a_photo_black_24dp">
+
+                    </ImageButton>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal"
-        android:layout_gravity="bottom"
+        android:gravity="bottom">
 
-        >
         <Button
-            android:id="@+id/btnSaveShopInformation"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="#000000"
-            android:background="#5082bd"
+            android:background="@color/colorPrimary"
+            android:onClick="confirmInput"
             android:text="Lưu"
-            android:layout_gravity="bottom"/>
+            android:textColor="#fff"
+            android:textSize="18sp" />
     </LinearLayout>
+
 </LinearLayout>

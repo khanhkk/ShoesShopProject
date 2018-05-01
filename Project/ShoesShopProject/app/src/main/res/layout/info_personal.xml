@@ -11,11 +11,16 @@
         style="@style/toolbar"
         android:minHeight="?attr/actionBarSize"
         app:theme="@style/ThemeOverlay.AppCompat.Dark"
-        tools:ignore="MissingPrefix">
-
+        tools:ignore="MissingPrefix" >
         <TextView
-            style="@style/textOftoolbar"
-            android:text="Thông tin của tôi" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Thông tin tài khoản"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#fff"
+            />
+        />
     </android.support.v7.widget.Toolbar>
     <!--main-->
     <LinearLayout

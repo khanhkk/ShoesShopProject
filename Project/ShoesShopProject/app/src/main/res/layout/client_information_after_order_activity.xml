@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    >
-    <!--Toolbar-->
+    tools:context=".Son.ClientInformationAfterOrder">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/toolbar"
@@ -23,47 +23,102 @@
             />
         />
     </android.support.v7.widget.Toolbar>
-    <!--main-->
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/nen2"
-        >
+        android:layout_height="0dp"
+        android:layout_weight="5">
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            >
+            android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:padding="16dp"
+                android:id="@+id/linear"
                 android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/edt_hoten"
-                    android:hint="@string/hint_hoten"
-                    style="@style/edit_1"/>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/id_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintTextAppearance="@style/TextLabel"
+                    android:minHeight="30dp"
+                    app:errorEnabled="true">
 
-                <EditText
-                   android:id="@+id/edt_email"
-                    android:hint="@string/email"
-                    style="@style/edit_1"
-                    />
-                <EditText
-                    android:id="@+id/edt_sdt"
-                    android:hint="@string/hint_sdt"
-                    style="@style/edit_1"/>
-                <EditText
-                    android:id="@+id/edt_diachi"
-                    android:hint="@string/hint_diachi"
-                    style="@style/edit_1"/>
-                <Button
-                    android:id="@+id/btnDatHang"
-                    android:text="@string/dathang"
-                    style="@style/btn_dathang"/>
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/id_hoten"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintTextAppearance="@style/TextLabel"
+                    android:minHeight="30dp"
+                    app:errorEnabled="true">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Họ tên"
+                        android:inputType="text" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/id_sdt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintTextAppearance="@style/TextLabel"
+                    android:minHeight="30dp"
+                    app:errorEnabled="true">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Số điện thoại"
+                        android:inputType="phone"
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/id_diachi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintTextAppearance="@style/TextLabel"
+                    android:minHeight="30dp"
+                    app:errorEnabled="true">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Địa chỉ"
+                        android:inputType="textPostalAddress"
+                        />
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="bottom"
+        android:layout_weight="1">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            android:onClick="confirmInput"
+            android:text="Đặt hàng" />
+    </LinearLayout>
+
 </LinearLayout>
