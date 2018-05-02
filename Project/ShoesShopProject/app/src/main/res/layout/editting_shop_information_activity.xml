@@ -7,17 +7,12 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     tools:context="tdc.edu.vn.shoesshop.Thanh.EdittingShopInformation">
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 164299c5bc71f96d16923c25ffb27d2053bc882b
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/toolbar"
         android:minHeight="?attr/actionBarSize"
         app:theme="@style/ThemeOverlay.AppCompat.Dark"
-<<<<<<< HEAD
         tools:ignore="MissingPrefix" >
         <TextView
             style="@style/textOftoolbar"
@@ -31,9 +26,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-
-            >
+            android:layout_margin="10dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -190,23 +183,23 @@
                         android:textStyle="bold"
                         android:text="Hình ảnh"
                         android:textColor="#fff"/>
-                    <ImageView
-                        android:id="@+id/imgView_info"
-                        android:layout_width="170dp"
-                        android:layout_height="100dp"
-                        android:scaleType="fitXY"
-                        android:layout_marginLeft="50dp"
-                        />
-                    <Button
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:text="..."
-                        android:id="@+id/btn_infor"
-                        android:layout_marginLeft="5dp"
-                        android:textAlignment="center"
-                        android:textColor="#fff"
-                        android:background="@drawable/button2_style"
-                        />
+                    <!--<ImageView-->
+                        <!--android:id="@+id/imgView_info"-->
+                        <!--android:layout_width="170dp"-->
+                        <!--android:layout_height="100dp"-->
+                        <!--android:scaleType="fitXY"-->
+                        <!--android:layout_marginLeft="50dp"-->
+                        <!--/>-->
+                    <!--<Button-->
+                        <!--android:layout_width="50dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="..."-->
+                        <!--android:id="@+id/btn_infor"-->
+                        <!--android:layout_marginLeft="5dp"-->
+                        <!--android:textAlignment="center"-->
+                        <!--android:textColor="#fff"-->
+                        <!--android:background="@drawable/button2_style"-->
+                        <!--/>-->
                 </LinearLayout>
 
                 <Button
@@ -222,19 +215,9 @@
                     android:layout_gravity="center"
                     android:textSize="20sp"/>
             </LinearLayout>
-        </ScrollView>
-=======
-        tools:ignore="MissingPrefix">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Sửa thông tin Shop"
-            android:textColor="#fff"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-        />
-    </android.support.v7.widget.Toolbar>
+        </ScrollView>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -411,7 +394,6 @@
             android:text="Lưu"
             android:textColor="#fff"
             android:textSize="18sp" />
->>>>>>> 164299c5bc71f96d16923c25ffb27d2053bc882b
     </LinearLayout>
 
 </LinearLayout>

@@ -115,7 +115,6 @@
         android:gravity="bottom"
         android:layout_weight="1">
         <Button
-<<<<<<< HEAD
             android:id="@+id/btnLuu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -124,15 +123,6 @@
             android:text="Lưu"
             android:layout_gravity="bottom"/>
 
-=======
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:textColor="#fff"
-            android:textSize="18sp"
-            android:onClick="confirmInput"
-            android:text="Lưu" />
->>>>>>> 164299c5bc71f96d16923c25ffb27d2053bc882b
     </LinearLayout>
 
 

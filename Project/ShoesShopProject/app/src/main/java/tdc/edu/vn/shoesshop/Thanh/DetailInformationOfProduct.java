@@ -41,24 +41,15 @@ import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Toan.HomeForShop;
 
 public class DetailInformationOfProduct extends AppCompatActivity {
-<<<<<<< HEAD
     private static final int CAM_REQUEST = 1313;
     private Dialog dialog;
     ImageButton btn_chooseImg,btn_takeaphoto;
     final int CROP_PIC = 2;
-=======
-
-    private Dialog dialog;
-    //final int CROP_PIC = 2;
->>>>>>> 164299c5bc71f96d16923c25ffb27d2053bc882b
     private Uri picUri;
     private Button btn_getimage;
     private Button btnSave;
     private EditText edttensanpham, edtthuonghieu, edtbaohanh, edtgianiemyet, edtgiaban, edtdiemtichluy, edtmota;
-<<<<<<< HEAD
     ImageView img_ava_patient1,img_infor_2,img_infor_3;
-=======
-    ImageView img_ava_patient1;
     ImageView img_ava_patient2;
     ImageView img_ava_patient3;
     RatingBar ratingBar;
@@ -69,11 +60,9 @@ public class DetailInformationOfProduct extends AppCompatActivity {
     String img2 = null;
     String img3 = null;
 
-
     //firebase
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
->>>>>>> 164299c5bc71f96d16923c25ffb27d2053bc882b
 
     @Nullable
     @Override
@@ -102,15 +91,9 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         dialog.setContentView(R.layout.dialog);
         dialog.setTitle("Choose Avatar Image");
 
-<<<<<<< HEAD
-        btn_chooseImg = (ImageButton) dialog.findViewById(R.id.img_choosenGallery);
-        btn_takeaphoto = (ImageButton) dialog.findViewById(R.id.img_choosenTakephoto);
-        btnSave = (Button) findViewById(R.id.btnSaveProductInformation) ;
-=======
-        //anh xa
+
         ImageButton btn_chooseImg = (ImageButton) dialog.findViewById(R.id.img_choosenGallery);
         ImageButton btn_takeaphoto = (ImageButton) dialog.findViewById(R.id.img_choosenTakephoto);
->>>>>>> 164299c5bc71f96d16923c25ffb27d2053bc882b
 
         btnSave = (Button) findViewById(R.id.btnSaveProductInformation) ;
         btn_getimage = (Button) findViewById(R.id.btn_infor);
@@ -141,7 +124,6 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                 chooseFromGallery();
             }
         });
-<<<<<<< HEAD
         btn_takeaphoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,7 +133,6 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         img_ava_patient1 = (ImageView) findViewById(R.id.imgView_info1);
         img_infor_2  = (ImageView) findViewById(R.id.imgView_info2);
         img_infor_3  = (ImageView) findViewById(R.id.imgView_info3);
-=======
 
         //lay anh tu camera
         btn_takeaphoto.setOnClickListener(new View.OnClickListener() {
@@ -167,7 +148,6 @@ public class DetailInformationOfProduct extends AppCompatActivity {
 
             }
         });
->>>>>>> 164299c5bc71f96d16923c25ffb27d2053bc882b
 
         btn_getimage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,51 +158,6 @@ public class DetailInformationOfProduct extends AppCompatActivity {
             }
         });
 
-<<<<<<< HEAD
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String tensanpham = edttensanpham.getText().toString().trim();
-                String thuonghieu = edtthuonghieu.getText().toString().trim();
-                String baohanh = edtbaohanh.getText().toString().trim();
-                int gianiemyet = -1;
-                if (edtgianiemyet.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Please enter price marker!", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                gianiemyet = Integer.parseInt(edtgianiemyet.getText().toString().trim());
-                int giaban = -1;
-                if (edtgiaban.getText().toString().trim().isEmpty())
-                {
-                    Toast.makeText(getApplicationContext(), "Please enter product price!", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                giaban = Integer.parseInt(edtgiaban.getText().toString().trim());
-                String diemtichluy = edtdiemtichluy.toString().trim();
-                String mota = edtmota.toString().trim();
-                if (TextUtils.isEmpty(tensanpham)){
-                    Toast.makeText(getApplicationContext(), "Please enter product name!", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if(TextUtils.isEmpty(thuonghieu)){
-                    Toast.makeText(getApplicationContext(),"Please enter trademark!", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if(TextUtils.isEmpty(baohanh)){
-                    Toast.makeText(getApplicationContext(), "Please enter guarantee!", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if(TextUtils.isEmpty(edtgianiemyet.getText() +"")){
-                    Toast.makeText(getApplicationContext(), "Please email Listed price!", Toast.LENGTH_LONG).show();
-                    return;}
-                if(TextUtils.isEmpty(edtgiaban.getText() +"")){
-                    Toast.makeText(getApplicationContext(), "Please Enter price!", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if(TextUtils.isEmpty(diemtichluy)){
-                    Toast.makeText(getApplicationContext(), "Please Enter cumulative point!", Toast.LENGTH_LONG).show();
-                    return;
-=======
         Intent intent = getIntent();
         product = (Product) intent.getSerializableExtra("product");
         if(product != null)
@@ -256,7 +191,6 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                     img_ava_patient1.setImageBitmap(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
->>>>>>> 164299c5bc71f96d16923c25ffb27d2053bc882b
                 }
             }
 
@@ -283,6 +217,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
             float number = product.getRating();
             ratingBar.setRating(number);
         }
+
 
         //luu thong tin san pham
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -414,7 +349,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                 {
                     Toast.makeText(getApplicationContext(), "Check data input", Toast.LENGTH_LONG).show();
                 }
-<<<<<<< HEAD
+
                 if(img_ava_patient1.getDrawable() == null || img_infor_2.getDrawable() == null || img_infor_3.getDrawable() == null)
                 {
                     Toast.makeText(getApplicationContext(), "Please choose image or take a photo in here!", Toast.LENGTH_LONG).show();
@@ -422,9 +357,6 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                 }
                 Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
                     startActivity(intent);
-
-=======
->>>>>>> 164299c5bc71f96d16923c25ffb27d2053bc882b
             }
         });
     }
@@ -440,12 +372,12 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent,"Select Picture"), 1);
     }
 
-
     private void takeNewProfilePicture(){
         Activity profileFrag = this;
         Intent cameraintent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         profileFrag.startActivityForResult(cameraintent, CAM_REQUEST);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

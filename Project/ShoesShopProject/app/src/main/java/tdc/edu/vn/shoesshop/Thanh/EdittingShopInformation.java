@@ -1,9 +1,5 @@
 package tdc.edu.vn.shoesshop.Thanh;
 
-import android.icu.text.UnicodeSetSpanner;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -11,14 +7,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextPaint;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -26,10 +22,8 @@ import android.widget.Toast;
 import java.io.FileNotFoundException;
 
 import Controls.General;
-import tdc.edu.vn.shoesshop.Bao.MainInfoCilent;
 import tdc.edu.vn.shoesshop.Bao.MainInfoShop;
 import tdc.edu.vn.shoesshop.R;
-import tdc.edu.vn.shoesshop.Toan.HomeForShop;
 
 public class EdittingShopInformation extends AppCompatActivity {
     private static final int CAM_REQUEST = 1313;
