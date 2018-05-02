@@ -1,18 +1,15 @@
 package tdc.edu.vn.shoesshop.Toan;
 
-
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import Adapters.RecyclerViewAdapter;
 import Models.Product;
 import tdc.edu.vn.shoesshop.R;
@@ -44,9 +41,10 @@ public class Home_Client_Fragment extends Fragment {
         View view;
 
         view = inflater.inflate(R.layout.home_layout_activity, container, false);
-     RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         RecyclerView recyclerView1 = view.findViewById(R.id.recyclerView1);
         RecyclerView recyclerView2 = view.findViewById(R.id.recyclerView2);
+
 //        //recyclerView.setLayoutManager(layoutManager);
 //
 //        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), mNames, mImageUrls);
@@ -56,18 +54,17 @@ public class Home_Client_Fragment extends Fragment {
 //        recyclerView.setLayoutManager(llm);
 //        getImages();
 //        adapter.notifyDataSetChanged();
-       getImages();
+        getImages();
+
         initRecyclerView(view, recyclerView);
         initRecyclerView(view, recyclerView1);
         initRecyclerView(view, recyclerView2);
+
+
         return view;
-
-
     }
 
     private void getImages() {
-
-
         Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
 
         mImageUrls.add("https://c1.staticflickr.com/5/4636/25316407448_de5fbf183d_o.jpg");

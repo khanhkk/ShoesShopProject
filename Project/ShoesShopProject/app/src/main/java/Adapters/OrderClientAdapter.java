@@ -64,7 +64,7 @@ public class OrderClientAdapter extends BaseAdapter {
             tien += (arrItem.get(pos).getGia() *  arrItem.get(pos).getSoLuong());
         }
 
-        OrderInformationForClient.tvTotal.setText(tien+"");
+        OrderInformationForClient.tvTotal.setText(tien+" đ");
         return view;
     }
 

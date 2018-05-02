@@ -175,7 +175,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
     }
 
 
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    public void onCreateContextMenu(final ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
         ExpandableListView.ExpandableListContextMenuInfo info =
@@ -188,8 +188,39 @@ public class SelectionProductToEditting extends AppCompatActivity {
         if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
 
             ProductDetail item = (ProductDetail) adapter.getChild(group, child);
-            menu.setHeaderTitle(item.getProduct());
-            menu.setHeaderIcon(R.mipmap.giay);
+            menu.setHeaderTitle("Select to action");
+
+            //menu.setHeaderTitle(item.getProduct());
+//            DatabaseReference myRef  = FirebaseDatabase.getInstance().getReference();
+//            myRef.child("Products").orderByChild("id").equalTo(item.getProduct()).addChildEventListener(new ChildEventListener() {
+//                @Override
+//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                    Product pro = dataSnapshot.getValue(Product.class);
+//                    menu.setHeaderTitle(pro.getName());
+//                }
+//
+//                @Override
+//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                }
+//
+//                @Override
+//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
+
+            //menu.setHeaderIcon(R.mipmap.giay);
 
             menu.add(0, R.id.cmSua, 0, "Sua");
             menu.add(0, R.id.cmXoa, 0, "Xoa");
@@ -210,10 +241,11 @@ public class SelectionProductToEditting extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.cmSua:
                     Toast.makeText(SelectionProductToEditting.this, "sua" + productDetail.getProduct(), Toast.LENGTH_SHORT).show();
-                    Intent itent = new Intent(SelectionProductToEditting.this, QuantityManagement.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("detail", productDetail.getId()+ "");
-                    startActivity(itent);
+                    Intent intent = new Intent(SelectionProductToEditting.this, QuantityManagement.class);
+                    intent.putExtra("detail", productDetail);
+                    //Bundle bundle = new Bundle();
+                    //bundle.putString("detail", productDetail.getId()+ "");
+                    startActivity(intent);
                     break;
 
                 case R.id.cmXoa:
@@ -257,10 +289,10 @@ public class SelectionProductToEditting extends AppCompatActivity {
 //        Product product2 = new Product("SP0002", "giay di phuot 2", 175000, 150000, shop.getId(), null);
 //        Product product3 = new Product("SP0003", "giay thoi trang 3", 239000, 200000, shop.getId(), null);
 //        Product product4 = new Product("SP0004", "giay the thao 4", 299000, 250000, shop.getId(), null);
-        Product product = new Product(null, "giay the thao","Nike", null, user.getUid(), "3 thang", 0, null, null, null , 1290000, 900000, 3, null);
-        Product product2 = new Product(null, "giay thoi trang","Bittis", null, user.getUid(), "12 thang", 0, null, null, null , 149000, 90000, 3, null);
-        Product product3 = new Product(null, "giay di phuot","Adidas", null, user.getUid(), "1 thang", 0, null, null, null , 499000, 300000, 3, null);
-        Product product4 = new Product(null, "giay bao ho","Nike", null, user.getUid(), "2 thang", 0, null, null, null , 299000, 250000, 3, null);
+        Product product = new Product(null, "giay the thao","Nike",0, null, user.getUid(), "3 thang", 0, null, null, null , 1290000, 900000, 3);
+        Product product2 = new Product(null, "giay thoi trang","Bittis", 1, null, user.getUid(), "12 thang", 0, null, null, null , 149000, 90000, 3);
+        Product product3 = new Product(null, "giay di phuot","Adidas", 2, null, user.getUid(), "1 thang", 0, null, null, null , 499000, 300000, 3);
+        Product product4 = new Product(null, "giay bao ho","Nike", 0, null, user.getUid(), "2 thang", 0, null, null, null , 299000, 250000, 3);
 
         ProductDetail pd = new ProductDetail(null, null, 38, "xanh la cay", 10);
         ProductDetail pd2 = new ProductDetail(null,null, 39, "xanh la cay", 10);

@@ -1,21 +1,22 @@
 package Models;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
  * Created by kk on 30/03/2018.
  */
 
-public class Product {
-    private String guarantee, id, name, trademark, description , image1, imag2, image3, shop;
-    private int accumulatedPoint, rating;
+public class Product implements Serializable {
+    private String guarantee, id, name, trademark, description , image1, image2, image3, shop;
+    private int accumulatedPoint, sex;
+    private float rating;
     private double listedPrice, salePrice;
-    private ArrayList<ProductDetail> list;
+    //private ArrayList<ProductDetail> list;
 
     public Product() {
     }
 
-    public Product(String id, String name, String trademark, String description, String shop, String guarantee, int accumulatedPoint, String image1, String imag2, String image3, double listedPrice, double salePrice, int stars , ArrayList<ProductDetail> details) {
+    public Product(String id, String name, String trademark, int sex, String description, String shop, String guarantee, int accumulatedPoint, String image1, String image2, String image3, double listedPrice, double salePrice, float stars) {
         this.id = id;
         this.name = name;
         this.trademark = trademark;
@@ -24,12 +25,13 @@ public class Product {
         this.guarantee = guarantee;
         this.accumulatedPoint = accumulatedPoint;
         this.image1 = image1;
-        this.imag2 = imag2;
+        this.image2 = image2;
         this.image3 = image3;
         this.listedPrice = listedPrice;
         this.salePrice = salePrice;
         this.rating = stars;
-        this.list = details;
+        this.sex = sex;
+        //this.list = details;
     }
 
 //    public Product(String id, String name, double salePrice, String shop) {
@@ -50,13 +52,13 @@ public class Product {
 //    }
 
 
-    public ArrayList<ProductDetail> getList() {
-        return list;
-    }
-
-    public void setList(ArrayList<ProductDetail> list) {
-        this.list = list;
-    }
+//    public ArrayList<ProductDetail> getList() {
+//        return list;
+//    }
+//
+//    public void setList(ArrayList<ProductDetail> list) {
+//        this.list = list;
+//    }
 
     public String getId() {
         return id;
@@ -122,12 +124,12 @@ public class Product {
         this.image1 = image1;
     }
 
-    public String getImag2() {
-        return imag2;
+    public String getImage2() {
+        return image2;
     }
 
-    public void setImag2(String imag2) {
-        this.imag2 = imag2;
+    public void setImage2(String image2) {
+        this.image2 = image2;
     }
 
     public String getImage3() {
@@ -154,11 +156,19 @@ public class Product {
         this.salePrice = salePrice;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(float rating) {
         this.rating = rating;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
     }
 }

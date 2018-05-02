@@ -5,22 +5,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="tdc.edu.vn.shoesshop.Toan.HomeForShop">
-    <LinearLayout
-        android:id="@+id/llParentShop"
+    tools:context=".Toan.HomeForShop">
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/lltabar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:orientation="horizontal"-->
+        <!--&gt;-->
+
+        <!--<Spinner-->
+            <!--android:id="@+id/spin_name"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_marginRight="5dp"-->
+            <!--android:backgroundTint="#000"-->
+            <!--android:entries="@array/filter_name_arrays"-->
+            <!--android:prompt="@string/filter_name" />-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="right|bottom">-->
+
+            <!--<SearchView-->
+                <!--android:id="@+id/searchView"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:background="#d2d1d1"-->
+                <!--android:elevation="2dp"/>-->
+        <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        android:layout_weight="8"></LinearLayout>
+        android:layout_weight="10"
+        />
 
-    <LinearLayout
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        >
-        <Controls.TabarControl
-            android:id="@+id/tcTabarShop"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></Controls.TabarControl>
-    </LinearLayout>
+        app:menu="@menu/bottom_navigation_shop"
+        android:background="?android:attr/windowBackground"/>
+
 </LinearLayout>

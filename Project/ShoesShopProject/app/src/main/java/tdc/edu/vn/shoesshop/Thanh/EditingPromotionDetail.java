@@ -37,7 +37,7 @@ public class EditingPromotionDetail extends AppCompatActivity {
 
     Button btnSave;
     Intent intent;
-    EditText  edtquatang, edtgiamgia, edtgiaban, edtgiauudai;
+    EditText  edtquatang, edtgiamgia, edtgiaban, edtgiauudai, edtDiemTichLuy;
     Spinner spnSanPham;
 
     ArrayList<String> listProduct = new ArrayList<>();
@@ -47,9 +47,9 @@ public class EditingPromotionDetail extends AppCompatActivity {
     Bundle bundle = null;
     String promotion = null;
     Product product = null;
-    String product_id = null;
+    //String product_id = null;
     PromotionsDetail promotionsDetail;
-    String id = null;
+    //String id = null;
     int type = 0;
 
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
@@ -66,10 +66,12 @@ public class EditingPromotionDetail extends AppCompatActivity {
         //anh xa
         btnSave = (Button) findViewById(R.id.btnSavePromotionsDetail);
         spnSanPham = (Spinner) findViewById(R.id.spnSanPham);
+
         edtquatang = (EditText) findViewById(R.id.quatang);
         edtgiamgia = (EditText) findViewById(R.id.giamgia);
         edtgiaban = (EditText) findViewById(R.id.giaban_promotion);
         edtgiauudai = (EditText) findViewById(R.id.giauudai);
+        edtDiemTichLuy = (EditText) findViewById(R.id.diemTichLuy);
 
         //lay danh sach san pham cua shop
         products.clear();
@@ -82,8 +84,8 @@ public class EditingPromotionDetail extends AppCompatActivity {
                 listProduct.add(product.getName());
                 products.add(product);
 
-                if(product_id != null) {
-                    if (product_id.equals(product.getId())) {
+                if(promotionsDetail != null) {
+                    if (product.getId().equals(promotionsDetail.getProduct())) {
                         spnSanPham.setSelection(listProduct.indexOf(product.getName()));
                     }
                 }
@@ -120,10 +122,11 @@ public class EditingPromotionDetail extends AppCompatActivity {
             promotionsDetail = (PromotionsDetail) bundle.getSerializable("detail");
             edtquatang.setText(promotionsDetail.getGift());
             this.promotion = promotionsDetail.getPromotions();
-            this.product_id = promotionsDetail.getProduct();
+            //this.product_id = promotionsDetail.getProduct();
             spnSanPham.setEnabled(false);
             edtgiamgia.setText( promotionsDetail.getDiscount() + "");
-            id = promotionsDetail.getId();
+            edtDiemTichLuy.setText(promotionsDetail.getPoint() + "");
+            //id = promotionsDetail.getId();
             type = 1;
         }
         else if((bundle = intent.getBundleExtra("data")) != null)
@@ -189,6 +192,8 @@ public class EditingPromotionDetail extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 //String sanpham = s.getText().toString().trim();
                 String quatang = edtquatang.getText().toString().trim();
                 String giamgia = edtgiamgia.getText().toString().trim();
@@ -198,7 +203,7 @@ public class EditingPromotionDetail extends AppCompatActivity {
 //                    Toast.makeText(getApplicationContext(), "Please enter product", Toast.LENGTH_SHORT).show();
 //                    return;
 //                }
-                if(TextUtils.isEmpty(quatang) && TextUtils.isEmpty(giamgia)){
+                if(TextUtils.isEmpty(quatang) && TextUtils.isEmpty(giamgia) && TextUtils.isEmpty(edtDiemTichLuy.getText().toString().trim())){
                     Toast.makeText(getApplicationContext(), "Please enter promotion", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -226,13 +231,24 @@ public class EditingPromotionDetail extends AppCompatActivity {
                             promotionsDetail.setDiscount(Integer.parseInt(edtgiamgia.getText() + ""));
                         }catch (Exception ex)
                         {
-                            Toast.makeText(getApplicationContext(), "Check data input!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Check discount for the product!", Toast.LENGTH_LONG).show();
                             return;
                         }
                     }
+
+                    if(edtDiemTichLuy.getText().length() > 0) {
+                        try {
+                            promotionsDetail.setPoint(Integer.parseInt(edtDiemTichLuy.getText() + ""));
+                        }catch (Exception ex)
+                        {
+                            Toast.makeText(getApplicationContext(), "Check discount for the product!", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                    }
+
                     promotionsDetail.setGift(edtquatang.getText() + "");
 
-                    database.child("PromotionsDetails").orderByChild("id").equalTo(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                    database.child("PromotionsDetails").orderByChild("id").equalTo(promotionsDetail.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             //PromotionsDetail pro = dataSnapshot.getValue(PromotionsDetail.class);
@@ -262,54 +278,64 @@ public class EditingPromotionDetail extends AppCompatActivity {
                 else
                 {
                     //them san pham duoc khuyen mai moi
-                    PromotionsDetail pro = new PromotionsDetail();
-                    if(edtgiamgia.getText().length() > 0) {
-                        pro.setDiscount(Integer.parseInt(edtgiamgia.getText() + ""));
-                    }
-                    pro.setGift(edtquatang.getText() + "");
-                    pro.setProduct(product.getId());
-                    pro.setPromotions(promotion);
+                    try {
+                        PromotionsDetail pro = new PromotionsDetail();
 
-                    database.child("PromotionsDetails").orderByChild("promotions").equalTo(promotion).addChildEventListener(new ChildEventListener() {
-                        @Override
-                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                            PromotionsDetail pro = dataSnapshot.getValue(PromotionsDetail.class);
+                        if (edtgiamgia.getText().length() > 0) {
+                            pro.setDiscount(Integer.parseInt(edtgiamgia.getText() + ""));
+                        }
+
+                        if (edtDiemTichLuy.getText().length() > 0) {
+                            pro.setPoint(Integer.parseInt(edtDiemTichLuy.getText() + ""));
+                        }
+
+                        pro.setGift(edtquatang.getText() + "");
+                        pro.setProduct(product.getId());
+                        pro.setPromotions(promotion);
+
+                        database.child("PromotionsDetails").orderByChild("promotions").equalTo(promotion).addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                PromotionsDetail pro = dataSnapshot.getValue(PromotionsDetail.class);
 //                            if(promotionsDetail1.getPromotions().equals(promotion))
 //                            {
-                                if(pro.getProduct().equals(product.getId()) && pro.getPromotions().equals(promotion))
-                                {
+                                if (pro.getProduct().equals(product.getId()) && pro.getPromotions().equals(promotion)) {
                                     Toast.makeText(getApplicationContext(), "This product was in the promotions program!", Toast.LENGTH_LONG).show();
                                     return;
                                 }
 //                            }
-                        }
+                            }
 
-                        @Override
-                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-                        }
+                            }
 
-                        @Override
-                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-                        }
+                            }
 
-                        @Override
-                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-                        }
+                            }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
 
-                        }
-                    });
+                            }
+                        });
 
-                    pro.setId(database.child("PromotionsDetails").push().getKey());
-                    database.child("PromotionsDetails").push().setValue(pro);
-                    Toast.makeText(getApplicationContext(), "Successful!", Toast.LENGTH_LONG).show();
-                    intent.setClass(EditingPromotionDetail.this, Promotions.class);
-                    startActivity(intent);
+                        pro.setId(database.child("PromotionsDetails").push().getKey());
+                        database.child("PromotionsDetails").push().setValue(pro);
+                        Toast.makeText(getApplicationContext(), "Successful!", Toast.LENGTH_LONG).show();
+                        intent.setClass(EditingPromotionDetail.this, Promotions.class);
+                        startActivity(intent);
+                    }catch (Exception ex)
+                    {
+                        Toast.makeText(getApplicationContext(), "Check data input!", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });

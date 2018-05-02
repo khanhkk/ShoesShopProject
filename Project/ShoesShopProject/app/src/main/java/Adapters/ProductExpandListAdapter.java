@@ -2,6 +2,7 @@ package Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,9 +22,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import Controls.General;
 import Models.Product;
 import Models.ProductDetail;
 import tdc.edu.vn.shoesshop.Khanh.SelectionProductToEditting;
@@ -153,11 +156,26 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
         viewHolder.tvListedPrice.setTextColor(_context.getResources().getColor(R.color.bg_register));
         viewHolder.tvListedPrice.setPaintFlags(viewHolder.tvListedPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
+        if(member.getImage1() !=  null)
+        {
+            try {
+                Bitmap bitmap = General.decodeFromFirebaseBase64(member.getImage1());
+                //RoundedBitmapDrawable roundedBitmapDrawable = General.setCircleImage(bitmap);
+                viewHolder.imageView.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            viewHolder.imageView.setImageAlpha(R.mipmap.giay);
+        }
+
         viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(_context, QuantityManagement.class);
-                intent.putExtra("product", member.getId());
+                intent.putExtra("product", member);
                 _context.startActivity(intent);
             }
         });
@@ -219,7 +237,7 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(_context, DetailInformationOfProduct.class);
-                intent.putExtra("product", member.getId());
+                intent.putExtra("product", member);
                 _context.startActivity(intent);
             }
         });

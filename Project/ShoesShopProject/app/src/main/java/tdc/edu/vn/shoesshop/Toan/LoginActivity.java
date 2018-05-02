@@ -26,8 +26,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import Controls.General;
 import Models.Account;
-import Models.Shop;
-import tdc.edu.vn.shoesshop.Khanh.EdittingPromotions;
 import tdc.edu.vn.shoesshop.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -42,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
     Query allClient = myRef.child("Clients");
     Query allShop = myRef.child("Shops");
     public static final String BUNDLE = "bundel";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,18 +121,6 @@ public class LoginActivity extends AppCompatActivity {
                                                 final Bundle bundle = new Bundle();
                                                 Account account = dataSnapshot.getValue(Account.class);
                                                 if (account.getLevel() == 0) {
-//                                                    myRef.child("Shops").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-//                                                        @Override
-//                                                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                                                            Shop shop = dataSnapshot.getValue(Shop.class);
-//                                                            bundle.put
-//                                                        }
-//
-//                                                        @Override
-//                                                        public void onCancelled(DatabaseError databaseError) {
-//
-//                                                        }
-//                                                    });
                                                     bundle.putString("key", user.getUid());
                                                     intent = new Intent(LoginActivity.this, HomeForShop.class);
                                                     intent.putExtra(BUNDLE,bundle);
