@@ -126,46 +126,46 @@ public class SelectionProductToEditting extends AppCompatActivity {
         });
 
 
-        database.child("Products").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Product product = dataSnapshot.getValue(Product.class);
-                products.add(product);
-                if(details.size() > 0)
-                {
-                    ArrayList<ProductDetail> list = new ArrayList<>();
-                    for(ProductDetail productDetail : details)
-                    {
-                        if(productDetail.getProduct().equals(product.getId()))
-                        {
-                            list.add(productDetail);
-                            adapter.notifyDataSetChanged();
-                        }
-                    }
-                    children.put(product, list);
-                }
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        database.child("Products").addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                Product product = dataSnapshot.getValue(Product.class);
+//                products.add(product);
+//                if(details.size() > 0)
+//                {
+//                    ArrayList<ProductDetail> list = new ArrayList<>();
+//                    for(ProductDetail productDetail : details)
+//                    {
+//                        if(productDetail.getProduct().equals(product.getId()))
+//                        {
+//                            list.add(productDetail);
+//                            adapter.notifyDataSetChanged();
+//                        }
+//                    }
+//                    children.put(product, list);
+//                }
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
         adapter = new ProductExpandListAdapter(SelectionProductToEditting.this, products, children);
 
@@ -174,6 +174,29 @@ public class SelectionProductToEditting extends AppCompatActivity {
         registerForContextMenu(lvList);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent = getIntent();
+        Bundle bundle = intent.getBundleExtra("list");
+        if(bundle != null)
+        {
+            products = (ArrayList<Product>) bundle.getSerializable("data");
+            if(details.size() > 0)
+            {
+                for(Product product : products) {
+                    ArrayList<ProductDetail> list = new ArrayList<>();
+                    for (ProductDetail productDetail : details) {
+                        if (productDetail.getProduct().equals(product.getId())) {
+                            list.add(productDetail);
+                        }
+                    }
+                    children.put(product, list);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        }
+    }
 
     public void onCreateContextMenu(final ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);

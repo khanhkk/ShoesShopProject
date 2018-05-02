@@ -11,7 +11,8 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/toolbar"
-        android:minHeight="?attr/actionBarSize"
+        android:minHeight
+            ="?attr/actionBarSize"
         app:theme="@style/ThemeOverlay.AppCompat.Dark"
         tools:ignore="MissingPrefix" >
         <TextView
@@ -183,23 +184,23 @@
                         android:textStyle="bold"
                         android:text="Hình ảnh"
                         android:textColor="#fff"/>
-                    <!--<ImageView-->
-                        <!--android:id="@+id/imgView_info"-->
-                        <!--android:layout_width="170dp"-->
-                        <!--android:layout_height="100dp"-->
-                        <!--android:scaleType="fitXY"-->
-                        <!--android:layout_marginLeft="50dp"-->
-                        <!--/>-->
-                    <!--<Button-->
-                        <!--android:layout_width="50dp"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="..."-->
-                        <!--android:id="@+id/btn_infor"-->
-                        <!--android:layout_marginLeft="5dp"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="#fff"-->
-                        <!--android:background="@drawable/button2_style"-->
-                        <!--/>-->
+                    <ImageView
+                        android:id="@+id/imgView_info"
+                        android:layout_width="170dp"
+                        android:layout_height="100dp"
+                        android:scaleType="fitXY"
+                        android:layout_marginLeft="50dp"
+                        />
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:text="..."
+                        android:id="@+id/btn_infor"
+                        android:layout_marginLeft="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#fff"
+                        android:background="@drawable/button2_style"
+                        />
                 </LinearLayout>
 
                 <Button
@@ -219,181 +220,181 @@
         </ScrollView>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="5">-->
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <!--<ScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="16dp">
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:orientation="vertical"-->
+                <!--android:padding="16dp">-->
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/id_hoten"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="30dp"
-                    app:errorEnabled="true"
-                    app:hintTextAppearance="@style/TextLabel">
+                <!--<android.support.design.widget.TextInputLayout-->
+                    <!--android:id="@+id/id_hoten"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:minHeight="30dp"-->
+                    <!--app:errorEnabled="true"-->
+                    <!--app:hintTextAppearance="@style/TextLabel">-->
 
-                    <android.support.design.widget.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Tên Shop"
-                        android:inputType="text"
-                        android:text="Miumiu Shop" />
+                    <!--<android.support.design.widget.TextInputEditText-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:hint="Tên Shop"-->
+                        <!--android:inputType="text"-->
+                        <!--android:text="Miumiu Shop" />-->
 
-                </android.support.design.widget.TextInputLayout>
+                <!--</android.support.design.widget.TextInputLayout>-->
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/id_sdt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="30dp"
-                    app:errorEnabled="true"
-                    app:hintTextAppearance="@style/TextLabel">
+                <!--<android.support.design.widget.TextInputLayout-->
+                    <!--android:id="@+id/id_sdt"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:minHeight="30dp"-->
+                    <!--app:errorEnabled="true"-->
+                    <!--app:hintTextAppearance="@style/TextLabel">-->
 
-                    <android.support.design.widget.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Số điện thoại"
-                        android:inputType="phone"
-                        android:text="01675562567" />
+                    <!--<android.support.design.widget.TextInputEditText-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:hint="Số điện thoại"-->
+                        <!--android:inputType="phone"-->
+                        <!--android:text="01675562567" />-->
 
-                </android.support.design.widget.TextInputLayout>
+                <!--</android.support.design.widget.TextInputLayout>-->
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/id_diachi"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="30dp"
-                    app:errorEnabled="true"
-                    app:hintTextAppearance="@style/TextLabel">
+                <!--<android.support.design.widget.TextInputLayout-->
+                    <!--android:id="@+id/id_diachi"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:minHeight="30dp"-->
+                    <!--app:errorEnabled="true"-->
+                    <!--app:hintTextAppearance="@style/TextLabel">-->
 
-                    <android.support.design.widget.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Địa chỉ"
-                        android:inputType="text"
-                        android:text="46 Võ Văn Ngân - Phường Linh Chiểu - Quận Thủ Đức - TP. HCM" />
+                    <!--<android.support.design.widget.TextInputEditText-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:hint="Địa chỉ"-->
+                        <!--android:inputType="text"-->
+                        <!--android:text="46 Võ Văn Ngân - Phường Linh Chiểu - Quận Thủ Đức - TP. HCM" />-->
 
-                </android.support.design.widget.TextInputLayout>
+                <!--</android.support.design.widget.TextInputLayout>-->
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/id_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="30dp"
-                    app:errorEnabled="true"
-                    app:hintTextAppearance="@style/TextLabel">
+                <!--<android.support.design.widget.TextInputLayout-->
+                    <!--android:id="@+id/id_email"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:minHeight="30dp"-->
+                    <!--app:errorEnabled="true"-->
+                    <!--app:hintTextAppearance="@style/TextLabel">-->
 
-                    <android.support.design.widget.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Email"
-                        android:inputType="textEmailAddress"
-                        android:text="miumiushop@gmail.com" />
-                </android.support.design.widget.TextInputLayout>
+                    <!--<android.support.design.widget.TextInputEditText-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:hint="Email"-->
+                        <!--android:inputType="textEmailAddress"-->
+                        <!--android:text="miumiushop@gmail.com" />-->
+                <!--</android.support.design.widget.TextInputLayout>-->
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/id_nguoidaidien"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="30dp"
-                    app:errorEnabled="true"
-                    app:hintTextAppearance="@style/TextLabel">
+                <!--<android.support.design.widget.TextInputLayout-->
+                    <!--android:id="@+id/id_nguoidaidien"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:minHeight="30dp"-->
+                    <!--app:errorEnabled="true"-->
+                    <!--app:hintTextAppearance="@style/TextLabel">-->
 
-                    <android.support.design.widget.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Người đại diện"
-                        android:inputType="textEmailAddress"
-                        android:text="Vũ Đình Khánh" />
-                </android.support.design.widget.TextInputLayout>
+                    <!--<android.support.design.widget.TextInputEditText-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:hint="Người đại diện"-->
+                        <!--android:inputType="textEmailAddress"-->
+                        <!--android:text="Vũ Đình Khánh" />-->
+                <!--</android.support.design.widget.TextInputLayout>-->
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/id_soTk"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="30dp"
-                    app:errorEnabled="true"
-                    app:hintTextAppearance="@style/TextLabel">
+                <!--<android.support.design.widget.TextInputLayout-->
+                    <!--android:id="@+id/id_soTk"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:minHeight="30dp"-->
+                    <!--app:errorEnabled="true"-->
+                    <!--app:hintTextAppearance="@style/TextLabel">-->
 
-                    <android.support.design.widget.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Số tài khoản"
-                        android:inputType="number"
-                        android:text="9721545125021" />
-                </android.support.design.widget.TextInputLayout>
+                    <!--<android.support.design.widget.TextInputEditText-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:hint="Số tài khoản"-->
+                        <!--android:inputType="number"-->
+                        <!--android:text="9721545125021" />-->
+                <!--</android.support.design.widget.TextInputLayout>-->
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/id_Facebook"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="30dp"
-                    app:errorEnabled="true"
-                    app:hintTextAppearance="@style/TextLabel">
+                <!--<android.support.design.widget.TextInputLayout-->
+                    <!--android:id="@+id/id_Facebook"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:minHeight="30dp"-->
+                    <!--app:errorEnabled="true"-->
+                    <!--app:hintTextAppearance="@style/TextLabel">-->
 
-                    <android.support.design.widget.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Địa chỉ Facebook"
-                        android:inputType="textPostalAddress"
-                        android:text="https://www.facebook.com/vi.vo.50159?ref=br_rs" />
-                </android.support.design.widget.TextInputLayout>
+                    <!--<android.support.design.widget.TextInputEditText-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:hint="Địa chỉ Facebook"-->
+                        <!--android:inputType="textPostalAddress"-->
+                        <!--android:text="https://www.facebook.com/vi.vo.50159?ref=br_rs" />-->
+                <!--</android.support.design.widget.TextInputLayout>-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:gravity="center_vertical"
-                        android:text="Hình ảnh:"
-                        android:textColor="#050503"
-                        android:textSize="18sp" />
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="30dp"-->
+                        <!--android:gravity="center_vertical"-->
+                        <!--android:text="Hình ảnh:"-->
+                        <!--android:textColor="#050503"-->
+                        <!--android:textSize="18sp" />-->
 
-                    <ImageView
-                        android:id="@+id/imgView_info"
-                        android:layout_width="180dp"
-                        android:layout_height="180dp"
-                        android:layout_marginLeft="50dp" />
+                    <!--<ImageView-->
+                        <!--android:id="@+id/imgView_info"-->
+                        <!--android:layout_width="180dp"-->
+                        <!--android:layout_height="180dp"-->
+                        <!--android:layout_marginLeft="50dp" />-->
 
-                    <ImageButton
-                        android:id="@+id/btn_infor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="#ffff"
-                        android:src="@drawable/ic_add_a_photo_black_24dp">
+                    <!--<ImageButton-->
+                        <!--android:id="@+id/btn_infor"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:background="#ffff"-->
+                        <!--android:src="@drawable/ic_add_a_photo_black_24dp">-->
 
-                    </ImageButton>
-                </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+                    <!--</ImageButton>-->
+                <!--</LinearLayout>-->
+            <!--</LinearLayout>-->
+        <!--</ScrollView>-->
+    <!--</LinearLayout>-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="bottom">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="bottom">-->
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:onClick="confirmInput"
-            android:text="Lưu"
-            android:textColor="#fff"
-            android:textSize="18sp" />
-    </LinearLayout>
+        <!--<Button-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@color/colorPrimary"-->
+            <!--android:onClick="confirmInput"-->
+            <!--android:text="Lưu"-->
+            <!--android:textColor="#fff"-->
+            <!--android:textSize="18sp" />-->
+    <!--</LinearLayout>-->
 
 </LinearLayout>

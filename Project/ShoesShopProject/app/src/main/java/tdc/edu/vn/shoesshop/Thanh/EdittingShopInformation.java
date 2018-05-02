@@ -31,7 +31,7 @@ public class EdittingShopInformation extends AppCompatActivity {
     ImageButton btn_chooseImg,btn_takeaphoto;
     final int CROP_PIC = 2;
     private Uri picUri;
-    private ImageButton btn_getimage;
+    private Button btn_getimage;
     private Button btnSave;
     Intent intent;
 
@@ -59,9 +59,6 @@ public class EdittingShopInformation extends AppCompatActivity {
         textInputTenshop = findViewById(R.id.id_hoten);
         textInputSdt = findViewById(R.id.id_sdt);
         textInputDiachi = findViewById(R.id.id_diachi);
-        textInputNguoidaidien = findViewById(R.id.id_nguoidaidien);
-        textInputFacebook = findViewById(R.id.id_Facebook);
-        textInputSotaikhoan = findViewById(R.id.id_soTk);
 
 //        edttenshop = (EditText) findViewById(R.id.ten_shop);
 //        edtdiachi = (EditText) findViewById(R.id.dia_chi);
@@ -120,7 +117,7 @@ public class EdittingShopInformation extends AppCompatActivity {
 
         img_ava_patient = (ImageView) findViewById(R.id.imgView_info);
 
-        btn_getimage = (ImageButton) findViewById(R.id.btn_infor);
+        btn_getimage = (Button) findViewById(R.id.btn_infor);
         btn_getimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
