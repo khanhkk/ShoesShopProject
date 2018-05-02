@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,7 +37,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
     private Button btn_getimage;
     private Button btnSave;
     private EditText edttensanpham, edtthuonghieu, edtbaohanh, edtgianiemyet, edtgiaban, edtdiemtichluy, edtmota;
-    ImageView img_ava_patient1;
+    ImageView img_ava_patient1,img_infor_2,img_infor_3;
 
     @Nullable
     @Override
@@ -93,8 +94,8 @@ public class DetailInformationOfProduct extends AppCompatActivity {
             }
         });
         img_ava_patient1 = (ImageView) findViewById(R.id.imgView_info1);
-
-
+        img_infor_2  = (ImageView) findViewById(R.id.imgView_info2);
+        img_infor_3  = (ImageView) findViewById(R.id.imgView_info3);
 
         btn_getimage = (Button) findViewById(R.id.btn_infor);
         btn_getimage.setOnClickListener(new View.OnClickListener() {
@@ -112,8 +113,19 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                 String tensanpham = edttensanpham.getText().toString().trim();
                 String thuonghieu = edtthuonghieu.getText().toString().trim();
                 String baohanh = edtbaohanh.getText().toString().trim();
-                int gianiemyet = Integer.parseInt(edtgianiemyet.getText().toString().trim());
-                int giaban = Integer.parseInt(edtgiaban.getText().toString().trim());
+                int gianiemyet = -1;
+                if (edtgianiemyet.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please enter price marker!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                gianiemyet = Integer.parseInt(edtgianiemyet.getText().toString().trim());
+                int giaban = -1;
+                if (edtgiaban.getText().toString().trim().isEmpty())
+                {
+                    Toast.makeText(getApplicationContext(), "Please enter product price!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                giaban = Integer.parseInt(edtgiaban.getText().toString().trim());
                 String diemtichluy = edtdiemtichluy.toString().trim();
                 String mota = edtmota.toString().trim();
                 if (TextUtils.isEmpty(tensanpham)){
@@ -154,8 +166,14 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                     edtgiaban.requestFocus();
                     return;
                 }
+                if(img_ava_patient1.getDrawable() == null || img_infor_2.getDrawable() == null || img_infor_3.getDrawable() == null)
+                {
+                    Toast.makeText(getApplicationContext(), "Please choose image or take a photo in here!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
                     startActivity(intent);
+
             }
         });
     }
@@ -164,9 +182,11 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         General.chooseFromCamera(DetailInformationOfProduct.this);
     }
     public void chooseFromGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, 0);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,"Select Picture"), 1);
     }
 
 
@@ -183,20 +203,44 @@ public class DetailInformationOfProduct extends AppCompatActivity {
             if(requestCode == CAM_REQUEST){
                 Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
                 //  picUri = data.getData();
-                img_ava_patient1.setImageBitmap(thumbnail);
+               // img_ava_patient1.setImageBitmap(thumbnail);
+
+                if(img_ava_patient1.getDrawable() == null)
+                {
+                    img_ava_patient1.setImageBitmap(thumbnail);
+                }
+                else if (img_infor_2.getDrawable() == null)
+                {
+                    img_infor_2.setImageBitmap(thumbnail);
+                }
+                else if (img_infor_3.getDrawable() == null)
+                {
+                    img_infor_3.setImageBitmap(thumbnail);
+                }
                 dialog.dismiss();
             }
         }
         else if (resultCode == RESULT_OK){
             picUri = data.getData();
-
+            Log.i("image",picUri+"");
             // Uri targetUri = data.getData();
             //  textTargetUri.setText(targetUri.toString());
             Bitmap bitmap;
             try {
                 Context applicationContext = dialog.getContext();
                 bitmap = BitmapFactory.decodeStream( applicationContext.getContentResolver().openInputStream(picUri));
-                img_ava_patient1.setImageBitmap(bitmap);
+                if(img_ava_patient1.getDrawable() == null)
+                {
+                    img_ava_patient1.setImageBitmap(bitmap);
+                }
+                else if (img_infor_2.getDrawable() == null)
+                {
+                    img_infor_2.setImageBitmap(bitmap);
+                }
+                else if (img_infor_3.getDrawable() == null)
+                {
+                    img_infor_3.setImageBitmap(bitmap);
+                }
 
                 dialog.dismiss();
             } catch (FileNotFoundException e) {
@@ -204,4 +248,5 @@ public class DetailInformationOfProduct extends AppCompatActivity {
             }
         }
     }
+
 }
