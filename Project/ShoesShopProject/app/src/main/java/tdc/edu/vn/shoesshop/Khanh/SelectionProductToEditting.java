@@ -3,6 +3,7 @@ package tdc.edu.vn.shoesshop.Khanh;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -103,6 +104,11 @@ public class SelectionProductToEditting extends AppCompatActivity {
         {
 
             products = (ArrayList<Product>) bundle.getSerializable("list");
+            for(Product product : products)
+            {
+                ArrayList<ProductDetail> list = new ArrayList<>();
+                children.put(product, list);
+            }
             //Log.d("ss", products.size()+"--");
             //Log.d("child", details.size()+"===");
 //            if(details.size() > 0)
@@ -129,7 +135,8 @@ public class SelectionProductToEditting extends AppCompatActivity {
                 {
                     if(product.getId().equals(productDetail.getProduct()))
                     {
-
+                        children.get(product).add(productDetail);
+                        adapter.notifyDataSetChanged();
                     }
 
                 }
@@ -208,7 +215,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+        Log.d("aa", details.size()+"  fasd");
     }
 
     public void onCreateContextMenu(final ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
