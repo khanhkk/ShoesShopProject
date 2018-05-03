@@ -192,6 +192,8 @@ public class EditingPromotionDetail extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 //String sanpham = s.getText().toString().trim();
                 String quatang = edtquatang.getText().toString().trim();
                 String giamgia = edtgiamgia.getText().toString().trim();

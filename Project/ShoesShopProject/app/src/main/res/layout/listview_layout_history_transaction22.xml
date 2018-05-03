@@ -3,7 +3,7 @@
     android:orientation="horizontal"
     android:layout_marginTop="10dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/imgView"
@@ -27,7 +27,7 @@
             android:id="@+id/btnImg"
             android:layout_width="82dp"
             android:layout_height="76dp"
-            android:src="@drawable/buttun" />
+            android:src="@drawable/buttunarrow" />
 
 </LinearLayout>
 

@@ -1,17 +1,14 @@
 package tdc.edu.vn.shoesshop.Toan;
 
-
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
-
 import java.util.ArrayList;
-
 import Adapters.Adapter_ProductFilter;
 import tdc.edu.vn.shoesshop.R;
 
@@ -21,8 +18,8 @@ import tdc.edu.vn.shoesshop.R;
 public class Home_User_Fragment extends Fragment {
     private static final String TAG = "ProductFilter";
     GridView gridView;
-    //vars
 
+    //vars
     private ArrayList<Integer> mImageUrls = new ArrayList<>();
     private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<Integer> mrate = new ArrayList<>();
@@ -30,11 +27,9 @@ public class Home_User_Fragment extends Fragment {
     private ArrayList<Double> mSells = new ArrayList<>();
     private ArrayList<Double> mCost = new ArrayList<>();
 
-
     public Home_User_Fragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -1,8 +1,9 @@
 package tdc.edu.vn.shoesshop.Bao;
 
-import android.app.Fragment;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,8 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 
 import tdc.edu.vn.shoesshop.R;
-import tdc.edu.vn.shoesshop.Sang.Bills;
 import tdc.edu.vn.shoesshop.Sang.ChangePassword;
+import tdc.edu.vn.shoesshop.Sang.ListOder;
 import tdc.edu.vn.shoesshop.Toan.LoginActivity;
 
 
@@ -43,7 +44,7 @@ public class PersonalOfClientLoginedFragment extends Fragment {
         txtlichsu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), Bills.class);
+                Intent intent = new Intent(getActivity(), ListOder.class);
                 startActivity (intent);
                 Toast.makeText(getActivity(), " Lịch sử mua hàng " , Toast.LENGTH_SHORT).show();
             }

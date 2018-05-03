@@ -41,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
     Query allShop = myRef.child("Shops");
     public static final String BUNDLE = "bundel";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

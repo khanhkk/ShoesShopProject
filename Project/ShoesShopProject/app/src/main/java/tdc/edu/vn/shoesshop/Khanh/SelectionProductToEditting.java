@@ -126,46 +126,46 @@ public class SelectionProductToEditting extends AppCompatActivity {
         });
 
 
-        database.child("Products").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Product product = dataSnapshot.getValue(Product.class);
-                products.add(product);
-                if(details.size() > 0)
-                {
-                    ArrayList<ProductDetail> list = new ArrayList<>();
-                    for(ProductDetail productDetail : details)
-                    {
-                        if(productDetail.getProduct().equals(product.getId()))
-                        {
-                            list.add(productDetail);
-                            adapter.notifyDataSetChanged();
-                        }
-                    }
-                    children.put(product, list);
-                }
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        database.child("Products").addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                Product product = dataSnapshot.getValue(Product.class);
+//                products.add(product);
+//                if(details.size() > 0)
+//                {
+//                    ArrayList<ProductDetail> list = new ArrayList<>();
+//                    for(ProductDetail productDetail : details)
+//                    {
+//                        if(productDetail.getProduct().equals(product.getId()))
+//                        {
+//                            list.add(productDetail);
+//                            adapter.notifyDataSetChanged();
+//                        }
+//                    }
+//                    children.put(product, list);
+//                }
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
         adapter = new ProductExpandListAdapter(SelectionProductToEditting.this, products, children);
 
@@ -174,6 +174,29 @@ public class SelectionProductToEditting extends AppCompatActivity {
         registerForContextMenu(lvList);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent = getIntent();
+        Bundle bundle = intent.getBundleExtra("list");
+        if(bundle != null)
+        {
+            products = (ArrayList<Product>) bundle.getSerializable("data");
+            if(details.size() > 0)
+            {
+                for(Product product : products) {
+                    ArrayList<ProductDetail> list = new ArrayList<>();
+                    for (ProductDetail productDetail : details) {
+                        if (productDetail.getProduct().equals(product.getId())) {
+                            list.add(productDetail);
+                        }
+                    }
+                    children.put(product, list);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        }
+    }
 
     public void onCreateContextMenu(final ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -289,10 +312,10 @@ public class SelectionProductToEditting extends AppCompatActivity {
 //        Product product2 = new Product("SP0002", "giay di phuot 2", 175000, 150000, shop.getId(), null);
 //        Product product3 = new Product("SP0003", "giay thoi trang 3", 239000, 200000, shop.getId(), null);
 //        Product product4 = new Product("SP0004", "giay the thao 4", 299000, 250000, shop.getId(), null);
-        Product product = new Product(null, "giay the thao","Nike", null, user.getUid(), "3 thang", 0, null, null, null , 1290000, 900000, 3);
-        Product product2 = new Product(null, "giay thoi trang","Bittis", null, user.getUid(), "12 thang", 0, null, null, null , 149000, 90000, 3);
-        Product product3 = new Product(null, "giay di phuot","Adidas", null, user.getUid(), "1 thang", 0, null, null, null , 499000, 300000, 3);
-        Product product4 = new Product(null, "giay bao ho","Nike", null, user.getUid(), "2 thang", 0, null, null, null , 299000, 250000, 3);
+        Product product = new Product(null, "giay the thao","Nike",0, null, user.getUid(), "3 thang", 0, null, null, null , 1290000, 900000, 3);
+        Product product2 = new Product(null, "giay thoi trang","Bittis", 1, null, user.getUid(), "12 thang", 0, null, null, null , 149000, 90000, 3);
+        Product product3 = new Product(null, "giay di phuot","Adidas", 2, null, user.getUid(), "1 thang", 0, null, null, null , 499000, 300000, 3);
+        Product product4 = new Product(null, "giay bao ho","Nike", 0, null, user.getUid(), "2 thang", 0, null, null, null , 299000, 250000, 3);
 
         ProductDetail pd = new ProductDetail(null, null, 38, "xanh la cay", 10);
         ProductDetail pd2 = new ProductDetail(null,null, 39, "xanh la cay", 10);

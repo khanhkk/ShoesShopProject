@@ -5,15 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
     <ImageView
         android:id="@+id/imgViews12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
         android:src="@drawable/history"
         />
-
 
     <TextView
         android:id="@+id/txtInfo"
@@ -30,8 +27,9 @@
         android:id="@+id/btnChiTiet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="#f6fafa"
         android:layout_marginTop="30dp"
+        android:textColor="#e90b0b"
         android:text="@string/btnChiTiet" />
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package tdc.edu.vn.shoesshop.Thanh;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -7,15 +8,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
@@ -37,23 +41,24 @@ import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Toan.HomeForShop;
 
 public class DetailInformationOfProduct extends AppCompatActivity {
-
+    private static final int CAM_REQUEST = 1313;
     private Dialog dialog;
-    //final int CROP_PIC = 2;
+    ImageButton btn_chooseImg,btn_takeaphoto;
+    final int CROP_PIC = 2;
     private Uri picUri;
     private Button btn_getimage;
     private Button btnSave;
     private EditText edttensanpham, edtthuonghieu, edtbaohanh, edtgianiemyet, edtgiaban, edtdiemtichluy, edtmota;
-    ImageView img_ava_patient1;
+    ImageView img_ava_patient1,img_infor_2,img_infor_3;
     ImageView img_ava_patient2;
     ImageView img_ava_patient3;
     RatingBar ratingBar;
+    RadioButton rbtBoth, rbtNam, rbtNu;
 
     Product product = null;
     String img1 = null;
     String img2 = null;
     String img3 = null;
-
 
     //firebase
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -86,7 +91,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         dialog.setContentView(R.layout.dialog);
         dialog.setTitle("Choose Avatar Image");
 
-        //anh xa
+
         ImageButton btn_chooseImg = (ImageButton) dialog.findViewById(R.id.img_choosenGallery);
         ImageButton btn_takeaphoto = (ImageButton) dialog.findViewById(R.id.img_choosenTakephoto);
 
@@ -106,15 +111,28 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         img_ava_patient2 = (ImageView) findViewById(R.id.imgView_info2);
         img_ava_patient3 = (ImageView) findViewById(R.id.imgView_info3);
 
+        rbtBoth = (RadioButton) findViewById(R.id.rbtAll);
+        rbtNam = (RadioButton) findViewById(R.id.rbtMan);
+        rbtNu = (RadioButton) findViewById(R.id.rbtWoman);
+
         General.setupUI(findViewById(R.id.information_of_product), DetailInformationOfProduct.this);
 
         //chon anh tu thu vien
         btn_chooseImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                General.chooseFromGallery(DetailInformationOfProduct.this);
+                chooseFromGallery();
             }
         });
+        btn_takeaphoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                takeNewProfilePicture();
+            }
+        });
+        img_ava_patient1 = (ImageView) findViewById(R.id.imgView_info1);
+        img_infor_2  = (ImageView) findViewById(R.id.imgView_info2);
+        img_infor_3  = (ImageView) findViewById(R.id.imgView_info3);
 
         //lay anh tu camera
         btn_takeaphoto.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +169,21 @@ public class DetailInformationOfProduct extends AppCompatActivity {
             edtgianiemyet.setText(product.getListedPrice()+"");
             edtmota.setText(product.getDescription());
             edtthuonghieu.setText(product.getTrademark());
+
+            if(product.getSex() == 0)
+            {
+                rbtNu.setChecked(true);
+            }
+            else if(product.getSex() == 1)
+            {
+                rbtNam.setChecked(true);
+            }
+            else
+            {
+                rbtBoth.setChecked(true);
+            }
+
+
             if(product.getImage1() != null)
             {
                 try {
@@ -184,6 +217,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
             float number = product.getRating();
             ratingBar.setRating(number);
         }
+
 
         //luu thong tin san pham
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -227,6 +261,20 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                     double giaban = Double.parseDouble(edtgiaban.getText().toString().trim());
                     ///int tichluy = Integer.parseInt(edtdiemtichluy.getText().toString().trim());
                     String mota = edtmota.getText().toString().trim();
+                    int gioiTinh = -1;
+
+                    if(rbtBoth.isChecked())
+                    {
+                        gioiTinh = 2;
+                    }
+                    else if(rbtNam.isChecked())
+                    {
+                        gioiTinh = 1;
+                    }
+                    else
+                    {
+                        gioiTinh = 0;
+                    }
 
                     if (gianiemyet <= 0) {
                         Toast.makeText(getApplicationContext(), "Please check listed price!", Toast.LENGTH_LONG).show();
@@ -241,7 +289,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                         return;
                     }
 
-                    if(ratingBar.getRating() <= 1)
+                    if(ratingBar.getRating() < 1)
                     {
                         Toast.makeText(getApplicationContext(), "Please rate the product!", Toast.LENGTH_LONG).show();
                         return;
@@ -249,6 +297,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
 
                     if(product == null)
                     {
+                        product = new Product();
                         product.setName(tensanpham);
                         product.setRating(ratingBar.getRating());
                         if(edtdiemtichluy.getText().length() > 0) {
@@ -258,10 +307,13 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                         product.setGuarantee(baohanh);
                         product.setListedPrice(gianiemyet);
                         product.setSalePrice(giaban);
+                        product.setSex(gioiTinh);
                         product.setTrademark(thuonghieu);
                         product.setShop(user.getUid());
                         product.setId(database.child("Products").push().getKey());
                         database.child("Products").push().setValue(product);
+                        Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                        startActivity(intent);
                     }
                     else
                     {
@@ -275,6 +327,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                         product.setListedPrice(gianiemyet);
                         product.setSalePrice(giaban);
                         product.setTrademark(thuonghieu);
+                        product.setSex(gioiTinh);
 
                         database.child("Products").orderByChild("id").equalTo(product.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -282,6 +335,8 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                                 for (DataSnapshot child: dataSnapshot.getChildren()) {
                                     child.getRef().setValue(product);
                                 }
+                                Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                                startActivity(intent);
                             }
 
                             @Override
@@ -290,13 +345,18 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                             }
                         });
                     }
-
-                    Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
-                    startActivity(intent);
                 } catch (Exception ex)
                 {
                     Toast.makeText(getApplicationContext(), "Check data input", Toast.LENGTH_LONG).show();
                 }
+
+                if(img_ava_patient1.getDrawable() == null || img_infor_2.getDrawable() == null || img_infor_3.getDrawable() == null)
+                {
+                    Toast.makeText(getApplicationContext(), "Please choose image or take a photo in here!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                    startActivity(intent);
             }
         });
     }
@@ -304,40 +364,72 @@ public class DetailInformationOfProduct extends AppCompatActivity {
     public void profilepictureOnClick(){
         General.chooseFromCamera(DetailInformationOfProduct.this);
     }
+    public void chooseFromGallery() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,"Select Picture"), 1);
+    }
+
+    private void takeNewProfilePicture(){
+        Activity profileFrag = this;
+        Intent cameraintent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        profileFrag.startActivityForResult(cameraintent, CAM_REQUEST);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK && requestCode == General.CAM_REQUEST) {
-            if (requestCode == General.CAM_REQUEST) {
-                Bitmap thumbnail1 = (Bitmap) data.getExtras().get("data");
-                Bitmap thumbnail2 = (Bitmap) data.getExtras().get("data");
-                Bitmap thumbnail3 = (Bitmap) data.getExtras().get("data");
+        if(resultCode == RESULT_OK && requestCode == CAM_REQUEST) {
+            if(requestCode == CAM_REQUEST){
+                Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
                 //  picUri = data.getData();
-                img_ava_patient1.setImageBitmap(thumbnail1);
-                img_ava_patient2.setImageBitmap(thumbnail2);
-                img_ava_patient3.setImageBitmap(thumbnail3);
+               // img_ava_patient1.setImageBitmap(thumbnail);
+
+                if(img_ava_patient1.getDrawable() == null)
+                {
+                    img_ava_patient1.setImageBitmap(thumbnail);
+                }
+                else if (img_infor_2.getDrawable() == null)
+                {
+                    img_infor_2.setImageBitmap(thumbnail);
+                }
+                else if (img_infor_3.getDrawable() == null)
+                {
+                    img_infor_3.setImageBitmap(thumbnail);
+                }
                 dialog.dismiss();
             }
-        } else if (resultCode == RESULT_OK) {
+        }
+        else if (resultCode == RESULT_OK){
             picUri = data.getData();
-
+            Log.i("image",picUri+"");
             // Uri targetUri = data.getData();
             //  textTargetUri.setText(targetUri.toString());
-            Bitmap bitmap1, bitmap2, bitmap3;
+            Bitmap bitmap;
             try {
                 Context applicationContext = dialog.getContext();
-                bitmap1 = BitmapFactory.decodeStream(applicationContext.getContentResolver().openInputStream(picUri));
-                bitmap2 = BitmapFactory.decodeStream(applicationContext.getContentResolver().openInputStream(picUri));
-                bitmap3 = BitmapFactory.decodeStream(applicationContext.getContentResolver().openInputStream(picUri));
-                img_ava_patient1.setImageBitmap(bitmap1);
-                img_ava_patient2.setImageBitmap(bitmap2);
-                img_ava_patient3.setImageBitmap(bitmap3);
+                bitmap = BitmapFactory.decodeStream( applicationContext.getContentResolver().openInputStream(picUri));
+                if(img_ava_patient1.getDrawable() == null)
+                {
+                    img_ava_patient1.setImageBitmap(bitmap);
+                }
+                else if (img_infor_2.getDrawable() == null)
+                {
+                    img_infor_2.setImageBitmap(bitmap);
+                }
+                else if (img_infor_3.getDrawable() == null)
+                {
+                    img_infor_3.setImageBitmap(bitmap);
+                }
+
                 dialog.dismiss();
-            } catch (FileNotFoundException e){
+            } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }
     }
+
 }

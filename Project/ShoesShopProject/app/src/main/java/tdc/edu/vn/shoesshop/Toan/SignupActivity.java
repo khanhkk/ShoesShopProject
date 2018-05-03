@@ -229,14 +229,4 @@ public class SignupActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
     }
-
-    public static class EditingPromotionDetail extends AppCompatActivity {
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.editing_promotion_detail_activity);
-
-        }
-    }
 }

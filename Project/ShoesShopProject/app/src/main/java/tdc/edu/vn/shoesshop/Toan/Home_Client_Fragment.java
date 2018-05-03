@@ -1,18 +1,15 @@
 package tdc.edu.vn.shoesshop.Toan;
 
-
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import Adapters.RecyclerViewAdapter_Client;
 import Models.Product;
 import tdc.edu.vn.shoesshop.R;
@@ -54,17 +51,14 @@ public class Home_Client_Fragment extends Fragment {
         RecyclerView recyclerView1 = view.findViewById(R.id.recyclerView1);
         RecyclerView recyclerView2 = view.findViewById(R.id.recyclerView2);
         getImages();
+
         initRecyclerView(view, recyclerView);
         initRecyclerView(view, recyclerView1);
         initRecyclerView(view, recyclerView2);
         return view;
-
-
     }
 
     private void getImages() {
-
-
         Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
 
         mImageUrls.add(R.drawable.a);

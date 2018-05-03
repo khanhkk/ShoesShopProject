@@ -34,7 +34,7 @@ public class OrderInformationForClient extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.lv_item);
         arritem = new ArrayList<OrderClient>();
 
-        arritem.add(new OrderClient(R.mipmap.giay, "0035", 199000, 249000, 1));
+        arritem.add(new OrderClient(R.mipmap.giay, "0036", 199000, 249000, 1));
         arritem.add(new OrderClient(R.mipmap.giay1, "0035", 199000, 249000, 1));
         arritem.add(new OrderClient(R.mipmap.giay1, "0035", 199000, 599000, 2));
         arritem.add(new OrderClient(R.mipmap.giay, "0035", 229000, 599000, 1));
@@ -53,7 +53,7 @@ public class OrderInformationForClient extends AppCompatActivity {
 //  Action bar back
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
-        mToolbar.setNavigationIcon(R.drawable.ic_chevron_left_black_24dp);
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
