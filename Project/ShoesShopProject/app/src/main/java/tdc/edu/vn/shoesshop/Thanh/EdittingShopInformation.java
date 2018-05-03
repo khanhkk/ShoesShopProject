@@ -32,7 +32,7 @@ public class EdittingShopInformation extends AppCompatActivity {
     ImageButton btn_chooseImg,btn_takeaphoto;
     final int CROP_PIC = 2;
     private Uri picUri;
-    private ImageButton btn_getimage;
+    private Button btn_getimage;
     private Button btnSave;
     Intent intent;
 
@@ -121,7 +121,7 @@ public class EdittingShopInformation extends AppCompatActivity {
         });
 
         img_ava_patient = (ImageView) findViewById(R.id.imgView_info);
-        btn_getimage = (ImageButton) findViewById(R.id.btn_infor);
+        btn_getimage = (Button) findViewById(R.id.btn_infor);
 
         btn_getimage.setOnClickListener(new View.OnClickListener() {
             @Override

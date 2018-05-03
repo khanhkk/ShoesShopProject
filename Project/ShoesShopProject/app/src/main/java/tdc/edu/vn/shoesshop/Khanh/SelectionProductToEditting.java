@@ -3,6 +3,7 @@ package tdc.edu.vn.shoesshop.Khanh;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -97,52 +98,47 @@ public class SelectionProductToEditting extends AppCompatActivity {
         details.clear();
         products.clear();
 
+        Intent intent = getIntent();
+        Bundle bundle = intent.getBundleExtra("data");
+        if(bundle != null)
+        {
+
+            products = (ArrayList<Product>) bundle.getSerializable("list");
+            for(Product product : products)
+            {
+                ArrayList<ProductDetail> list = new ArrayList<>();
+                children.put(product, list);
+            }
+            //Log.d("ss", products.size()+"--");
+            //Log.d("child", details.size()+"===");
+//            if(details.size() > 0)
+//            {
+//                for(Product product : products) {
+//                    ArrayList<ProductDetail> list = new ArrayList<>();
+//                    for (ProductDetail productDetail : details) {
+//                        if (productDetail.getProduct().equals(product.getId())) {
+//                            list.add(productDetail);
+//                        }
+//                    }
+//                    children.put(product, list);
+//                    adapter.notifyDataSetChanged();
+//                }
+//            }
+        }
+
         database.child("ProductDetails").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
                 details.add(productDetail);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-        database.child("Products").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Product product = dataSnapshot.getValue(Product.class);
-                products.add(product);
-                if(details.size() > 0)
+                for(Product product : products)
                 {
-                    ArrayList<ProductDetail> list = new ArrayList<>();
-                    for(ProductDetail productDetail : details)
+                    if(product.getId().equals(productDetail.getProduct()))
                     {
-                        if(productDetail.getProduct().equals(product.getId()))
-                        {
-                            list.add(productDetail);
-                            adapter.notifyDataSetChanged();
-                        }
+                        children.get(product).add(productDetail);
+                        adapter.notifyDataSetChanged();
                     }
-                    children.put(product, list);
+
                 }
             }
 
@@ -167,6 +163,48 @@ public class SelectionProductToEditting extends AppCompatActivity {
             }
         });
 
+
+//        database.child("Products").addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                Product product = dataSnapshot.getValue(Product.class);
+//                products.add(product);
+//                if(details.size() > 0)
+//                {
+//                    ArrayList<ProductDetail> list = new ArrayList<>();
+//                    for(ProductDetail productDetail : details)
+//                    {
+//                        if(productDetail.getProduct().equals(product.getId()))
+//                        {
+//                            list.add(productDetail);
+//                            adapter.notifyDataSetChanged();
+//                        }
+//                    }
+//                    children.put(product, list);
+//                }
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+
         adapter = new ProductExpandListAdapter(SelectionProductToEditting.this, products, children);
 
         lvList.setAdapter(adapter);
@@ -174,6 +212,11 @@ public class SelectionProductToEditting extends AppCompatActivity {
         registerForContextMenu(lvList);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("aa", details.size()+"  fasd");
+    }
 
     public void onCreateContextMenu(final ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);

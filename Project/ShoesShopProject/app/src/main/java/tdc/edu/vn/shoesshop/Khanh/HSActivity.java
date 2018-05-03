@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,6 +38,9 @@ public class HSActivity extends Fragment {
     private FloatingActionButton fab, fab_add, fab_edit, fab_delete;
     private Animation amOpen, amClose, amRClockwise, amRanticlockwise;
     Boolean isOpen = false;
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
     @Override
     //protected void onCreateView(Bundle savedInstanceState) {
@@ -83,14 +86,33 @@ public class HSActivity extends Fragment {
         fab_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if(PlaceholderFragment.adapter.getCheckedProducts().size() > 0)
+                {
+                    //Log.d("ss", PlaceholderFragment.adapter.getCheckedProducts().size()+"--");
+                    Intent intent = new Intent(getActivity(), SelectionProductToEditting.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("list", PlaceholderFragment.adapter.getCheckedProducts());
+                    intent.putExtra("data", bundle);
+                    startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), "Chon san pham de  thao tac!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         fab_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(PlaceholderFragment.adapter.getCheckedProducts().size() > 0)
+                {
 
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), "Chon san pham de  thao tac!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -154,9 +176,11 @@ public class HSActivity extends Fragment {
 
         private static final String ARG_SECTION_NUMBER = "section_number";
         GridView gridView;
+        TextView textView;
 
         private ArrayList<Product> list = new ArrayList<>();
-        private Adapter_ProductFilter_Shop  adapter;
+        private ArrayList<Product> ListProducts = new ArrayList<>();
+        public static Adapter_ProductFilter_Shop  adapter;
         private ArrayList<String> listTrademark = new ArrayList<>();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -178,20 +202,37 @@ public class HSActivity extends Fragment {
 
             View rootView = inflater.inflate(R.layout.hs_fragment, container, false);
             gridView = (GridView) rootView.findViewById(R.id.grid);
+            textView = (TextView) rootView.findViewById(R.id.section_label);
 
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            int i = getArguments().getInt(ARG_SECTION_NUMBER);
-            Log.d("so", i+"");
+            textView.setVisibility(View.GONE);
 
             list.clear();
-            listTrademark.clear();
+            ListProducts.clear();
             database.child("Products").orderByChild("shop").equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     Product product = dataSnapshot.getValue(Product.class);
-                    list.add(product);
-                    adapter.notifyDataSetChanged();
+                    ListProducts.add(product);
+                    char c = textView.getText().charAt(textView.getText().length()-1);
+                    if (c == '1') {
+                        if (product.getSex() == 2) {
+                            list.add(product);
+                            adapter.notifyDataSetChanged();
+                        }
+                    } else if (c == '2') {
+                        if (product.getSex() == 0) {
+                            list.add(product);
+                            adapter.notifyDataSetChanged();
+                        }
+                    } else {
+                        if (product.getSex() == 1) {
+                            list.add(product);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+
+
                 }
 
                 @Override
@@ -217,13 +258,7 @@ public class HSActivity extends Fragment {
 
             adapter = new Adapter_ProductFilter_Shop(getContext(), list);
             gridView.setAdapter(adapter);
-
             return rootView;
-        }
-
-        @Override
-        public void onStart() {
-            super.onStart();
         }
     }
 

@@ -5,11 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -24,9 +26,6 @@ import tdc.edu.vn.shoesshop.R;
 
 public class Adapter_ProductFilter_Shop extends BaseAdapter {
 
-
-    private static final String TAG = "Adapter_ProductFilter";
-
     //vars
 //    private ArrayList<Integer> mImageUrls = new ArrayList<>();
 //    private ArrayList<String> mNames = new ArrayList<>();
@@ -36,9 +35,10 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
 //    private ArrayList<Double> mPercent = new ArrayList<>();
 //    private ArrayList<Integer> mCount = new ArrayList<>();
 //    private ArrayList<Boolean> mCheck = new ArrayList<>();
-
+    private static final String TAG = "Adapter_ProductFilter";
     private Context mContext;
     private ArrayList<Product> list;
+    private ArrayList<Product> CheckedProducts = new ArrayList<>();
 
 //    public Adapter_ProductFilter_Shop(ArrayList<Integer> mImageUrls, ArrayList<String> mNames, ArrayList<Integer> mrate, ArrayList<Double> mSells, ArrayList<Double> mCost, ArrayList<Integer> mCount, ArrayList<Boolean> mCheck, Context mContext) {
 //        this.mImageUrls = mImageUrls;
@@ -73,6 +73,10 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return 0;
+    }
+
+    public ArrayList<Product> getCheckedProducts() {
+        return CheckedProducts;
     }
 
     class ViewHolderGrid
@@ -111,7 +115,7 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
 //        imageView.setImageResource(mImageUrls.get(position));
 //        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        Product product = list.get(position);
+        final Product product = list.get(position);
 
         //format 1
         NumberFormat nf = NumberFormat.getInstance();
@@ -163,6 +167,23 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
 
             }
         }
+
+        viewHolder.chkCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b)
+                {
+                    Log.d("tag", "y");
+                    CheckedProducts.add(product);
+                }
+                else
+                {
+                    Log.d("tag", "n");
+                    CheckedProducts.remove(product);
+                }
+            }
+        });
+
 
 //        name.setText(mNames.get(position));
 //        rate_bar.setRating(Integer.valueOf(mrate.get(position)));
