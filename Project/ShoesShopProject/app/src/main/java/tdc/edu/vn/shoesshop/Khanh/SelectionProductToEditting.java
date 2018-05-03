@@ -97,11 +97,42 @@ public class SelectionProductToEditting extends AppCompatActivity {
         details.clear();
         products.clear();
 
+        Intent intent = getIntent();
+        Bundle bundle = intent.getBundleExtra("data");
+        if(bundle != null)
+        {
+
+            products = (ArrayList<Product>) bundle.getSerializable("list");
+            //Log.d("ss", products.size()+"--");
+            //Log.d("child", details.size()+"===");
+//            if(details.size() > 0)
+//            {
+//                for(Product product : products) {
+//                    ArrayList<ProductDetail> list = new ArrayList<>();
+//                    for (ProductDetail productDetail : details) {
+//                        if (productDetail.getProduct().equals(product.getId())) {
+//                            list.add(productDetail);
+//                        }
+//                    }
+//                    children.put(product, list);
+//                    adapter.notifyDataSetChanged();
+//                }
+//            }
+        }
+
         database.child("ProductDetails").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
                 details.add(productDetail);
+                for(Product product : products)
+                {
+                    if(product.getId().equals(productDetail.getProduct()))
+                    {
+
+                    }
+
+                }
             }
 
             @Override
@@ -177,25 +208,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("list");
-        if(bundle != null)
-        {
-            products = (ArrayList<Product>) bundle.getSerializable("data");
-            if(details.size() > 0)
-            {
-                for(Product product : products) {
-                    ArrayList<ProductDetail> list = new ArrayList<>();
-                    for (ProductDetail productDetail : details) {
-                        if (productDetail.getProduct().equals(product.getId())) {
-                            list.add(productDetail);
-                        }
-                    }
-                    children.put(product, list);
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        }
+
     }
 
     public void onCreateContextMenu(final ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {

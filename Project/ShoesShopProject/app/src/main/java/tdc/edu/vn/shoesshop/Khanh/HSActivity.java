@@ -88,6 +88,7 @@ public class HSActivity extends Fragment {
             public void onClick(View view) {
                 if(PlaceholderFragment.adapter.getCheckedProducts().size() > 0)
                 {
+                    //Log.d("ss", PlaceholderFragment.adapter.getCheckedProducts().size()+"--");
                     Intent intent = new Intent(getActivity(), SelectionProductToEditting.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("list", PlaceholderFragment.adapter.getCheckedProducts());
@@ -175,8 +176,10 @@ public class HSActivity extends Fragment {
 
         private static final String ARG_SECTION_NUMBER = "section_number";
         GridView gridView;
+        TextView textView;
 
         private ArrayList<Product> list = new ArrayList<>();
+        private ArrayList<Product> ListProducts = new ArrayList<>();
         public static Adapter_ProductFilter_Shop  adapter;
         private ArrayList<String> listTrademark = new ArrayList<>();
 
@@ -199,42 +202,37 @@ public class HSActivity extends Fragment {
 
             View rootView = inflater.inflate(R.layout.hs_fragment, container, false);
             gridView = (GridView) rootView.findViewById(R.id.grid);
+            textView = (TextView) rootView.findViewById(R.id.section_label);
 
-            //text view chua du lieu filter
-            final TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             textView.setVisibility(View.GONE);
 
             list.clear();
-            listTrademark.clear();
+            ListProducts.clear();
             database.child("Products").orderByChild("shop").equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     Product product = dataSnapshot.getValue(Product.class);
+                    ListProducts.add(product);
                     char c = textView.getText().charAt(textView.getText().length()-1);
-                    if(c == '1')
-                    {
-                        if(product.getSex() == 2)
-                        {
+                    if (c == '1') {
+                        if (product.getSex() == 2) {
                             list.add(product);
+                            adapter.notifyDataSetChanged();
                         }
-                    }
-                    else if(c == '2')
-                    {
-                        if(product.getSex() == 0)
-                        {
+                    } else if (c == '2') {
+                        if (product.getSex() == 0) {
                             list.add(product);
+                            adapter.notifyDataSetChanged();
                         }
-                    }
-                    else
-                    {
-                        if(product.getSex() == 1)
-                        {
+                    } else {
+                        if (product.getSex() == 1) {
                             list.add(product);
+                            adapter.notifyDataSetChanged();
                         }
                     }
 
-                    adapter.notifyDataSetChanged();
+
                 }
 
                 @Override
@@ -260,13 +258,7 @@ public class HSActivity extends Fragment {
 
             adapter = new Adapter_ProductFilter_Shop(getContext(), list);
             gridView.setAdapter(adapter);
-
             return rootView;
-        }
-
-        @Override
-        public void onStart() {
-            super.onStart();
         }
     }
 

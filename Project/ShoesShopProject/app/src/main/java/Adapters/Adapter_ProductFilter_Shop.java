@@ -5,11 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -113,7 +115,7 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
 //        imageView.setImageResource(mImageUrls.get(position));
 //        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        Product product = list.get(position);
+        final Product product = list.get(position);
 
         //format 1
         NumberFormat nf = NumberFormat.getInstance();
@@ -166,14 +168,22 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
             }
         }
 
-        if(viewHolder.chkCheck.isChecked())
-        {
-            CheckedProducts.add(product);
-        }
-        else
-        {
-            CheckedProducts.remove(product);
-        }
+        viewHolder.chkCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b)
+                {
+                    Log.d("tag", "y");
+                    CheckedProducts.add(product);
+                }
+                else
+                {
+                    Log.d("tag", "n");
+                    CheckedProducts.remove(product);
+                }
+            }
+        });
+
 
 //        name.setText(mNames.get(position));
 //        rate_bar.setRating(Integer.valueOf(mrate.get(position)));
