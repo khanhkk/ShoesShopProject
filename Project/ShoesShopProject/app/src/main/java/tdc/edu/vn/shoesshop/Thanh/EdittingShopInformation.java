@@ -1,5 +1,6 @@
 package tdc.edu.vn.shoesshop.Thanh;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -45,6 +46,7 @@ public class EdittingShopInformation extends AppCompatActivity {
     //private EditText edttenshop, edtsdt, edtdiachi, edtemail, edtnguoidaidien, edtfacebook, edtsotaikhoan;
 
     ImageView img_ava_patient;
+    @SuppressLint("WrongViewCast")
     @Nullable
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,9 +61,9 @@ public class EdittingShopInformation extends AppCompatActivity {
         textInputTenshop = findViewById(R.id.id_hoten);
         textInputSdt = findViewById(R.id.id_sdt);
         textInputDiachi = findViewById(R.id.id_diachi);
-        textInputNguoidaidien = findViewById(R.id.id_nguoidaidien);
-        textInputFacebook = findViewById(R.id.id_Facebook);
-        textInputSotaikhoan = findViewById(R.id.id_soTk);
+        textInputNguoidaidien = findViewById(R.id.nguoidaidien_shop);
+        textInputSotaikhoan = findViewById(R.id.sotaikhoan);
+        textInputFacebook = findViewById(R.id.facebook);
 
 //        edttenshop = (EditText) findViewById(R.id.ten_shop);
 //        edtdiachi = (EditText) findViewById(R.id.dia_chi);
@@ -119,8 +121,8 @@ public class EdittingShopInformation extends AppCompatActivity {
         });
 
         img_ava_patient = (ImageView) findViewById(R.id.imgView_info);
-
         btn_getimage = (ImageButton) findViewById(R.id.btn_infor);
+
         btn_getimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
