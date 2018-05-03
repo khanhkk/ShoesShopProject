@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#f2f2f2"
     tools:context="tdc.edu.vn.shoesshop.Toan.HomeLayout">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#f2f2f2"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +22,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sản phẩm mới" />
+            android:text="Sản phẩm mới"
+
+            android:paddingBottom="3dp"
+            android:textStyle="bold|italic"
+            android:textColor="#0206ff"
+            android:textSize="16dp"/>
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
@@ -36,8 +46,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sản phẩm phổ biến"
-            android:paddingTop="20dp"
-            android:textStyle="bold"/>
+
+            android:paddingBottom="3dp"
+            android:textStyle="bold|italic"
+            android:textColor="#0206ff"
+            android:textSize="16dp"/>
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -55,9 +68,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sản phẩm giảm giá"
-            android:paddingTop="20dp"
-            android:textStyle="bold"
-            android:paddingBottom="20dp"/>
+            android:paddingBottom="3dp"
+            android:textStyle="bold|italic"
+            android:textColor="#0206ff"
+            android:textSize="16dp"/>
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -68,3 +82,4 @@
     </LinearLayout>
 
 </LinearLayout>
+</ScrollView>
