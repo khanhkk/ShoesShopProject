@@ -15,7 +15,7 @@ public class Adapter_info_product extends PagerAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private Integer [] images = {R.drawable.run,R.drawable.run,R.drawable.run};
+    private Integer [] images = {R.drawable.a,R.drawable.b,R.drawable.c};
 
     public Adapter_info_product(Context context) {
         this.context = context;
