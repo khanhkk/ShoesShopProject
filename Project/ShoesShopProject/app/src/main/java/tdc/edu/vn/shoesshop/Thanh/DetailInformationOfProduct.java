@@ -412,6 +412,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
             try {
                 Context applicationContext = dialog.getContext();
                 bitmap = BitmapFactory.decodeStream( applicationContext.getContentResolver().openInputStream(picUri));
+
                 if(img_ava_patient1.getDrawable() == null)
                 {
                     img_ava_patient1.setImageBitmap(bitmap);
