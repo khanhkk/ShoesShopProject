@@ -81,7 +81,7 @@ public class HSActivity extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("list", PlaceholderFragment.adapter.getCheckedProducts());
                     intent.putExtra("data", bundle);
-                    startActivity(intent);
+                    getContext().startActivity(intent);
                     Toast.makeText(getActivity(), "thao tac!", Toast.LENGTH_SHORT).show();
                 }
                 else
@@ -232,13 +232,33 @@ public class HSActivity extends Fragment {
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+        //ArrayList<Fragment> list = new ArrayList<>();
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
+//            Fragment fragment = PlaceholderFragment.newInstance(1);
+//            Fragment fragment2 = PlaceholderFragment.newInstance(2);
+//            Fragment fragment3 = PlaceholderFragment.newInstance(3);
+//
+//            list.add(fragment);
+//            list.add(fragment2);
+//            list.add(fragment3);
         }
 
         @Override
         public Fragment getItem(int position) {
-            return PlaceholderFragment.newInstance(position + 1);
+            Fragment fragment = null;
+
+
+
+            //if (getFragmentManager().getFragments().get(position) == null) {
+
+                fragment = PlaceholderFragment.newInstance(position + 1);
+//            } else {
+//                fragment = getFragmentManager().getFragments().get(position);
+//            }
+
+            Toast.makeText(getActivity(), getChildFragmentManager().getFragments().size() + "", Toast.LENGTH_SHORT).show();
+            return fragment;
         }
 
         @Override
