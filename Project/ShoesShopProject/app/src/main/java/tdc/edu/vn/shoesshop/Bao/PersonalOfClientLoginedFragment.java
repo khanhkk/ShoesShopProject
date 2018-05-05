@@ -17,9 +17,6 @@ import Models.Notification;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Sang.ChangePassword;
 import tdc.edu.vn.shoesshop.Sang.ListOder;
-import tdc.edu.vn.shoesshop.Son.NotificationFragment;
-import tdc.edu.vn.shoesshop.Toan.LoginActivity;
-
 
 public class PersonalOfClientLoginedFragment extends Fragment {
 

@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,12 +16,13 @@ import java.util.List;
 import Models.Notification;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Son.OrderInformationForClient;
+import tdc.edu.vn.shoesshop.Son.OrderInformationForShop;
 
-public class NotificationClientAdapter extends RecyclerView.Adapter<NotificationClientAdapter.MyViewHolder> {
+public class NotificationShopAdapter extends RecyclerView.Adapter<NotificationShopAdapter.MyViewHolder> {
     Context mContext;
     List<Notification> mData;
 
-    public NotificationClientAdapter(Context mContext, List<Notification> mData) {
+    public NotificationShopAdapter(Context mContext, List<Notification> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -37,7 +37,7 @@ public class NotificationClientAdapter extends RecyclerView.Adapter<Notification
             @Override
             public void onClick(View view) {
                 Toast.makeText(mContext,"TT"+String.valueOf(viewHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mContext,OrderInformationForClient.class);
+                Intent intent = new Intent(mContext,OrderInformationForShop.class);
                 mContext.startActivity(intent);
             }
         });

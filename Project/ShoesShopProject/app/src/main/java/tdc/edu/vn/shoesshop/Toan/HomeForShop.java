@@ -14,7 +14,8 @@ import tdc.edu.vn.shoesshop.Bao.PersonalOfShopFragment;
 import tdc.edu.vn.shoesshop.Khanh.HSActivity;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Sang.TransactionOfShopFragment;
-import tdc.edu.vn.shoesshop.Son.NotificationFragment;
+import tdc.edu.vn.shoesshop.Son.NotificationClientFragment;
+import tdc.edu.vn.shoesshop.Son.NotificationShopFragment;
 
 public class HomeForShop extends AppCompatActivity {
 
@@ -22,7 +23,7 @@ public class HomeForShop extends AppCompatActivity {
     private HSActivity hsActivity;
     private Home_Client_Fragment home_client_fragment;
     private TransactionOfShopFragment transaction;
-    private NotificationFragment notificationFragment;
+    private NotificationShopFragment notificationFragment;
     private PersonalOfShopFragment personal;
 
 
@@ -35,7 +36,7 @@ public class HomeForShop extends AppCompatActivity {
         hsActivity = new HSActivity();
         home_client_fragment = new Home_Client_Fragment();
         transaction = new TransactionOfShopFragment();
-        notificationFragment = new NotificationFragment();
+        notificationFragment = new NotificationShopFragment();
         personal = new PersonalOfShopFragment();
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
@@ -71,7 +72,7 @@ public class HomeForShop extends AppCompatActivity {
                             break;
 
                         case R.id.nav_notification:
-                            selectedFragment = notificationFragment;
+                            selectedFragment = new NotificationShopFragment();
                             break;
 
                         case R.id.nav_account:

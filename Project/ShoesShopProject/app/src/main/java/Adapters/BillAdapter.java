@@ -111,7 +111,7 @@ public class BillAdapter extends ArrayAdapter<BillDetail> {
     {
         double money = 0;
         if(list.size() != 0) {
-            for (BillDetail item : list) {
+                for (BillDetail item : list) {
                 money += (item.getQuantity() * item.getProduct().getSalePrice());
             }
         }
