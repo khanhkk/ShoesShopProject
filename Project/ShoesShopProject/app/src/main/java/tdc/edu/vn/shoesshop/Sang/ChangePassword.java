@@ -138,7 +138,7 @@ public class ChangePassword extends AppCompatActivity {
             return;
         }
 
-        Intent intent = new Intent(ChangePassword.this, HomeForClient.class);
+        Intent intent = new Intent(ChangePassword.this, LoginActivity.class);
         startActivity(intent);
 
 //        String input = "Email: " + textInputEmail.getEditText().getText().toString();

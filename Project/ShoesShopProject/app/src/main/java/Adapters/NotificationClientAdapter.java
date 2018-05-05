@@ -1,63 +1,79 @@
 package Adapters;
 
 import android.content.Context;
-import android.graphics.Paint;
+import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import Models.Notification;
-import Models.OrderClient;
 import tdc.edu.vn.shoesshop.R;
+import tdc.edu.vn.shoesshop.Son.OrderInformationForClient;
 
-public class NotificationClientAdapter extends BaseAdapter {
-    Context myContext;
-    int LAYOUT;
-    List<Notification> arrItem;
-    public NotificationClientAdapter(Context context, int layout, List<Notification> itemList)
-    {
-        myContext = context;
-        LAYOUT = layout;
-        arrItem = itemList;
+public class NotificationClientAdapter extends RecyclerView.Adapter<NotificationClientAdapter.MyViewHolder> {
+    Context mContext;
+    List<Notification> mData;
+
+    public NotificationClientAdapter(Context mContext, List<Notification> mData) {
+        this.mContext = mContext;
+        this.mData = mData;
     }
 
     @Override
-    public int getCount() {
-        return arrItem.size();
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v;
+        v = LayoutInflater.from(mContext).inflate(R.layout.notification_fragment_custom, parent,false);
+        final MyViewHolder viewHolder = new MyViewHolder(v);
+
+        viewHolder.item_contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext,"TT"+String.valueOf(viewHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext,OrderInformationForClient.class);
+                mContext.startActivity(intent);
+            }
+        });
+        return viewHolder;
     }
 
     @Override
-    public Object getItem(int i) {
-        return null;
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+
+        holder.tv_name.setText(mData.get(position).getTen());
+        holder.tv_active.setText(mData.get(position).getHoatdong());
+        holder.tv_date.setText(mData.get(position).getThoiGian());
+        holder.img_hinh.setImageResource(mData.get(position).getHinh());
     }
 
     @Override
-    public long getItemId(int i) {
-        return i;
+    public int getItemCount() {
+        return mData.size();
     }
 
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        LayoutInflater inflater = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(LAYOUT,null);
 
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
+        private LinearLayout item_contact;
+        private TextView tv_name;
+        private TextView tv_active;
+        private ImageView img_hinh;
+        private TextView tv_date;
+        public MyViewHolder(View itemView) {
 
-        TextView txtTen=(TextView) view.findViewById(R.id.tv_name);
-        txtTen.setText(arrItem.get(i).getTen());
-        ImageView imageView= (ImageView) view.findViewById(R.id.tv_img);
-        imageView.setImageResource(arrItem.get(i).getHinh());
-        TextView txtHoatdong=(TextView) view.findViewById(R.id.tv_active);
-        txtHoatdong.setText(arrItem.get(i).getHoatdong());
-        TextView txtDate=(TextView) view.findViewById(R.id.tv_date);
-        txtDate.setText(arrItem.get(i).getThoiGian());
-
-
-
-        return view;
+            super(itemView);
+            item_contact = (LinearLayout) itemView.findViewById(R.id.id_item);
+            tv_name = (TextView) itemView.findViewById(R.id.id_name);
+            tv_active = (TextView) itemView.findViewById(R.id.id_active);
+            tv_date = (TextView) itemView.findViewById(R.id.id_date);
+            img_hinh = (ImageView) itemView.findViewById(R.id.id_img);
+        }
     }
+
 }

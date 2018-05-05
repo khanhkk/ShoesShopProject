@@ -14,7 +14,7 @@ import tdc.edu.vn.shoesshop.Bao.PersonalOfShopFragment;
 import tdc.edu.vn.shoesshop.Khanh.HSActivity;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Sang.TransactionOfShopFragment;
-import tdc.edu.vn.shoesshop.Son.NotificationFragment;
+import tdc.edu.vn.shoesshop.Son.NotificationClientFragment;
 
 public class HomeForShop extends AppCompatActivity {
 
@@ -64,7 +64,7 @@ public class HomeForShop extends AppCompatActivity {
                             break;
 
                         case R.id.nav_notification:
-                            selectedFragment = new NotificationFragment();
+                            selectedFragment = new NotificationClientFragment();
                             break;
 
                         case R.id.nav_account:

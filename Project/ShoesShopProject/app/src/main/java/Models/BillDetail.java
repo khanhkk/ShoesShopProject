@@ -5,25 +5,26 @@ package Models;
  */
 
 public class BillDetail {
-    private int id, quantity;
-    private  String codeOfBill;
+    private int quantity;
+    private  String id;
     private Product product;
 
     public BillDetail() {
     }
 
-    public BillDetail(int id, String codeOfBill, Product codeOfProduct, int quantity) {
+    public BillDetail(String id, Product codeOfProduct, int quantity) {
         this.id = id;
         this.quantity = quantity;
-        this.codeOfBill = codeOfBill;
+        //this.price = gia;
+        //this.codeOfBill = codeOfBill;
         this.product = codeOfProduct;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -35,19 +36,27 @@ public class BillDetail {
         this.quantity = quantity;
     }
 
-    public String getCodeOfBill() {
-        return codeOfBill;
-    }
-
-    public void setCodeOfBill(String codeOfBill) {
-        this.codeOfBill = codeOfBill;
-    }
+//    public String getCodeOfBill() {
+//        return codeOfBill;
+//    }
+//
+//    public void setCodeOfBill(String codeOfBill) {
+//        this.codeOfBill = codeOfBill;
+//    }
 
     public Product getProduct() {
         return product;
     }
 
-    public void setCodeOfProduct(Product Product) {
+    public void setProduct(Product Product) {
         this.product = Product;
     }
+
+//    public double getPrice() {
+//        return price;
+//    }
+//
+//    public void setPrice(double price) {
+//        this.price = price;
+//    }
 }

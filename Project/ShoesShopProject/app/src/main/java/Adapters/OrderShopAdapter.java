@@ -48,9 +48,9 @@ public class OrderShopAdapter extends BaseAdapter {
         ImageView imageView= (ImageView) view.findViewById(R.id.imageView);
         imageView.setImageResource(arrItem.get(i).getHinh());
         TextView txtGiasp=(TextView) view.findViewById(R.id.giasp);
-        txtGiasp.setText(arrItem.get(i).getGia()+" ");
+        txtGiasp.setText(arrItem.get(i).getGia()+"đ");
         TextView txtGiagoc=(TextView) view.findViewById(R.id.giagoc);
-        txtGiagoc.setText(arrItem.get(i).getGiaGoc()+ " ");
+        txtGiagoc.setText(arrItem.get(i).getGiaGoc()+ "đ");
         txtGiagoc.setPaintFlags(txtGiagoc.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         TextView txtSoLuong=(TextView) view.findViewById(R.id.soluong);
         txtSoLuong.setText(arrItem.get(i).getSoLuong() + " ");

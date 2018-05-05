@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseUser;
 import tdc.edu.vn.shoesshop.Bao.PersonalOfClientLoginedFragment;
 import tdc.edu.vn.shoesshop.Khanh.Cart;
 import tdc.edu.vn.shoesshop.R;
-import tdc.edu.vn.shoesshop.Son.NotificationFragment;
+import tdc.edu.vn.shoesshop.Son.NotificationShopFragment;
 
 public class HomeForClient extends AppCompatActivity {
 
@@ -89,7 +89,7 @@ public class HomeForClient extends AppCompatActivity {
                             }
                             break;
                         case R.id.nav_notification:
-                            selectedFragment = new NotificationFragment();
+                            selectedFragment = new NotificationShopFragment();
                             break;
                         case R.id.nav_cart:
                             selectedFragment = new Cart();
