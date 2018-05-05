@@ -18,29 +18,35 @@ import tdc.edu.vn.shoesshop.Son.NotificationFragment;
 
 public class HomeForShop extends AppCompatActivity {
 
-    FirebaseUser users = FirebaseAuth.getInstance().getCurrentUser();
+    private FirebaseUser users = FirebaseAuth.getInstance().getCurrentUser();
+    private HSActivity hsActivity;
+    private Home_Client_Fragment home_client_fragment;
+    private TransactionOfShopFragment transaction;
+    private NotificationFragment notificationFragment;
+    private PersonalOfShopFragment personal;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_for_shop_activity);
 
+        //khoi tao fragment
+        hsActivity = new HSActivity();
+        home_client_fragment = new Home_Client_Fragment();
+        transaction = new TransactionOfShopFragment();
+        notificationFragment = new NotificationFragment();
+        personal = new PersonalOfShopFragment();
+
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-        //I added this if statement to keep the selected fragment when rotating the device
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                    new HomeLayout()).commit();
-//        }
-
-        if (users == null)
-        {
+        if (users == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new Home_Client_Fragment()).commit();
-        }else {
+                    home_client_fragment).commit();
+        } else {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new HSActivity()).commit();
+                    hsActivity).commit();
         }
     }
 
@@ -52,23 +58,24 @@ public class HomeForShop extends AppCompatActivity {
 
                     switch (item.getItemId()) {
                         case R.id.nav_home:
-                            if (users == null)
-                            {
-                                selectedFragment = new Home_Client_Fragment();
-                            }else {
-                                selectedFragment = new HSActivity();
+                            if (users == null) {
+                                //Toast.makeText(getApplicationContext(), "null", Toast.LENGTH_SHORT).show();
+                                selectedFragment = home_client_fragment;
+                            } else {
+                                //Toast.makeText(getApplicationContext(), "!null", Toast.LENGTH_SHORT).show();
+                                selectedFragment = hsActivity;
                             }
                             break;
                         case R.id.nav_history:
-                            selectedFragment = new TransactionOfShopFragment();
+                            selectedFragment = transaction;
                             break;
 
                         case R.id.nav_notification:
-                            selectedFragment = new NotificationFragment();
+                            selectedFragment = notificationFragment;
                             break;
 
                         case R.id.nav_account:
-                            selectedFragment = new PersonalOfShopFragment();
+                            selectedFragment = personal;
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
@@ -76,4 +83,5 @@ public class HomeForShop extends AppCompatActivity {
                     return true;
                 }
             };
+
 }

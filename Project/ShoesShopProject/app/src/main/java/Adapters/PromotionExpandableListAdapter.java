@@ -124,8 +124,6 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
 
             final PromotionsDetail member = (PromotionsDetail) getChild(groupPosition, childPosition);
 
-            //viewHolder.tvCode.setText(member.getProduct());
-
             if(listProduct.size() > 0)
             {
                 for ( Product p : listProduct) {
@@ -136,40 +134,7 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
                 }
             }
 
-//            myRef.child("Products").orderByChild("id").equalTo(member.getProduct()).addChildEventListener(new ChildEventListener() {
-//                @Override
-//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                    Product product = dataSnapshot.getValue(Product.class);
-//                    //Log.d("name", product.getId() + "123" + member.getProduct());
-//                    //if(product.getId().equals(member.getProduct()))
-//                    //{
-//                        viewHolder.tvCode.setText(product.getName());
-//                    //}
-//                }
-//
-//                @Override
-//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//                }
-//
-//                @Override
-//                public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                }
-//
-//                @Override
-//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//
-//                }
-//            });
-
             if (member.getDiscount() <= 0) {
-                //viewHolder.tvDiscount.setText("Không giảm giá!");
                 viewHolder.llDiscount.setVisibility(View.GONE);
             }
             else
@@ -179,7 +144,6 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
             }
 
             if (member.getGift().length() == 0) {
-                //viewHolder.tvGift.setText("Không có quà tặng!");
                 viewHolder.llGift.setVisibility(View.GONE);
             }
             else
@@ -256,14 +220,12 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
         final Promotion member = (Promotion) getGroup(groupPosition);
 
         viewHolder.tvNamePromotions.setText(member.getTitle());
-        //SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         viewHolder.tvTimeStart.setText(member.getDateStart());
         viewHolder.tvTimeEnd.setText(member.getDateEnd());
         if(member.getImage() != null)
         {
             try {
                 Bitmap bitmap = General.decodeFromFirebaseBase64(member.getImage());
-                //RoundedBitmapDrawable roundedBitmapDrawable = General.setCircleImage(bitmap);
                 viewHolder.imageView.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -271,7 +233,7 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
         }
         else
         {
-            viewHolder.imageView.setImageAlpha(R.mipmap.promotions2);
+            viewHolder.imageView.setImageResource(R.mipmap.promotions2);
         }
 
 

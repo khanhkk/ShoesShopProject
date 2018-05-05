@@ -76,16 +76,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         mToolbar.setTitle("");
         mToolbar.setNavigationIcon(R.drawable.back);
 
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DetailInformationOfProduct.this, HomeForShop.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("chuyen",1);
-                intent.putExtra("chuyen",bundle);
-                startActivity(intent);
-            }
-        });
+
 
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog);
@@ -158,7 +149,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
             }
         });
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         product = (Product) intent.getSerializableExtra("product");
         if(product != null)
         {
@@ -218,13 +209,30 @@ public class DetailInformationOfProduct extends AppCompatActivity {
             ratingBar.setRating(number);
         }
 
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(product == null) {
+                    Intent intent = new Intent(DetailInformationOfProduct.this, HomeForShop.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("chuyen", 1);
+                    intent.putExtra("chuyen", bundle);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
+                }
+                else
+                {
+                    Intent intent2 = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                    startActivity(intent);
+                }
+            }
+        });
 
         //luu thong tin san pham
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-
                     if (TextUtils.isEmpty(edttensanpham.getText()+"")) {
                         Toast.makeText(getApplicationContext(), "Please enter product name!", Toast.LENGTH_LONG).show();
                         return;
@@ -289,6 +297,11 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                         return;
                     }
 
+                    if(img1 == null || img2 == null || img3 == null)
+                    {
+                        Toast.makeText(getApplicationContext(), "Please check images!", Toast.LENGTH_LONG).show();
+                    }
+
                     if(ratingBar.getRating() < 1)
                     {
                         Toast.makeText(getApplicationContext(), "Please rate the product!", Toast.LENGTH_LONG).show();
@@ -310,9 +323,14 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                         product.setSex(gioiTinh);
                         product.setTrademark(thuonghieu);
                         product.setShop(user.getUid());
+                        product.setImage1(img1);
+                        product.setImage2(img2);
+                        product.setImage3(img3);
                         product.setId(database.child("Products").push().getKey());
+
                         database.child("Products").push().setValue(product);
                         Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                        intent.putExtra("pro", product);
                         startActivity(intent);
                     }
                     else
@@ -328,6 +346,9 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                         product.setSalePrice(giaban);
                         product.setTrademark(thuonghieu);
                         product.setSex(gioiTinh);
+                        product.setImage1(img1);
+                        product.setImage2(img2);
+                        product.setImage3(img3);
 
                         database.child("Products").orderByChild("id").equalTo(product.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -336,6 +357,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                                     child.getRef().setValue(product);
                                 }
                                 Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                                 startActivity(intent);
                             }
 
@@ -350,13 +372,13 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Check data input", Toast.LENGTH_LONG).show();
                 }
 
-                if(img_ava_patient1.getDrawable() == null || img_infor_2.getDrawable() == null || img_infor_3.getDrawable() == null)
-                {
-                    Toast.makeText(getApplicationContext(), "Please choose image or take a photo in here!", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
-                    startActivity(intent);
+//                if(img_ava_patient1.getDrawable() == null || img_infor_2.getDrawable() == null || img_infor_3.getDrawable() == null)
+//                {
+//                    Toast.makeText(getApplicationContext(), "Please choose image or take a photo in here!", Toast.LENGTH_LONG).show();
+//                    return;
+//                }
+//                Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+//                startActivity(intent);
             }
         });
     }
@@ -391,14 +413,17 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                 if(img_ava_patient1.getDrawable() == null)
                 {
                     img_ava_patient1.setImageBitmap(thumbnail);
+                    img1 = General.encodeBitmap(thumbnail);
                 }
                 else if (img_infor_2.getDrawable() == null)
                 {
                     img_infor_2.setImageBitmap(thumbnail);
+                    img2 = General.encodeBitmap(thumbnail);
                 }
                 else if (img_infor_3.getDrawable() == null)
                 {
                     img_infor_3.setImageBitmap(thumbnail);
+                    img3 = General.encodeBitmap(thumbnail);
                 }
                 dialog.dismiss();
             }
@@ -416,14 +441,17 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                 if(img_ava_patient1.getDrawable() == null)
                 {
                     img_ava_patient1.setImageBitmap(bitmap);
+                    img1 = General.encodeBitmap(bitmap);
                 }
                 else if (img_infor_2.getDrawable() == null)
                 {
                     img_infor_2.setImageBitmap(bitmap);
+                    img2 = General.encodeBitmap(bitmap);
                 }
                 else if (img_infor_3.getDrawable() == null)
                 {
                     img_infor_3.setImageBitmap(bitmap);
+                    img3 = General.encodeBitmap(bitmap);
                 }
 
                 dialog.dismiss();

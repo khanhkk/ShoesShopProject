@@ -136,8 +136,8 @@ public class QuantityManagement extends AppCompatActivity {
                         productDetail.setQuantity(quantity);
                         productDetail.setId(database.child("ProductDetails").push().getKey());
                         database.child("ProductDetails").push().setValue(productDetail);
-
                         intent = new Intent(QuantityManagement.this, SelectionProductToEditting.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                     }
                     else {
@@ -151,6 +151,7 @@ public class QuantityManagement extends AppCompatActivity {
                                     child.getRef().setValue(productDetail);
                                 }
                                 intent = new Intent(QuantityManagement.this, SelectionProductToEditting.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                                 startActivity(intent);
                             }
 

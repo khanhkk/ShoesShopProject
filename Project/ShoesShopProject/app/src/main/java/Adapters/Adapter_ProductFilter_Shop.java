@@ -15,6 +15,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -38,7 +39,7 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
     private static final String TAG = "Adapter_ProductFilter";
     private Context mContext;
     private ArrayList<Product> list;
-    private ArrayList<Product> CheckedProducts = new ArrayList<>();
+    private ArrayList<Product> CheckedProducts;
 
 //    public Adapter_ProductFilter_Shop(ArrayList<Integer> mImageUrls, ArrayList<String> mNames, ArrayList<Integer> mrate, ArrayList<Double> mSells, ArrayList<Double> mCost, ArrayList<Integer> mCount, ArrayList<Boolean> mCheck, Context mContext) {
 //        this.mImageUrls = mImageUrls;
@@ -58,6 +59,8 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
     public Adapter_ProductFilter_Shop(Context mContext, ArrayList<Product> list) {
         this.mContext = mContext;
         this.list = list;
+
+        CheckedProducts = new ArrayList<>();
     }
 
     @Override
@@ -175,11 +178,13 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
                 {
                     Log.d("tag", "y");
                     CheckedProducts.add(product);
+                    Toast.makeText(mContext, product.getName() + " checked - " + CheckedProducts.size(), Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
                     Log.d("tag", "n");
                     CheckedProducts.remove(product);
+                    Toast.makeText(mContext, product.getName() + " unchecked - " + CheckedProducts.size(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
