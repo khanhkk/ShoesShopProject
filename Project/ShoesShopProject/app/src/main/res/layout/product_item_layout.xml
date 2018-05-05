@@ -23,6 +23,7 @@
                     android:layout_width="@dimen/size_image"
                     android:layout_height="@dimen/height_size"
                     android:layout_margin="@dimen/margin_item"
+                    android:scaleType="fitXY"
                     android:src="@mipmap/giay"/>
 
             </LinearLayout>

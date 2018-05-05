@@ -3,6 +3,7 @@ package tdc.edu.vn.shoesshop.Khanh;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,12 +51,9 @@ public class SelectionProductToEditting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selection_product_to_editting_activity);
 
-
-
         lvList = (ExpandableListView) findViewById(R.id.lvListProduct);
         btnFinish = (Button) findViewById(R.id.btnFinishEdition);
         btnBack = (ImageButton) findViewById(R.id.btnBack);
-
 
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,78 +69,48 @@ public class SelectionProductToEditting extends AppCompatActivity {
             public void onClick(View v) {
                 intent = new Intent();
                 intent.setClass(SelectionProductToEditting.this, HomeForShop.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             }
         });
-
-//        creatList();
-//
-//            for(Product product: products)
-//            {
-//                String s = database.child("Products").push().getKey();
-//                product.setId(s);
-//                database.child("Products").push().setValue(product);
-//
-//                for (ProductDetail productDetail : details)
-//                {
-//                    String s2 = database.child("ProductDetails").push().getKey();
-//                    productDetail.setId(s2);
-//                    productDetail.setProduct(s);
-//                    database.child("ProductDetails").push().setValue(productDetail);
-//                }
-//        }
 
         children.clear();
         children.clear();
         details.clear();
         products.clear();
 
+        Intent intent = getIntent();
+        Bundle bundle = intent.getBundleExtra("data");
+        if(bundle != null)
+        {
+            products = (ArrayList<Product>) bundle.getSerializable("list");
+            for(Product product : products)
+            {
+                ArrayList<ProductDetail> list = new ArrayList<>();
+                children.put(product, list);
+            }
+        }
+        else {
+            Product product = (Product) intent.getSerializableExtra("pro");
+            if (product != null) {
+                products.add(product);
+                children.put(product, new ArrayList<ProductDetail>());
+            }
+        }
+
         database.child("ProductDetails").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
                 details.add(productDetail);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-        database.child("Products").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Product product = dataSnapshot.getValue(Product.class);
-                products.add(product);
-                if(details.size() > 0)
+                for(Product product : products)
                 {
-                    ArrayList<ProductDetail> list = new ArrayList<>();
-                    for(ProductDetail productDetail : details)
+                    if(product.getId().equals(productDetail.getProduct()))
                     {
-                        if(productDetail.getProduct().equals(product.getId()))
-                        {
-                            list.add(productDetail);
-                            adapter.notifyDataSetChanged();
-                        }
+                        children.get(product).add(productDetail);
+                        adapter.notifyDataSetChanged();
                     }
-                    children.put(product, list);
+
                 }
             }
 
@@ -174,6 +142,11 @@ public class SelectionProductToEditting extends AppCompatActivity {
         registerForContextMenu(lvList);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("aa", details.size()+"  fasd");
+    }
 
     public void onCreateContextMenu(final ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -189,38 +162,6 @@ public class SelectionProductToEditting extends AppCompatActivity {
 
             ProductDetail item = (ProductDetail) adapter.getChild(group, child);
             menu.setHeaderTitle("Select to action");
-
-            //menu.setHeaderTitle(item.getProduct());
-//            DatabaseReference myRef  = FirebaseDatabase.getInstance().getReference();
-//            myRef.child("Products").orderByChild("id").equalTo(item.getProduct()).addChildEventListener(new ChildEventListener() {
-//                @Override
-//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                    Product pro = dataSnapshot.getValue(Product.class);
-//                    menu.setHeaderTitle(pro.getName());
-//                }
-//
-//                @Override
-//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//                }
-//
-//                @Override
-//                public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                }
-//
-//                @Override
-//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//
-//                }
-//            });
-
-            //menu.setHeaderIcon(R.mipmap.giay);
 
             menu.add(0, R.id.cmSua, 0, "Sua");
             menu.add(0, R.id.cmXoa, 0, "Xoa");

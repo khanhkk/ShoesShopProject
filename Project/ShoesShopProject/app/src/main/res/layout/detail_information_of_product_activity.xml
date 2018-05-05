@@ -5,7 +5,8 @@
     android:id="@+id/information_of_product"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -17,7 +18,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Thông tin khách hàng"
+            android:text="Thông tin sản phẩm"
             android:textColor="#fff"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -247,6 +248,7 @@
                         android:text="..."
                         android:textColor="#fff" />
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -168,7 +168,7 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
         }
         else
         {
-            viewHolder.imageView.setImageAlpha(R.mipmap.giay);
+            viewHolder.imageView.setImageResource(R.mipmap.shoes4);
         }
 
         viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -226,6 +226,7 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
         if(isExpanded)
         {
             viewHolder.llListElement.setVisibility(View.VISIBLE);
+            viewHolder.llTitle.setVisibility(View.VISIBLE);
         }
         else
         {

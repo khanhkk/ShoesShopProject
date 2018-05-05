@@ -1,9 +1,6 @@
 package tdc.edu.vn.shoesshop.Thanh;
 
-import android.icu.text.UnicodeSetSpanner;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -11,14 +8,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextPaint;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -26,10 +23,8 @@ import android.widget.Toast;
 import java.io.FileNotFoundException;
 
 import Controls.General;
-import tdc.edu.vn.shoesshop.Bao.MainInfoCilent;
 import tdc.edu.vn.shoesshop.Bao.MainInfoShop;
 import tdc.edu.vn.shoesshop.R;
-import tdc.edu.vn.shoesshop.Toan.HomeForShop;
 
 public class EdittingShopInformation extends AppCompatActivity {
     private static final int CAM_REQUEST = 1313;
@@ -37,7 +32,7 @@ public class EdittingShopInformation extends AppCompatActivity {
     ImageButton btn_chooseImg,btn_takeaphoto;
     final int CROP_PIC = 2;
     private Uri picUri;
-    private ImageButton btn_getimage;
+    private Button btn_getimage;
     private Button btnSave;
     Intent intent;
 
@@ -50,6 +45,7 @@ public class EdittingShopInformation extends AppCompatActivity {
     private TextInputLayout textInputSotaikhoan;
 
     ImageView img_ava_patient;
+    @SuppressLint("WrongViewCast")
     @Nullable
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,9 +57,9 @@ public class EdittingShopInformation extends AppCompatActivity {
         textInputTenshop = findViewById(R.id.id_hoten);
         textInputSdt = findViewById(R.id.id_sdt);
         textInputDiachi = findViewById(R.id.id_diachi);
-        textInputNguoidaidien = findViewById(R.id.id_nguoidaidien);
-        textInputFacebook = findViewById(R.id.id_Facebook);
-        textInputSotaikhoan = findViewById(R.id.id_soTk);
+        textInputNguoidaidien = findViewById(R.id.nguoidaidien_shop);
+        textInputSotaikhoan = findViewById(R.id.sotaikhoan);
+        textInputFacebook = findViewById(R.id.facebook);
 
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -105,8 +101,8 @@ public class EdittingShopInformation extends AppCompatActivity {
         });
 
         img_ava_patient = (ImageView) findViewById(R.id.imgView_info);
+        btn_getimage = (Button) findViewById(R.id.btn_infor);
 
-        btn_getimage = (ImageButton) findViewById(R.id.btn_infor);
         btn_getimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

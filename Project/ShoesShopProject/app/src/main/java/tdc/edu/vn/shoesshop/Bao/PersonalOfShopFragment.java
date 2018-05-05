@@ -27,15 +27,6 @@ public class PersonalOfShopFragment extends Fragment {
         View view = null;
         view = inflater.inflate(R.layout.personal_of_shop_fragment, container, false);
 
-        ImageView imgthognbao = (ImageView) view.findViewById(R.id.imgthongbao);
-        TextView txtthongbao = (TextView) view.findViewById(R.id.txtthongbao);
-        txtthongbao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), " Thông báo " , Toast.LENGTH_SHORT).show();
-            }
-        });
-
         ImageView imgkhuyenmai = (ImageView) view.findViewById(R.id.imgkhuyenmai);
         TextView txtkhuyenmai = (TextView) view.findViewById(R.id.txtkhuyenmai);
         txtkhuyenmai.setOnClickListener(new View.OnClickListener() {

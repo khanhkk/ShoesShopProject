@@ -140,13 +140,14 @@
         android:gravity="bottom"
         android:layout_weight="1">
         <Button
+            android:id="@+id/btnLuu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:textColor="#fff"
-            android:textSize="18sp"
-            android:onClick="confirmInput"
-            android:text="Lưu" />
+            android:textColor="#000"
+            android:background="#5082bd"
+            android:text="Lưu"
+            android:layout_gravity="bottom"/>
+
     </LinearLayout>
 
 

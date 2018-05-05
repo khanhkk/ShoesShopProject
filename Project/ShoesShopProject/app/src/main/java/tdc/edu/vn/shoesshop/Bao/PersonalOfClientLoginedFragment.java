@@ -13,11 +13,10 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import Models.Notification;
 import tdc.edu.vn.shoesshop.R;
-import tdc.edu.vn.shoesshop.Sang.Bills;
 import tdc.edu.vn.shoesshop.Sang.ChangePassword;
-import tdc.edu.vn.shoesshop.Toan.LoginActivity;
-
+import tdc.edu.vn.shoesshop.Sang.ListOder;
 
 public class PersonalOfClientLoginedFragment extends Fragment {
 
@@ -30,21 +29,13 @@ public class PersonalOfClientLoginedFragment extends Fragment {
 
 
         final FirebaseAuth auth = FirebaseAuth.getInstance();
-        ImageView imgthognbao = (ImageView) view.findViewById(R.id.imgthongbao);
-        TextView txtthongbao = (TextView) view.findViewById(R.id.txtthongbao);
-        txtthongbao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), " Thông báo " , Toast.LENGTH_SHORT).show();
-            }
-        });
 
         ImageView imglichsu = (ImageView) view.findViewById(R.id.imglichsu);
         TextView txtlichsu = (TextView) view.findViewById(R.id.txtlichsu);
         txtlichsu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), Bills.class);
+                Intent intent = new Intent(getActivity(), ListOder.class);
                 startActivity (intent);
                 Toast.makeText(getActivity(), " Lịch sử mua hàng " , Toast.LENGTH_SHORT).show();
             }
@@ -78,7 +69,7 @@ public class PersonalOfClientLoginedFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 auth.signOut();
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                Intent intent = new Intent(getActivity(), MainCustomer.class);
                 startActivity (intent);
                 Toast.makeText(getActivity(), " Đăng xuất " , Toast.LENGTH_SHORT).show();
             }
