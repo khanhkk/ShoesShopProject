@@ -54,6 +54,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
     ImageView img_ava_patient3;
     RatingBar ratingBar;
     RadioButton rbtBoth, rbtNam, rbtNu;
+    Intent intent;
 
     Product product = null;
     String img1 = null;
@@ -149,7 +150,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
             }
         });
 
-        final Intent intent = getIntent();
+        intent = getIntent();
         product = (Product) intent.getSerializableExtra("product");
         if(product != null)
         {
@@ -213,7 +214,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(product == null) {
-                    Intent intent = new Intent(DetailInformationOfProduct.this, HomeForShop.class);
+                    intent = new Intent(DetailInformationOfProduct.this, HomeForShop.class);
                     Bundle bundle = new Bundle();
                     bundle.putInt("chuyen", 1);
                     intent.putExtra("chuyen", bundle);
@@ -222,7 +223,8 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                 }
                 else
                 {
-                    Intent intent2 = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                    intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent);
                 }
             }
@@ -329,7 +331,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                         product.setId(database.child("Products").push().getKey());
 
                         database.child("Products").push().setValue(product);
-                        Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                        intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
                         intent.putExtra("pro", product);
                         startActivity(intent);
                     }
@@ -356,7 +358,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                                 for (DataSnapshot child: dataSnapshot.getChildren()) {
                                     child.getRef().setValue(product);
                                 }
-                                Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                                intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                                 startActivity(intent);
                             }
@@ -382,6 +384,9 @@ public class DetailInformationOfProduct extends AppCompatActivity {
             }
         });
     }
+
+
+
 
     public void profilepictureOnClick(){
         General.chooseFromCamera(DetailInformationOfProduct.this);

@@ -3,6 +3,7 @@ package tdc.edu.vn.shoesshop.Sang;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -45,6 +46,11 @@ public class QuantityManagement extends AppCompatActivity {
         setContentView(R.layout.layoutquantitymanagement17);
 
         //anh xa
+        //  Action bar back
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("");
+        mToolbar.setNavigationIcon(R.drawable.back);
+
         btnSave = (Button) findViewById(R.id.btnSaveQuantityInformation);
         edtProduct = (EditText) findViewById(R.id.edtNameProduct);
         edtColor = (EditText) findViewById(R.id.edtColor);
@@ -94,6 +100,15 @@ public class QuantityManagement extends AppCompatActivity {
         {
             edtProduct.setText(product.getName());
         }
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(QuantityManagement.this, SelectionProductToEditting.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+            }
+        });
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override

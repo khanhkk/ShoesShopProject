@@ -15,7 +15,7 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Toan.HomeForShop"
+            android:name=".Toan.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,7 +60,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".Thanh.DetailInformationOfProduct"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Toan.LoginActivity"
+        <activity android:name=".Toan.HomeForShop"
             android:screenOrientation="portrait"/>
         <activity android:name=".Thanh.EditingPromotionDetail"
             android:screenOrientation="portrait"/>

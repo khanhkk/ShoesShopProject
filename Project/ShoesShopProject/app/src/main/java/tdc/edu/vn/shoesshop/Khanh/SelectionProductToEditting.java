@@ -3,7 +3,6 @@ package tdc.edu.vn.shoesshop.Khanh;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -145,7 +144,13 @@ public class SelectionProductToEditting extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("aa", details.size()+"  fasd");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
     }
 
     public void onCreateContextMenu(final ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
