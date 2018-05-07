@@ -1,6 +1,8 @@
 package tdc.edu.vn.shoesshop.Khanh;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -195,8 +197,8 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
         ExpandableListView.ExpandableListContextMenuInfo info =
                 (ExpandableListView.ExpandableListContextMenuInfo) item.getMenuInfo();
         int type = ExpandableListView.getPackedPositionType(info.packedPosition);
-        int group = ExpandableListView.getPackedPositionGroup(info.packedPosition);
-        int child =	ExpandableListView.getPackedPositionChild(info.packedPosition);
+        final int group = ExpandableListView.getPackedPositionGroup(info.packedPosition);
+        final int child =	ExpandableListView.getPackedPositionChild(info.packedPosition);
 
         if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
             final PromotionsDetail promotionsDetail = (PromotionsDetail) adapter.getChild(group, child);
@@ -212,23 +214,44 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
 
                 case R.id.cmXoa:
                     //Toast.makeText(Promotions.this, "xoa" + promotionsDetail.getProduct(), Toast.LENGTH_SHORT).show();
-                    list.get(listParent.get(group)).remove(child);
 
-                    myRef.child("PromotionsDetails").orderByChild("id").equalTo(promotionsDetail.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(Promotions.this);
+                    alertDialog.setTitle("Notification");
+                    alertDialog.setIcon(R.mipmap.ic_launcher);
+                    alertDialog.setMessage("Bạn muốn xóa chi tiết khuyến mãi này?");
+
+                    alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                            for (DataSnapshot child: dataSnapshot.getChildren()) {
-                                child.getRef().setValue(null);
-                            }
-                        }
+                            list.get(listParent.get(group)).remove(child);
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                            myRef.child("PromotionsDetails").orderByChild("id").equalTo(promotionsDetail.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
 
+                                    for (DataSnapshot child: dataSnapshot.getChildren()) {
+                                        child.getRef().setValue(null);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                            adapter.notifyDataSetChanged();
                         }
                     });
-                    adapter.notifyDataSetChanged();
+
+                    alertDialog.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+
+                    alertDialog.show();
                     break;
             }
         }

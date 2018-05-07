@@ -44,28 +44,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         return super.getItemPosition(object);
     }
 
-    // Force a refresh of the page when a different fragment is displayed
-//    @Override
-//    public int getItemPosition(Object object) {
-//        // this method will be called for every fragment in the ViewPager
-//        if (object instanceof SomePermanantCachedFragment) {
-//            return POSITION_UNCHANGED; // don't force a reload
-//        } else {
-//            // POSITION_NONE means something like: this fragment is no longer valid
-//            // triggering the ViewPager to re-build the instance of this fragment.
-//            return POSITION_NONE;
-//        }
-//    }
-
-//    @Override
-//    public void destroyItem(ViewGroup container, int position, Object object) {
-//        super.destroyItem(container, position, object);
-//        ContentFragment cf = (ContentFragment) object;
-//        mFragMan.beginTransaction().remove(cf).commit();
-//        mFrags.add(position, ContentFragment.newInstance(cf.getmParam1()));
-//        mFrags.remove(position+1);
-//    }
-
     @Override
     public int getCount() {
         return 3;

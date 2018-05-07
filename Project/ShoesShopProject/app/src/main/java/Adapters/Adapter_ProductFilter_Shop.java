@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -90,7 +90,6 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
         public TextView tvThuongHieu, tvName, tvSoLuong, tvSalePrice, tvListedPrice, tvDiscount;
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -124,7 +123,6 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
         NumberFormat nf = NumberFormat.getInstance();
         DecimalFormat df = (DecimalFormat) nf;
         df.applyPattern("#,### đ");
-
 
         viewHolder.tvName.setText(product.getName());
         viewHolder.ratingBar.setRating(product.getRating());
@@ -176,15 +174,15 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b)
                 {
-                    Log.d("tag", "y");
+                    //Log.d("tag", "y");
                     HSActivity.ListProducts.add(product);
-                    //Toast.makeText(mContext, product.getName() + " checked - " + CheckedProducts.size(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, product.getName() + " checked - " , Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    Log.d("tag", "n");
+                    //Log.d("tag", "n");
                     HSActivity.ListProducts.remove(product);
-                    //Toast.makeText(mContext, product.getName() + " unchecked - " + CheckedProducts.size(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, product.getName() + " unchecked - ", Toast.LENGTH_SHORT).show();
                 }
             }
         });

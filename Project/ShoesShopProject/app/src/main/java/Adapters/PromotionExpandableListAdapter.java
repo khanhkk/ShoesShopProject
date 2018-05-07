@@ -1,6 +1,8 @@
 package Adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -253,27 +255,46 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
 
 
-                myRef.child("PromotionsDetail").orderByChild("promotions").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+//                myRef.child("PromotionsDetail").orderByChild("promotions").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        for (DataSnapshot child: dataSnapshot.getChildren()) {
+//                            child.getRef().setValue(null);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//                });
+
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(_context);
+                alertDialog.setTitle("Notification");
+                alertDialog.setIcon(R.mipmap.ic_launcher);
+                alertDialog.setMessage("Bạn muốn xóa thông tin khuyến mãi?");
+
+                alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot child: dataSnapshot.getChildren()) {
-                            child.getRef().setValue(null);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                myRef.child("Promotions").orderByChild("id").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        myRef.child("PromotionsDetails").orderByChild("promotions").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        myRef.child("Promotions").orderByChild("id").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                myRef.child("PromotionsDetails").orderByChild("promotions").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                        for (DataSnapshot child: dataSnapshot.getChildren()) {
+                                            child.getRef().setValue(null);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
 
                                 for (DataSnapshot child: dataSnapshot.getChildren()) {
                                     child.getRef().setValue(null);
@@ -286,20 +307,20 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
                             }
                         });
 
-                        for (DataSnapshot child: dataSnapshot.getChildren()) {
-                            child.getRef().setValue(null);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
+                        _childList.remove(_listDataHeader.get(groupPosition));
+                        _listDataHeader.remove(groupPosition);
+                        Promotions.adapter.notifyDataSetChanged();
                     }
                 });
 
-                _childList.remove(_listDataHeader.get(groupPosition));
-                _listDataHeader.remove(groupPosition);
-                Promotions.adapter.notifyDataSetChanged();
+                alertDialog.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                alertDialog.show();
             }
         });
 
