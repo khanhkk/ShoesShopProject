@@ -89,7 +89,6 @@ public class EditingPromotionDetail extends AppCompatActivity {
                         spnSanPham.setSelection(listProduct.indexOf(product.getName()));
                     }
                 }
-
                 adapter.notifyDataSetChanged();
             }
 
@@ -150,18 +149,9 @@ public class EditingPromotionDetail extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-//                if(product != null) {
-//                    int index = listProduct.indexOf(product.getName());
-//                    spnSanPham.setSelection(index);
-//                    edtgiaban.setText(product.getSalePrice() + "");
-//                    edtgiauudai.setText(product.getSalePrice() + "");
-//                }
-//                else
-//                {
                     product =  products.get(i);
                     edtgiaban.setText(product.getSalePrice() + "");
                     edtgiauudai.setText(product.getSalePrice() + "");
-                //}
                 if(edtgiamgia.getText().length() > 0) {
                     changePrice();
                 }
@@ -192,34 +182,19 @@ public class EditingPromotionDetail extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+<<<<<<< HEAD
+
+
+=======
                 //String sanpham = s.getText().toString().trim();
+>>>>>>> 3e4951d3a8aadaa3ae7794ce50ec6e4ee7f6ddd7
                 String quatang = edtquatang.getText().toString().trim();
                 String giamgia = edtgiamgia.getText().toString().trim();
-                //int giaban = Integer.parseInt(edtgiaban.getText().toString().trim());
-                //int giauudai = Integer.parseInt(edtgiauudai.getText().toString().trim());
-//                if(TextUtils.isEmpty(sanpham)){
-//                    Toast.makeText(getApplicationContext(), "Please enter product", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
+
                 if(TextUtils.isEmpty(quatang) && TextUtils.isEmpty(giamgia) && TextUtils.isEmpty(edtDiemTichLuy.getText().toString().trim())){
                     Toast.makeText(getApplicationContext(), "Please enter promotion", Toast.LENGTH_SHORT).show();
                     return;
                 }
-//                if(TextUtils.isEmpty(giamgia)){
-//                    Toast.makeText(getApplicationContext(), "Please enter sale", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                if (giaban <=  0 ){
-//                    Toast.makeText(getApplicationContext(), "Please value is more than 0", Toast.LENGTH_LONG).show();                    edtgiaban.setText("");
-//                    edtgiaban.requestFocus();
-//                    return;
-//                }
-//                if(giauudai <= 0 || giauudai > giaban){
-//                    Toast.makeText(getApplicationContext(), "Please Characters is more than 0 and  less than 'gia ban'", Toast.LENGTH_SHORT).show();
-//                    edtgiauudai.setText("");
-//                    edtgiauudai.requestFocus();
-//                    return;
-//                }
 
                 if(type == 1)
                 {

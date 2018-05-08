@@ -163,7 +163,7 @@
 
                     <ImageView
                         android:id="@+id/imgView_info"
-                        android:layout_width="170dp"
+                        android:layout_width="132dp"
                         android:layout_height="80dp"
                         android:layout_marginLeft="50dp"
                         android:scaleType="fitXY" />
