@@ -54,6 +54,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
     ImageView img_ava_patient3;
     RatingBar ratingBar;
     RadioButton rbtBoth, rbtNam, rbtNu;
+    Intent intent;
 
     Product product = null;
     String img1 = null;
@@ -76,7 +77,9 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         mToolbar.setTitle("");
         mToolbar.setNavigationIcon(R.drawable.back);
 
-
+        //NumberFormat nf = NumberFormat.getInstance();
+        //DecimalFormat df = (DecimalFormat) nf;
+        //df.applyPattern("#,###");
 
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog);
@@ -149,15 +152,20 @@ public class DetailInformationOfProduct extends AppCompatActivity {
             }
         });
 
-        final Intent intent = getIntent();
+        intent = getIntent();
         product = (Product) intent.getSerializableExtra("product");
         if(product != null)
         {
             edttensanpham.setText(product.getName());
             edtbaohanh.setText(product.getGuarantee());
             edtdiemtichluy.setText(product.getAccumulatedPoint()+"");
-            edtgiaban.setText(product.getSalePrice()+"");
-            edtgianiemyet.setText(product.getListedPrice()+"");
+//            edtgiaban.setText(df.format(product.getSalePrice()));
+//            edtgianiemyet.setText(df.format(product.getListedPrice()));
+            //double uudai = gia - (gia * giam * 0.01);
+            double ny = Math.round(product.getListedPrice() * 0.001 / 0.001);
+            double gb = Math.round(product.getSalePrice() * 0.001 / 0.001);
+            edtgiaban.setText(gb + "");
+            edtgianiemyet.setText(ny + "");
             edtmota.setText(product.getDescription());
             edtthuonghieu.setText(product.getTrademark());
 
@@ -173,7 +181,6 @@ public class DetailInformationOfProduct extends AppCompatActivity {
             {
                 rbtBoth.setChecked(true);
             }
-
 
             if(product.getImage1() != null)
             {
@@ -213,7 +220,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(product == null) {
-                    Intent intent = new Intent(DetailInformationOfProduct.this, HomeForShop.class);
+                    intent = new Intent(DetailInformationOfProduct.this, HomeForShop.class);
                     Bundle bundle = new Bundle();
                     bundle.putInt("chuyen", 1);
                     intent.putExtra("chuyen", bundle);
@@ -222,7 +229,8 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                 }
                 else
                 {
-                    Intent intent2 = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                    intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent);
                 }
             }
@@ -297,10 +305,11 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                         return;
                     }
 
-                    if(img1 == null || img2 == null || img3 == null)
-                    {
-                        Toast.makeText(getApplicationContext(), "Please check images!", Toast.LENGTH_LONG).show();
-                    }
+//                    if(img1 == null || img2 == null || img3 == null)
+//                    {
+//                        Toast.makeText(getApplicationContext(), "Please check images!", Toast.LENGTH_LONG).show();
+//                        return;
+//                    }
 
                     if(ratingBar.getRating() < 1)
                     {
@@ -329,7 +338,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                         product.setId(database.child("Products").push().getKey());
 
                         database.child("Products").push().setValue(product);
-                        Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                        intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
                         intent.putExtra("pro", product);
                         startActivity(intent);
                     }
@@ -356,7 +365,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                                 for (DataSnapshot child: dataSnapshot.getChildren()) {
                                     child.getRef().setValue(product);
                                 }
-                                Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                                intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                                 startActivity(intent);
                             }
@@ -407,9 +416,6 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         if(resultCode == RESULT_OK && requestCode == CAM_REQUEST) {
             if(requestCode == CAM_REQUEST){
                 Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-                //  picUri = data.getData();
-               // img_ava_patient1.setImageBitmap(thumbnail);
-
                 if(img_ava_patient1.getDrawable() == null)
                 {
                     img_ava_patient1.setImageBitmap(thumbnail);
@@ -431,8 +437,6 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         else if (resultCode == RESULT_OK){
             picUri = data.getData();
             Log.i("image",picUri+"");
-            // Uri targetUri = data.getData();
-            //  textTargetUri.setText(targetUri.toString());
             Bitmap bitmap;
             try {
                 Context applicationContext = dialog.getContext();

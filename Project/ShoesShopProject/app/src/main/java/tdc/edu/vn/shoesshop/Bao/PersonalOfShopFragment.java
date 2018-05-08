@@ -2,6 +2,7 @@ package tdc.edu.vn.shoesshop.Bao;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import tdc.edu.vn.shoesshop.Khanh.Promotions;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Sang.ChangePassword;
+import tdc.edu.vn.shoesshop.Son.NotificationShopFragment;
 import tdc.edu.vn.shoesshop.Toan.LoginActivity;
 
 public class PersonalOfShopFragment extends Fragment {

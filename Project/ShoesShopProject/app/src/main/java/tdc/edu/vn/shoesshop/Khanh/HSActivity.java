@@ -1,33 +1,31 @@
 package tdc.edu.vn.shoesshop.Khanh;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.GridView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import Adapters.Adapter_ProductFilter_Shop;
 import Models.Product;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Thanh.DetailInformationOfProduct;
@@ -37,19 +35,41 @@ public class HSActivity extends Fragment {
     private ViewPager mViewPager;
     private FloatingActionButton fab, fab_add, fab_edit, fab_delete;
     private Animation amOpen, amClose, amRClockwise, amRanticlockwise;
+
     Boolean isOpen = false;
+    public static ArrayList<Product> ListProducts = new ArrayList<>();
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.hs_activity, container, false);
+        final View view = inflater.inflate(R.layout.hs_activity, container, false);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
-
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) view.findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
-
+        mViewPager.setOffscreenPageLimit(3);
+        mViewPager.setPageTransformer(true, new RotateUpTransformer());
+//        mViewPager.setPageTransformer(false, new ViewPager.PageTransformer() {
+//            @Override
+//            public void transformPage(View page, float position) {
+//                int pageWidth = view.getWidth();
+//                int pageHeight = view.getHeight();
+//
+//                if (position < -1) { // [-Infinity,-1)
+//                    // This page is way off-screen to the left.
+//                    view.setAlpha(0);
+//                } else if(position <= 1){ // Page to the left, page centered, page to the right
+//                    // modify page view animations here for pages in view
+//                } else { // (1,+Infinity]
+//                    // This page is way off-screen to the right.
+//                    view.setAlpha(0);
+//                }
+//            }
+//        });
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
@@ -72,21 +92,29 @@ public class HSActivity extends Fragment {
             }
         });
 
+        ListProducts.clear();
         fab_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(PlaceholderFragment.adapter.getCheckedProducts().size() > 0)
+                if(ListProducts.size() > 0)
                 {
-                    Intent intent = new Intent(getActivity(), SelectionProductToEditting.class);
+                    Intent intent = new Intent(getContext(), SelectionProductToEditting.class);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("list", PlaceholderFragment.adapter.getCheckedProducts());
+                    //bundle.putSerializable("list", ListProducts);
+                    ArrayList<String> list = new ArrayList<>();
+                    for(Product product : ListProducts)
+                    {
+                        list.add(product.getId());
+                    }
+
+                    bundle.putStringArrayList("list", list);
                     intent.putExtra("data", bundle);
-                    startActivity(intent);
-                    Toast.makeText(getActivity(), "thao tac!", Toast.LENGTH_SHORT).show();
+                    getContext().startActivity(intent);
+                    Toast.makeText(getActivity(), "kk!", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    Toast.makeText(getActivity(), "Chon san pham de thao tac!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Chọn sản phẩm để thao tác!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -94,7 +122,65 @@ public class HSActivity extends Fragment {
         fab_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(ListProducts.size() > 0)
+                {
+                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                    alertDialog.setTitle("Notification");
+                    alertDialog.setIcon(R.mipmap.ic_launcher);
+                    alertDialog.setMessage("Bạn muốn xóa thông tin sản phẩm?");
 
+                    alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            for(Product product : ListProducts)
+                            {
+                                database.child("ProductDetails").orderByChild("product").equalTo(product.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot child: dataSnapshot.getChildren()) {
+                                            child.getRef().setValue(null);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                                database.child("Products").orderByChild("id").equalTo(product.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot child: dataSnapshot.getChildren()) {
+                                            child.getRef().setValue(null);
+                                            mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
+                                            mViewPager.setAdapter(mSectionsPagerAdapter);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+                    alertDialog.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+
+                    alertDialog.show();
+
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), "Chọn sản phẩm để thao tác!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -131,119 +217,6 @@ public class HSActivity extends Fragment {
         return view;
     }
 
-    public static class PlaceholderFragment extends Fragment {
 
-        private static final String ARG_SECTION_NUMBER = "section_number";
-        GridView gridView;
-        TextView textView;
-
-        private ArrayList<Product> list = new ArrayList<>();
-        public static Adapter_ProductFilter_Shop adapter;
-        private ArrayList<String> listTrademark = new ArrayList<>();
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-
-        public PlaceholderFragment() {
-        }
-
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-            View rootView = inflater.inflate(R.layout.hs_fragment, container, false);
-            gridView = (GridView) rootView.findViewById(R.id.grid);
-            final TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            textView.setVisibility(View.GONE);
-            Toast.makeText(getActivity(), getArguments().getInt(ARG_SECTION_NUMBER) + "", Toast.LENGTH_SHORT).show();
-
-            list.clear();
-            listTrademark.clear();
-            database.child("Products").orderByChild("shop").equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    Product product = dataSnapshot.getValue(Product.class);
-                    char c = textView.getText().charAt(textView.getText().length()-1);
-                    if(c == '1')
-                    {
-//                        if(product.getSex() == 2)
-//                        {
-//                            list.add(product);
-//                        }
-                        list.add(product);
-                    }
-                    else if(c == '2')
-                    {
-                        if(product.getSex() == 0)
-                        {
-                            list.add(product);
-                        }
-                    }
-                    else
-                    {
-                        if(product.getSex() == 1)
-                        {
-                            list.add(product);
-                        }
-                    }
-                    adapter.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-            adapter = new Adapter_ProductFilter_Shop(getContext(), list);
-            gridView.setAdapter(adapter);
-
-            return rootView;
-        }
-
-        @Override
-        public void onStart() {
-            super.onStart();
-        }
-    }
-
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return PlaceholderFragment.newInstance(position + 1);
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
-    }
 }
+

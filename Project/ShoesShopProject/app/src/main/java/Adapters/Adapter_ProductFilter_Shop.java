@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +22,7 @@ import java.util.ArrayList;
 
 import Controls.General;
 import Models.Product;
+import tdc.edu.vn.shoesshop.Khanh.HSActivity;
 import tdc.edu.vn.shoesshop.R;
 
 public class Adapter_ProductFilter_Shop extends BaseAdapter {
@@ -39,7 +39,7 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
     private static final String TAG = "Adapter_ProductFilter";
     private Context mContext;
     private ArrayList<Product> list;
-    private ArrayList<Product> CheckedProducts;
+    //private ArrayList<Product> CheckedProducts;
 
 //    public Adapter_ProductFilter_Shop(ArrayList<Integer> mImageUrls, ArrayList<String> mNames, ArrayList<Integer> mrate, ArrayList<Double> mSells, ArrayList<Double> mCost, ArrayList<Integer> mCount, ArrayList<Boolean> mCheck, Context mContext) {
 //        this.mImageUrls = mImageUrls;
@@ -60,7 +60,7 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
         this.mContext = mContext;
         this.list = list;
 
-        CheckedProducts = new ArrayList<>();
+        //CheckedProducts = new ArrayList<>();
     }
 
     @Override
@@ -78,9 +78,9 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
         return 0;
     }
 
-    public ArrayList<Product> getCheckedProducts() {
-        return CheckedProducts;
-    }
+//    public ArrayList<Product> getCheckedProducts() {
+//        return CheckedProducts;
+//    }
 
     class ViewHolderGrid
     {
@@ -89,7 +89,6 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
         public RatingBar ratingBar;
         public TextView tvThuongHieu, tvName, tvSoLuong, tvSalePrice, tvListedPrice, tvDiscount;
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -124,7 +123,6 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
         NumberFormat nf = NumberFormat.getInstance();
         DecimalFormat df = (DecimalFormat) nf;
         df.applyPattern("#,### đ");
-
 
         viewHolder.tvName.setText(product.getName());
         viewHolder.ratingBar.setRating(product.getRating());
@@ -176,15 +174,15 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b)
                 {
-                    Log.d("tag", "y");
-                    CheckedProducts.add(product);
-                    Toast.makeText(mContext, product.getName() + " checked - " + CheckedProducts.size(), Toast.LENGTH_SHORT).show();
+                    //Log.d("tag", "y");
+                    HSActivity.ListProducts.add(product);
+                    Toast.makeText(mContext, product.getName() + " checked - " , Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    Log.d("tag", "n");
-                    CheckedProducts.remove(product);
-                    Toast.makeText(mContext, product.getName() + " unchecked - " + CheckedProducts.size(), Toast.LENGTH_SHORT).show();
+                    //Log.d("tag", "n");
+                    HSActivity.ListProducts.remove(product);
+                    Toast.makeText(mContext, product.getName() + " unchecked - ", Toast.LENGTH_SHORT).show();
                 }
             }
         });
