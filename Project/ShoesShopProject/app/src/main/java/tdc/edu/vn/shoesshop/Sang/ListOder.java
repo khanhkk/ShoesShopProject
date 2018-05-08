@@ -3,7 +3,8 @@ package tdc.edu.vn.shoesshop.Sang;
 
     import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ListView;
+    import android.support.v7.widget.SearchView;
+    import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -11,11 +12,13 @@ import Adapters.CustumAdapterOder;
 import Controls.DatePickerCustom;
 import tdc.edu.vn.shoesshop.R;
 
-public class ListOder  extends AppCompatActivity {
+public class ListOder  extends AppCompatActivity implements SearchView.OnQueryTextListener{
     ListView lvContact;
     CustumAdapterOder adapter;
     ArrayList<String> list = new ArrayList<>();
     DatePickerCustom dateTimePicker;
+
+  //  SearchView svSearchPromotions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,9 @@ public class ListOder  extends AppCompatActivity {
         setContentView(R.layout.layout_oder);
         lvContact = (ListView) findViewById(R.id.ListOrder);
         dateTimePicker = (DatePickerCustom)findViewById(R.id.dtDatePicker) ;
+
+//        svSearchPromotions = (SearchView) findViewById(R.id.Search);
+//        svSearchPromotions.setOnQueryTextListener(this);
 
         //dateTimePicker.setDate(Calendar.getInstance().getTime());
 
@@ -44,6 +50,16 @@ public class ListOder  extends AppCompatActivity {
 
         CustumAdapterOder customAdapter = new CustumAdapterOder(ListOder.this,R.layout.layout_listviewoder,list);
         lvContact.setAdapter(customAdapter);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 }
 

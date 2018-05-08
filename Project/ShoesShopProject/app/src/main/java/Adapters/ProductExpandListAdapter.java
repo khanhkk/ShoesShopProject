@@ -184,7 +184,10 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
                 Toast.makeText(_context, "add", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(_context, QuantityManagement.class);
-                intent.putExtra("product", member);
+                Product pro = new Product();
+                pro.setId(member.getId());
+                pro.setName(member.getName());
+                intent.putExtra("product", pro);
                 _context.startActivity(intent);
             }
         });
