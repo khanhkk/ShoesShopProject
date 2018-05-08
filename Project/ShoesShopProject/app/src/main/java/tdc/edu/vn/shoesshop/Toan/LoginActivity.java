@@ -118,8 +118,6 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                     dialog.dismiss();
                                 } else {
-                                    dialog.dismiss();
-
                                     final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                     if (user.isEmailVerified()) {
                                         myRef.child("Accounts").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -139,21 +137,23 @@ public class LoginActivity extends AppCompatActivity {
                                                     intent.putExtra(BUNDLE,bundle);
                                                     startActivity(intent);
                                                 }
+                                                dialog.dismiss();
                                             }
-
                                             @Override
                                             public void onCancelled(DatabaseError databaseError) {
 
                                             }
                                         });
 
+
                                     } else {
                                         Toast.makeText(LoginActivity.this, "Check your emails", Toast.LENGTH_LONG).show();
-
-
+                                        dialog.dismiss();
                                     }
+
                                     // finish();
                                 }
+
                             }
                         });
             }

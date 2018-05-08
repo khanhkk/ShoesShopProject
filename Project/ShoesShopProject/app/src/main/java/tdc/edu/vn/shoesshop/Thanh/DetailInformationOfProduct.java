@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -153,67 +154,97 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         });
 
         intent = getIntent();
-        product = (Product) intent.getSerializableExtra("product");
-        if(product != null)
+        String id = (String) intent.getSerializableExtra("product");
+        if(id != null)
         {
-            edttensanpham.setText(product.getName());
-            edtbaohanh.setText(product.getGuarantee());
-            edtdiemtichluy.setText(product.getAccumulatedPoint()+"");
+            database.child("Products").orderByChild("id").equalTo(id).addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    product = dataSnapshot.getValue(Product.class);
+                    edttensanpham.setText(product.getName());
+                    edtbaohanh.setText(product.getGuarantee());
+                    edtdiemtichluy.setText(product.getAccumulatedPoint()+"");
 //            edtgiaban.setText(df.format(product.getSalePrice()));
 //            edtgianiemyet.setText(df.format(product.getListedPrice()));
-            //double uudai = gia - (gia * giam * 0.01);
-            double ny = Math.round(product.getListedPrice() * 0.001 / 0.001);
-            double gb = Math.round(product.getSalePrice() * 0.001 / 0.001);
-            edtgiaban.setText(gb + "");
-            edtgianiemyet.setText(ny + "");
-            edtmota.setText(product.getDescription());
-            edtthuonghieu.setText(product.getTrademark());
+                    //double uudai = gia - (gia * giam * 0.01);
+                    double ny = Math.round(product.getListedPrice() * 0.001 / 0.001);
+                    double gb = Math.round(product.getSalePrice() * 0.001 / 0.001);
+                    edtgiaban.setText(gb + "");
+                    edtgianiemyet.setText(ny + "");
+                    edtmota.setText(product.getDescription());
+                    edtthuonghieu.setText(product.getTrademark());
 
-            if(product.getSex() == 0)
-            {
-                rbtNu.setChecked(true);
-            }
-            else if(product.getSex() == 1)
-            {
-                rbtNam.setChecked(true);
-            }
-            else
-            {
-                rbtBoth.setChecked(true);
-            }
+                    if(product.getSex() == 0)
+                    {
+                        rbtNu.setChecked(true);
+                    }
+                    else if(product.getSex() == 1)
+                    {
+                        rbtNam.setChecked(true);
+                    }
+                    else
+                    {
+                        rbtBoth.setChecked(true);
+                    }
 
-            if(product.getImage1() != null)
-            {
-                try {
-                    Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage1());
-                    img_ava_patient1.setImageBitmap(bitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    if(product.getImage1() != null)
+                    {
+                        try {
+                            Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage1());
+                            img_ava_patient1.setImageBitmap(bitmap);
+                            img1 = product.getImage1();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    if(product.getImage2() != null)
+                    {
+                        try {
+                            Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage2());
+                            img_ava_patient2.setImageBitmap(bitmap);
+                            img2 = product.getImage2();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    if(product.getImage3() != null)
+                    {
+                        try {
+                            Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage3());
+                            img_ava_patient3.setImageBitmap(bitmap);
+                            img3 = product.getImage3();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    float number = product.getRating();
+                    ratingBar.setRating(number);
                 }
-            }
 
-            if(product.getImage2() != null)
-            {
-                try {
-                    Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage2());
-                    img_ava_patient2.setImageBitmap(bitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
                 }
-            }
 
-            if(product.getImage3() != null)
-            {
-                try {
-                    Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage3());
-                    img_ava_patient3.setImageBitmap(bitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
                 }
-            }
 
-            float number = product.getRating();
-            ratingBar.setRating(number);
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
         }
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {

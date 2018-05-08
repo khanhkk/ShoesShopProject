@@ -192,6 +192,7 @@
                         android:layout_gravity="bottom"
                         android:background="#5082bd"
                         android:text="Lưu"
+                        android:onClick="confirmInput"
                         android:textColor="#000" />
                 </LinearLayout>
             </LinearLayout>

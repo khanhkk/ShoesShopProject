@@ -31,7 +31,7 @@ import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Thanh.DetailInformationOfProduct;
 
 public class HSActivity extends Fragment {
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private Adapters.SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private FloatingActionButton fab, fab_add, fab_edit, fab_delete;
     private Animation amOpen, amClose, amRClockwise, amRanticlockwise;
@@ -46,7 +46,7 @@ public class HSActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.hs_activity, container, false);
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
+        mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) view.findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -110,7 +110,7 @@ public class HSActivity extends Fragment {
                     bundle.putStringArrayList("list", list);
                     intent.putExtra("data", bundle);
                     getContext().startActivity(intent);
-                    Toast.makeText(getActivity(), "kk!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "kk!", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
@@ -153,7 +153,7 @@ public class HSActivity extends Fragment {
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         for (DataSnapshot child: dataSnapshot.getChildren()) {
                                             child.getRef().setValue(null);
-                                            mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
+                                            mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
                                             mViewPager.setAdapter(mSectionsPagerAdapter);
                                         }
                                     }

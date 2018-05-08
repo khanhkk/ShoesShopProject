@@ -212,9 +212,9 @@ public class EdittingPromotions extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(EdittingPromotions.this);
-                alertDialog.setTitle("Notification");
+                alertDialog.setTitle("Thông báo");
                 alertDialog.setIcon(R.mipmap.ic_launcher);
-                alertDialog.setMessage("Do you want to get image from camera or library?");
+                alertDialog.setMessage("Bạn muốn lấy ảnh từ?");
 
                 alertDialog.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
                     @Override
@@ -223,7 +223,7 @@ public class EdittingPromotions extends AppCompatActivity {
                     }
                 });
 
-                alertDialog.setNegativeButton("Library", new DialogInterface.OnClickListener() {
+                alertDialog.setNegativeButton("Thư viện", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         General.chooseFromGallery(EdittingPromotions.this);
@@ -259,7 +259,7 @@ public class EdittingPromotions extends AppCompatActivity {
             try {
                 dialog = new Dialog(this);
                 dialog.setContentView(R.layout.dialog);
-                dialog.setTitle("Choose Avatar Image");
+                dialog.setTitle("Chọn ảnh đại diện");
                 Context applicationContext = dialog.getContext();
                 bitmap = BitmapFactory.decodeStream(applicationContext.getContentResolver().openInputStream(picUri));
 

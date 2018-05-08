@@ -1,4 +1,4 @@
-package tdc.edu.vn.shoesshop.Khanh;
+package Adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -36,7 +36,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         //Log.d("aaa", position+"");
-        return PlaceholderFragment.newInstance(position + 1);
+        return tdc.edu.vn.shoesshop.Khanh.PlaceholderFragment.newInstance(position + 1);
     }
 
     @Override

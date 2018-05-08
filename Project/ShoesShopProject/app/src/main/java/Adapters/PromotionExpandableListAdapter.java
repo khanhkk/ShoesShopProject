@@ -270,7 +270,7 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
 //                });
 
                 final AlertDialog.Builder alertDialog = new AlertDialog.Builder(_context);
-                alertDialog.setTitle("Notification");
+                alertDialog.setTitle("Thông báo");
                 alertDialog.setIcon(R.mipmap.ic_launcher);
                 alertDialog.setMessage("Bạn muốn xóa thông tin khuyến mãi?");
 

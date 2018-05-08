@@ -51,11 +51,6 @@ public class EdittingShopInformation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editting_shop_information_activity);
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 3e4951d3a8aadaa3ae7794ce50ec6e4ee7f6ddd7
         textInputEmail = findViewById(R.id.id_email);
         textInputTenshop = findViewById(R.id.id_hoten);
         textInputSdt = findViewById(R.id.id_sdt);
@@ -64,10 +59,6 @@ public class EdittingShopInformation extends AppCompatActivity {
         textInputSotaikhoan = findViewById(R.id.sotaikhoan);
         textInputFacebook = findViewById(R.id.facebook);
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 3e4951d3a8aadaa3ae7794ce50ec6e4ee7f6ddd7
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);

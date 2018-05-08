@@ -184,7 +184,7 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
         if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
 
             PromotionsDetail item = (PromotionsDetail) adapter.getChild(group, child);
-            menu.setHeaderTitle("Select to action");
+            menu.setHeaderTitle("Chọn để thực hiện");
 
             menu.add(0, R.id.cmSua, 0, "Sua");
             menu.add(0, R.id.cmXoa, 0, "Xoa");
@@ -216,7 +216,7 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
                     //Toast.makeText(Promotions.this, "xoa" + promotionsDetail.getProduct(), Toast.LENGTH_SHORT).show();
 
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(Promotions.this);
-                    alertDialog.setTitle("Notification");
+                    alertDialog.setTitle("Thông báo");
                     alertDialog.setIcon(R.mipmap.ic_launcher);
                     alertDialog.setMessage("Bạn muốn xóa chi tiết khuyến mãi này?");
 

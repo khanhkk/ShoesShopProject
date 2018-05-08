@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,7 +51,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("tag", "1");
+        //Log.d("tag", "1");
         setContentView(R.layout.selection_product_to_editting_activity);
 
         lvList = (ExpandableListView) findViewById(R.id.lvListProduct);
@@ -305,7 +304,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
         if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
 
             ProductDetail item = (ProductDetail) adapter.getChild(group, child);
-            menu.setHeaderTitle("Select to action");
+            menu.setHeaderTitle("Chọn để thực hiện");
 
             menu.add(0, R.id.cmSua, 0, "Sua");
             menu.add(0, R.id.cmXoa, 0, "Xoa");
@@ -353,7 +352,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
 //                    });
 
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(SelectionProductToEditting.this);
-                    alertDialog.setTitle("Notification");
+                    alertDialog.setTitle("Thông báo");
                     alertDialog.setIcon(R.mipmap.ic_launcher);
                     alertDialog.setMessage("Bạn muốn xóa sản phẩm?");
 

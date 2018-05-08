@@ -168,15 +168,39 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
         viewHolder.tvListedPrice.setTextColor(_context.getResources().getColor(R.color.bg_register));
         viewHolder.tvListedPrice.setPaintFlags(viewHolder.tvListedPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
+        Bitmap bitmap = null;
         if(member.getImage1() !=  null)
         {
             try {
-                Bitmap bitmap = General.decodeFromFirebaseBase64(member.getImage1());
-                //RoundedBitmapDrawable roundedBitmapDrawable = General.setCircleImage(bitmap);
-                viewHolder.imageView.setImageBitmap(bitmap);
+                 bitmap = General.decodeFromFirebaseBase64(member.getImage1());
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        else if(member.getImage2() !=  null)
+        {
+            try {
+                bitmap = General.decodeFromFirebaseBase64(member.getImage2());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(member.getImage3() !=  null)
+        {
+            try {
+                bitmap = General.decodeFromFirebaseBase64(member.getImage3());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(bitmap != null)
+        {
+            viewHolder.imageView.setImageBitmap(bitmap);
+        }//
+        else
+        {
+            viewHolder.imageView.setImageResource(R.mipmap.shoes4);
         }
 
         viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -198,7 +222,7 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
                 //Toast.makeText(_context,"dsafds",Toast.LENGTH_SHORT).show();
 
                 final AlertDialog.Builder alertDialog = new AlertDialog.Builder(_context);
-                alertDialog.setTitle("Notification");
+                alertDialog.setTitle("Thông báo");
                 alertDialog.setIcon(R.mipmap.ic_launcher);
                 alertDialog.setMessage("Bạn muốn xóa thông tin sản phẩm?");
 
@@ -270,7 +294,7 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
                 Toast.makeText(_context, "edit", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(_context, DetailInformationOfProduct.class);
-                intent.putExtra("product", member);
+                intent.putExtra("product", member.getId());
                 _context.startActivity(intent);
             }
         });

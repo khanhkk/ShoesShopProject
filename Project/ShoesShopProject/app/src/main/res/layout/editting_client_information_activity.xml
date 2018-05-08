@@ -146,6 +146,7 @@
             android:textColor="#000"
             android:background="#5082bd"
             android:text="Lưu"
+            android:onClick="confirmInput"
             android:layout_gravity="bottom"/>
 
     </LinearLayout>

@@ -189,23 +189,20 @@ public class QuantityManagement extends AppCompatActivity {
                         return;
                     }
 
-                    if(listDetails.size() > 1)
-                    {
-                        for(ProductDetail pro : listDetails)
+                    if (productDetail == null) {
+                        if(listDetails.size() > 0)
                         {
-                            if(pro.getId() != productDetail.getId())
+                            for(ProductDetail pro : listDetails)
                             {
+
                                 if(pro.getColor() == color && pro.getSize() == size)
                                 {
                                     Toast.makeText(getApplicationContext(), "Kiểm tra thông tin nhập!", Toast.LENGTH_SHORT).show();
-                                    Toast.makeText(getApplicationContext(), "Kiểm tra thông tin nhập!", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
+
                             }
                         }
-                    }
-
-                    if (productDetail == null) {
                         productDetail = new ProductDetail();
                         productDetail.setProduct(product.getId());
                         productDetail.setColor(mau);
@@ -218,6 +215,21 @@ public class QuantityManagement extends AppCompatActivity {
                         startActivity(intent);
                     }
                     else {
+                        if(listDetails.size() > 1)
+                        {
+                            for(ProductDetail pro : listDetails)
+                            {
+                                if(pro.getId() != productDetail.getId())
+                                {
+                                    if(pro.getColor() == color && pro.getSize() == size)
+                                    {
+                                        Toast.makeText(getApplicationContext(), "Kiểm tra thông tin nhập!", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+
                         productDetail.setColor(mau);
                         productDetail.setSize(size);
                         productDetail.setQuantity(quantity);
