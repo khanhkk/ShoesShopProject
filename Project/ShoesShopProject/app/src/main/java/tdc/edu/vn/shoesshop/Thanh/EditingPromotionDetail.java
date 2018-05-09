@@ -149,9 +149,9 @@ public class EditingPromotionDetail extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                    product =  products.get(i);
-                    edtgiaban.setText(product.getSalePrice() + "");
-                    edtgiauudai.setText(product.getSalePrice() + "");
+                product =  products.get(i);
+                edtgiaban.setText(product.getSalePrice() + "");
+                edtgiauudai.setText(product.getSalePrice() + "");
                 if(edtgiamgia.getText().length() > 0) {
                     changePrice();
                 }

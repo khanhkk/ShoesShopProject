@@ -66,7 +66,7 @@ public class BillAdapter extends ArrayAdapter<BillDetail> {
         }
         final BillDetail member = list.get(position);
 
-        viewHolder.tvCode.setText(member.getProduct().getId());
+        viewHolder.tvCode.setText(member.getProduct().getName());
         viewHolder.tvPrice.setText(member.getProduct().getSalePrice() + "");
         viewHolder.tvQuantity.setText(member.getQuantity() + "");
         //viewHolder.imgImage.setImageResource(member.getProduct().getImage1());

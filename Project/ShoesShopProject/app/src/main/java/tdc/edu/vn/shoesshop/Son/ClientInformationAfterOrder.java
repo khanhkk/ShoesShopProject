@@ -1,14 +1,11 @@
 package tdc.edu.vn.shoesshop.Son;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Toan.HomeForClient;
@@ -112,6 +109,9 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
         if (!validateEmail() | !validateHoten() | !validateSdt() | !validateDiachi()) {
             return;
         }
+
+
+
 
         Intent intent = new Intent(ClientInformationAfterOrder.this, HomeForClient.class);
         startActivity(intent);

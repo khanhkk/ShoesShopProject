@@ -2,11 +2,13 @@ package tdc.edu.vn.shoesshop.Khanh;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,7 +25,6 @@ import Models.Product;
 import tdc.edu.vn.shoesshop.R;
 
 public class PlaceholderFragment extends Fragment {
-
     private static final String ARG_SECTION_NUMBER = "section_number";
     GridView gridView;
     TextView textView;
@@ -49,6 +50,10 @@ public class PlaceholderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        String ss = HSActivity.name_product.length() + " ---- " + HSActivity.trademark.length() ;
+        Toast.makeText(getContext(), ss, Toast.LENGTH_LONG).show();
+        Log.d("tag", ss);
+
         View rootView = inflater.inflate(R.layout.hs_fragment, container, false);
         gridView = (GridView) rootView.findViewById(R.id.grid);
         final TextView textView = (TextView) rootView.findViewById(R.id.section_label);
@@ -63,29 +68,30 @@ public class PlaceholderFragment extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Product product = dataSnapshot.getValue(Product.class);
 
-                if(c == '1')
-                {
-                    if(product.getSex() == 2)
-                    {
-                        list.add(product);
+                if(HSActivity.name_product.length() != 0) {
+                    if(HSActivity.trademark.length() != 0) {
+                        if (product.getName().contains(HSActivity.name_product) && product.getTrademark().toUpperCase().equals(HSActivity.trademark)) {
+                            setup(product, c);
+                        }
                     }
-                    //list.add(product);
+                    else
+                    {
+                        if (product.getName().contains(HSActivity.name_product)) {
+                            setup(product, c);
+                        }
+                    }
+                }
+                else {
+                    if(HSActivity.trademark.length() != 0) {
+                        if ( product.getTrademark().toUpperCase().equals(HSActivity.trademark)) {
+                            setup(product, c);
+                        }
+                    }
+                    else {
+                        setup(product, c);
+                    }
+                }
 
-                }
-                else if(c == '2')
-                {
-                    if(product.getSex() == 0)
-                    {
-                        list.add(product);
-                    }
-                }
-                else
-                {
-                    if(product.getSex() == 1)
-                    {
-                        list.add(product);
-                    }
-                }
                 adapter.notifyDataSetChanged();
             }
 
@@ -116,4 +122,21 @@ public class PlaceholderFragment extends Fragment {
         return rootView;
     }
 
+    private void setup(Product product, char c)
+    {
+        if (c == '1') {
+            if (product.getSex() == 2) {
+                list.add(product);
+            }
+
+        } else if (c == '2') {
+            if (product.getSex() == 0) {
+                list.add(product);
+            }
+        } else {
+            if (product.getSex() == 1) {
+                list.add(product);
+            }
+        }
+    }
 }

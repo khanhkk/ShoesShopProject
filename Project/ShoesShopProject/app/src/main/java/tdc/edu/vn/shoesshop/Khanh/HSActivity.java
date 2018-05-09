@@ -13,11 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,54 +35,48 @@ import Models.Product;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Thanh.DetailInformationOfProduct;
 
-public class HSActivity extends Fragment {
+public class HSActivity extends Fragment implements SearchView.OnQueryTextListener {
     private Adapters.SectionsPagerAdapter mSectionsPagerAdapter;
+    private ArrayAdapter<String> adapter;
+
     private ViewPager mViewPager;
     private FloatingActionButton fab, fab_add, fab_edit, fab_delete;
     private Animation amOpen, amClose, amRClockwise, amRanticlockwise;
+    private SearchView svSearch;
+    private Spinner spnTradeMark;
 
     Boolean isOpen = false;
     public static ArrayList<Product> ListProducts = new ArrayList<>();
+    ArrayList<String> ListTradeMark = new ArrayList<>();
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+
+    public static String trademark = "";
+    public static String name_product = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.hs_activity, container, false);
 
-        mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
-        // Set up the ViewPager with the sections adapter.
+        svSearch = (SearchView) view.findViewById(R.id.searchView) ;
+        spnTradeMark = (Spinner) view.findViewById(R.id.spin_name) ;
         mViewPager = (ViewPager) view.findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
-        mViewPager.setOffscreenPageLimit(3);
-        mViewPager.setPageTransformer(true, new RotateUpTransformer());
-//        mViewPager.setPageTransformer(false, new ViewPager.PageTransformer() {
-//            @Override
-//            public void transformPage(View page, float position) {
-//                int pageWidth = view.getWidth();
-//                int pageHeight = view.getHeight();
-//
-//                if (position < -1) { // [-Infinity,-1)
-//                    // This page is way off-screen to the left.
-//                    view.setAlpha(0);
-//                } else if(position <= 1){ // Page to the left, page centered, page to the right
-//                    // modify page view animations here for pages in view
-//                } else { // (1,+Infinity]
-//                    // This page is way off-screen to the right.
-//                    view.setAlpha(0);
-//                }
-//            }
-//        });
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
         //floating action button
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab_add = (FloatingActionButton) view.findViewById(R.id.fabAdd);
         fab_edit = (FloatingActionButton) view.findViewById(R.id.fabEdit);
         fab_delete = (FloatingActionButton) view.findViewById(R.id.fabDelete);
+
+        mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setOffscreenPageLimit(3);
+        mViewPager.setPageTransformer(true, new RotateUpTransformer());
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        svSearch.setOnQueryTextListener(this);
 
         amOpen = AnimationUtils.loadAnimation(getContext(), R.anim.fab_open);
         amClose = AnimationUtils.loadAnimation(getContext(), R.anim.fab_close);
@@ -100,7 +99,6 @@ public class HSActivity extends Fragment {
                 {
                     Intent intent = new Intent(getContext(), SelectionProductToEditting.class);
                     Bundle bundle = new Bundle();
-                    //bundle.putSerializable("list", ListProducts);
                     ArrayList<String> list = new ArrayList<>();
                     for(Product product : ListProducts)
                     {
@@ -110,7 +108,6 @@ public class HSActivity extends Fragment {
                     bundle.putStringArrayList("list", list);
                     intent.putExtra("data", bundle);
                     getContext().startActivity(intent);
-                    //Toast.makeText(getActivity(), "kk!", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
@@ -214,7 +211,97 @@ public class HSActivity extends Fragment {
             }
         });
 
+        ListTradeMark.clear();
+        database.child("Products").orderByChild("shop").equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Product product = dataSnapshot.getValue(Product.class);
+                if(ListTradeMark.size() > 0)
+                {
+                    int flag = 0;
+                    for(String str : ListTradeMark)
+                    {
+                        if(str.toLowerCase().equals(product.getTrademark().toLowerCase()))
+                        {
+                            flag++;
+                            break;
+                        }
+                    }
+
+                    if(flag == 0)
+                    {
+                        ListTradeMark.add(product.getTrademark().toUpperCase());
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+                else
+                {
+                    ListTradeMark.add("All");
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, ListTradeMark);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+        spnTradeMark.setAdapter(adapter);
+        spnTradeMark.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i != 0) {
+                    trademark = ListTradeMark.get(i);
+                    mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
+                    mViewPager.setAdapter(mSectionsPagerAdapter);
+                }
+                else
+                {
+                    trademark = "";
+                    mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
+                    mViewPager.setAdapter(mSectionsPagerAdapter);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         return view;
+    }
+
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        Toast.makeText(getContext(), newText, Toast.LENGTH_SHORT).show();
+        name_product = newText;
+        mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+        return true;
     }
 
 

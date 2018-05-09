@@ -55,8 +55,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginRight="5dp"
-                android:backgroundTint="#000"
-                android:entries="@array/filter_name_arrays"
+                android:popupBackground="@color/white"
                 android:prompt="@string/filter_name" />
 
             <LinearLayout
