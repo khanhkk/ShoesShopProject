@@ -61,6 +61,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
+                        android:text="Giày cơ động"
                         android:background="@drawable/edittext_style"
                         android:padding="@dimen/paddingEditText" />
                 </LinearLayout>
@@ -83,6 +84,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
+                        android:text="Adidas_LOL"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/edittext_style"
                         android:padding="@dimen/paddingEditText" />
@@ -107,6 +109,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
+                        android:text="2nam"
                         android:background="@drawable/edittext_style"
                         android:padding="@dimen/paddingEditText" />
                 </LinearLayout>
@@ -131,6 +134,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
+                        android:text="2000000"
                         android:background="@drawable/edittext_style"
                         android:padding="@dimen/paddingEditText" />
                 </LinearLayout>
@@ -154,6 +158,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
+                        android:text="15000000"
                         android:background="@drawable/edittext_style"
                         android:padding="@dimen/paddingEditText" />
                 </LinearLayout>
@@ -177,6 +182,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
+                        android:text="20"
                         android:background="@drawable/edittext_style"
                         android:padding="@dimen/paddingEditText" />
                 </LinearLayout>
@@ -200,6 +206,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
+                        android:text="Giày chống ngu"
                         android:background="@drawable/edittext_style"
                         android:padding="@dimen/paddingEditText" />
                 </LinearLayout>

@@ -52,6 +52,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Tên shop"
+                        android:text="Shose Shop"
                         android:inputType="text" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -68,6 +69,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="SĐT"
+                        android:text="01662042347"
                         android:inputType="phone" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -83,6 +85,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="53 Võ Văn Ngân"
                         android:hint="Địa chỉ"
                         android:inputType="text" />
 
@@ -100,6 +103,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Email"
+                        android:text="lenguyenvietthanh2511@gmail.com"
                         android:inputType="textEmailAddress" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -115,6 +119,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Người đại diện"
+                        android:text="Cu Toàn Anh Yêu <3"
                         android:inputType="textEmailAddress" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -130,6 +135,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Số tài khoản"
+                        android:text="159753852"
                         android:inputType="textEmailAddress" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -145,6 +151,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Facebook"
+                        android:text="Mai Kim Trí"
                         android:inputType="textEmailAddress" />
                 </android.support.design.widget.TextInputLayout>
 

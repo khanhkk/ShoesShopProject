@@ -59,6 +59,7 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
+                android:text="1 gói Durex"
                 android:id="@+id/quatang"/>
         </LinearLayout>
 
@@ -78,6 +79,7 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
+                android:text="15"
                 android:id="@+id/diemTichLuy"/>
         </LinearLayout>
 
@@ -98,6 +100,7 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
+                android:text="200000"
                 android:id="@+id/giamgia"/>
 
         </LinearLayout>
@@ -118,6 +121,7 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
                 android:editable="false"
+                android:text="18900000"
                 android:id="@+id/giaban_promotion"/>
 
         </LinearLayout>
@@ -138,6 +142,7 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="70"
                 android:editable="false"
+                android:text="1500000"
                 android:id="@+id/giauudai"/>
 
         </LinearLayout>

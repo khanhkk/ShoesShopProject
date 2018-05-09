@@ -50,6 +50,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Email"
+                        android:text="lenguyenvietthanh2511@gmail.com"
                         android:inputType="textEmailAddress" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -66,6 +67,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Họ tên"
+                        android:text="ThanhKute1234"
                         android:inputType="text" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -83,6 +85,7 @@
                         android:layout_height="wrap_content"
                         android:hint="Số điện thoại"
                         android:inputType="phone"
+                        android:text="01662042347"
                         />
 
                 </android.support.design.widget.TextInputLayout>
@@ -99,6 +102,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Địa chỉ"
+                        android:text="53 Võ Văn Ngân, p.Linh Chiểu, q.Thủ Đức"
                         android:inputType="textPostalAddress"
                         />
                 </android.support.design.widget.TextInputLayout>
