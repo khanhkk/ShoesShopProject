@@ -68,29 +68,31 @@ public class PlaceholderFragment extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Product product = dataSnapshot.getValue(Product.class);
 
-                if(HSActivity.name_product.length() != 0) {
-                    if(HSActivity.trademark.length() != 0) {
-                        if (product.getName().contains(HSActivity.name_product) && product.getTrademark().toUpperCase().equals(HSActivity.trademark)) {
-                            setup(product, c);
-                        }
-                    }
-                    else
-                    {
-                        if (product.getName().contains(HSActivity.name_product)) {
-                            setup(product, c);
-                        }
-                    }
-                }
-                else {
-                    if(HSActivity.trademark.length() != 0) {
-                        if ( product.getTrademark().toUpperCase().equals(HSActivity.trademark)) {
-                            setup(product, c);
-                        }
-                    }
-                    else {
-                        setup(product, c);
-                    }
-                }
+//                if(HSActivity.name_product.length() != 0) {
+//                    if(HSActivity.trademark.length() != 0) {
+//                        if (product.getName().contains(HSActivity.name_product) && product.getTrademark().toUpperCase().equals(HSActivity.trademark)) {
+//                            setup(product, c);
+//                        }
+//                    }
+//                    else
+//                    {
+//                        if (product.getName().contains(HSActivity.name_product)) {
+//                            setup(product, c);
+//                        }
+//                    }
+//                }
+//                else {
+//                    if(HSActivity.trademark.length() != 0) {
+//                        if ( product.getTrademark().toUpperCase().equals(HSActivity.trademark)) {
+//                            setup(product, c);
+//                        }
+//                    }
+//                    else {
+//                        setup(product, c);
+//                    }
+//                }
+
+                setup(product, c);
 
                 adapter.notifyDataSetChanged();
             }

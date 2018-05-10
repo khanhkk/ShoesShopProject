@@ -15,18 +15,6 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <!--<android.support.v7.widget.Toolbar-->
-        <!--android:id="@+id/toolbar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="?attr/actionBarSize"-->
-        <!--android:layout_weight="1"-->
-        <!--android:background="?attr/colorPrimary"-->
-        <!--app:layout_scrollFlags="scroll|enterAlways"-->
-        <!--app:popupTheme="@style/AppTheme.PopupOverlay"-->
-        <!--app:title="@string/app_name">
-
-    </android.support.v7.widget.Toolbar>-->
-
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
@@ -53,38 +41,6 @@
 
         </android.support.design.widget.TabLayout>
 
-        <!--<LinearLayout-->
-            <!--android:id="@+id/lltabar"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:gravity="center"-->
-            <!--android:orientation="horizontal"-->
-            <!--&gt;-->
-
-            <!--<Spinner-->
-                <!--android:id="@+id/spin_name"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:layout_marginRight="5dp"-->
-                <!--android:backgroundTint="#000"-->
-                <!--android:entries="@array/filter_name_arrays"-->
-                <!--android:prompt="@string/filter_name" />-->
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:gravity="right|center_vertical">-->
-
-                <!--<SearchView-->
-                    <!--android:id="@+id/searchView"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:background="#d2d1d1"-->
-                    <!--android:elevation="2dp"/>-->
-            <!--</LinearLayout>-->
-        <!--</LinearLayout>-->
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
