@@ -102,7 +102,6 @@ public class Home_ProductFilter_Fragment extends Fragment {
                 Product product = dataSnapshot.getValue(Product.class);
                 list.add(product);
                 adapter.notifyDataSetChanged();
-
             }
 
             @Override

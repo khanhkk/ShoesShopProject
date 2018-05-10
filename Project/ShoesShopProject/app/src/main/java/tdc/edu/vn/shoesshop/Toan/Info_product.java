@@ -29,18 +29,22 @@ public class Info_product extends AppCompatActivity {
     private ImageView[] dots;
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
-    Button btnXemThem, btnBinhLuan;
+    Button btnXemThem, btnBinhLuan, btnMuaHang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info_product);
-       // setPaintFlags(holder.cost.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-//get firebase auth instance
+        // setPaintFlags(holder.cost.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+        //get current user
         auth = FirebaseAuth.getInstance();
-//Button
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        //Button
         btnBinhLuan = (Button) findViewById(R.id.btnBinhLuan);
         btnXemThem = (Button) findViewById(R.id.btnXemThem);
+        btnMuaHang = (Button) findViewById(R.id.btnBuyProduct);
+
         btnXemThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,11 +53,13 @@ public class Info_product extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        ////
 
+        btnMuaHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        //get current user
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            }
+        });
 
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -68,7 +74,7 @@ public class Info_product extends AppCompatActivity {
             }
         };
 
-//  Action bar back
+        //  Action bar back
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle(getString(R.string.app_name));
         mToolbar.setNavigationIcon(R.drawable.ic_chevron_left_black_24dp);
@@ -81,6 +87,7 @@ public class Info_product extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         //View Pager
         viewPager = (ViewPager) findViewById(R.id.viewPager);
 
@@ -94,8 +101,8 @@ public class Info_product extends AppCompatActivity {
         dots = new ImageView[dotscount];
 
         for (int i = 0; i < dotscount; i++) {
-
             dots[i] = new ImageView(this);
+
             dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot));
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);

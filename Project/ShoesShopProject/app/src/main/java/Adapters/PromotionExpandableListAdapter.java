@@ -1,6 +1,8 @@
 package Adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -124,8 +126,6 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
 
             final PromotionsDetail member = (PromotionsDetail) getChild(groupPosition, childPosition);
 
-            //viewHolder.tvCode.setText(member.getProduct());
-
             if(listProduct.size() > 0)
             {
                 for ( Product p : listProduct) {
@@ -136,40 +136,7 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
                 }
             }
 
-//            myRef.child("Products").orderByChild("id").equalTo(member.getProduct()).addChildEventListener(new ChildEventListener() {
-//                @Override
-//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                    Product product = dataSnapshot.getValue(Product.class);
-//                    //Log.d("name", product.getId() + "123" + member.getProduct());
-//                    //if(product.getId().equals(member.getProduct()))
-//                    //{
-//                        viewHolder.tvCode.setText(product.getName());
-//                    //}
-//                }
-//
-//                @Override
-//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//                }
-//
-//                @Override
-//                public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                }
-//
-//                @Override
-//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//
-//                }
-//            });
-
             if (member.getDiscount() <= 0) {
-                //viewHolder.tvDiscount.setText("Không giảm giá!");
                 viewHolder.llDiscount.setVisibility(View.GONE);
             }
             else
@@ -179,7 +146,6 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
             }
 
             if (member.getGift().length() == 0) {
-                //viewHolder.tvGift.setText("Không có quà tặng!");
                 viewHolder.llGift.setVisibility(View.GONE);
             }
             else
@@ -256,14 +222,12 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
         final Promotion member = (Promotion) getGroup(groupPosition);
 
         viewHolder.tvNamePromotions.setText(member.getTitle());
-        //SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         viewHolder.tvTimeStart.setText(member.getDateStart());
         viewHolder.tvTimeEnd.setText(member.getDateEnd());
         if(member.getImage() != null)
         {
             try {
                 Bitmap bitmap = General.decodeFromFirebaseBase64(member.getImage());
-                //RoundedBitmapDrawable roundedBitmapDrawable = General.setCircleImage(bitmap);
                 viewHolder.imageView.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -271,7 +235,7 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
         }
         else
         {
-            viewHolder.imageView.setImageAlpha(R.mipmap.promotions2);
+            viewHolder.imageView.setImageResource(R.mipmap.promotions2);
         }
 
 
@@ -291,27 +255,46 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
 
 
-                myRef.child("PromotionsDetail").orderByChild("promotions").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+//                myRef.child("PromotionsDetail").orderByChild("promotions").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        for (DataSnapshot child: dataSnapshot.getChildren()) {
+//                            child.getRef().setValue(null);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//                });
+
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(_context);
+                alertDialog.setTitle("Thông báo");
+                alertDialog.setIcon(R.mipmap.ic_launcher);
+                alertDialog.setMessage("Bạn muốn xóa thông tin khuyến mãi?");
+
+                alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot child: dataSnapshot.getChildren()) {
-                            child.getRef().setValue(null);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                myRef.child("Promotions").orderByChild("id").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        myRef.child("PromotionsDetails").orderByChild("promotions").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        myRef.child("Promotions").orderByChild("id").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                myRef.child("PromotionsDetails").orderByChild("promotions").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                        for (DataSnapshot child: dataSnapshot.getChildren()) {
+                                            child.getRef().setValue(null);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
 
                                 for (DataSnapshot child: dataSnapshot.getChildren()) {
                                     child.getRef().setValue(null);
@@ -324,20 +307,20 @@ public class PromotionExpandableListAdapter extends BaseExpandableListAdapter {
                             }
                         });
 
-                        for (DataSnapshot child: dataSnapshot.getChildren()) {
-                            child.getRef().setValue(null);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
+                        _childList.remove(_listDataHeader.get(groupPosition));
+                        _listDataHeader.remove(groupPosition);
+                        Promotions.adapter.notifyDataSetChanged();
                     }
                 });
 
-                _childList.remove(_listDataHeader.get(groupPosition));
-                _listDataHeader.remove(groupPosition);
-                Promotions.adapter.notifyDataSetChanged();
+                alertDialog.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                alertDialog.show();
             }
         });
 

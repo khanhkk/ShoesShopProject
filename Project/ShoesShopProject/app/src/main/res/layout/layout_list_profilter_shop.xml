@@ -41,8 +41,8 @@
                     android:layout_height="wrap_content"
                     android:maxHeight="175dp"
                     android:layout_gravity="center_vertical|center_horizontal"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/a" />
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/shoes4" />
             </LinearLayout>
 
             <TextView

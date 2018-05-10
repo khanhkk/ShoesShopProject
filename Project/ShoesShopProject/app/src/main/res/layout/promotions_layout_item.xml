@@ -14,7 +14,7 @@
         android:contentDescription="abc"
         android:focusable="false"
         android:padding="@dimen/margin_item"
-        android:scaleType="fitCenter"
+        android:scaleType="fitXY"
         android:src="@mipmap/promotions2" />
 
     <RelativeLayout

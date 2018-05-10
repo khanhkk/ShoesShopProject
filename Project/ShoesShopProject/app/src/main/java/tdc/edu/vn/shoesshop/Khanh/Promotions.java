@@ -1,6 +1,8 @@
 package tdc.edu.vn.shoesshop.Khanh;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -61,28 +63,6 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
         svSearchPromotions = (SearchView) findViewById(R.id.svSearch);
         svSearchPromotions.setOnQueryTextListener(this);
 
-//        if(listParent.size() == 0) {
-//            TakeData();
-//            listCopy.addAll(listParent);
-//        }
-//        else
-//        {
-//            listCopy.clear();
-//            listCopy.addAll(listParent);
-//        }
-//
-//        for(int i = 0; i < promotionsDetailArrayList.size(); i++)
-//        {
-//            PromotionsDetail promotionsDetail = promotionsDetailArrayList.get(i);
-//            myRef.child("PromotionsDetail").push().setValue(promotionsDetail);
-//        }
-//
-//        for(int i = 0; i< listParent.size(); i++)
-//        {
-//            Promotion promotion = listParent.get(i);
-//            myRef.child("Promotions").push().setValue(promotion);
-//        }
-
         Query allPromtions = myRef.child("Promotions").orderByChild("shop").equalTo(user.getUid());
         listParent.clear();
         list.clear();
@@ -139,8 +119,6 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
                     list.put(por, arr);
                     adapter.notifyDataSetChanged();
                 }
-
-
             }
 
             @Override
@@ -206,38 +184,7 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
         if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
 
             PromotionsDetail item = (PromotionsDetail) adapter.getChild(group, child);
-            //menu.setHeaderTitle(item.getProduct());
-            menu.setHeaderTitle("Select to action");
-//            DatabaseReference myRef  = FirebaseDatabase.getInstance().getReference();
-//            myRef.child("Products").orderByChild("id").equalTo(item.getProduct()).addChildEventListener(new ChildEventListener() {
-//                @Override
-//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                    Product pro = dataSnapshot.getValue(Product.class);
-//                    menu.setHeaderTitle(pro.getName());
-//                }
-//
-//                @Override
-//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//                }
-//
-//                @Override
-//                public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                }
-//
-//                @Override
-//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//
-//                }
-//            });
-
-            //menu.setHeaderIcon(R.mipmap.promotions);
+            menu.setHeaderTitle("Chọn để thực hiện");
 
             menu.add(0, R.id.cmSua, 0, "Sua");
             menu.add(0, R.id.cmXoa, 0, "Xoa");
@@ -250,8 +197,8 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
         ExpandableListView.ExpandableListContextMenuInfo info =
                 (ExpandableListView.ExpandableListContextMenuInfo) item.getMenuInfo();
         int type = ExpandableListView.getPackedPositionType(info.packedPosition);
-        int group = ExpandableListView.getPackedPositionGroup(info.packedPosition);
-        int child =	ExpandableListView.getPackedPositionChild(info.packedPosition);
+        final int group = ExpandableListView.getPackedPositionGroup(info.packedPosition);
+        final int child =	ExpandableListView.getPackedPositionChild(info.packedPosition);
 
         if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
             final PromotionsDetail promotionsDetail = (PromotionsDetail) adapter.getChild(group, child);
@@ -267,139 +214,49 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
 
                 case R.id.cmXoa:
                     //Toast.makeText(Promotions.this, "xoa" + promotionsDetail.getProduct(), Toast.LENGTH_SHORT).show();
-                    list.get(listParent.get(group)).remove(child);
 
-                    myRef.child("PromotionsDetails").orderByChild("id").equalTo(promotionsDetail.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(Promotions.this);
+                    alertDialog.setTitle("Thông báo");
+                    alertDialog.setIcon(R.mipmap.ic_launcher);
+                    alertDialog.setMessage("Bạn muốn xóa chi tiết khuyến mãi này?");
+
+                    alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                            PromotionsDetail pro = dataSnapshot.getValue(PromotionsDetail.class);
-//                            Log.d("tag", pro.getPromotions() + "123" + promotionsDetail.getPromotions());
-//                            if(pro.getPromotions().equals(promotionsDetail.getPromotions())) {
-//                                dataSnapshot.getRef().setValue(null);
-//                            }
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                            for (DataSnapshot child: dataSnapshot.getChildren()) {
-                                child.getRef().setValue(null);
-                            }
-                        }
+                            list.get(listParent.get(group)).remove(child);
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                            myRef.child("PromotionsDetails").orderByChild("id").equalTo(promotionsDetail.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
 
+                                    for (DataSnapshot child: dataSnapshot.getChildren()) {
+                                        child.getRef().setValue(null);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                            adapter.notifyDataSetChanged();
                         }
                     });
 
-//                    int key = promotionsDetailArrayList.get(child).getPromotions();
-//
-//                    String s[]=listParent.get(key-1).getListDetail().split("#");
-//                    String list = "";
-//                    for (String a:s) {
-//                        Log.d("a",a + " " + promotionsDetailArrayList.get(child).getId());
-//                        if(Integer.parseInt(a) != (promotionsDetailArrayList.get(child).getId())){
-//                            list = list + a +"#";
-//                        }
-//                    }
-//                    Log.d("ab",list);
-//
-//                    pro = listParent.get(key-1);
-//                    pro.setListDetail(list);
-//                    Log.d("aa",pro.getListDetail());
-//
-//                    myRef.child("Promotions").orderByChild("id").equalTo(key).addListenerForSingleValueEvent(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                            for (DataSnapshot child : dataSnapshot.getChildren()) {
-//                                child.getRef().setValue(pro);
-//                            }
-//                        }
-//                        @Override
-//                        public void onCancelled(DatabaseError databaseError) {
-//
-//                        }
-//                    });
-                    adapter.notifyDataSetChanged();
+                    alertDialog.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+
+                    alertDialog.show();
                     break;
             }
         }
 
         return super.onContextItemSelected(item);
-    }
-
-    //tao du lieu cho activity
-    void TakeData()
-    {
-        listParent.clear();
-        listCopy.clear();
-        //Shop shop = new Shop("SH0001", "MiuMiu", "01512151211");
-
-//        Product product = new Product("SP0001", "giay the thao","Nike", null, user.getUid(), "1 thang", 0, null, null, null , 1290000, 900000, 3);
-//        Product product2 = new Product("SP0002", "giay thoi trang","Bittis", null, user.getUid(), "1 thang", 0, null, null, null , 1290000, 900000, 3);
-//        Product product3 = new Product("SP0003", "giay di phuot","", null, user.getUid(), "1 thang", 0, null, null, null , 1290000, 900000, 3);
-//        Product product4 = new Product("SP0004", "giay bao ho","Nike", null, user.getUid(), "1 thang", 0, null, null, null , 1290000, 900000, 3);
-
-
-//        Promotion promotions = new Promotion(1,"Chương trình khuyến mãi 1", user.getUid(), "fjds hgfds fhasjfd jfhads jndsjfdsajfdsh jda hjfd hds fd hd","10/04/2018 07:00", "20/04/2018 10:00", null, null);
-//        Promotion promotions2 = new Promotion(2,"Chương trình khuyến mãi 2", user.getUid(), null,"11/04/2018 10:00","21/04/2018 17:00", null, null);
-//        Promotion promotions3 = new Promotion(3,"Chương trình khuyến mãi 3", user.getUid(), null, "12/04/2018 11:00","22/04/2018 18:00", null, null);
-//        Promotion promotions4 = new Promotion(4,"Chương trình khuyến mãi 4", user.getUid(), null, "13/04/2018 07:00","23/04/2018 17:30", null, null);
-//        Promotion promotions5 = new Promotion(5,"Chương trình khuyến mãi 5", user.getUid(), null,"14/04/2018 08:00", "24/04/2018 18:30", null, null);
-
-//
-        promotionsDetailArrayList.clear();
-//        PromotionsDetail promotionsDetail = new PromotionsDetail(1, 10, promotions.getId(), product.getId(), "Vớ cao cấp",0);
-//        PromotionsDetail promotionsDetail2 = new PromotionsDetail(2, 20, promotions.getId(), product2.getId(), null, 0);
-//        PromotionsDetail promotionsDetail3 = new PromotionsDetail(3, 15, promotions.getId(), product3.getId(), "Miếng lót giày", 0);
-//        PromotionsDetail promotionsDetail4 = new PromotionsDetail(4, 0, promotions.getId(), product4.getId(), "vòng tay thời trang",10);
-
-//        HashMap<String,Integer> list = new HashMap<>();
-//        list.put(promotionsDetail.getId()+"", promotionsDetail.getId());
-//        list.put(promotionsDetail2.getId()+"", promotionsDetail2.getId());
-//        list.put(promotionsDetail3.getId()+"", promotionsDetail3.getId());
-//        list.put(promotionsDetail4.getId()+"", promotionsDetail4.getId());
-
-
-//        promotions.setDetails(list);
-//        promotions2.setDetails(list);
-//        promotions3.setDetails(list);
-//        promotions4.setDetails(list);
-//        promotions5.setDetails(list);
-
-//            promotionsDetailArrayList.add(promotionsDetail);
-//            promotionsDetailArrayList.add(promotionsDetail2);
-//            promotionsDetailArrayList.add(promotionsDetail3);
-//            promotionsDetailArrayList.add(promotionsDetail4);
-
-//            promotions.setListDetail(promotionsDetailArrayList);
-//            promotions2.setListDetail(promotionsDetailArrayList);
-//            promotions3.setListDetail(promotionsDetailArrayList);
-//            promotions4.setListDetail(promotionsDetailArrayList);
-//            promotions5.setListDetail(promotionsDetailArrayList);
-//
-//            promotions.setListDetail(promotionsDetailArrayList);
-
-//            list.put(promotions, promotionsDetailArrayList);
-//            list.put(promotions2, promotionsDetailArrayList);
-//            list.put(promotions3, promotionsDetailArrayList);
-//           list.put(promotions4, promotionsDetailArrayList);
-//           list.put(promotions5, promotionsDetailArrayList);
-
-//        String s = "";
-//        for(int i = 0; i < promotionsDetailArrayList.size(); i++)
-//        {
-//            s += promotionsDetailArrayList.get(i).getId() + "#";
-//        }
-
-        //promotions.setListDetail(s);
-//        promotions2.setListDetail(s);
-//        promotions3.setListDetail(s);
-//        promotions4.setListDetail(s);
-//        promotions5.setListDetail(s);
-
-//        listParent.add(promotions);
-//        listParent.add(promotions2);
-//        listParent.add(promotions3);
-//        listParent.add(promotions4);
-//        listParent.add(promotions5);
     }
 
     @Override

@@ -13,10 +13,16 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import Adapters.BillAdapter;
 import Models.BillDetail;
+import Models.Product;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Son.ClientInformationAfterOrder;
 
@@ -34,6 +40,7 @@ public class Cart extends Fragment {
     Intent intent;
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
     @Nullable
     @Override
@@ -45,7 +52,46 @@ public class Cart extends Fragment {
         btnThanhToan = (Button) view.findViewById(R.id.btnPay);
         //btnBack = (Button)findViewById(R.id.btnBack);
 
-        createData();
+        //createData();
+        database.child("Products").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Product product = dataSnapshot.getValue(Product.class);
+                if(product.getSex() == 1)
+                {
+                    BillDetail billDetail = new BillDetail();
+                    //billDetail.setCodeOfProduct(product.getId());
+                    billDetail.setId(database.child("Products").push().getKey());
+                    billDetail.setQuantity(1);
+                    //billDetail.setPrice(product.getSalePrice());
+                    billDetail.setProduct(product);
+                    list.add(billDetail);
+                    billAdapter.notifyDataSetChanged();
+
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
         listView = (ListView)view.findViewById(R.id.lvList);
         billAdapter = new BillAdapter(getActivity(), R.layout.bill_item, list);

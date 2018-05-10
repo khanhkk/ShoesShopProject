@@ -44,14 +44,12 @@
                     app:hintTextAppearance="@style/TextLabel"
                     android:minHeight="30dp"
                     app:errorEnabled="true">
-
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Họ tên"
                         android:text="Nguyễn Xuân Toàn"
                         android:inputType="text" />
-
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -105,6 +103,33 @@
                         android:inputType="textEmailAddress"
                         />
                 </android.support.design.widget.TextInputLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:gravity="center_vertical"
+                        android:text="Hình ảnh:"
+                        android:textColor="#050503"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/imgView_info"
+                        android:layout_width="180dp"
+                        android:layout_height="180dp"
+                        android:layout_marginLeft="50dp" />
+
+                    <ImageButton
+                        android:id="@+id/btn_infor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#ffff"
+                        android:src="@drawable/ic_add_a_photo_black_24dp">
+
+                    </ImageButton>
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
@@ -121,6 +146,7 @@
             android:textColor="#000"
             android:background="#5082bd"
             android:text="Lưu"
+            android:onClick="confirmInput"
             android:layout_gravity="bottom"/>
 
     </LinearLayout>

@@ -1,6 +1,8 @@
 package Adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
@@ -13,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -148,34 +153,65 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
             viewHolder = (ViewHolder)convertView.getTag();
         }
 
+        NumberFormat nf = NumberFormat.getInstance();
+        DecimalFormat df = (DecimalFormat) nf;
+        df.applyPattern("#,### đ");
         final Product member = (Product) getGroup(groupPosition);
-        Log.d("gia", member.getSalePrice() + "");
+
+        //Log.d("gia", member.getSalePrice() + "");
         viewHolder.tvNameproduct.setText(member.getName()+"");
-        viewHolder.tvSalePrice.setText(member.getSalePrice() + "");
-        viewHolder.tvListedPrice.setText(member.getListedPrice() + "");
+//        viewHolder.tvSalePrice.setText(member.getSalePrice() + "");
+//        viewHolder.tvListedPrice.setText(member.getListedPrice() + "");
+        viewHolder.tvSalePrice.setText(df.format(member.getSalePrice()));
+        viewHolder.tvListedPrice.setText(df.format(member.getListedPrice()));
+        viewHolder.tvListedPrice.setPaintFlags(viewHolder.tvListedPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         viewHolder.tvListedPrice.setTextColor(_context.getResources().getColor(R.color.bg_register));
         viewHolder.tvListedPrice.setPaintFlags(viewHolder.tvListedPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
+        Bitmap bitmap = null;
         if(member.getImage1() !=  null)
         {
             try {
-                Bitmap bitmap = General.decodeFromFirebaseBase64(member.getImage1());
-                //RoundedBitmapDrawable roundedBitmapDrawable = General.setCircleImage(bitmap);
-                viewHolder.imageView.setImageBitmap(bitmap);
+                 bitmap = General.decodeFromFirebaseBase64(member.getImage1());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        else if(member.getImage2() !=  null)
+        {
+            try {
+                bitmap = General.decodeFromFirebaseBase64(member.getImage2());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(member.getImage3() !=  null)
+        {
+            try {
+                bitmap = General.decodeFromFirebaseBase64(member.getImage3());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(bitmap != null)
+        {
+            viewHolder.imageView.setImageBitmap(bitmap);
+        }//
         else
         {
-            viewHolder.imageView.setImageAlpha(R.mipmap.giay);
+            viewHolder.imageView.setImageResource(R.mipmap.shoes4);
         }
 
         viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(_context, "add", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(_context, QuantityManagement.class);
-                intent.putExtra("product", member);
+                Product pro = new Product();
+                pro.setId(member.getId());
+                pro.setName(member.getName());
+                intent.putExtra("product", pro);
                 _context.startActivity(intent);
             }
         });
@@ -184,16 +220,35 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(_context,"dsafds",Toast.LENGTH_SHORT).show();
-                myRef.child("Products").orderByChild("id").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(_context);
+                alertDialog.setTitle("Thông báo");
+                alertDialog.setIcon(R.mipmap.ic_launcher);
+                alertDialog.setMessage("Bạn muốn xóa thông tin sản phẩm?");
+
+                alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-                        myRef.child("ProductDetails").orderByChild("product").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        myRef.child("Products").orderByChild("id").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                //dataSnapshot.getRef().setValue(null);
+                                myRef.child("ProductDetails").orderByChild("product").equalTo(member.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        //dataSnapshot.getRef().setValue(null);
 
+                                        for (DataSnapshot child: dataSnapshot.getChildren()) {
+                                            child.getRef().setValue(null);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                                //dataSnapshot.getRef().setValue(null);
                                 for (DataSnapshot child: dataSnapshot.getChildren()) {
                                     child.getRef().setValue(null);
                                 }
@@ -205,27 +260,28 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
                             }
                         });
 
-                        //dataSnapshot.getRef().setValue(null);
-                        for (DataSnapshot child: dataSnapshot.getChildren()) {
-                            child.getRef().setValue(null);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        _childList.remove(_listDataHeader.get(groupPosition));
+                        _listDataHeader.remove(_listDataHeader.get(groupPosition));
+                        SelectionProductToEditting.adapter.notifyDataSetChanged();
 
                     }
                 });
 
-                _childList.remove(_listDataHeader.get(groupPosition));
-                _listDataHeader.remove(_listDataHeader.get(groupPosition));
-                SelectionProductToEditting.adapter.notifyDataSetChanged();
+                alertDialog.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                alertDialog.show();
             }
         });
 
         if(isExpanded)
         {
             viewHolder.llListElement.setVisibility(View.VISIBLE);
+            viewHolder.llTitle.setVisibility(View.VISIBLE);
         }
         else
         {
@@ -236,8 +292,9 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
         viewHolder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(_context, "edit", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(_context, DetailInformationOfProduct.class);
-                intent.putExtra("product", member);
+                intent.putExtra("product", member.getId());
                 _context.startActivity(intent);
             }
         });

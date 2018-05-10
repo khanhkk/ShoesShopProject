@@ -2,6 +2,7 @@ package tdc.edu.vn.shoesshop.Bao;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import tdc.edu.vn.shoesshop.Khanh.Promotions;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Sang.ChangePassword;
+import tdc.edu.vn.shoesshop.Son.NotificationShopFragment;
 import tdc.edu.vn.shoesshop.Toan.LoginActivity;
 
 public class PersonalOfShopFragment extends Fragment {
@@ -26,15 +28,6 @@ public class PersonalOfShopFragment extends Fragment {
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         View view = null;
         view = inflater.inflate(R.layout.personal_of_shop_fragment, container, false);
-
-        ImageView imgthognbao = (ImageView) view.findViewById(R.id.imgthongbao);
-        TextView txtthongbao = (TextView) view.findViewById(R.id.txtthongbao);
-        txtthongbao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), " Thông báo " , Toast.LENGTH_SHORT).show();
-            }
-        });
 
         ImageView imgkhuyenmai = (ImageView) view.findViewById(R.id.imgkhuyenmai);
         TextView txtkhuyenmai = (TextView) view.findViewById(R.id.txtkhuyenmai);

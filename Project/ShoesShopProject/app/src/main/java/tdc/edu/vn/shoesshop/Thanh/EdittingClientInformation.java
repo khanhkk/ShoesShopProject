@@ -1,29 +1,49 @@
 package tdc.edu.vn.shoesshop.Thanh;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.FileNotFoundException;
 
 import Controls.General;
 import tdc.edu.vn.shoesshop.Bao.MainInfoCilent;
 import tdc.edu.vn.shoesshop.R;
-import tdc.edu.vn.shoesshop.Son.ClientInformationAfterOrder;
-import tdc.edu.vn.shoesshop.Toan.HomeForClient;
-import tdc.edu.vn.shoesshop.Toan.LoginActivity;
 
 public class EdittingClientInformation extends AppCompatActivity {
-
+    ImageView img_ava_patient;
+    private static final int CAM_REQUEST = 1313;
+    private Dialog dialog;
+    ImageButton btn_chooseImg, btn_takeaphoto;
+    final int CROP_PIC = 2;
+    private Uri picUri;
+    private ImageButton btn_getimage;
     private TextInputLayout textInputEmail;
     private TextInputLayout textInputHoten;
     private TextInputLayout textInputSdt;
     private TextInputLayout textInputDiachi;
+    private Button btnLuu;
+
+    public static final String HOTEN = "HỌ TÊN";
+    public static final String SDT = "SỐ ĐIỆN THOẠI";
+    public static final String DIACHI = "ĐỊA CHỈ";
+    public static final String EMAIL = "EMAIL";
+    private boolean title;
+
     //ImageButton back;
     //Button btnOrder;
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +54,42 @@ public class EdittingClientInformation extends AppCompatActivity {
         textInputSdt = findViewById(R.id.id_sdt);
         textInputDiachi = findViewById(R.id.id_diachi);
 
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog);
+        dialog.setTitle("Choose Avatar Image");
+
+        btnLuu = (Button) findViewById(R.id.btnLuu);
+        btn_chooseImg = (ImageButton) dialog.findViewById(R.id.img_choosenGallery);
+        btn_takeaphoto = (ImageButton) dialog.findViewById(R.id.img_choosenTakephoto);
+        General.setupUI(findViewById(R.id.editting_client_information), EdittingClientInformation.this);
+
+        btn_chooseImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseFromGallery();
+            }
+        });
+
+        btn_takeaphoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                profilepictureOnClick();
+            }
+        });
+
+        img_ava_patient = (ImageView) findViewById(R.id.imgView_info);
+
+        btn_getimage = (ImageButton) findViewById(R.id.btn_infor);
+        btn_getimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(EdittingClientInformation.this
+                        , "Clicked", Toast.LENGTH_SHORT).show();
+                dialog.show();
+            }
+        });
+
 
         //  Action bar back
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -43,15 +99,35 @@ public class EdittingClientInformation extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EdittingClientInformation.this,MainInfoCilent.class);
+                Intent intent = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt("chuyen",1);
-                intent.putExtra("chuyen",bundle);
+                bundle.putInt("chuyen", 1);
+                intent.putExtra("chuyen", bundle);
                 startActivity(intent);
             }
         });
 
+        btnLuu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String hoten = textInputHoten.getEditText().toString();
+                String sdt = textInputSdt.getEditText().toString();
+                String diachi = textInputDiachi.getEditText().toString();
+                String email = textInputEmail.getEditText().toString();
+                byExtras(hoten, sdt, diachi, email);
+            }
+        });
     }
+
+    public void byExtras(String Hoten, String SDT, String diachi, String eMail) {
+        Intent intent = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
+        intent.putExtra(HOTEN, Hoten);
+        intent.putExtra(SDT, SDT);
+        intent.putExtra(DIACHI, diachi);
+        intent.putExtra(EMAIL, eMail);
+        startActivity(intent);
+    }
+
     private boolean validateEmail() {
         String emailInput = textInputEmail.getEditText().getText().toString().trim();
         if (emailInput.isEmpty()) {
@@ -130,5 +206,56 @@ public class EdittingClientInformation extends AppCompatActivity {
 
         Intent intent = new Intent(EdittingClientInformation.this,MainInfoCilent.class);
         startActivity(intent);
+    }
+
+    public void chooseFromGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, 0);
+    }
+
+
+    private void takeNewProfilePicture(){
+        Activity profileFrag = this;
+        Intent cameraintent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        profileFrag.startActivityForResult(cameraintent, CAM_REQUEST);
+    }
+
+
+
+    public void profilepictureOnClick(){
+        takeNewProfilePicture();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK && requestCode == CAM_REQUEST) {
+            if(requestCode == CAM_REQUEST){
+                Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+
+                //  picUri = data.getData();
+
+                img_ava_patient.setImageBitmap(thumbnail);
+                dialog.dismiss();
+            }
+        }
+        else if (resultCode == RESULT_OK){
+            picUri = data.getData();
+
+            // Uri targetUri = data.getData();
+            //  textTargetUri.setText(targetUri.toString());
+            Bitmap bitmap;
+            try {
+                Context applicationContext = dialog.getContext();
+                bitmap = BitmapFactory.decodeStream( applicationContext.getContentResolver().openInputStream(picUri));
+                img_ava_patient.setImageBitmap(bitmap);
+
+                dialog.dismiss();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

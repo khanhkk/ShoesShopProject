@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import 	android.app.ProgressDialog;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     Query allClient = myRef.child("Clients");
     Query allShop = myRef.child("Shops");
     public static final String BUNDLE = "bundel";
+    public ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +94,9 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                dialog = new ProgressDialog(LoginActivity.this);
+                dialog.setTitle("Loading ......");
+                dialog.show();
 
 
                 //authenticate user
@@ -104,14 +109,15 @@ public class LoginActivity extends AppCompatActivity {
                                 // signed in user can be handled in the listener.
 
                                 if (!task.isSuccessful()) {
+
                                     // there was an error
                                     if (password.length() < 8) {
                                         inputPassword.setError(getString(R.string.minimum_password));
                                     } else {
                                         Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                     }
+                                    dialog.dismiss();
                                 } else {
-
                                     final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                     if (user.isEmailVerified()) {
                                         myRef.child("Accounts").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -131,21 +137,23 @@ public class LoginActivity extends AppCompatActivity {
                                                     intent.putExtra(BUNDLE,bundle);
                                                     startActivity(intent);
                                                 }
+                                                dialog.dismiss();
                                             }
-
                                             @Override
                                             public void onCancelled(DatabaseError databaseError) {
 
                                             }
                                         });
 
+
                                     } else {
                                         Toast.makeText(LoginActivity.this, "Check your emails", Toast.LENGTH_LONG).show();
-
-
+                                        dialog.dismiss();
                                     }
+
                                     // finish();
                                 }
+
                             }
                         });
             }

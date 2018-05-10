@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -54,6 +55,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
     ImageView img_ava_patient3;
     RatingBar ratingBar;
     RadioButton rbtBoth, rbtNam, rbtNu;
+    Intent intent;
 
     Product product = null;
     String img1 = null;
@@ -76,16 +78,9 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         mToolbar.setTitle("");
         mToolbar.setNavigationIcon(R.drawable.back);
 
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DetailInformationOfProduct.this, HomeForShop.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("chuyen",1);
-                intent.putExtra("chuyen",bundle);
-                startActivity(intent);
-            }
-        });
+        //NumberFormat nf = NumberFormat.getInstance();
+        //DecimalFormat df = (DecimalFormat) nf;
+        //df.applyPattern("#,###");
 
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog);
@@ -158,73 +153,125 @@ public class DetailInformationOfProduct extends AppCompatActivity {
             }
         });
 
-        Intent intent = getIntent();
-        product = (Product) intent.getSerializableExtra("product");
-        if(product != null)
+        intent = getIntent();
+        String id = (String) intent.getSerializableExtra("product");
+        if(id != null)
         {
-            edttensanpham.setText(product.getName());
-            edtbaohanh.setText(product.getGuarantee());
-            edtdiemtichluy.setText(product.getAccumulatedPoint()+"");
-            edtgiaban.setText(product.getSalePrice()+"");
-            edtgianiemyet.setText(product.getListedPrice()+"");
-            edtmota.setText(product.getDescription());
-            edtthuonghieu.setText(product.getTrademark());
+            database.child("Products").orderByChild("id").equalTo(id).addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    product = dataSnapshot.getValue(Product.class);
+                    edttensanpham.setText(product.getName());
+                    edtbaohanh.setText(product.getGuarantee());
+                    edtdiemtichluy.setText(product.getAccumulatedPoint()+"");
+//            edtgiaban.setText(df.format(product.getSalePrice()));
+//            edtgianiemyet.setText(df.format(product.getListedPrice()));
+                    //double uudai = gia - (gia * giam * 0.01);
+                    double ny = Math.round(product.getListedPrice() * 0.001 / 0.001);
+                    double gb = Math.round(product.getSalePrice() * 0.001 / 0.001);
+                    edtgiaban.setText(gb + "");
+                    edtgianiemyet.setText(ny + "");
+                    edtmota.setText(product.getDescription());
+                    edtthuonghieu.setText(product.getTrademark());
 
-            if(product.getSex() == 0)
-            {
-                rbtNu.setChecked(true);
-            }
-            else if(product.getSex() == 1)
-            {
-                rbtNam.setChecked(true);
-            }
-            else
-            {
-                rbtBoth.setChecked(true);
-            }
+                    if(product.getSex() == 0)
+                    {
+                        rbtNu.setChecked(true);
+                    }
+                    else if(product.getSex() == 1)
+                    {
+                        rbtNam.setChecked(true);
+                    }
+                    else
+                    {
+                        rbtBoth.setChecked(true);
+                    }
 
+                    if(product.getImage1() != null)
+                    {
+                        try {
+                            Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage1());
+                            img_ava_patient1.setImageBitmap(bitmap);
+                            img1 = product.getImage1();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
-            if(product.getImage1() != null)
-            {
-                try {
-                    Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage1());
-                    img_ava_patient1.setImageBitmap(bitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    if(product.getImage2() != null)
+                    {
+                        try {
+                            Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage2());
+                            img_ava_patient2.setImageBitmap(bitmap);
+                            img2 = product.getImage2();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    if(product.getImage3() != null)
+                    {
+                        try {
+                            Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage3());
+                            img_ava_patient3.setImageBitmap(bitmap);
+                            img3 = product.getImage3();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    float number = product.getRating();
+                    ratingBar.setRating(number);
                 }
-            }
 
-            if(product.getImage2() != null)
-            {
-                try {
-                    Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage2());
-                    img_ava_patient2.setImageBitmap(bitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
                 }
-            }
 
-            if(product.getImage3() != null)
-            {
-                try {
-                    Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage3());
-                    img_ava_patient3.setImageBitmap(bitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
                 }
-            }
 
-            float number = product.getRating();
-            ratingBar.setRating(number);
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
         }
 
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(product == null) {
+                    intent = new Intent(DetailInformationOfProduct.this, HomeForShop.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("chuyen", 1);
+                    intent.putExtra("chuyen", bundle);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
+                }
+                else
+                {
+                    intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
+                }
+            }
+        });
 
         //luu thong tin san pham
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-
                     if (TextUtils.isEmpty(edttensanpham.getText()+"")) {
                         Toast.makeText(getApplicationContext(), "Please enter product name!", Toast.LENGTH_LONG).show();
                         return;
@@ -289,6 +336,12 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                         return;
                     }
 
+//                    if(img1 == null || img2 == null || img3 == null)
+//                    {
+//                        Toast.makeText(getApplicationContext(), "Please check images!", Toast.LENGTH_LONG).show();
+//                        return;
+//                    }
+
                     if(ratingBar.getRating() < 1)
                     {
                         Toast.makeText(getApplicationContext(), "Please rate the product!", Toast.LENGTH_LONG).show();
@@ -310,9 +363,14 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                         product.setSex(gioiTinh);
                         product.setTrademark(thuonghieu);
                         product.setShop(user.getUid());
+                        product.setImage1(img1);
+                        product.setImage2(img2);
+                        product.setImage3(img3);
                         product.setId(database.child("Products").push().getKey());
+
                         database.child("Products").push().setValue(product);
-                        Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                        intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                        intent.putExtra("pro", product);
                         startActivity(intent);
                     }
                     else
@@ -328,6 +386,9 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                         product.setSalePrice(giaban);
                         product.setTrademark(thuonghieu);
                         product.setSex(gioiTinh);
+                        product.setImage1(img1);
+                        product.setImage2(img2);
+                        product.setImage3(img3);
 
                         database.child("Products").orderByChild("id").equalTo(product.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -335,7 +396,8 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                                 for (DataSnapshot child: dataSnapshot.getChildren()) {
                                     child.getRef().setValue(product);
                                 }
-                                Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                                intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                                 startActivity(intent);
                             }
 
@@ -350,13 +412,13 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Check data input", Toast.LENGTH_LONG).show();
                 }
 
-                if(img_ava_patient1.getDrawable() == null || img_infor_2.getDrawable() == null || img_infor_3.getDrawable() == null)
-                {
-                    Toast.makeText(getApplicationContext(), "Please choose image or take a photo in here!", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
-                    startActivity(intent);
+//                if(img_ava_patient1.getDrawable() == null || img_infor_2.getDrawable() == null || img_infor_3.getDrawable() == null)
+//                {
+//                    Toast.makeText(getApplicationContext(), "Please choose image or take a photo in here!", Toast.LENGTH_LONG).show();
+//                    return;
+//                }
+//                Intent intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
+//                startActivity(intent);
             }
         });
     }
@@ -385,20 +447,20 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         if(resultCode == RESULT_OK && requestCode == CAM_REQUEST) {
             if(requestCode == CAM_REQUEST){
                 Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-                //  picUri = data.getData();
-               // img_ava_patient1.setImageBitmap(thumbnail);
-
                 if(img_ava_patient1.getDrawable() == null)
                 {
                     img_ava_patient1.setImageBitmap(thumbnail);
+                    img1 = General.encodeBitmap(thumbnail);
                 }
                 else if (img_infor_2.getDrawable() == null)
                 {
                     img_infor_2.setImageBitmap(thumbnail);
+                    img2 = General.encodeBitmap(thumbnail);
                 }
                 else if (img_infor_3.getDrawable() == null)
                 {
                     img_infor_3.setImageBitmap(thumbnail);
+                    img3 = General.encodeBitmap(thumbnail);
                 }
                 dialog.dismiss();
             }
@@ -406,8 +468,6 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         else if (resultCode == RESULT_OK){
             picUri = data.getData();
             Log.i("image",picUri+"");
-            // Uri targetUri = data.getData();
-            //  textTargetUri.setText(targetUri.toString());
             Bitmap bitmap;
             try {
                 Context applicationContext = dialog.getContext();
@@ -416,14 +476,17 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                 if(img_ava_patient1.getDrawable() == null)
                 {
                     img_ava_patient1.setImageBitmap(bitmap);
+                    img1 = General.encodeBitmap(bitmap);
                 }
                 else if (img_infor_2.getDrawable() == null)
                 {
                     img_infor_2.setImageBitmap(bitmap);
+                    img2 = General.encodeBitmap(bitmap);
                 }
                 else if (img_infor_3.getDrawable() == null)
                 {
                     img_infor_3.setImageBitmap(bitmap);
+                    img3 = General.encodeBitmap(bitmap);
                 }
 
                 dialog.dismiss();
