@@ -15,7 +15,7 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Toan.LoginActivity"
+            android:name=".Toan.HomeForClient"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,7 @@
         </activity>
         <activity android:name=".Toan.MainActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Toan.HomeForClient"
+        <activity android:name=".Toan.LoginActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".Thanh.EdittingShopInformation"
             android:screenOrientation="portrait"/>

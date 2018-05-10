@@ -40,31 +40,6 @@ public class Product implements Serializable {
         //this.list = details;
     }
 
-//    public Product(String id, String name, double salePrice, String shop) {
-//        this.id = id;
-//        this.name = name;
-//        this.salePrice = salePrice;
-//        this.shop = shop;
-//    }
-//
-//
-//    public Product(String id, String name, double listedPrice, double salePrice, String shop, ArrayList<ProductDetail> details) {
-//        this.id = id;
-//        this.name = name;
-//        this.listedPrice = listedPrice;
-//        this.salePrice = salePrice;
-//        this.shop = shop;
-//        this.list = details;
-//    }
-
-
-//    public ArrayList<ProductDetail> getList() {
-//        return list;
-//    }
-//
-//    public void setList(ArrayList<ProductDetail> list) {
-//        this.list = list;
-//    }
 
     public String getId() {
         return id;

@@ -18,7 +18,6 @@ import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

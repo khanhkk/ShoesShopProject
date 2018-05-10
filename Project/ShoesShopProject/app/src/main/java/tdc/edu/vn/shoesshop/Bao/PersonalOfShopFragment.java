@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import tdc.edu.vn.shoesshop.Khanh.Promotions;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Sang.ChangePassword;
@@ -23,7 +25,7 @@ public class PersonalOfShopFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+        final FirebaseAuth auth = FirebaseAuth.getInstance();
         View view = null;
         view = inflater.inflate(R.layout.personal_of_shop_fragment, container, false);
 
@@ -65,6 +67,7 @@ public class PersonalOfShopFragment extends Fragment {
         txtlogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                auth.signOut();
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity (intent);
                 Toast.makeText(getActivity(), " Đăng xuất " , Toast.LENGTH_SHORT).show();

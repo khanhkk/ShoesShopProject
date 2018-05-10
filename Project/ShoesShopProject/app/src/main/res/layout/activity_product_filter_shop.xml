@@ -22,23 +22,22 @@
             app:tabIndicatorColor="@color/white">
 
             <android.support.design.widget.TabItem
-                android:id="@+id/tabItem"
+                android:id="@+id/tiWoman"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:icon="@drawable/gender"/>
+                android:icon="@drawable/man"
+                android:text="Tab4" />
 
+            <android.support.design.widget.TabItem
+                android:id="@+id/tiAll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:icon="@drawable/gender" />
             <android.support.design.widget.TabItem
                 android:id="@+id/tabItem2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:icon="@drawable/woman"/>
-
-            <android.support.design.widget.TabItem
-                android:id="@+id/tabItem3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:icon="@drawable/man"/>
-
         </android.support.design.widget.TabLayout>
 
     </android.support.design.widget.AppBarLayout>
