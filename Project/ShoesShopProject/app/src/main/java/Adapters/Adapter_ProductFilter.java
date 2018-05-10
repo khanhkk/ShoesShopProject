@@ -1,7 +1,10 @@
 package Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Paint;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,52 +13,38 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+import Controls.General;
+import Models.Product;
+import Models.ProductDetail;
 import tdc.edu.vn.shoesshop.R;
 
 public class Adapter_ProductFilter extends BaseAdapter {
 
-
     private static final String TAG = "Adapter_ProductFilter";
-
-    //vars
-    private ArrayList<Integer> mImageUrls = new ArrayList<>();
-    private ArrayList<String> mNames = new ArrayList<>();
-    private ArrayList<Integer> rate = new ArrayList<>();
-    private ArrayList<Double> mSells = new ArrayList<>();
-    private ArrayList<Double> mCost = new ArrayList<>();
-    private ArrayList<Integer> mCount = new ArrayList<>();
     private Context mContext;
-
-    public Adapter_ProductFilter(ArrayList<Integer> mImageUrls, ArrayList<String> mNames, ArrayList<Integer> rate, ArrayList<Double> mSells, ArrayList<Double> mCost, ArrayList<Integer> mCount, Context mContext) {
-        this.mImageUrls = mImageUrls;
-        this.mNames = mNames;
-        this.rate = rate;
-        this.mSells = mSells;
-        this.mCost = mCost;
-        this.mCount = mCount;
-        this.mContext = mContext;
-    }
-
-    public Adapter_ProductFilter(ArrayList<Integer> mImageUrls, ArrayList<String> mNames, ArrayList<Integer> rate, ArrayList<Double> mSells, ArrayList<Double> mCost, Context mContext) {
-        this.mImageUrls = mImageUrls;
-        this.mNames = mNames;
-        this.rate = rate;
-        this.mSells = mSells;
-        this.mCost = mCost;
-        this.mContext = mContext;
-    }
-
+    private ArrayList<Product> list;
+    private ArrayList<ProductDetail> listDetail;
+    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     public Adapter_ProductFilter() {
         super();
     }
 
+    public Adapter_ProductFilter(Context mContext, ArrayList<Product> list, ArrayList<ProductDetail> listDetail) {
+        this.mContext = mContext;
+        this.list = list;
+        this.listDetail = listDetail;
+    }
+
     @Override
     public int getCount() {
-        return mImageUrls.size();
+        return list.size();
     }
 
     @Override
@@ -68,40 +57,104 @@ public class Adapter_ProductFilter extends BaseAdapter {
         return 0;
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
-        convertView = layoutInflater.inflate(R.layout.layout_list_profilter_s, null);
 
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.image_view);
-        TextView name = (TextView) convertView.findViewById(R.id.name) ;
-        RatingBar rate_bar = (RatingBar) convertView.findViewById(R.id.rating);
-        TextView count = (TextView) convertView.findViewById(R.id.count);
-        TextView sells = (TextView) convertView.findViewById(R.id.sells);
-        TextView cost = (TextView) convertView.findViewById(R.id.cost);
-        TextView percent = (TextView) convertView.findViewById(R.id.percent);
-
-        imageView.setImageResource(mImageUrls.get(position));
-        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        name.setText(mNames.get(position));
-        rate_bar.setRating(Integer.valueOf(rate.get(position)));
-        count.setText("("+String.valueOf(mCount.get(position))+")");
-        long percent_a;
-        percent_a = Math.round(100 - 100 * mSells.get(position)/mCost.get(position));
-        percent.setText("-"+String.valueOf(percent_a)+"%");
-
-        //format 1
-        NumberFormat nf=NumberFormat.getInstance();
-        DecimalFormat df=(DecimalFormat)nf;
-        df.applyPattern("#,### đ");
-
-        sells.setText(df.format((mSells.get(position))));
-        cost.setText(df.format((mCost.get(position))));
-        cost.setPaintFlags(cost.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-
-        return convertView;
-
+    class ViewHolderGrid
+    {
+        public ImageView imageView;
+        public RatingBar ratingBar;
+        public TextView tvThuongHieu, tvName, tvSoLuong, tvSalePrice, tvListedPrice, tvDiscount;
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
+        ViewHolderGrid viewHolder = null;
+        if(convertView == null)
+        {
+            viewHolder = new ViewHolderGrid();
+            convertView = layoutInflater.inflate(R.layout.layout_list_profilter_s, parent, false);
+            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.image_view);
+            viewHolder.tvName = (TextView) convertView.findViewById(R.id.name);
+            viewHolder.ratingBar = (RatingBar) convertView.findViewById(R.id.rating);
+            viewHolder.tvSoLuong = (TextView) convertView.findViewById(R.id.count);
+            viewHolder.tvSalePrice = (TextView) convertView.findViewById(R.id.sells);
+            viewHolder.tvListedPrice = (TextView) convertView.findViewById(R.id.cost);
+            viewHolder.tvDiscount = (TextView) convertView.findViewById(R.id.percent);
+            convertView.setTag(viewHolder);
+        }
+        else
+        {
+            viewHolder = (ViewHolderGrid) convertView.getTag();
+        }
+
+//        imageView.setImageResource(mImageUrls.get(position));
+//        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+
+        final Product product = list.get(position);
+
+        //format
+        final ProductDetail productDetail = listDetail.get(position);
+        NumberFormat nf = NumberFormat.getInstance();
+        DecimalFormat df = (DecimalFormat) nf;
+        df.applyPattern("#,### đ");
+
+
+        viewHolder.tvName.setText(product.getName());
+        viewHolder.ratingBar.setRating(product.getRating());
+        int soluong = 0;
+
+        for(ProductDetail pro : listDetail)
+        {
+            if(pro.getProduct().equals(product.getId()))
+            {
+                soluong += pro.getQuantity();
+            }
+            viewHolder.tvSoLuong.setText("("+ String.valueOf(soluong)+")");
+        }
+      //  Log.d("da", soluong+"");
+        long percent_a;
+
+       percent_a = Math.round(100 - 100 * product.getSalePrice() /product.getListedPrice());
+
+       viewHolder.tvDiscount.setText("-" + String.valueOf(percent_a) + "%");
+        viewHolder.tvSalePrice.setText(df.format(product.getSalePrice()));
+        viewHolder.tvListedPrice.setText(df.format(product.getListedPrice()));
+        viewHolder.tvListedPrice.setPaintFlags(viewHolder.tvListedPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        //viewHolder.chkCheck.isChecked();
+
+        if(product.getImage1() != null)
+        {
+            try {
+                Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage1());
+                viewHolder.imageView.setImageBitmap(bitmap);
+            }catch (Exception ex)
+            {
+
+            }
+        }
+        else if(product.getImage2() != null)
+        {
+            try {
+                Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage2());
+                viewHolder.imageView.setImageBitmap(bitmap);
+            }catch (Exception ex)
+            {
+
+            }
+        }
+        else if(product.getImage3() != null)
+        {
+            try {
+                Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage3());
+                viewHolder.imageView.setImageBitmap(bitmap);
+            }catch (Exception ex)
+            {
+
+            }
+        }
+
+        return convertView;
+    }
 }

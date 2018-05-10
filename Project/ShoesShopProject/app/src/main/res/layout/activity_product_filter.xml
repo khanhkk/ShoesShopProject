@@ -7,48 +7,38 @@
     android:background="#b7b4b4"
     android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="12dp"
-        android:layout_marginTop="5dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/appbar_padding_top"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <ImageButton
-            android:id="@+id/all"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:scaleType="centerInside"
-            android:src="@drawable/gender" />
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/male"
-            android:layout_width="0dp"
+        <android.support.design.widget.TabItem
+            android:id="@+id/tabItem"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:scaleType="centerInside"
-            android:src="@drawable/man" />
+            android:icon="@drawable/gender" />
 
-        <ImageButton
-            android:id="@+id/female"
-            android:layout_width="0dp"
+        <android.support.design.widget.TabItem
+            android:id="@+id/tabItem1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:scaleType="centerInside"
-            android:src="@drawable/woman" />
-    </LinearLayout>
+            android:icon="@drawable/woman" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tabItem2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/man" />
+
+    </android.support.design.widget.TabLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,7 +48,8 @@
 
         <Spinner
             android:id="@+id/spin_name"
-            android:layout_width="170dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"
             android:backgroundTint="#000"
@@ -68,13 +59,14 @@
 
         <Spinner
             android:id="@+id/spin_price"
-            android:layout_width="130dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:backgroundTint="#000"
             android:entries="@array/price_arrays"
             android:prompt="@string/Filter_Price" />
     </LinearLayout>
-
+    </android.support.design.widget.AppBarLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

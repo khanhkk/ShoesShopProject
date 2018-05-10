@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -61,8 +62,13 @@ public class HomeForClient extends AppCompatActivity {
                 }
             }
         };
+        Intent intent1 = getIntent();
+                            Bundle bundle1 = intent1.getBundleExtra(LoginActivity.BUNDLE);
+                            if(bundle1!=null){
+                                Toast.makeText(getApplicationContext(),"key: "+ bundle1.getString("key"),Toast.LENGTH_LONG).show();
+                            }
     }
-    //                            Intent intent1 = getIntent();
+           //                  Intent intent1 = getIntent();
 //                            Bundle bundle1 = intent1.getBundleExtra(LoginActivity.BUNDLE);
 //                            if(bundle1!=null){
 //                                Toast.makeText(getApplicationContext(),"key: "+ bundle1.getString("key"),Toast.LENGTH_LONG).show();
