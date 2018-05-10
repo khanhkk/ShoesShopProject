@@ -51,8 +51,8 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
-    public static String trademark = "";
-    public static String name_product = "";
+    //public static String trademark = "";
+    //public static String name_product = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -268,15 +268,15 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i != 0) {
-                    trademark = ListTradeMark.get(i);
-                    mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
-                    mViewPager.setAdapter(mSectionsPagerAdapter);
+                    //trademark = ListTradeMark.get(i);
+//                    mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
+//                    mViewPager.setAdapter(mSectionsPagerAdapter);
                 }
                 else
                 {
-                    trademark = "";
-                    mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
-                    mViewPager.setAdapter(mSectionsPagerAdapter);
+                    //trademark = "";
+//                    mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
+//                    mViewPager.setAdapter(mSectionsPagerAdapter);
                 }
             }
 
@@ -297,9 +297,9 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
     @Override
     public boolean onQueryTextChange(String newText) {
         Toast.makeText(getContext(), newText, Toast.LENGTH_SHORT).show();
-        name_product = newText;
-        mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        //name_product = newText;
+//        mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
+//        mViewPager.setAdapter(mSectionsPagerAdapter);
         return true;
     }
 

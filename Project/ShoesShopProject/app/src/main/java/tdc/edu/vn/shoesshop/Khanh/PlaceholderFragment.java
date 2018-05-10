@@ -2,13 +2,11 @@ package tdc.edu.vn.shoesshop.Khanh;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -50,9 +48,9 @@ public class PlaceholderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        String ss = HSActivity.name_product.length() + " ---- " + HSActivity.trademark.length() ;
-        Toast.makeText(getContext(), ss, Toast.LENGTH_LONG).show();
-        Log.d("tag", ss);
+        //String ss = HSActivity.name_product.length() + " ---- " + HSActivity.trademark.length() ;
+        //Toast.makeText(getContext(), ss, Toast.LENGTH_LONG).show();
+        //Log.d("tag", ss);
 
         View rootView = inflater.inflate(R.layout.hs_fragment, container, false);
         gridView = (GridView) rootView.findViewById(R.id.grid);
