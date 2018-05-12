@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 dialog = new ProgressDialog(LoginActivity.this);
-                dialog.setTitle("Loading ......");
+                dialog.setMessage("Loading ......");
                 dialog.show();
 
 

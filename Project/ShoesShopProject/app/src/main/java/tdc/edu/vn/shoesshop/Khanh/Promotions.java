@@ -57,19 +57,22 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.promotions_activity);
 
+        //anh xa
         btnBack = (ImageButton) findViewById(R.id.btnBack);
         btnAdd = (ImageButton)findViewById(R.id.btnAddPromotions);
         lvPromotions = (ExpandableListView) findViewById(R.id.lvListPromotions);
         svSearchPromotions = (SearchView) findViewById(R.id.svSearch);
         svSearchPromotions.setOnQueryTextListener(this);
 
+        //clear data in list
         Query allPromtions = myRef.child("Promotions").orderByChild("shop").equalTo(user.getUid());
         listParent.clear();
         list.clear();
         listCopy.clear();
-
         promotionsDetailArrayList.clear();
 
+
+        //set up data
        myRef.child("PromotionsDetails").addChildEventListener(new ChildEventListener() {
            @Override
            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -98,7 +101,6 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
            }
 
        });
-
 
         allPromtions.addChildEventListener(new ChildEventListener() {
             @Override
@@ -142,9 +144,7 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
             }
         });
 
-        adapter = new PromotionExpandableListAdapter(Promotions.this, listCopy, list);
-        lvPromotions.setAdapter(adapter);
-
+        //nhan data tu ac khac
         intent = getIntent();
 
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -164,9 +164,11 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
             }
         });
 
+        adapter = new PromotionExpandableListAdapter(Promotions.this, listCopy, list);
+        lvPromotions.setAdapter(adapter);
+
         //dang ky contextmenu cho list view
         registerForContextMenu(lvPromotions);
-
     }
 
     //khoi tao contextmenu

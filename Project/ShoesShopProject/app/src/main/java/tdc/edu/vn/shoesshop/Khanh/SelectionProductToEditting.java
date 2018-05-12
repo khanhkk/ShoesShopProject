@@ -51,9 +51,9 @@ public class SelectionProductToEditting extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Log.d("tag", "1");
         setContentView(R.layout.selection_product_to_editting_activity);
 
+        //anh xa
         lvList = (ExpandableListView) findViewById(R.id.lvListProduct);
         btnFinish = (Button) findViewById(R.id.btnFinishEdition);
         btnBack = (ImageButton) findViewById(R.id.btnBack);
@@ -395,50 +395,5 @@ public class SelectionProductToEditting extends AppCompatActivity {
 
         return super.onContextItemSelected(item);
     }
-
-//    private  void creatList()
-//    {
-//        children = new HashMap<>();
-//        products = new ArrayList<>();
-//        details = new ArrayList<>();
-//
-//        //Shop shop = new Shop("SH0001", "MiuMiu", "01512151211");
-//
-//
-////        Product product = new Product("SP0001", "giay hang hieu 1", 1290000, 900000, shop.getId(), null);
-////        Product product2 = new Product("SP0002", "giay di phuot 2", 175000, 150000, shop.getId(), null);
-////        Product product3 = new Product("SP0003", "giay thoi trang 3", 239000, 200000, shop.getId(), null);
-////        Product product4 = new Product("SP0004", "giay the thao 4", 299000, 250000, shop.getId(), null);
-//        Product product = new Product(null, "giay the thao","Nike",0, null, user.getUid(), "3 thang", 0, null, null, null , 1290000, 900000, 3);
-//        Product product2 = new Product(null, "giay thoi trang","Bittis", 1, null, user.getUid(), "12 thang", 0, null, null, null , 149000, 90000, 3);
-//        Product product3 = new Product(null, "giay di phuot","Adidas", 2, null, user.getUid(), "1 thang", 0, null, null, null , 499000, 300000, 3);
-//        Product product4 = new Product(null, "giay bao ho","Nike", 0, null, user.getUid(), "2 thang", 0, null, null, null , 299000, 250000, 3);
-//
-//        ProductDetail pd = new ProductDetail(null, null, 38, "xanh la cay", 10);
-//        ProductDetail pd2 = new ProductDetail(null,null, 39, "xanh la cay", 10);
-//        ProductDetail pd3 = new ProductDetail(null,null, 40, "xanh la cay", 10);
-//        ProductDetail pd4 = new ProductDetail(null,null, 38, "xam nhat", 10);
-//        ProductDetail pd5 = new ProductDetail(null,null, 39, "xam nhat", 10);
-//        ProductDetail pd6 = new ProductDetail(null,null, 40, "xam nhat", 10);
-//        ProductDetail pd7 = new ProductDetail(null,null, 38, "do nau", 10);
-//
-//        details.add(pd);
-//        details.add(pd2);
-//        details.add(pd3);
-//        details.add(pd4);
-//        details.add(pd5);
-//        details.add(pd6);
-//        details.add(pd7);
-//
-//        children.put(product, details);
-//        children.put(product2, null);
-//        children.put(product3, details);
-//        children.put(product4, null);
-//
-//        products.add(product);
-//        products.add(product2);
-//        products.add(product3);
-//        products.add(product4);
-//    }
 
 }

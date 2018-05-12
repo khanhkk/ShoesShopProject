@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -48,10 +49,11 @@ public class PlaceholderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        //String ss = HSActivity.name_product.length() + " ---- " + HSActivity.trademark.length() ;
-        //Toast.makeText(getContext(), ss, Toast.LENGTH_LONG).show();
+        String ss = HSActivity.name_product.length() + "----" + HSActivity.trademark.length() ;
+        Toast.makeText(getContext(), ss, Toast.LENGTH_SHORT).show();
         //Log.d("tag", ss);
 
+        //anh xa
         View rootView = inflater.inflate(R.layout.hs_fragment, container, false);
         gridView = (GridView) rootView.findViewById(R.id.grid);
         final TextView textView = (TextView) rootView.findViewById(R.id.section_label);
@@ -61,38 +63,40 @@ public class PlaceholderFragment extends Fragment {
         final char c = textView.getText().charAt(textView.getText().length()-1);
         list.clear();
         listTrademark.clear();
+
         database.child("Products").orderByChild("shop").equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Product product = dataSnapshot.getValue(Product.class);
 
-//                if(HSActivity.name_product.length() != 0) {
-//                    if(HSActivity.trademark.length() != 0) {
-//                        if (product.getName().contains(HSActivity.name_product) && product.getTrademark().toUpperCase().equals(HSActivity.trademark)) {
-//                            setup(product, c);
-//                        }
-//                    }
+                //if(HSActivity.name_product.length() == 0 & HSActivity.trademark.length() == 0) {
+                    //if(HSActivity.trademark.length() == 0) {
+                    setup(product, c);
+                    adapter.notifyDataSetChanged();
+                    //}
 //                    else
 //                    {
-//                        if (product.getName().contains(HSActivity.name_product)) {
+//                        if (product.getTrademark().contains(HSActivity.name_product)) {
 //                            setup(product, c);
 //                        }
 //                    }
-//                }
+                //}
 //                else {
-//                    if(HSActivity.trademark.length() != 0) {
-//                        if ( product.getTrademark().toUpperCase().equals(HSActivity.trademark)) {
+//                    if(HSActivity.trademark.length() == 0) {
+//                        if ( product.getName().toUpperCase().equals(HSActivity.trademark)) {
 //                            setup(product, c);
 //                        }
 //                    }
 //                    else {
-//                        setup(product, c);
+//                        if (product.getName().contains(HSActivity.name_product) && product.getTrademark().toUpperCase().equals(HSActivity.trademark)) {
+//                            setup(product, c);
+//                        }
 //                    }
 //                }
 
-                setup(product, c);
+                //setup(product, c);
 
-                adapter.notifyDataSetChanged();
+
             }
 
             @Override

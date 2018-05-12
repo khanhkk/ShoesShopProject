@@ -45,6 +45,7 @@ public class Cart extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+
         View view = null;
         view = inflater.inflate(R.layout.cart_fragment, container, false);
 
@@ -115,26 +116,4 @@ public class Cart extends Fragment {
         return view;
     }
 
-    public void createData()
-    {
-        //Shop shop = new Shop("SH0001", "MiuMiu", "01512151211");
-//        Product product = new Product("SP0001", "giay1", 100000, user.getUid());
-//        Product product2 = new Product("SP0002", "giay2", 150000, shop.getId());
-//        Product product3 = new Product("SP0003", "giay3", 200000, shop.getId());
-//        Product product4 = new Product("SP0004", "giay4", 250000, shop.getId());
-//        Product product5 = new Product("SP0005", "giay5", 300000, shop.getId());
-//        Product product6 = new Product("SP0005", "giay5", 300000, shop.getId());
-//
-//        BillDetail bd = new BillDetail(1,"HD0001", product, 1);
-//        BillDetail bd2 = new BillDetail(1,"HD0001", product2, 1);
-//        BillDetail bd3 = new BillDetail(1,"HD0001", product3, 1);
-//        BillDetail bd4 = new BillDetail(1,"HD0001", product4, 1);
-//        BillDetail bd5 = new BillDetail(1,"HD0001", product5, 1);
-
-//        list.add(bd);
-//        list.add(bd2);
-//        list.add(bd3);
-//        list.add(bd4);
-//        list.add(bd5);
-    }
 }
