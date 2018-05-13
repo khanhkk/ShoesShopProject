@@ -1,6 +1,8 @@
 package Adapters;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -22,6 +24,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import Controls.General;
@@ -43,12 +47,16 @@ public class BillAdapter extends ArrayAdapter<BillDetail> {
     private int layoutId;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+    NumberFormat nf = NumberFormat.getInstance();
+    DecimalFormat df = (DecimalFormat) nf;
+
 
     public BillAdapter(@NonNull Activity context, @LayoutRes int resource, @NonNull ArrayList<BillDetail> objects) {
         super(context, resource, objects);
         this.context = context;
         this.list = objects;
         this.layoutId = resource;
+        df.applyPattern("#,###");
     }
 
     public static class ViewHolder {
@@ -80,7 +88,7 @@ public class BillAdapter extends ArrayAdapter<BillDetail> {
         }
         final BillDetail member = list.get(position);
 
-
+        viewHolder.tvPrice.setText(df.format(member.getPrice()));
 
         database.child("Products").orderByChild("id").equalTo(member.getProduct()).addChildEventListener(new ChildEventListener() {
             @Override
@@ -88,7 +96,6 @@ public class BillAdapter extends ArrayAdapter<BillDetail> {
 
                 final Product product = dataSnapshot.getValue(Product.class);
                 viewHolder.tvCode.setText(product.getName());
-                viewHolder.tvPrice.setText(product.getSalePrice() + "");
 
                 if(product.getImage1() != null)
                 {
@@ -129,12 +136,15 @@ public class BillAdapter extends ArrayAdapter<BillDetail> {
                         if (s <= 20) {
                             member.setQuantity(s);
                             viewHolder.tvQuantity.setText(member.getQuantity() + "");
-                            tinhTong(product);
+                            tinhTong();
 
                             database.child("Clients").child(user.getUid()).child("Cart").orderByChild("id").equalTo(member.getId()).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    database.child("Clients").child(user.getUid()).child("Cart").child(dataSnapshot.getKey()).child("quantity").setValue(member.getQuantity());
+                                    for(DataSnapshot child : dataSnapshot.getChildren())
+                                    {
+                                        child.getRef().setValue(member);
+                                    }
                                 }
 
                                 @Override
@@ -154,12 +164,15 @@ public class BillAdapter extends ArrayAdapter<BillDetail> {
                         if (s > 0) {
                             member.setQuantity(s);
                             viewHolder.tvQuantity.setText(member.getQuantity() + "");
-                            tinhTong(product);
+                            tinhTong();
 
-                            database.child("Clients").child(user.getUid()).orderByChild("id").equalTo(member.getId()).addValueEventListener(new ValueEventListener() {
+                            database.child("Clients").child(user.getUid()).child("Cart").orderByChild("id").equalTo(member.getId()).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    database.child("Clients").child(user.getUid()).child("Cart").child(dataSnapshot.getKey()).child("quantity").setValue(member.getQuantity());
+                                    for(DataSnapshot child : dataSnapshot.getChildren())
+                                    {
+                                        child.getRef().setValue(member);
+                                    }
                                 }
 
                                 @Override
@@ -174,13 +187,48 @@ public class BillAdapter extends ArrayAdapter<BillDetail> {
                 viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        list.remove(member);
-                        BillAdapter.super.notifyDataSetChanged();
-                        tinhTong(product);
+
+                        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+                        alertDialog.setTitle("Thông báo");
+                        alertDialog.setIcon(R.mipmap.ic_launcher);
+                        alertDialog.setMessage("Bạn muốn xóa sản phẩm trong giỏ hàng?");
+
+                        alertDialog.setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                list.remove(member);
+                                BillAdapter.super.notifyDataSetChanged();
+                                tinhTong();
+                                database.child("Clients").child(user.getUid()).child("Cart").orderByChild("id").equalTo(member.getId()).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for(DataSnapshot child : dataSnapshot.getChildren())
+                                        {
+                                            child.getRef().setValue(null);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                        });
+
+                        alertDialog.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+
+                        alertDialog.show();
+
                     }
                 });
 
-                tinhTong(product);
+                tinhTong();
             }
 
             @Override
@@ -209,19 +257,19 @@ public class BillAdapter extends ArrayAdapter<BillDetail> {
 
         return convertView;
     }
-    private void tinhTong(Product pro)
+    private void tinhTong()
     {
         double money = 0;
         if(list.size() != 0) {
-                for (BillDetail item : list) {
-                money += (item.getQuantity() * pro.getSalePrice());
+            for (BillDetail item : list) {
+                money += (item.getQuantity() * item.getPrice());
             }
         }
         else
         {
             money = 0;
         }
-        Cart.tvMoney.setText(money + "");
+        Cart.tvMoney.setText(df.format(money));
     }
 }
 

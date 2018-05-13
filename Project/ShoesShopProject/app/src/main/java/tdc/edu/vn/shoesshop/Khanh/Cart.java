@@ -51,9 +51,7 @@ public class Cart extends Fragment {
 
         tvMoney = (TextView) view.findViewById(R.id.tvMoney);
         btnThanhToan = (Button) view.findViewById(R.id.btnPay);
-        //btnBack = (Button)findViewById(R.id.btnBack);
 
-        //createData();
 //        database.child("Products").addChildEventListener(new ChildEventListener() {
 //            @Override
 //            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -66,10 +64,10 @@ public class Cart extends Fragment {
 //                    billDetail.setQuantity(1);
 //                    //billDetail.setPrice(product.getSalePrice());
 //                    billDetail.setProduct(product.getId());
+//                    billDetail.setPrice(product.getSalePrice());
 //                    list.add(billDetail);
 //                    database.child("Clients").child(user.getUid()).child("Cart").push().setValue(billDetail);
 //                    billAdapter.notifyDataSetChanged();
-//
 //                }
 //            }
 //
@@ -144,5 +142,4 @@ public class Cart extends Fragment {
         });
         return view;
     }
-
 }

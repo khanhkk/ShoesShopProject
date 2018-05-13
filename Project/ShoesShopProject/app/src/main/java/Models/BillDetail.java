@@ -8,16 +8,16 @@ public class BillDetail {
     private int quantity;
     private  String id;
     private String product;
+    private double price;
 
     public BillDetail() {
     }
 
-    public BillDetail(String id, String codeOfProduct, int quantity) {
+    public BillDetail(String id, String codeOfProduct, int quantity, double price) {
         this.id = id;
         this.quantity = quantity;
-        //this.price = gia;
-        //this.codeOfBill = codeOfBill;
         this.product = codeOfProduct;
+        this.price = price;
     }
 
     public String getId() {
@@ -36,14 +36,6 @@ public class BillDetail {
         this.quantity = quantity;
     }
 
-//    public String getCodeOfBill() {
-//        return codeOfBill;
-//    }
-//
-//    public void setCodeOfBill(String codeOfBill) {
-//        this.codeOfBill = codeOfBill;
-//    }
-
     public String getProduct() {
         return product;
     }
@@ -52,11 +44,11 @@ public class BillDetail {
         this.product = Product;
     }
 
-//    public double getPrice() {
-//        return price;
-//    }
-//
-//    public void setPrice(double price) {
-//        this.price = price;
-//    }
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 }
