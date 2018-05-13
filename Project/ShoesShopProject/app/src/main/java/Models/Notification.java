@@ -1,10 +1,11 @@
 package Models;
 
 public class Notification {
-   private int hinh;
+    private int hinh;
     private String ten;
     private String hoatdong;
     private String thoiGian;
+    private boolean status;
 
     public Notification(int hinh, String ten, String hoatdong, String thoiGian) {
         this.hinh = hinh;
@@ -43,5 +44,13 @@ public class Notification {
 
     public void setThoiGian(String thoiGian) {
         this.thoiGian = thoiGian;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

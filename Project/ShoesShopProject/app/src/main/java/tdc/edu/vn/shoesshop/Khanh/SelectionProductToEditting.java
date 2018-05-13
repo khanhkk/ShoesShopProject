@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -41,7 +40,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
     ArrayList<String> ListProductId =  new ArrayList<>();
 
     ExpandableListView lvList;
-    Button btnFinish;
+    //Button btnFinish;
     ImageButton btnBack;
     Intent intent;
 
@@ -55,24 +54,27 @@ public class SelectionProductToEditting extends AppCompatActivity {
 
         //anh xa
         lvList = (ExpandableListView) findViewById(R.id.lvListProduct);
-        btnFinish = (Button) findViewById(R.id.btnFinishEdition);
+        //btnFinish = (Button) findViewById(R.id.btnFinishEdition);
         btnBack = (ImageButton) findViewById(R.id.btnBack);
 
-        btnFinish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            intent = new Intent();
-            intent.setClass(SelectionProductToEditting.this, HomeForShop.class);
-            startActivity(intent);
-            }
-        });
+//        btnFinish.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//            intent = new Intent();
+//            intent.setClass(SelectionProductToEditting.this, HomeForShop.class);
+//            startActivity(intent);
+//            }
+//        });
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                intent = new Intent();
+//                intent.setClass(SelectionProductToEditting.this, HomeForShop.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                startActivity(intent);
                 intent = new Intent();
                 intent.setClass(SelectionProductToEditting.this, HomeForShop.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             }
         });
@@ -161,7 +163,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
                                 ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
                                 details.add(productDetail);
                                 children.get(product).add(productDetail);
-                                adapter.notifyDataSetChanged();
+
                             }
 
                             @Override
@@ -184,6 +186,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
 
                             }
                         });
+                        adapter.notifyDataSetChanged();
                     }
 
                     @Override
@@ -209,21 +212,21 @@ public class SelectionProductToEditting extends AppCompatActivity {
             }
         }
         else {
-            final Product product = (Product) intent.getSerializableExtra("pro");
+            final String product = intent.getStringExtra("pro");
             if (product != null) {
-                products.add(product);
-                database.child("Products").orderByChild("id").equalTo(product.getId()).addChildEventListener(new ChildEventListener() {
+                //products.add(product);
+                database.child("Products").orderByChild("id").equalTo(product).addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        Product pro = dataSnapshot.getValue(Product.class);
+                        final Product pro = dataSnapshot.getValue(Product.class);
+                        products.add(pro);
                         children.put(pro, new ArrayList<ProductDetail>());
-                        database.child("ProductDetails").orderByChild("product").equalTo(product.getId()).addChildEventListener(new ChildEventListener() {
+                        database.child("ProductDetails").orderByChild("product").equalTo(product).addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                 ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
                                 details.add(productDetail);
-                                children.get(product).add(productDetail);
-                                adapter.notifyDataSetChanged();
+                                children.get(pro).add(productDetail);
                             }
 
                             @Override
@@ -246,6 +249,8 @@ public class SelectionProductToEditting extends AppCompatActivity {
 
                             }
                         });
+
+                        adapter.notifyDataSetChanged();
                     }
 
                     @Override
@@ -268,7 +273,6 @@ public class SelectionProductToEditting extends AppCompatActivity {
 
                     }
                 });
-
             }
         }
     }
@@ -279,7 +283,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         if(savedInstanceState != null)
         {
-            products = (ArrayList<Product>) savedInstanceState.getSerializable("data");
+            products = (ArrayList<Product>) savedInstanceState.getSerializable("aaa");
         }
     }
 
@@ -287,7 +291,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if(products.size() > 0) {
-            outState.putSerializable("data", products);
+            outState.putSerializable("aaa", products);
         }
     }
 

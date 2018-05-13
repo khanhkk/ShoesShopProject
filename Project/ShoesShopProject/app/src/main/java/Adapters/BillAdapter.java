@@ -1,6 +1,7 @@
 package Adapters;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,9 +13,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
+import Controls.General;
 import Models.BillDetail;
+import Models.Product;
 import tdc.edu.vn.shoesshop.Khanh.Cart;
 import tdc.edu.vn.shoesshop.R;
 
@@ -29,6 +41,8 @@ public class BillAdapter extends ArrayAdapter<BillDetail> {
     private Activity context = null;
     private ArrayList<BillDetail> list = null;
     private int layoutId;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
     public BillAdapter(@NonNull Activity context, @LayoutRes int resource, @NonNull ArrayList<BillDetail> objects) {
         super(context, resource, objects);
@@ -66,53 +80,141 @@ public class BillAdapter extends ArrayAdapter<BillDetail> {
         }
         final BillDetail member = list.get(position);
 
-        viewHolder.tvCode.setText(member.getProduct().getName());
-        viewHolder.tvPrice.setText(member.getProduct().getSalePrice() + "");
+
+
+        database.child("Products").orderByChild("id").equalTo(member.getProduct()).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                final Product product = dataSnapshot.getValue(Product.class);
+                viewHolder.tvCode.setText(product.getName());
+                viewHolder.tvPrice.setText(product.getSalePrice() + "");
+
+                if(product.getImage1() != null)
+                {
+                    try {
+                        Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage1());
+                        viewHolder.imgImage.setImageBitmap(bitmap);
+                    }catch (Exception ex)
+                    {
+
+                    }
+                }
+                else if(product.getImage2() != null)
+                {
+                    try {
+                        Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage2());
+                        viewHolder.imgImage.setImageBitmap(bitmap);
+                    }catch (Exception ex)
+                    {
+
+                    }
+                }
+                else if(product.getImage3() != null)
+                {
+                    try {
+                        Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage3());
+                        viewHolder.imgImage.setImageBitmap(bitmap);
+                    }catch (Exception ex)
+                    {
+
+                    }
+                }
+
+                viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int s = Integer.parseInt(viewHolder.tvQuantity.getText() + "");
+                        s++;
+                        if (s <= 20) {
+                            member.setQuantity(s);
+                            viewHolder.tvQuantity.setText(member.getQuantity() + "");
+                            tinhTong(product);
+
+                            database.child("Clients").child(user.getUid()).child("Cart").orderByChild("id").equalTo(member.getId()).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    database.child("Clients").child(user.getUid()).child("Cart").child(dataSnapshot.getKey()).child("quantity").setValue(member.getQuantity());
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                    }
+                });
+
+                viewHolder.btnSub.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int s = Integer.parseInt(viewHolder.tvQuantity.getText() + "");
+                        s--;
+                        if (s > 0) {
+                            member.setQuantity(s);
+                            viewHolder.tvQuantity.setText(member.getQuantity() + "");
+                            tinhTong(product);
+
+                            database.child("Clients").child(user.getUid()).orderByChild("id").equalTo(member.getId()).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    database.child("Clients").child(user.getUid()).child("Cart").child(dataSnapshot.getKey()).child("quantity").setValue(member.getQuantity());
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                    }
+                });
+
+                viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        list.remove(member);
+                        BillAdapter.super.notifyDataSetChanged();
+                        tinhTong(product);
+                    }
+                });
+
+                tinhTong(product);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         viewHolder.tvQuantity.setText(member.getQuantity() + "");
         //viewHolder.imgImage.setImageResource(member.getProduct().getImage1());
-        viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int s = Integer.parseInt(viewHolder.tvQuantity.getText() + "");
-                s++;
-                if (s <= 20) {
-                    member.setQuantity(s);
-                    viewHolder.tvQuantity.setText(member.getQuantity() + "");
-                    tinhTong();
-                }
-            }
-        });
-        viewHolder.btnSub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int s = Integer.parseInt(viewHolder.tvQuantity.getText() + "");
-                s--;
-                if (s > 0) {
-                    member.setQuantity(s);
-                    viewHolder.tvQuantity.setText(member.getQuantity() + "");
-                    tinhTong();
-                }
-            }
-        });
 
-        viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                list.remove(member);
-                BillAdapter.super.notifyDataSetChanged();
-                tinhTong();
-            }
-        });
-
-        tinhTong();
         return convertView;
     }
-    private void tinhTong()
+    private void tinhTong(Product pro)
     {
         double money = 0;
         if(list.size() != 0) {
                 for (BillDetail item : list) {
-                money += (item.getQuantity() * item.getProduct().getSalePrice());
+                money += (item.getQuantity() * pro.getSalePrice());
             }
         }
         else

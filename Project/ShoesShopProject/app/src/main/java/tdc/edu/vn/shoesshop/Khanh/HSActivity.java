@@ -3,6 +3,7 @@ package tdc.edu.vn.shoesshop.Khanh;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -18,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -46,16 +48,20 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
 
     Boolean isOpen = false;
     public static ArrayList<Product> ListProducts = new ArrayList<>();
+    public static ArrayList<Product> products = new ArrayList<>();
     ArrayList<String> ListTradeMark = new ArrayList<>();
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+    LoadData loadData;
 
     public static String trademark = "";
     public static String name_product = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        new LoadData().execute();
+
         final View view = inflater.inflate(R.layout.hs_activity, container, false);
 
         svSearch = (SearchView) view.findViewById(R.id.searchView) ;
@@ -130,6 +136,7 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
                         public void onClick(DialogInterface dialogInterface, int i) {
                             for(Product product : ListProducts)
                             {
+                                products.remove(product);
                                 database.child("ProductDetails").orderByChild("product").equalTo(product.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -151,6 +158,7 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
                                             child.getRef().setValue(null);
                                             mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
                                             mViewPager.setAdapter(mSectionsPagerAdapter);
+
                                         }
                                     }
 
@@ -218,8 +226,9 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
                 if(ListTradeMark.size() > 0)
                 {
                     int flag = 0;
-                    for(String str : ListTradeMark)
+                    for(int i = 1 ; i < ListTradeMark.size(); i++)
                     {
+                        String str = ListTradeMark.get(i);
                         if(str.toLowerCase().equals(product.getTrademark().toLowerCase()))
                         {
                             flag++;
@@ -269,14 +278,14 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i != 0) {
                     trademark = ListTradeMark.get(i);
-                    //mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
-                    //mViewPager.setAdapter(mSectionsPagerAdapter);
+                    mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
+                    mViewPager.setAdapter(mSectionsPagerAdapter);
                 }
                 else
                 {
                     trademark = "";
-                    //mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
-                    //mViewPager.setAdapter(mSectionsPagerAdapter);
+                    mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
+                    mViewPager.setAdapter(mSectionsPagerAdapter);
                 }
             }
 
@@ -296,14 +305,59 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        Toast.makeText(getContext(), newText
-                + "--", Toast.LENGTH_SHORT).show();
-        name_product = newText;
-        //mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
-        //mViewPager.setAdapter(mSectionsPagerAdapter);
+        //Toast.makeText(getContext(), newText + "--", Toast.LENGTH_SHORT).show();
+        name_product = newText.trim();
+        mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
+        mViewPager.setAdapter(mSectionsPagerAdapter);
         return true;
     }
 
 
+    public class LoadData extends AsyncTask<Void ,Integer , ArrayList<Product>>
+    {
+        @Override
+        protected ArrayList<Product> doInBackground(Void... voids) {
+
+            final ArrayList<Product> list = new ArrayList<>();
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+
+            database.child("Products").orderByChild("shop").equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    Product product = dataSnapshot.getValue(Product.class);
+                    list.add(product);
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+            return list;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Product> products) {
+            super.onPostExecute(products);
+            HSActivity.products = products;
+        }
+    }
 }
 

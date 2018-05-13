@@ -34,7 +34,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Calendar;
 
+import Controls.DateTimePicker;
 import Controls.General;
 import Models.Product;
 import tdc.edu.vn.shoesshop.Khanh.SelectionProductToEditting;
@@ -366,11 +368,15 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                         product.setImage1(img1);
                         product.setImage2(img2);
                         product.setImage3(img3);
+                        Calendar calendar = Calendar.getInstance();
+                        //Date date = DateTimePicker.simpleDateFormat.parse(calendar.getTime().toString());
+                        product.setAddDay(DateTimePicker.simpleDateFormat.format(calendar.getTime()));
+
                         product.setId(database.child("Products").push().getKey());
 
                         database.child("Products").push().setValue(product);
                         intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
-                        intent.putExtra("pro", product);
+                        intent.putExtra("pro", product.getId());
                         startActivity(intent);
                     }
                     else

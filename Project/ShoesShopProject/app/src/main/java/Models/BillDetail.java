@@ -7,12 +7,12 @@ package Models;
 public class BillDetail {
     private int quantity;
     private  String id;
-    private Product product;
+    private String product;
 
     public BillDetail() {
     }
 
-    public BillDetail(String id, Product codeOfProduct, int quantity) {
+    public BillDetail(String id, String codeOfProduct, int quantity) {
         this.id = id;
         this.quantity = quantity;
         //this.price = gia;
@@ -44,11 +44,11 @@ public class BillDetail {
 //        this.codeOfBill = codeOfBill;
 //    }
 
-    public Product getProduct() {
+    public String getProduct() {
         return product;
     }
 
-    public void setProduct(Product Product) {
+    public void setProduct(String Product) {
         this.product = Product;
     }
 

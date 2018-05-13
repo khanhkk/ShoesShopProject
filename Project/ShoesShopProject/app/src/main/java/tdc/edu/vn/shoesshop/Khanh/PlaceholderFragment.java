@@ -7,13 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -49,8 +45,8 @@ public class PlaceholderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        String ss = HSActivity.name_product.length() + "----" + HSActivity.trademark.length() ;
-        Toast.makeText(getContext(), ss, Toast.LENGTH_SHORT).show();
+        //String ss = HSActivity.name_product.length() + "----" + HSActivity.trademark.length() ;
+        //Toast.makeText(getContext(), ss, Toast.LENGTH_SHORT).show();
         //Log.d("tag", ss);
 
         //anh xa
@@ -64,23 +60,55 @@ public class PlaceholderFragment extends Fragment {
         list.clear();
         listTrademark.clear();
 
-        database.child("Products").orderByChild("shop").equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Product product = dataSnapshot.getValue(Product.class);
+        if(HSActivity.products.size() > 0)
+        {
+            for(Product product : HSActivity.products)
+            {
+                if(HSActivity.name_product.length() == 0 ) {
+                    if(HSActivity.trademark.length() == 0) {
+                        setup(product, c);
+                    }
+                    else
+                    {
+                        if ( product.getTrademark().toUpperCase().equals(HSActivity.trademark)) {
+                            setup(product, c);
+                        }
+                    }
+                }
+                else {
+                    if(HSActivity.trademark.length() == 0) {
 
-                //if(HSActivity.name_product.length() == 0 & HSActivity.trademark.length() == 0) {
-                    //if(HSActivity.trademark.length() == 0) {
-                    setup(product, c);
-                    adapter.notifyDataSetChanged();
-                    //}
+                        if (product.getName().contains(HSActivity.name_product)) {
+                            setup(product, c);
+                        }
+                    }
+                    else {
+                        if (product.getName().contains(HSActivity.name_product) && product.getTrademark().toUpperCase().equals(HSActivity.trademark)) {
+                            setup(product, c);
+                        }
+                    }
+                }
+
+                //adapter.notifyDataSetChanged();
+            }
+        }
+
+//        database.child("Products").orderByChild("shop").equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                Product product = dataSnapshot.getValue(Product.class);
+//
+//                if(HSActivity.name_product.length() == 0 ) {
+//                    if(HSActivity.trademark.length() == 0) {
+//                        setup(product, c);
+//                    }
 //                    else
 //                    {
 //                        if (product.getTrademark().contains(HSActivity.name_product)) {
 //                            setup(product, c);
 //                        }
 //                    }
-                //}
+//                }
 //                else {
 //                    if(HSActivity.trademark.length() == 0) {
 //                        if ( product.getName().toUpperCase().equals(HSActivity.trademark)) {
@@ -93,32 +121,32 @@ public class PlaceholderFragment extends Fragment {
 //                        }
 //                    }
 //                }
-
-                //setup(product, c);
-
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//
+//                //setup(product, c);
+//                adapter.notifyDataSetChanged();
+//
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
         adapter = new Adapter_ProductFilter_Shop(getContext(), list);
         gridView.setAdapter(adapter);

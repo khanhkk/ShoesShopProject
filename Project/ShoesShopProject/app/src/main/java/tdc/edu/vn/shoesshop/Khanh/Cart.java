@@ -20,9 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+
 import Adapters.BillAdapter;
 import Models.BillDetail;
-import Models.Product;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Son.ClientInformationAfterOrder;
 
@@ -54,22 +54,52 @@ public class Cart extends Fragment {
         //btnBack = (Button)findViewById(R.id.btnBack);
 
         //createData();
-        database.child("Products").addChildEventListener(new ChildEventListener() {
+//        database.child("Products").addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                Product product = dataSnapshot.getValue(Product.class);
+//                if(product.getSex() == 2)
+//                {
+//                    BillDetail billDetail = new BillDetail();
+//                    //billDetail.setCodeOfProduct(product.getId());
+//                    billDetail.setId(database.child("Cart").push().getKey());
+//                    billDetail.setQuantity(1);
+//                    //billDetail.setPrice(product.getSalePrice());
+//                    billDetail.setProduct(product.getId());
+//                    list.add(billDetail);
+//                    database.child("Clients").child(user.getUid()).child("Cart").push().setValue(billDetail);
+//                    billAdapter.notifyDataSetChanged();
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+
+        database.child("Clients").child(user.getUid()).child("Cart").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Product product = dataSnapshot.getValue(Product.class);
-                if(product.getSex() == 1)
-                {
-                    BillDetail billDetail = new BillDetail();
-                    //billDetail.setCodeOfProduct(product.getId());
-                    billDetail.setId(database.child("Products").push().getKey());
-                    billDetail.setQuantity(1);
-                    //billDetail.setPrice(product.getSalePrice());
-                    billDetail.setProduct(product);
-                    list.add(billDetail);
-                    billAdapter.notifyDataSetChanged();
-
-                }
+                BillDetail bill = dataSnapshot.getValue(BillDetail.class);
+                list.add(bill);
+                billAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -92,7 +122,6 @@ public class Cart extends Fragment {
 
             }
         });
-
 
         listView = (ListView)view.findViewById(R.id.lvList);
         billAdapter = new BillAdapter(getActivity(), R.layout.bill_item, list);
