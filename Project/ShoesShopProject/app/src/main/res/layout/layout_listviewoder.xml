@@ -7,29 +7,41 @@
 
     <ImageView
         android:id="@+id/imgViews12"
-        android:layout_width="100dp"
-        android:layout_height="80dp"
-        android:src="@drawable/history"
+        android:layout_width="70dp"
+        android:layout_height="60dp"
+        android:src="@drawable/imageedit_1_3706021323"
         />
-
-    <TextView
-        android:id="@+id/txtInfo"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_weight="1.07"
-        android:gravity="center"
-        android:text="@string/txtHistoryInfo"
-        android:textSize="30dp"
-        android:textStyle="italic|normal" />
+        android:orientation="vertical"
+        android:layout_marginLeft="5dp">
+        <TextView
+            android:id="@+id/txtEmailhistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/txtHistoryInfo"
+            android:textSize="20dp"
+            android:textStyle="italic|normal" />
 
-    <Button
-        android:id="@+id/btnChiTiet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#f6fafa"
-        android:layout_marginTop="30dp"
-        android:textColor="#e90b0b"
-        android:text="@string/btnChiTiet" />
+        <TextView
+            android:id="@+id/txtInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txtThoiGian"
+            android:layout_marginTop="5dp"
+            android:textSize="15dp"
+            android:textStyle="italic|normal" />
+
+    </LinearLayout>
+    <!--<Button-->
+        <!--android:id="@+id/btnChiTiet"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="#f6fafa"-->
+        <!--android:layout_marginTop="30dp"-->
+        <!--android:textColor="#e90b0b"-->
+        <!--android:text="@string/btnChiTiet" />-->
 
 </LinearLayout>

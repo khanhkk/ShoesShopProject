@@ -3,12 +3,12 @@ package Models;
 public class ContactListOder {
     private String imageHistory;
     private String Info;
-    private String ChiTiet;
+    private String EmailOder;
 
-    public ContactListOder(String imageHistory, String Info, String ChiTiet) {
+    public ContactListOder(String imageHistory, String Info, String EmailOder) {
         this.imageHistory = imageHistory;
         this.Info = Info;
-        this.ChiTiet = ChiTiet;
+        this.EmailOder = EmailOder;
     }
 
     public String getImageHistory() {
@@ -28,10 +28,10 @@ public class ContactListOder {
     }
 
     public String getChiTiet() {
-        return ChiTiet;
+        return EmailOder;
     }
 
     public void setChiTiet(String ChiTiet) {
-        this.ChiTiet = ChiTiet;
+        this.EmailOder = ChiTiet;
     }
 }

@@ -45,8 +45,8 @@ public class ListOder  extends AppCompatActivity implements SearchView.OnQueryTe
 //        arrayList.add(contact3);
 //        arrayList.add(contact4);
 
-        list.add("Don hang");
-        list.add("don hang");
+       list.add("thời gian");
+       list.add("thời gian");
 
         CustumAdapterOder customAdapter = new CustumAdapterOder(ListOder.this,R.layout.layout_listviewoder,list);
         lvContact.setAdapter(customAdapter);
