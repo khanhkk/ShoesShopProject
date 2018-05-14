@@ -84,8 +84,8 @@
     <string name="txtTenShop">MiniShop</string>
     <string name="txtThongBao">Thông báo</string>
     <!--lay out12-->
-    <string name="txtHistoryInfo">mã hàng</string>
-    <string name="btnChiTiet">Chi tiết</string>
+    <string name="txtHistoryInfo">email</string>
+    <string name="txtThoiGian">thời gian</string>
 
 
     <!--Toan update-->

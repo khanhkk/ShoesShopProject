@@ -41,13 +41,13 @@ public class CustumAdapterOder extends ArrayAdapter<String> {
         convertView = inflater.inflate(resource, parent, false);
         ImageView imgView = (ImageView) convertView.findViewById(R.id.imgViews12);
         TextView txtLichSu = (TextView) convertView.findViewById(R.id.txtInfo);
-        Button btnChiTiet = (Button) convertView.findViewById(R.id.btnChiTiet);
+        TextView emailOder = (TextView) convertView.findViewById(R.id.txtEmailhistory);
 
         String contact = arrayContact.get(position);
 
 
         txtLichSu.setText(contact);
-        btnChiTiet.setOnClickListener(new View.OnClickListener() {
+        txtLichSu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //toi mang hinh 23
