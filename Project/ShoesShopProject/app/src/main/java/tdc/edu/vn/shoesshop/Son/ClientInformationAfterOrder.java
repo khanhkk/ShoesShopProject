@@ -6,6 +6,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -131,7 +132,6 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
         }
 
         final ArrayList<Bill> list = new ArrayList<>();
-        final String[] shops = {null};
         database.child("Clients").child(user.getUid()).child("Cart").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -141,8 +141,26 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Product product = dataSnapshot.getValue(Product.class);
-                        //bill.setShop(product.getShop());
-                        shops[0] = product.getShop();
+                        if(list.size() == 0)
+                        {
+                            UpBillFirebase(product.getShop(), list);
+                        }
+                        else
+                        {
+                            int check = 0;
+                            for(Bill bill : list)
+                            {
+                                if(bill.getShop().equals(product.getShop()))
+                                {
+                                    check ++;
+                                    break;
+                                }
+                            }
+                            if(check == 0)
+                            {
+                                UpBillFirebase(product.getShop(), list);
+                            }
+                        }
                     }
 
                     @Override
@@ -166,26 +184,13 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
                     }
                 });
 
-                if(list.size() == 0)
-                {
-                    UpBillFirebase(shops[0], list);
-                }
-                else
-                {
-                    int check = 0;
-                    for(Bill bill : list)
-                    {
-                        if(bill.getShop().equals(shops[0]))
-                        {
-                            check ++;
-                            break;
-                        }
-                    }
-                    if(check == 0)
-                    {
-                        UpBillFirebase(shops[0], list);
-                    }
-                }
+                //clear gio hang
+                //database.child("Clients").child(user.getUid()).child("Cart").setValue(null);
+
+                Intent intent = new Intent(ClientInformationAfterOrder.this, HomeForClient.class);
+                startActivity(intent);
+
+                Toast.makeText(ClientInformationAfterOrder.this, "Tạo đơn hàng thành công!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -209,13 +214,8 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
             }
         });
 
-
-
         //clear gio hang
         //database.child("Clients").child(user.getUid()).child("Cart").setValue(null);
-
-        Intent intent = new Intent(ClientInformationAfterOrder.this, HomeForClient.class);
-        startActivity(intent);
 
 //        String input = "Email: " + textInputEmail.getEditText().getText().toString();
 //        input += "\n";
@@ -241,6 +241,5 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
         list.add(bill);
         database.child("Clients").child(user.getUid()).child("Transactions").push().setValue(bill);
         database.child("Shops").child(shop).child("Transactions").push().setValue(bill);
-
     }
 }
