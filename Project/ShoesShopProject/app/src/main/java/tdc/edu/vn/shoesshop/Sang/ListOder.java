@@ -1,16 +1,21 @@
 package tdc.edu.vn.shoesshop.Sang;
 
 
+    import android.content.Intent;
     import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
     import android.support.v7.widget.SearchView;
+    import android.view.View;
+    import android.widget.AdapterView;
     import android.widget.ListView;
+    import android.widget.Toast;
 
-import java.util.ArrayList;
+    import java.util.ArrayList;
 
 import Adapters.CustumAdapterOder;
 import Controls.DatePickerCustom;
 import tdc.edu.vn.shoesshop.R;
+    import tdc.edu.vn.shoesshop.Son.OrderInformationForClient;
 
 public class ListOder  extends AppCompatActivity implements SearchView.OnQueryTextListener{
     ListView lvContact;
@@ -50,6 +55,15 @@ public class ListOder  extends AppCompatActivity implements SearchView.OnQueryTe
 
         CustumAdapterOder customAdapter = new CustumAdapterOder(ListOder.this,R.layout.layout_listviewoder,list);
         lvContact.setAdapter(customAdapter);
+
+        lvContact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(ListOder.this, i+ "",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ListOder.this, OrderInformationForClient.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

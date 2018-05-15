@@ -12,6 +12,7 @@
         android:src="@drawable/imageedit_1_3706021323"
         />
     <LinearLayout
+        android:id="@+id/linear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
