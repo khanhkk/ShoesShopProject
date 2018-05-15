@@ -1,5 +1,7 @@
 package tdc.edu.vn.shoesshop.Khanh;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,9 +23,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import Adapters.BillAdapter;
+import Controls.DateTimePicker;
+import Models.Bill;
 import Models.BillDetail;
+import Models.Client;
+import Models.Product;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Son.ClientInformationAfterOrder;
 
@@ -121,7 +129,7 @@ public class Cart extends Fragment {
             }
         });
 
-        listView = (ListView)view.findViewById(R.id.lvList);
+        listView = (ListView) view.findViewById(R.id.lvList);
         billAdapter = new BillAdapter(getActivity(), R.layout.bill_item, list);
         listView.setAdapter(billAdapter);
 
@@ -135,11 +143,145 @@ public class Cart extends Fragment {
         btnThanhToan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent();
-                intent.setClass(getActivity(), ClientInformationAfterOrder.class);
-                startActivity(intent);
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                alertDialog.setTitle("Thông báo");
+                alertDialog.setIcon(R.mipmap.ic_launcher);
+                alertDialog.setMessage("Địa chỉ trong hóa đơn được lấy từ đâu?");
+
+                alertDialog.setPositiveButton("Mặc định", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        final ArrayList<Bill> list = new ArrayList<>();
+                        database.child("Clients").child(user.getUid()).child("Cart").addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                final BillDetail billDetail = dataSnapshot.getValue(BillDetail.class);
+                                //final String[] shops = new String[]{};
+                                database.child("Products").orderByChild("id").equalTo(billDetail.getProduct()).addChildEventListener(new ChildEventListener() {
+                                    @Override
+                                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                        Product product = dataSnapshot.getValue(Product.class);
+                                        if (list.size() == 0) {
+                                            UpBillFirebase(product.getShop(), list);
+                                        } else {
+                                            int check = 0;
+                                            for (Bill bill : list) {
+                                                if (bill.getShop().equals(product.getShop())) {
+                                                    check++;
+                                                    break;
+                                                }
+                                            }
+                                            if (check == 0) {
+                                                UpBillFirebase(product.getShop(), list);
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                                //clear gio hang
+                                //database.child("Clients").child(user.getUid()).child("Cart").setValue(null);
+
+                                Toast.makeText(getContext(), "Tạo đơn hàng thành công!", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                });
+
+                alertDialog.setNegativeButton("Nhập mới", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        intent = new Intent();
+                        intent.setClass(getActivity(), ClientInformationAfterOrder.class);
+                        startActivity(intent);
+                    }
+                });
+                 alertDialog.show();
             }
         });
         return view;
+    }
+
+    private void UpBillFirebase(final String shop, final ArrayList<Bill> list) {
+        database.child("Clients").orderByKey().equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Client client = dataSnapshot.getValue(Client.class);
+                Bill bill = new Bill();
+                bill.setAddress(client.getAddress());
+                bill.setEmail(client.getEmail());
+                bill.setNameClient(client.getName());
+                bill.setPhone(client.getPhone());
+                bill.setShop(shop);
+                Calendar calendar = Calendar.getInstance();
+                bill.setTime(DateTimePicker.simpleDateFormat.format(calendar.getTime()));
+                list.add(bill);
+                database.child("Clients").child(user.getUid()).child("Transactions").push().setValue(bill);
+                database.child("Shops").child(shop).child("Transactions").push().setValue(bill);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 }
