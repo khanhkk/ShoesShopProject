@@ -1,6 +1,7 @@
 package tdc.edu.vn.shoesshop.Khanh;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -9,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +51,7 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
     Boolean isOpen = false;
     public static ArrayList<Product> ListProducts = new ArrayList<>();
     public static ArrayList<Product> products = new ArrayList<>();
+    public static ProgressDialog dialog;
     ArrayList<String> ListTradeMark = new ArrayList<>();
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -60,6 +63,9 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        dialog = new ProgressDialog(getContext());
+        dialog.setMessage("Loading ......");
+        dialog.show();
         new LoadData().execute();
 
         final View view = inflater.inflate(R.layout.hs_activity, container, false);
@@ -356,7 +362,9 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
         @Override
         protected void onPostExecute(ArrayList<Product> products) {
             super.onPostExecute(products);
+            Log.d("afdasf", products.size() + "");
             HSActivity.products = products;
+            HSActivity.dialog.dismiss();
         }
     }
 }

@@ -21,6 +21,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,6 +49,7 @@ public class Cart extends Fragment {
     Button btnThanhToan;
     Intent intent;
     final ArrayList<String> ListShop = new ArrayList<>();
+    ArrayList<Bill> bills = new ArrayList<>();
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
@@ -148,6 +150,8 @@ public class Cart extends Fragment {
 
                 if(list.size() > 0) {
                     ListShop.clear();
+                    bills.clear();
+
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                     alertDialog.setTitle("Thông báo");
                     alertDialog.setIcon(R.mipmap.ic_launcher);
@@ -165,18 +169,48 @@ public class Cart extends Fragment {
                                         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                             Product product = dataSnapshot.getValue(Product.class);
                                             if (list.size() == 0) {
-                                                UpBillFirebase(product.getShop());
+                                                UpBillFirebase(product.getShop(),billDetail, bills);
                                                 ListShop.add(product.getShop());
                                             } else {
                                                 int check = 0;
-                                                for (String ss : ListShop) {
-                                                    if (ss.equals(product.getShop())) {
+                                                for (Bill bill : bills) {
+                                                    if (bill.getShop().equals(product.getShop())) {
                                                         check++;
+                                                        database.child("Clients").child(user.getUid()).child("Transactions").orderByChild("id").equalTo(bill.getId()).addValueEventListener(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                for (DataSnapshot child : dataSnapshot.getChildren())
+                                                                {
+                                                                    child.getRef().child("Details").push().setValue(billDetail);
+                                                                    break;
+                                                                }
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(DatabaseError databaseError) {
+
+                                                            }
+                                                        });
+                                                        database.child("Shops").child(product.getShop()).child("Transactions").orderByChild("id").equalTo(bill.getId()).addValueEventListener(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                for (DataSnapshot child : dataSnapshot.getChildren())
+                                                                {
+                                                                    child.getRef().child("Details").push().setValue(billDetail);
+                                                                    break;
+                                                                }
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(DatabaseError databaseError) {
+
+                                                            }
+                                                        });
                                                         break;
                                                     }
                                                 }
                                                 if (check == 0) {
-                                                    UpBillFirebase(product.getShop());
+                                                    UpBillFirebase(product.getShop(),billDetail, bills);
                                                     ListShop.add(product.getShop());
                                                 }
                                             }
@@ -254,7 +288,7 @@ public class Cart extends Fragment {
         return view;
     }
 
-    private void UpBillFirebase(final String shop) {
+    private void UpBillFirebase(final String shop, final  BillDetail detail, final ArrayList<Bill> list) {
         database.child("Clients").orderByKey().equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -272,8 +306,44 @@ public class Cart extends Fragment {
                 bill.setTime(DateTimePicker.simpleDateFormat.format(calendar.getTime()));
                 bill.setId(database.child("Clients").child(user.getUid()).child("Transactions").push().getKey());
 
+                list.add(bill);
                 database.child("Clients").child(user.getUid()).child("Transactions").push().setValue(bill);
                 database.child("Shops").child(shop).child("Transactions").push().setValue(bill);
+
+                //them san pham vao don dat hang
+//                database.child("Clients").child(user.getUid()).child("Transactions").orderByChild("id").equalTo(bill.getId()).getRef().child("Details").push().setValue(detail);
+//                database.child("Shops").child(shop).child("Transactions").orderByChild("id").equalTo(bill.getId()).getRef().child("Details").push().setValue(detail);
+
+                database.child("Clients").child(user.getUid()).child("Transactions").orderByChild("id").equalTo(bill.getId()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot child : dataSnapshot.getChildren())
+                        {
+                            child.getRef().child("Details").push().setValue(detail);
+                            break;
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                database.child("Shops").child(shop).child("Transactions").orderByChild("id").equalTo(bill.getId()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        for (DataSnapshot child : dataSnapshot.getChildren())
+//                        {
+//                            child.getRef().child("Details").push().setValue(detail);
+//                            break;
+//                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
                 //them notify cho shop
                 Notification notification = new Notification();
