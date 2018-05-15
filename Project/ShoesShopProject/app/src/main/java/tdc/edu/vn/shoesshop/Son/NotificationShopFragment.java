@@ -40,10 +40,10 @@ public class NotificationShopFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         list = new ArrayList<>();
         //list.add(new Notification(R.drawable.gai,"Quỳnh Như","đã đặt hàng","13:20 05/07/2017"));
         //list.add(new Notification(R.drawable.gai,"Quỳnh Như","đã hủy đơn hàng","13:20 05/07/2017"));
+
 
     }
 }
