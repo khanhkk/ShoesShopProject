@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class Product implements Serializable {
     private String guarantee, id, name, trademark, description , image1, image2, image3, shop, addDay;
-    private int accumulatedPoint, sex;
+    private int accumulatedPoint, sex; // sex:  0:nu, 1:nam, 2:chung
     private float rating;
     private double listedPrice, salePrice;
     //private ArrayList<ProductDetail> list;

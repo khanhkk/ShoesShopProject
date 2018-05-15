@@ -9,9 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import java.util.ArrayList;
 import java.util.List;
-import Adapters.NotificationClientAdapter;
+
 import Adapters.NotificationShopAdapter;
 import Models.Notification;
 import tdc.edu.vn.shoesshop.R;
@@ -41,8 +42,8 @@ public class NotificationShopFragment extends Fragment {
 
 
         list = new ArrayList<>();
-        list.add(new Notification(R.drawable.gai,"Quỳnh Như","đã đặt hàng","13:20 05/07/2017"));
-        list.add(new Notification(R.drawable.gai,"Quỳnh Như","đã hủy đơn hàng","13:20 05/07/2017"));
+        //list.add(new Notification(R.drawable.gai,"Quỳnh Như","đã đặt hàng","13:20 05/07/2017"));
+        //list.add(new Notification(R.drawable.gai,"Quỳnh Như","đã hủy đơn hàng","13:20 05/07/2017"));
 
     }
 }

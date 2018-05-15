@@ -184,13 +184,13 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
                     }
                 });
 
-                //clear gio hang
-                //database.child("Clients").child(user.getUid()).child("Cart").setValue(null);
-
                 Intent intent = new Intent(ClientInformationAfterOrder.this, HomeForClient.class);
                 startActivity(intent);
 
                 Toast.makeText(ClientInformationAfterOrder.this, "Tạo đơn hàng thành công!", Toast.LENGTH_SHORT).show();
+
+                //clear gio hang
+                database.child("Clients").child(user.getUid()).child("Cart").setValue(null);
             }
 
             @Override
@@ -213,19 +213,6 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
 
             }
         });
-
-        //clear gio hang
-        //database.child("Clients").child(user.getUid()).child("Cart").setValue(null);
-
-//        String input = "Email: " + textInputEmail.getEditText().getText().toString();
-//        input += "\n";
-//        input += "Họ Tên: " + textInputHoten.getEditText().getText().toString();
-//        input += "\n";
-//        input += "Sdt: " + textInputSdt.getEditText().getText().toString();
-//        input += "\n";
-//        input += "Địa chỉ: " + textInputDiachi.getEditText().getText().toString();
-//
-//        Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
     }
 
     private void UpBillFirebase(String shop, ArrayList<Bill> list)
@@ -236,8 +223,10 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
         bill.setNameClient(textInputHoten.getEditText().getText().toString().trim());
         bill.setPhone(textInputSdt.getEditText().getText().toString().trim());
         bill.setShop(shop);
+        bill.setStatus(0);
         Calendar calendar = Calendar.getInstance();
         bill.setTime(DateTimePicker.simpleDateFormat.format(calendar.getTime()));
+        bill.setId(database.child("Clients").child(user.getUid()).child("Transactions").push().getKey());
         list.add(bill);
         database.child("Clients").child(user.getUid()).child("Transactions").push().setValue(bill);
         database.child("Shops").child(shop).child("Transactions").push().setValue(bill);

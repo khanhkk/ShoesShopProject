@@ -1,33 +1,43 @@
 package Models;
 
 public class Notification {
-    private int hinh;
-    private String ten;
+    private String hinh;
+    private String client;
     private String hoatdong;
     private String thoiGian;
     private boolean status;
+    private String bill;
 
-    public Notification(int hinh, String ten, String hoatdong, String thoiGian) {
-        this.hinh = hinh;
-        this.ten = ten;
-        this.hoatdong = hoatdong;
-        this.thoiGian = thoiGian;
+    public static String STR_HUY = " đã hủy đơn hàng ";
+    public static String STR_VAN_CHUYEN = " đang vận chuyển đơn hàng ";
+    public static String STR_DAT_HANG = " đã đặt hàng ";
+
+    public Notification() {
     }
 
-    public int getHinh() {
+    public Notification(String hinh, String client, String hoatdong, String thoiGian, boolean status, String bill) {
+        this.hinh = hinh;
+        this.client = client;
+        this.hoatdong = hoatdong;
+        this.thoiGian = thoiGian;
+        this.status = status;
+        this.bill = bill;
+    }
+
+    public String getHinh() {
         return hinh;
     }
 
-    public void setHinh(int hinh) {
+    public void setHinh(String hinh) {
         this.hinh = hinh;
     }
 
-    public String getTen() {
-        return ten;
+    public String getClient() {
+        return client;
     }
 
-    public void setTen(String ten) {
-        this.ten = ten;
+    public void setClient(String ten) {
+        this.client = ten;
     }
 
     public String getHoatdong() {
@@ -52,5 +62,13 @@ public class Notification {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public String getBill() {
+        return bill;
+    }
+
+    public void setBill(String bill) {
+        this.bill = bill;
     }
 }

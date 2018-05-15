@@ -42,9 +42,9 @@ public class NotificationClientFragment extends Fragment {
 
 
         list = new ArrayList<>();
-        list.add(new Notification(R.drawable.lzd,"Lazada Shop","đang giao hàng","13:20 05/02/2018"));
-        list.add(new Notification(R.drawable.lzd,"Lazada Shop","đã giao hàng","13:20 08/02/2018"));
-        list.add(new Notification(R.drawable.lzd,"Lazada Shop","đã hủy","13:20 09/02/2018"));
+        //list.add(new Notification(R.drawable.lzd,"Lazada Shop","đang giao hàng","13:20 05/02/2018"));
+        //list.add(new Notification(R.drawable.lzd,"Lazada Shop","đã giao hàng","13:20 08/02/2018"));
+        //list.add(new Notification(R.drawable.lzd,"Lazada Shop","đã hủy","13:20 09/02/2018"));
 
 
 

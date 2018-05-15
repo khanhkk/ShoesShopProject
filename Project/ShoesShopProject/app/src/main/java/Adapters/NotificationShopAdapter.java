@@ -15,7 +15,6 @@ import java.util.List;
 
 import Models.Notification;
 import tdc.edu.vn.shoesshop.R;
-import tdc.edu.vn.shoesshop.Son.OrderInformationForClient;
 import tdc.edu.vn.shoesshop.Son.OrderInformationForShop;
 
 public class NotificationShopAdapter extends RecyclerView.Adapter<NotificationShopAdapter.MyViewHolder> {
@@ -47,10 +46,10 @@ public class NotificationShopAdapter extends RecyclerView.Adapter<NotificationSh
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        holder.tv_name.setText(mData.get(position).getTen());
+        holder.tv_name.setText(mData.get(position).getClient());
         holder.tv_active.setText(mData.get(position).getHoatdong());
         holder.tv_date.setText(mData.get(position).getThoiGian());
-        holder.img_hinh.setImageResource(mData.get(position).getHinh());
+        //holder.img_hinh.setImageResource(mData.get(position).getHinh());
     }
 
     @Override
