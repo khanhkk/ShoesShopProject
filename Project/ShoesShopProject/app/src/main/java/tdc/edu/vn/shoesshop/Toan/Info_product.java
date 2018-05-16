@@ -60,15 +60,6 @@ public class Info_product extends AppCompatActivity {
    // BillAdapter billAdapter;
     ArrayList<BillDetail> list = new ArrayList<BillDetail>();
     String ma = null;
-    public static  int type;
-
-    public static int getType() {
-        return type;
-    }
-
-    public static void setType(int type) {
-        Info_product.type = type;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +107,8 @@ public class Info_product extends AppCompatActivity {
             public void onClick(View v) {
                 //bundleShop = new Bundle();
                 Intent intent = new Intent(Info_product.this, tdc.edu.vn.shoesshop.Bao.MainInfoShop.class);
-                Info_product.setType(1);
+                intent.putExtra("shop",ma);
+//                Info_product.setType(1);
                 startActivity(intent);
             }
         });
@@ -371,6 +363,7 @@ public class Info_product extends AppCompatActivity {
         //billDetail.setCodeOfProduct(product.getId());
         billDetail.setId(database.child("Cart").push().getKey());
         billDetail.setQuantity(1);
+        billDetail.setShop(pro.getShop());
         //billDetail.setPrice(product.getSalePrice());
         billDetail.setProduct(pro.getId());
         billDetail.setPrice(pro.getSalePrice());

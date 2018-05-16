@@ -13,18 +13,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 
 import Controls.General;
 import Models.Notification;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Son.OrderInformationForShop;
 
-public class NotificationShopAdapter extends RecyclerView.Adapter<NotificationShopAdapter.MyViewHolder> {
+public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.MyViewHolder> {
     Context mContext;
-    List<Notification> mData;
+    ArrayList<Notification> mData;
 
-    public NotificationShopAdapter(Context mContext, List<Notification> mData) {
+    public NotificationAdapter(Context mContext, ArrayList<Notification> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -49,7 +49,7 @@ public class NotificationShopAdapter extends RecyclerView.Adapter<NotificationSh
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        holder.tv_name.setText(mData.get(position).getClient());
+        //holder.tv_name.setText(mData.get(position).getClient());
         holder.tv_active.setText(mData.get(position).getHoatdong());
         holder.tv_date.setText(mData.get(position).getThoiGian());
         if(mData.get(position).getHinh() != null)
@@ -74,7 +74,7 @@ public class NotificationShopAdapter extends RecyclerView.Adapter<NotificationSh
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         private LinearLayout item_contact;
-        private TextView tv_name;
+        //private TextView tv_name;
         private TextView tv_active;
         private ImageView img_hinh;
         private TextView tv_date;
@@ -82,7 +82,7 @@ public class NotificationShopAdapter extends RecyclerView.Adapter<NotificationSh
 
             super(itemView);
             item_contact = (LinearLayout) itemView.findViewById(R.id.id_item);
-            tv_name = (TextView) itemView.findViewById(R.id.id_name);
+            //tv_name = (TextView) itemView.findViewById(R.id.id_name);
             tv_active = (TextView) itemView.findViewById(R.id.id_active);
             tv_date = (TextView) itemView.findViewById(R.id.id_date);
             img_hinh = (ImageView) itemView.findViewById(R.id.id_img);

@@ -10,10 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import Adapters.NotificationClientAdapter;
+import java.util.ArrayList;
+
+import Adapters.NotificationAdapter;
 import Models.Notification;
 import tdc.edu.vn.shoesshop.R;
 
@@ -22,31 +29,64 @@ public class NotificationClientFragment extends Fragment {
 
     View v;
     private RecyclerView recyclerView;
-    private List<Notification> list;
+    private ArrayList<Notification> list;
+    NotificationAdapter recyclerViewAdapter;
+
+    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
     public NotificationClientFragment(){}
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        list = new ArrayList<>();
         v = inflater.inflate(R.layout.notification_fragment, container,false);
         recyclerView = (RecyclerView) v.findViewById(R.id.id_recycleView);
-        NotificationClientAdapter recyclerViewAdapter = new  NotificationClientAdapter(getContext(),list);
+        recyclerViewAdapter = new  NotificationAdapter(getContext(),list);
+
+        database.child("Clients").child(user.getUid()).child("Notifications").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Notification notification = dataSnapshot.getValue(Notification.class);
+                list.add(notification);
+                recyclerViewAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(recyclerViewAdapter);
         return v;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-        list = new ArrayList<>();
-        //list.add(new Notification(R.drawable.lzd,"Lazada Shop","đang giao hàng","13:20 05/02/2018"));
-        //list.add(new Notification(R.drawable.lzd,"Lazada Shop","đã giao hàng","13:20 08/02/2018"));
-        //list.add(new Notification(R.drawable.lzd,"Lazada Shop","đã hủy","13:20 09/02/2018"));
-
-
-
-    }
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+//        list = new ArrayList<>();
+//        //list.add(new Notification(R.drawable.lzd,"Lazada Shop","đang giao hàng","13:20 05/02/2018"));
+//        //list.add(new Notification(R.drawable.lzd,"Lazada Shop","đã giao hàng","13:20 08/02/2018"));
+//        //list.add(new Notification(R.drawable.lzd,"Lazada Shop","đã hủy","13:20 09/02/2018"));
+//    }
 }

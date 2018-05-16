@@ -14,13 +14,14 @@ import android.support.v7.app.AppCompatActivity;
 
 import Adapters.CustumAdapterOder;
 import Controls.DatePickerCustom;
-import tdc.edu.vn.shoesshop.R;
+    import Models.Bill;
+    import tdc.edu.vn.shoesshop.R;
     import tdc.edu.vn.shoesshop.Son.OrderInformationForClient;
 
 public class ListOder  extends AppCompatActivity implements SearchView.OnQueryTextListener{
     ListView lvContact;
     CustumAdapterOder adapter;
-    ArrayList<String> list = new ArrayList<>();
+    ArrayList<Bill> list = new ArrayList<>();
     DatePickerCustom dateTimePicker;
 
   //  SearchView svSearchPromotions;
@@ -50,8 +51,8 @@ public class ListOder  extends AppCompatActivity implements SearchView.OnQueryTe
 //        arrayList.add(contact3);
 //        arrayList.add(contact4);
 
-       list.add("thời gian");
-       list.add("thời gian");
+        list.add(new Bill("nhom5@gmail.com","12/05/2018"));
+        list.add(new Bill("nhom5@gmail.com","12/05/2018"));
 
         CustumAdapterOder customAdapter = new CustumAdapterOder(ListOder.this,R.layout.layout_listviewoder,list);
         lvContact.setAdapter(customAdapter);

@@ -75,7 +75,7 @@ public class HomeForClient extends AppCompatActivity {
                             break;
                         case R.id.nav_notification:
                             selectedFragment = new NotificationClientFragment();
-                            Info_product.setType(2);
+                            //Info_product.setType(2);
                             break;
                         case R.id.nav_cart:
                             selectedFragment = new Cart();

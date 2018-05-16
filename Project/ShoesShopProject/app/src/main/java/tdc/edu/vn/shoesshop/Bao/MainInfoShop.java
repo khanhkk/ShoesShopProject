@@ -41,9 +41,9 @@ public class MainInfoShop extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info_shop);
         name = (TextView) findViewById(R.id.txtnameshop);
-        phone = (TextView) findViewById(R.id.txtsdt);
-        email = (TextView) findViewById(R.id.txtemail);
-        address = (TextView) findViewById(R.id.txtdc);
+        phone = (TextView) findViewById(R.id.txtsdtshop);
+        email = (TextView) findViewById(R.id.txtemailshop);
+        address = (TextView) findViewById(R.id.txtdcshop);
         button = (ImageButton) findViewById(R.id.btneditshop);
         intent = getIntent();
         shop_id = intent.getStringExtra("shop");

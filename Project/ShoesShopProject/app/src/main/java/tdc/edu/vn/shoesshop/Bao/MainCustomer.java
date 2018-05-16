@@ -25,7 +25,6 @@ public class MainCustomer extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainCustomer.this, LoginActivity.class);
                 startActivity (intent);
-                Toast.makeText(MainCustomer.this, " Đăng nhập ", Toast.LENGTH_SHORT).show();
             }
         });
         ImageView imgthognbao = (ImageView) findViewById(R.id.imgthongbao);
@@ -33,7 +32,6 @@ public class MainCustomer extends AppCompatActivity {
         txtthongbao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainCustomer.this, " Thông báo ", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -42,7 +40,6 @@ public class MainCustomer extends AppCompatActivity {
         txtdonhang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainCustomer.this, " Đơn hàng của tôi ", Toast.LENGTH_SHORT).show();
             }
         });
 

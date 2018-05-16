@@ -18,6 +18,11 @@ public class Bill {
         this.id = id;
     }
 
+    public Bill(String email, String time) {
+        this.email = email;
+        this.time = time;
+    }
+
     public String getNameClient() {
         return nameClient;
     }
