@@ -5,7 +5,7 @@ public class Notification {
     private String client;
     private String hoatdong;
     private String thoiGian;
-    private boolean status;
+    private boolean status; // true: da doc, false: chua doc
     private String bill;
 
     public static String STR_HUY = " đã hủy đơn hàng ";

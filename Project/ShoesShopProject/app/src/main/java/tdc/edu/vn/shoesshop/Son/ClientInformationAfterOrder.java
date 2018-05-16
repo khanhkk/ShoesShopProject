@@ -22,6 +22,8 @@ import java.util.Calendar;
 import Controls.DateTimePicker;
 import Models.Bill;
 import Models.BillDetail;
+import Models.Client;
+import Models.Notification;
 import Models.Product;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Toan.HomeForClient;
@@ -132,35 +134,71 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
         }
 
         final ArrayList<Bill> list = new ArrayList<>();
-        database.child("Clients").child(user.getUid()).child("Cart").addChildEventListener(new ChildEventListener() {
+
+
+        database.child("Clients").orderByKey().equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                final BillDetail billDetail = dataSnapshot.getValue(BillDetail.class);
-                //final String[] shops = new String[]{};
-                database.child("Products").orderByChild("id").equalTo(billDetail.getProduct()).addChildEventListener(new ChildEventListener() {
+                final Client client = dataSnapshot.getValue(Client.class);
+
+                database.child("Clients").child(user.getUid()).child("Cart").addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        Product product = dataSnapshot.getValue(Product.class);
-                        if(list.size() == 0)
-                        {
-                            UpBillFirebase(product.getShop(), list);
-                        }
-                        else
-                        {
-                            int check = 0;
-                            for(Bill bill : list)
-                            {
-                                if(bill.getShop().equals(product.getShop()))
+                        final BillDetail billDetail = dataSnapshot.getValue(BillDetail.class);
+                        database.child("Products").orderByChild("id").equalTo(billDetail.getProduct()).addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                Product product = dataSnapshot.getValue(Product.class);
+                                if(list.size() == 0)
                                 {
-                                    check ++;
-                                    break;
+                                    UpBillFirebase(product.getShop(), list, client);
+                                }
+                                else
+                                {
+                                    int check = 0;
+                                    for(Bill bill : list)
+                                    {
+                                        if(bill.getShop().equals(product.getShop()))
+                                        {
+                                            check ++;
+                                            break;
+                                        }
+                                    }
+                                    if(check == 0)
+                                    {
+                                        UpBillFirebase(product.getShop(), list, client);
+                                    }
                                 }
                             }
-                            if(check == 0)
-                            {
-                                UpBillFirebase(product.getShop(), list);
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
                             }
-                        }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+                        Intent intent = new Intent(ClientInformationAfterOrder.this, HomeForClient.class);
+                        startActivity(intent);
+
+                        Toast.makeText(ClientInformationAfterOrder.this, "Tạo đơn hàng thành công!", Toast.LENGTH_SHORT).show();
+
+                        //clear gio hang
+                        //database.child("Clients").child(user.getUid()).child("Cart").setValue(null);
                     }
 
                     @Override
@@ -183,14 +221,6 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
 
                     }
                 });
-
-                Intent intent = new Intent(ClientInformationAfterOrder.this, HomeForClient.class);
-                startActivity(intent);
-
-                Toast.makeText(ClientInformationAfterOrder.this, "Tạo đơn hàng thành công!", Toast.LENGTH_SHORT).show();
-
-                //clear gio hang
-                database.child("Clients").child(user.getUid()).child("Cart").setValue(null);
             }
 
             @Override
@@ -213,9 +243,11 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
 
             }
         });
+
+
     }
 
-    private void UpBillFirebase(String shop, ArrayList<Bill> list)
+    private void UpBillFirebase(String shop, ArrayList<Bill> list, Client client)
     {
         Bill bill = new Bill();
         bill.setAddress(textInputDiachi.getEditText().getText().toString().trim());
@@ -230,5 +262,19 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
         list.add(bill);
         database.child("Clients").child(user.getUid()).child("Transactions").push().setValue(bill);
         database.child("Shops").child(shop).child("Transactions").push().setValue(bill);
+
+        //them notify cho shop
+        Notification notification = new Notification();
+        notification.setClient(user.getUid());
+        notification.setHoatdong(client.getName() + Notification.STR_DAT_HANG);
+        notification.setStatus(false);
+        if(client.getImages() != null)
+        {
+            notification.setHinh(client.getImages());
+        }
+        notification.setThoiGian(DateTimePicker.simpleDateFormat.format(calendar.getTime()));
+        notification.setBill(bill.getId());
+
+        database.child("Shops").child(shop).child("Notifications").push().setValue(notification);
     }
 }

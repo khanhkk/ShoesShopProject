@@ -50,7 +50,7 @@ public class NotificationClientAdapter extends RecyclerView.Adapter<Notification
         holder.tv_name.setText(mData.get(position).getClient());
         holder.tv_active.setText(mData.get(position).getHoatdong());
         holder.tv_date.setText(mData.get(position).getThoiGian());
-        //holder.img_hinh.setImageResource(mData.get(position).getHinh());
+        //holder.img_hinh.setImageResource(mData.get(position).getHinh())
     }
 
     @Override
@@ -69,7 +69,7 @@ public class NotificationClientAdapter extends RecyclerView.Adapter<Notification
 
             super(itemView);
             item_contact = (LinearLayout) itemView.findViewById(R.id.id_item);
-            tv_name = (TextView) itemView.findViewById(R.id.id_name);
+            //tv_name = (TextView) itemView.findViewById(R.id.id_name);
             tv_active = (TextView) itemView.findViewById(R.id.id_active);
             tv_date = (TextView) itemView.findViewById(R.id.id_date);
             img_hinh = (ImageView) itemView.findViewById(R.id.id_img);
