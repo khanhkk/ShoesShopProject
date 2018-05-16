@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -48,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_below="@+id/SlidearDots"
-            android:layout_weight="2"
+            android:layout_weight="4"
             android:orientation="horizontal"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
@@ -57,14 +59,14 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="MS:" />
+                android:layout_weight="2.8"
+                android:text="Tên sản phẩm:" />
 
             <TextView
+                android:id="@+id/tensanpham"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="003"
                 android:textColor="#000"/>
 
             <TextView
@@ -78,8 +80,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
-                android:layout_weight="3"
-                android:entries="@array/size_arrays"
+                android:layout_weight="1.9"
                 android:gravity="center"
                 android:prompt="@string/filter_name" />
         </LinearLayout>
@@ -89,7 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_below="@+id/size"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:orientation="horizontal"
             android:paddingLeft="8dp"
             android:paddingRight="8dp">
@@ -101,11 +102,13 @@
                 android:text="Nhà sản xuất:" />
 
             <TextView
+                android:id="@+id/nsx"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Nike"
+                android:layout_weight="3"
                 android:textColor="#000"
+                android:paddingLeft="10dp"
+                android:textAllCaps="true"
                 />
         </LinearLayout>
 
@@ -114,44 +117,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_below="@+id/nhasx"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Giá sản phẩm:" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="1.000.000 đ"
-                android:textColor="#da0c0c"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Giá gốc" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="900.000 đ"
-                android:textColor="#000"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/xemthem"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_below="@+id/gia"
             android:layout_weight="2"
             android:orientation="horizontal"
             android:paddingLeft="8dp"
@@ -160,14 +125,49 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Giá bán:" />
+
+            <TextView
+                android:id="@+id/sells"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="Cửa hàng:" />
+                android:textSize="15dp"
+                android:textColor="#da0c0c"/>
+
+
+            <TextView
+                android:id="@+id/cost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textColor="#000"
+                android:paddingLeft="5dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/xemthem"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_below="@+id/gia"
+            android:layout_weight="4"
+            android:orientation="horizontal"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Cửa hàng:" />
+
+            <TextView
+                android:id="@+id/nameshop_info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="MiuShop"
                 android:textColor="#000"
                 />
 
@@ -195,11 +195,15 @@
                 android:text="Mô tả:" />
 
             <TextView
+                android:id="@+id/motasp"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="Hình ảnh chỉ mang tinh chất minh họa, mua hay không tùy ý huynh"
-                android:textColor="#000"/>
+                android:layout_height="80dp"
+                android:layout_weight="5"
+                android:maxLines="5"
+                android:scrollHorizontally="false"
+                android:ellipsize="none"
+                android:textColor="#000"
+                android:text=""/>
         </LinearLayout>
 
         <Button
@@ -207,7 +211,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_gravity="right"
-            android:layout_weight="2"
+            android:layout_weight="4"
             android:text="Xem bình luận" />
 
         <Button
@@ -218,3 +222,4 @@
             android:text="Mua ngay" />
     </LinearLayout>
 </ScrollView>
+</LinearLayout>

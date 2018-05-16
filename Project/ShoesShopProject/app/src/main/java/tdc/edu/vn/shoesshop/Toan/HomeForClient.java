@@ -16,37 +16,27 @@ import tdc.edu.vn.shoesshop.Bao.PersonalOfClientLoginedFragment;
 import tdc.edu.vn.shoesshop.Khanh.Cart;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Son.NotificationClientFragment;
-import tdc.edu.vn.shoesshop.Son.NotificationShopFragment;
 
 public class HomeForClient extends AppCompatActivity {
 
     private FirebaseAuth.AuthStateListener authListener;
     //private FirebaseAuth auth;
     FirebaseUser users = FirebaseAuth.getInstance().getCurrentUser();
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_for_client_activity);
-
-        //final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
+        intent = getIntent();
+        Toast.makeText(this, intent.getStringExtra("action"), Toast.LENGTH_SHORT);
         //get current user
-
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-
-        //I added this if statement to keep the selected fragment when rotating the device
-
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                    new HomeLayout()).commit();
-//        }
-        if (users == null)
-        {
+        if (users == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new Home_Client_Fragment()).commit();
-        }else {
+        } else {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new Home_User_Fragment()).commit();
         }
@@ -64,39 +54,28 @@ public class HomeForClient extends AppCompatActivity {
             }
         };
         Intent intent1 = getIntent();
-                            Bundle bundle1 = intent1.getBundleExtra(LoginActivity.BUNDLE);
-                            if(bundle1!=null){
-                                Toast.makeText(getApplicationContext(),"key: "+ bundle1.getString("key"),Toast.LENGTH_LONG).show();
-                            }
+        Bundle bundle1 = intent1.getBundleExtra(LoginActivity.BUNDLE);
+        if (bundle1 != null) {
+            Toast.makeText(getApplicationContext(), "key: " + bundle1.getString("key"), Toast.LENGTH_LONG).show();
+        }
     }
-           //                  Intent intent1 = getIntent();
-//                            Bundle bundle1 = intent1.getBundleExtra(LoginActivity.BUNDLE);
-//                            if(bundle1!=null){
-//                                Toast.makeText(getApplicationContext(),"key: "+ bundle1.getString("key"),Toast.LENGTH_LONG).show();
-//                            }
-//                            Bundle bundle = intent1.getBundleExtra("chuyen");
-//                            if (bundle != null) {
-//                                if (bundle.getInt("chuyen") == 1) {
-//                                }
-//                            }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = null;
-
                     switch (item.getItemId()) {
                         case R.id.nav_home:
-                            if (users == null)
-                            {
+                            if (users == null) {
                                 selectedFragment = new Home_Client_Fragment();
-                            }else {
+                            } else {
                                 selectedFragment = new Home_User_Fragment();
                             }
                             break;
                         case R.id.nav_notification:
                             selectedFragment = new NotificationClientFragment();
+                            Info_product.setType(2);
                             break;
                         case R.id.nav_cart:
                             selectedFragment = new Cart();
@@ -105,7 +84,9 @@ public class HomeForClient extends AppCompatActivity {
                             selectedFragment = new PersonalOfClientLoginedFragment();
                             break;
                     }
+
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+
 
                     return true;
                 }

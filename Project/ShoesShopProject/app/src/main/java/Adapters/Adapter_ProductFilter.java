@@ -13,9 +13,6 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -31,7 +28,7 @@ public class Adapter_ProductFilter extends BaseAdapter {
     private Context mContext;
     private ArrayList<Product> list;
     private ArrayList<ProductDetail> listDetail;
-    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+
     public Adapter_ProductFilter() {
         super();
     }
@@ -58,8 +55,7 @@ public class Adapter_ProductFilter extends BaseAdapter {
     }
 
 
-    class ViewHolderGrid
-    {
+    class ViewHolderGrid {
         public ImageView imageView;
         public RatingBar ratingBar;
         public TextView tvThuongHieu, tvName, tvSoLuong, tvSalePrice, tvListedPrice, tvDiscount;
@@ -71,8 +67,7 @@ public class Adapter_ProductFilter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
         ViewHolderGrid viewHolder = null;
-        if(convertView == null)
-        {
+        if (convertView == null) {
             viewHolder = new ViewHolderGrid();
             convertView = layoutInflater.inflate(R.layout.layout_list_profilter_s, parent, false);
             viewHolder.imageView = (ImageView) convertView.findViewById(R.id.image_view);
@@ -83,9 +78,7 @@ public class Adapter_ProductFilter extends BaseAdapter {
             viewHolder.tvListedPrice = (TextView) convertView.findViewById(R.id.cost);
             viewHolder.tvDiscount = (TextView) convertView.findViewById(R.id.percent);
             convertView.setTag(viewHolder);
-        }
-        else
-        {
+        } else {
             viewHolder = (ViewHolderGrid) convertView.getTag();
         }
 
@@ -105,52 +98,42 @@ public class Adapter_ProductFilter extends BaseAdapter {
         viewHolder.ratingBar.setRating(product.getRating());
         int soluong = 0;
 
-        for(ProductDetail pro : listDetail)
-        {
-            if(pro.getProduct().equals(product.getId()))
-            {
+        for (ProductDetail pro : listDetail) {
+            if (pro.getProduct().equals(product.getId())) {
                 soluong += pro.getQuantity();
             }
-            viewHolder.tvSoLuong.setText("("+ String.valueOf(soluong)+")");
+            viewHolder.tvSoLuong.setText("(" + String.valueOf(soluong) + ")");
         }
-      //  Log.d("da", soluong+"");
+        //  Log.d("da", soluong+"");
         long percent_a;
 
-       percent_a = Math.round(100 - 100 * product.getSalePrice() /product.getListedPrice());
+        percent_a = Math.round(100 - 100 * product.getSalePrice() / product.getListedPrice());
 
-       viewHolder.tvDiscount.setText("-" + String.valueOf(percent_a) + "%");
+        viewHolder.tvDiscount.setText("-" + String.valueOf(percent_a) + "%");
         viewHolder.tvSalePrice.setText(df.format(product.getSalePrice()));
         viewHolder.tvListedPrice.setText(df.format(product.getListedPrice()));
         viewHolder.tvListedPrice.setPaintFlags(viewHolder.tvListedPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         //viewHolder.chkCheck.isChecked();
 
-        if(product.getImage1() != null)
-        {
+        if (product.getImage1() != null) {
             try {
                 Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage1());
                 viewHolder.imageView.setImageBitmap(bitmap);
-            }catch (Exception ex)
-            {
+            } catch (Exception ex) {
 
             }
-        }
-        else if(product.getImage2() != null)
-        {
+        } else if (product.getImage2() != null) {
             try {
                 Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage2());
                 viewHolder.imageView.setImageBitmap(bitmap);
-            }catch (Exception ex)
-            {
+            } catch (Exception ex) {
 
             }
-        }
-        else if(product.getImage3() != null)
-        {
+        } else if (product.getImage3() != null) {
             try {
                 Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage3());
                 viewHolder.imageView.setImageBitmap(bitmap);
-            }catch (Exception ex)
-            {
+            } catch (Exception ex) {
 
             }
         }
