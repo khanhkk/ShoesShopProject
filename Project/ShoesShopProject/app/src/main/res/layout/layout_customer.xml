@@ -4,23 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     tools:context="tdc.edu.vn.shoesshop.Bao.MainCustomer">
 
-    <Button
-        android:id="@+id/btnlogin"
-        android:layout_width="122dp"
-        android:layout_height="37dp"
-        android:layout_weight="1"
-        android:background="@android:color/holo_green_light"
-        android:text="Đăng nhập"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:background="@drawable/background_nen">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            app:srcCompat="@drawable/userprofile"
+            android:layout_marginTop="200dp"/>
+        <Button
+            android:id="@+id/btnlogin"
+            android:layout_width="80dp"
+            android:layout_height="15dp"
+            android:background="@android:color/holo_green_light"
+            android:text="Đăng nhập"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="158dp"/>
+
+
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="300dp"
         android:orientation="vertical"
         >
         <LinearLayout
@@ -29,12 +44,12 @@
 
             <ImageView
                 android:id="@+id/imgthongbao"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                app:srcCompat="@mipmap/thongbao"
+                android:layout_width="44dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp"
+                app:srcCompat="@mipmap/thongbao" />
 
             <TextView
                 android:id="@+id/txtthongbao"
@@ -43,7 +58,7 @@
                 android:layout_toRightOf="@+id/imgthongbao"
                 android:text="Thông Báo"
                 android:layout_marginTop="20dp"
-                android:textSize="30dp"
+                android:textSize="25dp"
                 />
         </LinearLayout>
 
@@ -56,8 +71,8 @@
 
             <ImageView
                 android:id="@+id/imgdonhang"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:srcCompat="@mipmap/donhang"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="30dp"
@@ -70,7 +85,7 @@
                 android:layout_toRightOf="@+id/imgdonhang"
                 android:text="Đơn hàng của tôi"
                 android:layout_marginTop="20dp"
-                android:textSize="30dp"
+                android:textSize="25dp"
                 />
         </LinearLayout>
 

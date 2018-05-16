@@ -3,10 +3,8 @@ package Adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
-import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +15,6 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -146,16 +141,8 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
         if(product.getImage1() != null)
         {
             try {
-
-                //viewHolder.imageView.setImageBitmap(bitmap);
-                //byte[] arr = Base64.decode(product.getImage1(), Base64.DEFAULT);
                 Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage1());
-                Glide.with(mContext).load(bitmap).into(viewHolder.imageView);
-//                Picasso.get().load(Uri.parse(product.getImage1()))
-//                        .fit()
-//                        .centerCrop()
-//                        .into(viewHolder.imageView);
-
+                viewHolder.imageView.setImageBitmap(bitmap);
             }catch (Exception ex)
             {
 
@@ -164,15 +151,8 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
         else if(product.getImage2() != null)
         {
             try {
-//                Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage2());
-//////                viewHolder.imageView.setImageBitmap(bitmap);
-
                 Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage2());
-                Glide.with(mContext).load(bitmap).into(viewHolder.imageView);
-//                Picasso.get().load(Uri.parse(product.getImage2()))
-//                        .fit()
-//                        .centerCrop()
-//                        .into(viewHolder.imageView);
+                viewHolder.imageView.setImageBitmap(bitmap);
             }catch (Exception ex)
             {
 
@@ -181,10 +161,8 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
         else if(product.getImage3() != null)
         {
             try {
-//                Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage3());
-////                viewHolder.imageView.setImageBitmap(bitmap);
                 Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage3());
-                Glide.with(mContext).load(bitmap).into(viewHolder.imageView);
+                viewHolder.imageView.setImageBitmap(bitmap);
             }catch (Exception ex)
             {
 

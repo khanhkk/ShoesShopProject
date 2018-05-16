@@ -29,17 +29,18 @@ public class NotificationShopFragment extends Fragment {
 
     View v;
     private RecyclerView recyclerView;
+
     public static ArrayList<Notification> list;
     NotificationAdapter recyclerViewAdapter;
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-
     public NotificationShopFragment(){}
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
 //        list = new ArrayList<>();
 //        new LoadNotify().execute();
 //        Log.d("s", list.size() + "");
