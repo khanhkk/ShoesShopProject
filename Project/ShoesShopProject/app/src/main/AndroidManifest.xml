@@ -15,7 +15,7 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Sang.ListOder"
+            android:name=".Toan.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,8 +64,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".Thanh.EditingPromotionDetail"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Toan.LoginActivity"
-            android:screenOrientation="portrait"/>
+
         <activity android:name=".Son.OrderInformationForClient"
             android:screenOrientation="portrait"/>
         <activity android:name=".Bao.MainCustomer"

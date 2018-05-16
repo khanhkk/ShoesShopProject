@@ -65,6 +65,12 @@ public class MainInfoCilent extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     public void byBundle() {
         Intent intent = new Intent(MainInfoCilent.this, EdittingClientInformation.class);
         Bundle bundle = new Bundle();
