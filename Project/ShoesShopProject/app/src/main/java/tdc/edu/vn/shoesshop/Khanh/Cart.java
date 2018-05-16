@@ -21,7 +21,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,7 +31,6 @@ import Models.Bill;
 import Models.BillDetail;
 import Models.Client;
 import Models.Notification;
-import Models.Product;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Son.ClientInformationAfterOrder;
 
@@ -48,7 +46,7 @@ public class Cart extends Fragment {
     public static TextView tvMoney;
     Button btnThanhToan;
     Intent intent;
-    final ArrayList<String> ListShop = new ArrayList<>();
+    //final ArrayList<String> ListShop = new ArrayList<>();
     ArrayList<Bill> bills = new ArrayList<>();
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -149,8 +147,9 @@ public class Cart extends Fragment {
             public void onClick(View v) {
 
                 if(list.size() > 0) {
-                    ListShop.clear();
-                    bills.clear();
+                    //ListShop.clear();
+                    //bills.clear();
+                    final ArrayList<String> listShop = new ArrayList<>();
 
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                     alertDialog.setTitle("Thông báo");
@@ -160,111 +159,121 @@ public class Cart extends Fragment {
                     alertDialog.setPositiveButton("Mặc định", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            database.child("Clients").child(user.getUid()).child("Cart").addChildEventListener(new ChildEventListener() {
-                                @Override
-                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                    final BillDetail billDetail = dataSnapshot.getValue(BillDetail.class);
-                                    database.child("Products").orderByChild("id").equalTo(billDetail.getProduct()).addChildEventListener(new ChildEventListener() {
-                                        @Override
-                                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                            Product product = dataSnapshot.getValue(Product.class);
-                                            if (list.size() == 0) {
-                                                UpBillFirebase(product.getShop(),billDetail, bills);
-                                                ListShop.add(product.getShop());
-                                            } else {
-                                                int check = 0;
-                                                for (Bill bill : bills) {
-                                                    if (bill.getShop().equals(product.getShop())) {
-                                                        check++;
-                                                        database.child("Clients").child(user.getUid()).child("Transactions").orderByChild("id").equalTo(bill.getId()).addValueEventListener(new ValueEventListener() {
-                                                            @Override
-                                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                for (DataSnapshot child : dataSnapshot.getChildren())
-                                                                {
-                                                                    child.getRef().child("Details").push().setValue(billDetail);
-                                                                    break;
-                                                                }
-                                                            }
 
-                                                            @Override
-                                                            public void onCancelled(DatabaseError databaseError) {
 
-                                                            }
-                                                        });
-                                                        database.child("Shops").child(product.getShop()).child("Transactions").orderByChild("id").equalTo(bill.getId()).addValueEventListener(new ValueEventListener() {
-                                                            @Override
-                                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                for (DataSnapshot child : dataSnapshot.getChildren())
-                                                                {
-                                                                    child.getRef().child("Details").push().setValue(billDetail);
-                                                                    break;
-                                                                }
-                                                            }
 
-                                                            @Override
-                                                            public void onCancelled(DatabaseError databaseError) {
+                            for(final BillDetail detail : list)
+                            {
+                                //Log.d("aaaa", bills.size() + "");
+                                if (listShop.size() == 0) {
 
-                                                            }
-                                                        });
-                                                        break;
-                                                    }
-                                                }
-                                                if (check == 0) {
-                                                    UpBillFirebase(product.getShop(),billDetail, bills);
-                                                    ListShop.add(product.getShop());
-                                                }
-                                            }
+                                    UpBillFirebase(detail);
+                                    listShop.add(detail.getShop());
+                                } else {
+                                    int check = 0;
+                                    for (String bill : listShop) {
+                                        if (bill.equals(detail.getShop())) {
+                                            check++;
+//                                                    database.child("Clients").child(user.getUid()).child("Transactions").orderByChild("id").equalTo(bill.getId()).addChildEventListener(new ChildEventListener() {
+//                                                        @Override
+//                                                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                                                            database.child("Clients").child(user.getUid()).child("Transactions").child(dataSnapshot.getKey()).child("Details").push().setValue(detail);
+//                                                        }
+//
+//                                                        @Override
+//                                                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                                                        }
+//
+//                                                        @Override
+//                                                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                                                        }
+//
+//                                                        @Override
+//                                                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                                                        }
+//
+//                                                        @Override
+//                                                        public void onCancelled(DatabaseError databaseError) {
+//
+//                                                        }
+//                                                    });
+//
+//                                                    database.child("Shops").child(product.getShop()).child("Transactions").orderByChild("id").equalTo(bill.getId()).addChildEventListener(new ChildEventListener() {
+//                                                        @Override
+//                                                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                                                            database.child("Shops").child(product.getShop()).child("Transactions").child(dataSnapshot.getKey()).child("Details").push().setValue(detail);
+//                                                        }
+//
+//                                                        @Override
+//                                                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                                                        }
+//
+//                                                        @Override
+//                                                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                                                        }
+//
+//                                                        @Override
+//                                                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                                                        }
+//
+//                                                        @Override
+//                                                        public void onCancelled(DatabaseError databaseError) {
+//
+//                                                        }
+//                                                    });
+
+                                            break;
                                         }
-
-                                        @Override
-                                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                                        }
-
-                                        @Override
-                                        public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                                        }
-
-                                        @Override
-                                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                                        }
-
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
-
-                                        }
-                                    });
-
-                                    //clear gio hang
-                                    //database.child("Clients").child(user.getUid()).child("Cart").setValue(null);
-                                    //list.clear();;
-                                    //billAdapter.notifyDataSetChanged();
-
-                                    Toast.makeText(getContext(), "Tạo đơn hàng thành công!", Toast.LENGTH_SHORT).show();
+                                    }
+                                    if (check == 0) {
+                                        UpBillFirebase(detail);
+                                        listShop.add(detail.getShop());
+                                        //ListShop.add(product.getShop());
+                                    }
                                 }
 
-                                @Override
-                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//                                database.child("Products").orderByChild("id").equalTo(detail.getProduct()).addChildEventListener(new ChildEventListener() {
+//                                    @Override
+//                                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                                        final Product product = dataSnapshot.getValue(Product.class);
+//                                        //Log.d("aaaa", bills.size() + "");
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void onCancelled(DatabaseError databaseError) {
+//
+//                                    }
+//                                });
+                            }
 
-                                }
+                            //clear gio hang
+                            //database.child("Clients").child(user.getUid()).child("Cart").setValue(null);
+                            //list.clear();;
+                            //billAdapter.notifyDataSetChanged();
 
-                                @Override
-                                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                                }
-
-                                @Override
-                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            });
+                            Toast.makeText(getContext(), "Tạo đơn hàng thành công!", Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -288,7 +297,7 @@ public class Cart extends Fragment {
         return view;
     }
 
-    private void UpBillFirebase(final String shop, final  BillDetail detail, final ArrayList<Bill> list) {
+    private void UpBillFirebase(final  BillDetail detail) {
         database.child("Clients").orderByKey().equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -300,28 +309,75 @@ public class Cart extends Fragment {
                 bill.setEmail(client.getEmail());
                 bill.setNameClient(client.getName());
                 bill.setPhone(client.getPhone());
-                bill.setShop(shop);
+                bill.setShop(detail.getShop());
                 bill.setStatus(0);
                 Calendar calendar = Calendar.getInstance();
                 bill.setTime(DateTimePicker.simpleDateFormat.format(calendar.getTime()));
                 bill.setId(database.child("Clients").child(user.getUid()).child("Transactions").push().getKey());
 
-                list.add(bill);
                 database.child("Clients").child(user.getUid()).child("Transactions").push().setValue(bill);
-                database.child("Shops").child(shop).child("Transactions").push().setValue(bill);
+                database.child("Shops").child(detail.getShop()).child("Transactions").push().setValue(bill);
+                //bills.add(bill);
+
+                //Log.d("aaaaa", bills.size() + "");
+
 
                 //them san pham vao don dat hang
-//                database.child("Clients").child(user.getUid()).child("Transactions").orderByChild("id").equalTo(bill.getId()).getRef().child("Details").push().setValue(detail);
-//                database.child("Shops").child(shop).child("Transactions").orderByChild("id").equalTo(bill.getId()).getRef().child("Details").push().setValue(detail);
-
-                database.child("Clients").child(user.getUid()).child("Transactions").orderByChild("id").equalTo(bill.getId()).addValueEventListener(new ValueEventListener() {
+                database.child("Clients").child(user.getUid()).child("Transactions").orderByChild("id").equalTo(bill.getId()).addChildEventListener(new ChildEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot child : dataSnapshot.getChildren())
-                        {
-                            child.getRef().child("Details").push().setValue(detail);
-                            break;
-                        }
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        final  String string = dataSnapshot.getKey();
+
+                        database.child("Clients").child(user.getUid()).child("Transactions").child(dataSnapshot.getKey()).child("Details").addChildEventListener(new ChildEventListener() {
+                            @Override
+
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                BillDetail billDetail = dataSnapshot.getValue(BillDetail.class);
+                                if(!dataSnapshot.exists()){
+                                    database.child("Clients").child(user.getUid()).child("Transactions").child(string).child("Details").push().setValue(detail);
+                                }
+                                else if(!billDetail.getProduct().equals(detail.getProduct()))
+                                {
+                                    database.child("Clients").child(user.getUid()).child("Transactions").child(string).child("Details").push().setValue(detail);
+                                }
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
                     }
 
                     @Override
@@ -329,14 +385,26 @@ public class Cart extends Fragment {
 
                     }
                 });
-                database.child("Shops").child(shop).child("Transactions").orderByChild("id").equalTo(bill.getId()).addValueEventListener(new ValueEventListener() {
+
+                database.child("Shops").child(detail.getShop()).child("Transactions").orderByChild("id").equalTo(bill.getId()).addChildEventListener(new ChildEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        for (DataSnapshot child : dataSnapshot.getChildren())
-//                        {
-//                            child.getRef().child("Details").push().setValue(detail);
-//                            break;
-//                        }
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        database.child("Shops").child(detail.getShop()).child("Transactions").child(dataSnapshot.getKey()).child("Details").push().setValue(detail);
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
                     }
 
                     @Override
@@ -357,7 +425,7 @@ public class Cart extends Fragment {
                 notification.setThoiGian(DateTimePicker.simpleDateFormat.format(calendar.getTime()));
                 notification.setBill(bill.getId());
 
-                database.child("Shops").child(shop).child("Notifications").push().setValue(notification);
+                database.child("Shops").child(detail.getShop()).child("Notifications").push().setValue(notification);
             }
 
             @Override
@@ -380,6 +448,5 @@ public class Cart extends Fragment {
 
             }
         });
-
     }
 }
