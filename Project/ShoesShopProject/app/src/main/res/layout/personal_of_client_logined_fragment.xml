@@ -3,19 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#fff">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="230dp"
+        android:orientation="horizontal"
+        android:background="@drawable/background_nen"
         >
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="400dp"
-            android:layout_height="200dp"
-            app:srcCompat="@mipmap/a1" />
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            app:srcCompat="@mipmap/a1"
+            android:layout_marginTop="150dp"
+            android:layout_marginLeft="10dp"/>
 
 
         <TextView
@@ -23,8 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nguyễn Xuân Toàn"
-            android:layout_gravity="center"
-            android:textSize="20dp"/>
+            android:textSize="20dp"
+            android:layout_marginTop="175dp"/>
 
     </LinearLayout>
 
@@ -38,7 +42,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="30dp">
 
             <ImageView
                 android:id="@+id/imglichsu"
@@ -116,19 +120,19 @@
             android:layout_marginTop="10dp">
 
             <ImageView
-                android:id="@+id/imglogout"
+                android:id="@+id/imglogoutclient"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
-                app:srcCompat="@mipmap/c5"
+                app:srcCompat="@mipmap/logout"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="15dp" />
 
             <TextView
-                android:id="@+id/txtlogout"
+                android:id="@+id/txtlogoutclient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/imglogout"
+                android:layout_toRightOf="@+id/imglogoutclient"
                 android:text="Đăng xuất"
                 android:layout_marginTop="20dp"
                 android:textSize="20dp"

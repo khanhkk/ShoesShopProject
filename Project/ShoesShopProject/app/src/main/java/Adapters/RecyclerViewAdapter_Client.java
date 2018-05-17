@@ -2,6 +2,7 @@ package Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,31 +18,24 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+import Controls.General;
+import Models.Product;
+import Models.ProductDetail;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Toan.Info_product;
 
 public class RecyclerViewAdapter_Client extends RecyclerView.Adapter<RecyclerViewAdapter_Client.ViewHolder> {
 
     private static final String TAG = "RecyclerViewAdapter";
-
-    //vars
-
-    private ArrayList<Integer> mImageUrls = new ArrayList<>();
-    private ArrayList<String> mNames = new ArrayList<>();
-    private ArrayList<Integer> mRate = new ArrayList<>();
-    private ArrayList<Double> mSells = new ArrayList<>();
-    private ArrayList<Double> mCost = new ArrayList<>();
-    private ArrayList<Integer> mCount = new ArrayList<>();
+//    var
     private Context mContext;
+    private ArrayList<Product> list;
+    private ArrayList<ProductDetail> listDetail;
 
-    public RecyclerViewAdapter_Client(ArrayList<Integer> mImageUrls, ArrayList<String> mNames, ArrayList<Integer> rate, ArrayList<Double> mSells, ArrayList<Double> mCost, ArrayList<Integer> mCount, Context mContext) {
-        this.mImageUrls = mImageUrls;
-        this.mNames = mNames;
-        this.mRate = rate;
-        this.mSells = mSells;
-        this.mCost = mCost;
-        this.mCount = mCount;
+    public RecyclerViewAdapter_Client(Context mContext, ArrayList<Product> list, ArrayList<ProductDetail> listDetail) {
         this.mContext = mContext;
+        this.list = list;
+        this.listDetail = listDetail;
     }
 
     @Override
@@ -58,38 +52,87 @@ public class RecyclerViewAdapter_Client extends RecyclerView.Adapter<RecyclerVie
 //                .asBitmap()
 //                .load(mImageUrls.get(position))
 //                .into(holder.image);
-        holder.image.setImageResource(mImageUrls.get(position));
+//        holder.image.setImageResource(mImageUrls.get(position));
+        final Product product = list.get(position);
         holder.image.setScaleType(ImageView.ScaleType.FIT_XY);
-        holder.name.setText(mNames.get(position));
-        holder.ratingBar.setRating(Integer.valueOf(mRate.get(position)));
-        holder.count.setText("(" + String.valueOf(mCount.get(position)) + ")");
-        long percent_a;
-        percent_a = Math.round(100 - 100 * mSells.get(position) / mCost.get(position));
-        holder.percent.setText("-" + String.valueOf(percent_a) + "%");
+        holder.name.setText(product.getName());
+        holder.ratingBar.setRating(product.getRating());
+        int soluong = 0;
 
+        for(ProductDetail pro : listDetail)
+        {
+            if(pro.getProduct().equals(product.getId()))
+            {
+                soluong += pro.getQuantity();
+            }
+            holder.count.setText("("+ String.valueOf(soluong)+")");
+        }
+        //  Log.d("da", soluong+"");
+        long percent_a;
+
+        percent_a = Math.round(100 - 100 * product.getSalePrice() /product.getListedPrice());
+        holder.percent.setText("-" + String.valueOf(percent_a) + "%");
         //format 1
         NumberFormat nf = NumberFormat.getInstance();
         DecimalFormat df = (DecimalFormat) nf;
         df.applyPattern("#,### đ");
 
-        holder.sells.setText(df.format((mSells.get(position))));
-        holder.cost.setText(df.format((mCost.get(position))));
+        holder.sells.setText(df.format((product.getSalePrice())));
+        holder.cost.setText(df.format((product.getListedPrice())));
         holder.cost.setPaintFlags(holder.cost.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+        if(product.getImage1() != null)
+        {
+            try {
+                Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage1());
+                holder.image.setImageBitmap(bitmap);
+            }catch (Exception ex)
+            {
+
+            }
+        }
+        else if(product.getImage2() != null)
+        {
+            try {
+                Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage2());
+                holder.image.setImageBitmap(bitmap);
+            }catch (Exception ex)
+            {
+
+            }
+        }
+        else if(product.getImage3() != null)
+        {
+            try {
+                Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage3());
+                holder.image.setImageBitmap(bitmap);
+            }catch (Exception ex)
+            {
+
+            }
+        }
 
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: clicked on an image: " + mNames.get(position));
+                Log.d(TAG, "onClick: clicked on an image: " + product.getName());
                 Intent intent = new Intent(mContext, Info_product.class);
                 mContext.startActivity(intent);
-                Toast.makeText(mContext, mNames.get(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, product.getName(), Toast.LENGTH_SHORT).show();
             }
         });
+//        holder.cardView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(mContext, Info_product.class);
+//                mContext.startActivity(intent);
+//            }
+//        });
     }
 
     @Override
     public int getItemCount() {
-        return mImageUrls.size();
+        return list.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -97,8 +140,6 @@ public class RecyclerViewAdapter_Client extends RecyclerView.Adapter<RecyclerVie
         ImageView image;
         TextView name, sells, cost, count, percent;
         RatingBar ratingBar;
-
-
         public ViewHolder(View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.image_view);

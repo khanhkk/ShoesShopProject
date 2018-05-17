@@ -9,15 +9,17 @@ public class BillDetail {
     private  String id;
     private String product;
     private double price;
+    private String shop;
 
     public BillDetail() {
     }
 
-    public BillDetail(String id, String codeOfProduct, int quantity, double price) {
+    public BillDetail(String id, String codeOfProduct, int quantity, double price, String shop) {
         this.id = id;
         this.quantity = quantity;
         this.product = codeOfProduct;
         this.price = price;
+        this.shop = shop;
     }
 
     public String getId() {
@@ -50,5 +52,13 @@ public class BillDetail {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getShop() {
+        return shop;
+    }
+
+    public void setShop(String shop) {
+        this.shop = shop;
     }
 }

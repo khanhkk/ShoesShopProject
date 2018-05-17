@@ -1,5 +1,6 @@
 package tdc.edu.vn.shoesshop.Toan;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -36,9 +38,9 @@ public class Home_User_Fragment extends Fragment {
     TabItem tabItem, tabItem1, tabItem2;
     private ArrayList<Product> list = new ArrayList<>();
     private ArrayList<Product> list1 = new ArrayList<>();
-    private ArrayList<Product> listPice = new ArrayList<>();
     private ArrayList<ProductDetail> listdDetails = new ArrayList<>();
     private Adapter_ProductFilter adapter;
+
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
     public Home_User_Fragment() {
@@ -46,10 +48,38 @@ public class Home_User_Fragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
+
+    @Override
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.activity_product_filter, container, false);
         gridView = (GridView) view.findViewById(R.id.grid);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getActivity(), position + "", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getContext(), Info_product.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("id", list1.get(position).getId());
+                int count = 0;
+                if(list1.get(position).getImage1()!= null){
+                    count++;
+                }
+                if(list1.get(position).getImage2()!= null){
+                    count++;
+                }
+                if(list1.get(position).getImage3()!= null){
+                    count++;
+                }
+                bundle.putString("count", String.valueOf(count));
+                intent.putExtra("Bundel", bundle);
+                startActivity(intent);
+            }
+        });
         listdDetails.clear();
         data();
         connectAdapter();
@@ -99,7 +129,7 @@ public class Home_User_Fragment extends Fragment {
                     if (i == 0) {
                         list1.add(pro);
                     }
-                    if ((pro.getTrademark()).equals(spnThuongHieu.getSelectedItem().toString())) {
+                    if ((pro.getTrademark().toLowerCase()).equals(spnThuongHieu.getSelectedItem().toString().toLowerCase())) {
                         list1.add(pro);
                     }
                 }
@@ -149,6 +179,7 @@ public class Home_User_Fragment extends Fragment {
         });
         return view;
     }
+
 
     //
     public void connectAdapter() {

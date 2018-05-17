@@ -133,61 +133,6 @@ public class Home_ProductFilter_Fragment extends Fragment {
         return view;
     }
 
-//    private void getImages() {
-//        Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
-//
-//        mImageUrls.add(R.drawable.a);
-//        mNames.add("NIKE");
-//        mrate.add(2);
-//        mCount.add(20);
-//        mSells.add(199000.0);
-//        mCost.add(3000000.0);
-//        mCheck.add(true);
-//
-//        mImageUrls.add(R.drawable.b);
-//        mNames.add("CONVERT");
-//        mrate.add(4);
-//        mCount.add(20);
-//        mSells.add(399000.0);
-//        mCost.add(500000.0);
-//        mCheck.add(false);
-//
-//        mImageUrls.add(R.drawable.c);
-//        mNames.add("ADIDAS");
-//        mrate.add(5);
-//        mCount.add(40);
-//        mSells.add(499000.0);
-//        mCost.add(600000.0);
-//        mCheck.add(true);
-//
-//        mImageUrls.add(R.drawable.a);
-//        mNames.add("NIKE");
-//        mrate.add(2);
-//        mCount.add(20);
-//        mSells.add(199000.0);
-//        mCost.add(3000000.0);
-//        mCheck.add(true);
-//
-//        mImageUrls.add(R.drawable.b);
-//        mNames.add("CONVERT");
-//        mrate.add(4);
-//        mCount.add(20);
-//        mSells.add(399000.0);
-//        mCost.add(500000.0);
-//        mCheck.add(false);
-//
-//        mImageUrls.add(R.drawable.c);
-//        mNames.add("ADIDAS");
-//        mrate.add(5);
-//        mCount.add(40);
-//        mSells.add(499000.0);
-//        mCost.add(600000.0);
-//        mCheck.add(false);
-//
-//        initGridView();
-//
-//    }
-
     private void initGridView() {
 
         Log.d(TAG, "initRecyclerView: init recyclerview");

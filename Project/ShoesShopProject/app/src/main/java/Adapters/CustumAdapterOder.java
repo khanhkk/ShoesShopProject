@@ -17,16 +17,17 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import Models.Bill;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Son.OrderInformationForClient;
 
-public class CustumAdapterOder extends ArrayAdapter<String> {
+public class CustumAdapterOder extends ArrayAdapter<Bill> {
     private AppCompatActivity context;
     private  int resource;
-    private ArrayList<String> arrayContact;
+    private ArrayList<Bill> arrayContact;
 
 
-    public CustumAdapterOder(@NonNull AppCompatActivity context, int resource, @NonNull ArrayList<String> objects) {
+    public CustumAdapterOder(@NonNull AppCompatActivity context, int resource, @NonNull ArrayList<Bill> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
@@ -41,13 +42,14 @@ public class CustumAdapterOder extends ArrayAdapter<String> {
         //convertView = LayoutInflater.from(context).inflate(R.layout.layout_oder,parent,false);
         convertView = inflater.inflate(resource, parent, false);
         ImageView imgView = (ImageView) convertView.findViewById(R.id.imgViews12);
-        TextView txtLichSu = (TextView) convertView.findViewById(R.id.txtInfo);
+        TextView timeOder = (TextView) convertView.findViewById(R.id.txtInfo);
         TextView emailOder = (TextView) convertView.findViewById(R.id.txtEmailhistory);
 
-        String contact = arrayContact.get(position);
+        Bill contact = arrayContact.get(position);
 
 
-        txtLichSu.setText(contact);
+        timeOder.setText(contact.getTime());
+        emailOder.setText(contact.getEmail());
 
 
         return convertView;

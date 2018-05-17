@@ -30,48 +30,77 @@ public class PersonalOfClientLoginedFragment extends Fragment {
 
         final FirebaseAuth auth = FirebaseAuth.getInstance();
 
+        // lịch sử mua hàng
         ImageView imglichsu = (ImageView) view.findViewById(R.id.imglichsu);
+        imglichsu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ListOder.class);
+                startActivity (intent);
+            }
+        });
         TextView txtlichsu = (TextView) view.findViewById(R.id.txtlichsu);
         txtlichsu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ListOder.class);
                 startActivity (intent);
-                Toast.makeText(getActivity(), " Lịch sử mua hàng " , Toast.LENGTH_SHORT).show();
             }
         });
 
+        // thông tin khách hàng
         ImageView imgthongtin = (ImageView) view.findViewById(R.id.imgthongtin);
+        imgthongtin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MainInfoCilent.class);
+                startActivity (intent);
+            }
+        });
         TextView txtthongtin = (TextView) view.findViewById(R.id.txtthongtin);
         txtthongtin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MainInfoCilent.class);
                 startActivity (intent);
-                Toast.makeText(getActivity(), " Thông tin của tôi " , Toast.LENGTH_SHORT).show();
             }
         });
 
+        // đổi mật khẩu
         ImageView imgdoimk = (ImageView) view.findViewById(R.id.imgdoimk);
+        imgdoimk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ChangePassword.class);
+                startActivity (intent);
+            }
+        });
         TextView txtdoimk = (TextView) view.findViewById(R.id.txtdoimk);
         txtdoimk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ChangePassword.class);
                 startActivity (intent);
-                Toast.makeText(getActivity(), " Đổi mật khẩu " , Toast.LENGTH_SHORT).show();
             }
         });
 
-        ImageView imglogout = (ImageView) view.findViewById(R.id.imglogout);
-        TextView txtlogout = (TextView) view.findViewById(R.id.txtlogout);
+        // đăng xuất
+        ImageView imglogout = (ImageView) view.findViewById(R.id.imglogoutclient);
+        imglogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                auth.signOut();
+                Intent intent = new Intent(getActivity(), MainCustomer.class);
+                startActivity (intent);
+            }
+        });
+        TextView txtlogout = (TextView) view.findViewById(R.id.txtlogoutclient);
         txtlogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 auth.signOut();
                 Intent intent = new Intent(getActivity(), MainCustomer.class);
                 startActivity (intent);
-                Toast.makeText(getActivity(), " Đăng xuất " , Toast.LENGTH_SHORT).show();
             }
         });
 

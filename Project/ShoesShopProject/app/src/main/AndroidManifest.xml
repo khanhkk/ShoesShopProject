@@ -64,8 +64,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".Thanh.EditingPromotionDetail"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Sang.ListOder"
-            android:screenOrientation="portrait"/>
+
         <activity android:name=".Son.OrderInformationForClient"
             android:screenOrientation="portrait"/>
         <activity android:name=".Bao.MainCustomer"
