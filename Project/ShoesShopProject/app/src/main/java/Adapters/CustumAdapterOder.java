@@ -1,7 +1,5 @@
 package Adapters;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,17 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import Models.Bill;
 import tdc.edu.vn.shoesshop.R;
-import tdc.edu.vn.shoesshop.Son.OrderInformationForClient;
 
 public class CustumAdapterOder extends ArrayAdapter<Bill> {
     private AppCompatActivity context;
@@ -49,7 +43,7 @@ public class CustumAdapterOder extends ArrayAdapter<Bill> {
 
 
         timeOder.setText(contact.getTime());
-        emailOder.setText(contact.getEmail());
+        emailOder.setText(contact.getId());
 
 
         return convertView;

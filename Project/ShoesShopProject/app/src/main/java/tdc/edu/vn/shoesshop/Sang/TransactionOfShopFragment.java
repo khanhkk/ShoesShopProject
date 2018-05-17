@@ -18,7 +18,7 @@ public class TransactionOfShopFragment extends Fragment {
 
     ListView lvContact;
     CustumAdapterHistory customAdapter;
-    ArrayList<String> list = new ArrayList<>();
+    ArrayList<String> list;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,9 +26,10 @@ public class TransactionOfShopFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = null;
         view = inflater.inflate(R.layout.transaction_of_shop_fragment, container, false);
-
         lvContact = (ListView) view.findViewById(R.id.listview);
+
         lvContact.setDivider(null);
+        list = new ArrayList<>();
 
         list.add("Đơn hàng đã giao");
         list.add("Đơn hàng đang vận chuyển");

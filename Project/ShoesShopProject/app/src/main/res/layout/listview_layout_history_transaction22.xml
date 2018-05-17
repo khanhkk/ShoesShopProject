@@ -11,7 +11,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:src="@drawable/bill"
+            android:src="@drawable/transaction"
             />
 
         <LinearLayout
@@ -26,7 +26,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/txtLichSu"
-                    android:textSize="20sp" />
+                    android:textSize="25sp" />
 
                 <!--<TextView-->
                     <!--android:id="@+id/tvTime"-->

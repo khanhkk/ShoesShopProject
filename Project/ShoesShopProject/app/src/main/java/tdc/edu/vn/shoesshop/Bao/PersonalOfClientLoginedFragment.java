@@ -4,7 +4,6 @@ package tdc.edu.vn.shoesshop.Bao;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,16 +34,44 @@ public class PersonalOfClientLoginedFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = null;
         view = inflater.inflate(R.layout.personal_of_client_logined_fragment, container, false);
-
         final FirebaseAuth auth = FirebaseAuth.getInstance();
+
         nameClient = (TextView) view.findViewById(R.id.txtName);
-        data();
+        database.child("Clients").orderByKey().equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Client client = dataSnapshot.getValue(Client.class);
+                nameClient.setText(client.getName());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         // lịch sử mua hàng
         ImageView imglichsu = (ImageView) view.findViewById(R.id.imglichsu);
         imglichsu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ListOder.class);
+                intent.putExtra("type", "client");
                 startActivity(intent);
             }
         });
@@ -53,6 +80,7 @@ public class PersonalOfClientLoginedFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ListOder.class);
+                intent.putExtra("type", "client");
                 startActivity(intent);
             }
         });
@@ -114,55 +142,5 @@ public class PersonalOfClientLoginedFragment extends Fragment {
         });
 
         return view;
-    }
-
-    public void data() {
-
-
-        database.child("Clients").orderByKey().equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Client client = dataSnapshot.getValue(Client.class);
-                nameClient.setText(client.getName());
-//                txtsdt.setText("Số điện thoại:  " + client.getPhone());
-//                txtemail.setText("Email:  " + client.getEmail());
-//                txtdiachi.setText("Địa chỉ:  " + client.getAddress());
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-//        database.child("Accounts").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Account account = dataSnapshot.getValue(Account.class);
-//                if ((account.getLevel() == 0) || (user == null))
-//                    button.setVisibility(View.INVISIBLE);
-//                else
-//                    button.setVisibility(View.VISIBLE);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
     }
 }

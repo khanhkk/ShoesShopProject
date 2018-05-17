@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -42,6 +43,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".Sang.ChangePassword"
             android:screenOrientation="portrait"/>
+        <activity android:name=".Sang.ListOder"
+            android:screenOrientation="portrait"/>
         <activity android:name=".Son.OrderInformationForShop"
             android:screenOrientation="portrait"/>
         <activity android:name=".Son.ClientInformationAfterOrder"
@@ -64,7 +67,6 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".Thanh.EditingPromotionDetail"
             android:screenOrientation="portrait"/>
-
         <activity android:name=".Son.OrderInformationForClient"
             android:screenOrientation="portrait"/>
         <activity android:name=".Bao.MainCustomer"

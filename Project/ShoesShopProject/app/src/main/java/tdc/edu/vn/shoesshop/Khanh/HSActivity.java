@@ -84,7 +84,6 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
         mSectionsPagerAdapter = new Adapters.SectionsPagerAdapter(getChildFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOffscreenPageLimit(3);
-       // mViewPager.setPageTransformer(true, new RotateUpTransformer());
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
         svSearch.setOnQueryTextListener(this);

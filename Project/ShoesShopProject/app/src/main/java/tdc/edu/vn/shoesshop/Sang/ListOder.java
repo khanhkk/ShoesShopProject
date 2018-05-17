@@ -1,66 +1,100 @@
 package tdc.edu.vn.shoesshop.Sang;
 
 
-    import android.content.Intent;
-    import android.os.Bundle;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-    import android.support.v7.widget.SearchView;
-    import android.view.View;
-    import android.widget.AdapterView;
-    import android.widget.ListView;
-    import android.widget.Toast;
+import android.support.v7.widget.SearchView;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
-    import java.util.ArrayList;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 import Adapters.CustumAdapterOder;
 import Controls.DatePickerCustom;
-    import Models.Bill;
-    import tdc.edu.vn.shoesshop.R;
-    import tdc.edu.vn.shoesshop.Son.OrderInformationForClient;
+import Models.Bill;
+import tdc.edu.vn.shoesshop.R;
+import tdc.edu.vn.shoesshop.Son.OrderInformationForClient;
 
-public class ListOder  extends AppCompatActivity implements SearchView.OnQueryTextListener{
+public class ListOder extends AppCompatActivity implements SearchView.OnQueryTextListener {
     ListView lvContact;
     CustumAdapterOder adapter;
     ArrayList<Bill> list = new ArrayList<>();
     DatePickerCustom dateTimePicker;
+    SearchView svSearchPromotions;
+    Intent intent;
 
-  //  SearchView svSearchPromotions;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_oder);
         lvContact = (ListView) findViewById(R.id.ListOrder);
-        dateTimePicker = (DatePickerCustom)findViewById(R.id.dtDatePicker) ;
+        dateTimePicker = (DatePickerCustom) findViewById(R.id.dtDatePicker);
 
-//        svSearchPromotions = (SearchView) findViewById(R.id.Search);
-//        svSearchPromotions.setOnQueryTextListener(this);
+        svSearchPromotions = (SearchView) findViewById(R.id.svSearch);
+        svSearchPromotions.setOnQueryTextListener(this);
 
-        //dateTimePicker.setDate(Calendar.getInstance().getTime());
+        intent = getIntent();
+        String str = intent.getStringExtra("type");
+        if(str != null)
+        {
+            if(str.equals("client"))
+            {
+                database.child("Clients").child(user.getUid()).child("Transactions").addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Bill bill = dataSnapshot.getValue(Bill.class);
+                        list.add(bill);
+                        adapter.notifyDataSetChanged();
+                    }
 
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-//        ArrayList<contactList22>  arrayList = new ArrayList<>();
-//        contactList22 contact1 = new contactList22(null,"Nguyen Van A",);
-//        contactList22 contact2 = new contactList22(null,"Nguyen Van B","092xx xxxx");
-//        contactList22 contact3 = new contactList22(null,"Nguyen Van C","092xxx xxx");
-//        contactList22 contact4 = new contactList22(null,"Nguyen Van D","092xxx xxx");
+                    }
 
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-//        arrayList.add(contact1);
-//        arrayList.add(contact2);
-//        arrayList.add(contact3);
-//        arrayList.add(contact4);
+                    }
 
-        list.add(new Bill("nhom5@gmail.com","12/05/2018"));
-        list.add(new Bill("nhom5@gmail.com","12/05/2018"));
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-        CustumAdapterOder customAdapter = new CustumAdapterOder(ListOder.this,R.layout.layout_listviewoder,list);
-        lvContact.setAdapter(customAdapter);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+            else
+            {
+
+            }
+        }
+
+        adapter = new CustumAdapterOder(ListOder.this, R.layout.layout_listviewoder, list);
+        lvContact.setAdapter(adapter);
 
         lvContact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(ListOder.this, i+ "",Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListOder.this, i + "", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(ListOder.this, OrderInformationForClient.class);
                 startActivity(intent);
             }

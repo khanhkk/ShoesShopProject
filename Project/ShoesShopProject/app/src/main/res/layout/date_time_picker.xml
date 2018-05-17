@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:text="Lựa chọn mốc thời gian"
+        android:text="Thời gian"
         android:textSize="18sp"
         android:textColor="@android:color/darker_gray"
         android:layout_weight="5"
