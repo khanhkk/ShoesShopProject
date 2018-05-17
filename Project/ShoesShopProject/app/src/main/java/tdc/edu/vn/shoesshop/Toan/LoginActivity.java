@@ -167,10 +167,24 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 auth.signOut();
-                Intent intent = new Intent(LoginActivity.this, HomeForClient.class);
-                startActivity(intent);
+//                Intent intent = new Intent(LoginActivity.this, HomeForClient.class);
+//                startActivity(intent);
+                onBackPressed();
             }
         });
+    }
+    private static long back_pressed;
+    @Override
+    public void onBackPressed() {
+        if (back_pressed + 3000 > System.currentTimeMillis()) {
+            finishAffinity();
+        } else {
+            Toast.makeText(getBaseContext(), "Nhấn back thêm lần nữa để thoát",
+                    Toast.LENGTH_SHORT).show();
+            back_pressed = System.currentTimeMillis();
+
+        }
+
     }
 
 }

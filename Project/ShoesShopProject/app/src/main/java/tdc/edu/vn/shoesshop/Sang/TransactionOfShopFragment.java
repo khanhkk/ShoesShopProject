@@ -38,6 +38,7 @@ public class TransactionOfShopFragment extends Fragment {
         list.add("Đơn đã hủy");
         list.add("Đơn chờ xử lí");
 
+
         CustumAdapterHistory customAdapter = new CustumAdapterHistory(getActivity(), R.layout.listview_layout_history_transaction22,list);
 
         lvContact.setAdapter(customAdapter);
