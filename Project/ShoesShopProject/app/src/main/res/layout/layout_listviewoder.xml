@@ -9,7 +9,7 @@
         android:id="@+id/imgViews12"
         android:layout_width="70dp"
         android:layout_height="60dp"
-        android:src="@drawable/imageedit_1_3706021323"
+        android:src="@drawable/bill"
         />
     <LinearLayout
         android:id="@+id/linear"

@@ -12,11 +12,11 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import Models.Client;
 import tdc.edu.vn.shoesshop.R;
@@ -117,15 +117,31 @@ public class PersonalOfClientLoginedFragment extends Fragment {
     }
 
     public void data() {
-        database.child("Clients").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
 
+
+        database.child("Clients").orderByKey().equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Client client = dataSnapshot.getValue(Client.class);
                 nameClient.setText(client.getName());
 //                txtsdt.setText("Số điện thoại:  " + client.getPhone());
 //                txtemail.setText("Email:  " + client.getEmail());
 //                txtdiachi.setText("Địa chỉ:  " + client.getAddress());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
             }
 
             @Override
