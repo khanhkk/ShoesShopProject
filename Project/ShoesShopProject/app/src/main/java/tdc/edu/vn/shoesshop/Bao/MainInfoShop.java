@@ -104,6 +104,9 @@ public class MainInfoShop extends AppCompatActivity {
                 }
             });
         }
+        else {
+            dataShop_shop();
+        }
     }
     public void checkRight()
     {
@@ -113,9 +116,28 @@ public class MainInfoShop extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Account account = dataSnapshot.getValue(Account.class);
                 if ((account.getLevel() == 1) || (user == null))
-                    button.setVisibility(View.INVISIBLE);
+                    button.setVisibility(View.GONE);
                 else
                     button.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void dataShop_shop(){
+        database.child("Shops").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Shop shop = dataSnapshot.getValue(Shop.class);
+                name.setText(shop.getName());
+                phone.setText("Số điện thoại:  " + shop.getPhone());
+                email.setText("Email:  " + shop.getEmail());
+                address.setText("Địa chỉ:  " + shop.getAddress());
+                button.setVisibility(View.VISIBLE);
             }
 
             @Override

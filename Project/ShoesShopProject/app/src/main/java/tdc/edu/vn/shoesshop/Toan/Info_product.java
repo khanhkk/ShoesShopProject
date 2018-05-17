@@ -57,7 +57,7 @@ public class Info_product extends AppCompatActivity {
     Spinner spinner;
     Bundle bundle, bundleShop;
     public static Product pro;
-   // BillAdapter billAdapter;
+    // BillAdapter billAdapter;
     ArrayList<BillDetail> list = new ArrayList<BillDetail>();
     String ma = null;
 
@@ -107,8 +107,7 @@ public class Info_product extends AppCompatActivity {
             public void onClick(View v) {
                 //bundleShop = new Bundle();
                 Intent intent = new Intent(Info_product.this, tdc.edu.vn.shoesshop.Bao.MainInfoShop.class);
-                intent.putExtra("shop",ma);
-//                Info_product.setType(1);
+                intent.putExtra("shop", pro.getShop());
                 startActivity(intent);
             }
         });
@@ -117,7 +116,10 @@ public class Info_product extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addBilldetail();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                        new Cart()).commit();
                 Intent intent = new Intent(Info_product.this, tdc.edu.vn.shoesshop.Toan.HomeForClient.class);
+                intent.putExtra("action", "showCart");
                 startActivity(intent);
             }
         });
@@ -363,12 +365,11 @@ public class Info_product extends AppCompatActivity {
         //billDetail.setCodeOfProduct(product.getId());
         billDetail.setId(database.child("Cart").push().getKey());
         billDetail.setQuantity(1);
-        billDetail.setShop(pro.getShop());
         //billDetail.setPrice(product.getSalePrice());
         billDetail.setProduct(pro.getId());
         billDetail.setPrice(pro.getSalePrice());
         list.add(billDetail);
         database.child("Clients").child(user.getUid()).child("Cart").push().setValue(billDetail);
-      //  billAdapter.notifyDataSetChanged();
+        //  billAdapter.notifyDataSetChanged();
     }
 }

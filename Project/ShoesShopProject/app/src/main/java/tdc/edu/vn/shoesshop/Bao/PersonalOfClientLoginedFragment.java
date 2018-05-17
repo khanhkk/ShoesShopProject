@@ -9,16 +9,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import Models.Notification;
+import Models.Client;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Sang.ChangePassword;
 import tdc.edu.vn.shoesshop.Sang.ListOder;
 
 public class PersonalOfClientLoginedFragment extends Fragment {
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+    TextView nameClient;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,14 +37,15 @@ public class PersonalOfClientLoginedFragment extends Fragment {
 
 
         final FirebaseAuth auth = FirebaseAuth.getInstance();
-
+        nameClient = (TextView) view.findViewById(R.id.txtName);
+        data();
         // lịch sử mua hàng
         ImageView imglichsu = (ImageView) view.findViewById(R.id.imglichsu);
         imglichsu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ListOder.class);
-                startActivity (intent);
+                startActivity(intent);
             }
         });
         TextView txtlichsu = (TextView) view.findViewById(R.id.txtlichsu);
@@ -44,7 +53,7 @@ public class PersonalOfClientLoginedFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ListOder.class);
-                startActivity (intent);
+                startActivity(intent);
             }
         });
 
@@ -54,7 +63,7 @@ public class PersonalOfClientLoginedFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MainInfoCilent.class);
-                startActivity (intent);
+                startActivity(intent);
             }
         });
         TextView txtthongtin = (TextView) view.findViewById(R.id.txtthongtin);
@@ -62,7 +71,7 @@ public class PersonalOfClientLoginedFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MainInfoCilent.class);
-                startActivity (intent);
+                startActivity(intent);
             }
         });
 
@@ -72,7 +81,7 @@ public class PersonalOfClientLoginedFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ChangePassword.class);
-                startActivity (intent);
+                startActivity(intent);
             }
         });
         TextView txtdoimk = (TextView) view.findViewById(R.id.txtdoimk);
@@ -80,7 +89,7 @@ public class PersonalOfClientLoginedFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ChangePassword.class);
-                startActivity (intent);
+                startActivity(intent);
             }
         });
 
@@ -91,7 +100,7 @@ public class PersonalOfClientLoginedFragment extends Fragment {
             public void onClick(View view) {
                 auth.signOut();
                 Intent intent = new Intent(getActivity(), MainCustomer.class);
-                startActivity (intent);
+                startActivity(intent);
             }
         });
         TextView txtlogout = (TextView) view.findViewById(R.id.txtlogoutclient);
@@ -100,10 +109,44 @@ public class PersonalOfClientLoginedFragment extends Fragment {
             public void onClick(View view) {
                 auth.signOut();
                 Intent intent = new Intent(getActivity(), MainCustomer.class);
-                startActivity (intent);
+                startActivity(intent);
             }
         });
 
         return view;
+    }
+
+    public void data() {
+        database.child("Clients").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Client client = dataSnapshot.getValue(Client.class);
+                nameClient.setText(client.getName());
+//                txtsdt.setText("Số điện thoại:  " + client.getPhone());
+//                txtemail.setText("Email:  " + client.getEmail());
+//                txtdiachi.setText("Địa chỉ:  " + client.getAddress());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+//        database.child("Accounts").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Account account = dataSnapshot.getValue(Account.class);
+//                if ((account.getLevel() == 0) || (user == null))
+//                    button.setVisibility(View.INVISIBLE);
+//                else
+//                    button.setVisibility(View.VISIBLE);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 }
