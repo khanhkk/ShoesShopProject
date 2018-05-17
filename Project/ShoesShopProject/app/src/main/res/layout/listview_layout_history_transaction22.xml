@@ -27,6 +27,7 @@
             android:id="@+id/btnImg"
             android:layout_width="82dp"
             android:layout_height="76dp"
+            android:background="@color/none"
             android:src="@drawable/buttunarrow" />
 
 </LinearLayout>
