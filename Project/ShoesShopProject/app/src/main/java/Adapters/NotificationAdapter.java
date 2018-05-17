@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         viewHolder.item_contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext,"TT"+String.valueOf(viewHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext,"TT"+String.valueOf(viewHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext,OrderInformationForShop.class);
                 String s = mData.get(viewHolder.getAdapterPosition()).getBill();
                 intent.putExtra("bill", s);
