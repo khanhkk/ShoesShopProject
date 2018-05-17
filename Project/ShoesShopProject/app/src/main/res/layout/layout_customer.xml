@@ -1,41 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
+    android:orientation="vertical"
     tools:context="tdc.edu.vn.shoesshop.Bao.MainCustomer">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="280dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@drawable/background_nen">
 
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="20dp"
             app:srcCompat="@drawable/userprofile"
-            android:layout_marginTop="200dp"/>
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="bottom"
+            android:scaleType="fitCenter"/>
         <Button
             android:id="@+id/btnlogin"
             android:layout_width="80dp"
-            android:layout_height="15dp"
+            android:layout_height="25dp"
             android:background="@android:color/holo_green_light"
             android:text="Đăng nhập"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="10dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginLeft="158dp"/>
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="160dp"/>
 
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="300dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical"
         >
         <LinearLayout
@@ -93,4 +98,4 @@
 
 
 
-</RelativeLayout>
+</LinearLayout>

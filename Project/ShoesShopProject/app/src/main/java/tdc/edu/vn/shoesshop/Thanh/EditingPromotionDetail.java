@@ -227,6 +227,7 @@ public class EditingPromotionDetail extends AppCompatActivity {
 
                             for (DataSnapshot child: dataSnapshot.getChildren()) {
                                 child.getRef().setValue(promotionsDetail);
+                                break;
                             }
 
                             Toast.makeText(getApplicationContext(), "Successful!", Toast.LENGTH_LONG).show();

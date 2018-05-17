@@ -202,7 +202,7 @@
                     android:id="@+id/id_huy"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center_vertical"
                     android:text="Hủy"
                     android:background="@drawable/button2_style"
                     android:textColor="@color/white"

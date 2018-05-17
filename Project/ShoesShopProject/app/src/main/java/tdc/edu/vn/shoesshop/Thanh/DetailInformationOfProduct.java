@@ -401,6 +401,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 for (DataSnapshot child: dataSnapshot.getChildren()) {
                                     child.getRef().setValue(product);
+                                    break;
                                 }
                                 intent = new Intent(DetailInformationOfProduct.this, SelectionProductToEditting.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
