@@ -1,5 +1,6 @@
 package tdc.edu.vn.shoesshop.Bao;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import tdc.edu.vn.shoesshop.R;
+import tdc.edu.vn.shoesshop.Son.NotificationClientFragment;
 import tdc.edu.vn.shoesshop.Toan.LoginActivity;
 
 
@@ -32,6 +34,8 @@ public class MainCustomer extends AppCompatActivity {
         txtthongbao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainCustomer.this, Notification.class);
+                startActivity(intent);
             }
         });
 

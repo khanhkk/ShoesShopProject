@@ -54,7 +54,6 @@ public class MainInfoShop extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainInfoShop.this, EdittingShopInformation.class);
                 startActivity(intent);
-                Toast.makeText(MainInfoShop.this, "  ", Toast.LENGTH_SHORT).show();
             }
         });
         //  Action bar back
@@ -65,10 +64,18 @@ public class MainInfoShop extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainInfoShop.this, HomeForShop.class);
-                startActivity(intent);
+//                Intent intent = new Intent(MainInfoShop.this, HomeForShop.class);
+//                startActivity(intent);
+                onBackPressed();
             }
         });
+    }
+
+    //back trang truoc
+    @Override
+    public void onBackPressed() {
+        MainInfoShop.super.onBackPressed();
+
     }
 
     public void data() {

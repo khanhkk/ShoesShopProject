@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -63,11 +64,22 @@ public class EdittingPromotions extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editting_promotions_activity);
 
+        //back trang truoc
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("");
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         //anh xa
         dtTimeEnd = (DateTimePicker)findViewById(R.id.dateEnd);
         dtTimeStart = (DateTimePicker)findViewById(R.id.dateStart);
         btnSave = (Button) findViewById(R.id.btnSave);
-        btnBack = (ImageButton) findViewById(R.id.btnBack);
         etName = (EditText) findViewById(R.id.edtNameProgram);
         etContent = (EditText) findViewById(R.id.edtContent);
         btnChange = (ImageButton) findViewById(R.id.btnChangeImage);
@@ -121,15 +133,6 @@ public class EdittingPromotions extends AppCompatActivity {
             }
         }
 
-        //quay tro lai trang truoc
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                intent = getIntent();
-                intent.setClass(EdittingPromotions.this, Promotions.class);
-                startActivity(intent);
-            }
-        });
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -233,6 +236,13 @@ public class EdittingPromotions extends AppCompatActivity {
                 alertDialog.show();
             }
         });
+    }
+
+    //back trang truoc
+    @Override
+    public void onBackPressed() {
+        EdittingPromotions.super.onBackPressed();
+
     }
 
 
