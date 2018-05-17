@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -121,7 +122,8 @@ public class EdittingPromotions extends AppCompatActivity {
 //                        roundedBitmapDrawable.setCircular(true);
                         RoundedBitmapDrawable roundedBitmapDrawable = General.setCircleImage(bitmap);
 
-                        btnChange.setImageDrawable(roundedBitmapDrawable);
+                        Glide.with(EdittingPromotions.this).load(roundedBitmapDrawable).into(btnChange);
+                        //btnChange.setImageDrawable(roundedBitmapDrawable);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -151,13 +153,25 @@ public class EdittingPromotions extends AppCompatActivity {
                             Toast.makeText(EdittingPromotions.this, "Thông tin nhập chưa đúng!", Toast.LENGTH_SHORT).show();
                             return;
                         }
+
+
+
+
                     } catch (Exception ex) {
                     }
                     if (promotion != null) {
                         //sua thong tin cua chuong trinh khuyen mai
                         promotion.setTitle(etName.getText() + "");
+                        if(DateTimePicker.simpleDateFormat.parse(promotion.getDateStart()).compareTo(Calendar.getInstance().getTime()) > 0)
+                        {
+                            promotion.setDateStart(s1);
+                        }
+                        if(DateTimePicker.simpleDateFormat.parse(promotion.getDateEnd()).compareTo(Calendar.getInstance().getTime()) > 0)
+                        {
+                            promotion.setDateEnd(s2);
+                        }
                         //promotion.setDateStart(s1);
-                        promotion.setDateEnd(s2);
+                        //promotion.setDateEnd(s2);
                         promotion.setContent(etContent.getText() + "");
                         promotion.setShop(user.getUid());
                         if (image != null) {

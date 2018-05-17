@@ -45,8 +45,6 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".Sang.ChangePassword"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Sang.ListOder"
-            android:screenOrientation="portrait"/>
         <activity android:name=".Son.OrderInformationForShop"
             android:screenOrientation="portrait"/>
         <activity android:name=".Son.ClientInformationAfterOrder"

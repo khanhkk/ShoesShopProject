@@ -30,7 +30,6 @@ import java.util.HashMap;
 import Adapters.PromotionExpandableListAdapter;
 import Models.Promotion;
 import Models.PromotionsDetail;
-import tdc.edu.vn.shoesshop.Bao.PersonalOfShopFragment;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Thanh.EditingPromotionDetail;
 import tdc.edu.vn.shoesshop.Toan.HomeForShop;
@@ -61,15 +60,15 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
 
         //back
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("");
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(MainInfoCilent.this, HomeForClient.class);
-//                startActivity(intent);
-                onBackPressed();
+                Intent intent = new Intent(Promotions.this, HomeForShop.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+                //onBackPressed();
             }
         });
         //anh xa

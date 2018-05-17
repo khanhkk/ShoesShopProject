@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -25,6 +26,7 @@ import Controls.DatePickerCustom;
 import Models.Bill;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Son.OrderInformationForClient;
+import tdc.edu.vn.shoesshop.Toan.HomeForClient;
 
 public class ListOder extends AppCompatActivity implements SearchView.OnQueryTextListener {
     ListView lvContact;
@@ -46,6 +48,20 @@ public class ListOder extends AppCompatActivity implements SearchView.OnQueryTex
 
         svSearchPromotions = (SearchView) findViewById(R.id.svSearch);
         svSearchPromotions.setOnQueryTextListener(this);
+
+        //back
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListOder.this, HomeForClient.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+                //onBackPressed();
+            }
+        });
 
         intent = getIntent();
         String str = intent.getStringExtra("type");

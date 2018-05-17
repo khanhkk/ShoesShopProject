@@ -67,7 +67,6 @@ public class OrderInformationForShop extends AppCompatActivity {
 
         //arritem = new ArrayList<OrderShop>();
         ListDetail = new ArrayList<>();
-        vanchuyen.setVisibility(View.VISIBLE);
 
         intent = getIntent();
         bill_id = intent.getStringExtra("bill");
@@ -85,7 +84,7 @@ public class OrderInformationForShop extends AppCompatActivity {
                         vanchuyen.setVisibility(View.INVISIBLE);
                         if (bill.getStatus() == 0) {
                             tinhtrang.setText("Đang chờ xử lý");
-
+                            vanchuyen.setVisibility(View.VISIBLE);
                         } else if (bill.getStatus() == 1) {
                             tinhtrang.setText("Đang vận chuyển");
                         } else if (bill.getStatus() == -1) {
