@@ -3,6 +3,7 @@ package Adapters;
 /**
  * Created by ACER on 4/4/2018.
  */
+
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -19,7 +20,6 @@ import java.util.ArrayList;
 
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Sang.ListOder;
-import tdc.edu.vn.shoesshop.Son.OrderInformationForClient;
 
 
 public class CustumAdapterHistory extends ArrayAdapter<String> {
@@ -50,7 +50,8 @@ public class CustumAdapterHistory extends ArrayAdapter<String> {
         String contact = arrayContact.get(position);
 
 
-        txtLichSu.setText(contact+"");
+        txtLichSu.setText(contact);
+
         btnImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

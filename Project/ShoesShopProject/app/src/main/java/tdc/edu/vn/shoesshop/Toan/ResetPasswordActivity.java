@@ -73,16 +73,24 @@ public class ResetPasswordActivity extends AppCompatActivity {
         //  Action bar back
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
-        mToolbar.setNavigationIcon(R.drawable.ic_chevron_left_black_24dp);
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 auth.signOut();
-                Intent intent = new Intent(ResetPasswordActivity.this, LoginActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(ResetPasswordActivity.this, LoginActivity.class);
+//                startActivity(intent);
+                onBackPressed();
             }
         });
     }
 
+    //back trang truoc
+
+
+    @Override
+    public void onBackPressed() {
+        ResetPasswordActivity.super.onBackPressed();
+    }
 }

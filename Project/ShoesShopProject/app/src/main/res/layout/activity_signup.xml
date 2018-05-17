@@ -11,16 +11,22 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
     <!--Toolbar-->
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/toolbar"
-        android:minHeight="?attr/actionBarSize"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark"
-        tools:ignore="MissingPrefix" >
-        <TextView
-            style="@style/textOftoolbar"
-            android:text="Đăng ký"/>
-    </android.support.v7.widget.Toolbar>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/toolbar"
+            android:minHeight="?attr/actionBarSize"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark"
+            tools:ignore="MissingPrefix">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Đăng ký"
+                android:textColor="#fff"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+            />
+        </android.support.v7.widget.Toolbar>
     <!--main-->
     <LinearLayout
         android:layout_width="fill_parent"

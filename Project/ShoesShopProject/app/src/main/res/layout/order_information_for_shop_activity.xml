@@ -205,7 +205,7 @@
                     android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="11111110"
+                    android:text="0 đ"
                     android:textColor="@android:color/holo_red_light" />
 
             </LinearLayout>

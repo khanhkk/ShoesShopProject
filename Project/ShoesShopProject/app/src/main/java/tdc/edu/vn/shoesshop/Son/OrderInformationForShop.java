@@ -67,6 +67,7 @@ public class OrderInformationForShop extends AppCompatActivity {
 
         //arritem = new ArrayList<OrderShop>();
         ListDetail = new ArrayList<>();
+        vanchuyen.setVisibility(View.VISIBLE);
 
         intent = getIntent();
         bill_id = intent.getStringExtra("bill");
@@ -81,8 +82,10 @@ public class OrderInformationForShop extends AppCompatActivity {
                         tvClient.setText(bill.getNameClient());
                         tvPhone.setText(bill.getPhone());
                         tvEmail.setText(bill.getEmail());
+                        vanchuyen.setVisibility(View.INVISIBLE);
                         if (bill.getStatus() == 0) {
                             tinhtrang.setText("Đang chờ xử lý");
+
                         } else if (bill.getStatus() == 1) {
                             tinhtrang.setText("Đang vận chuyển");
                         } else if (bill.getStatus() == -1) {
@@ -163,6 +166,7 @@ public class OrderInformationForShop extends AppCompatActivity {
                             tinhtrang.setText("Đang vận chuyển");
                             vanchuyen.setBackground(getDrawable(R.drawable.button2_style));
                             vanchuyen.setText("Hủy");
+                            vanchuyen.setVisibility(View.INVISIBLE);
                             database.child("Shops").child(user.getUid()).child("Transactions").orderByChild("id").equalTo(bill.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
