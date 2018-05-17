@@ -7,30 +7,23 @@
     android:orientation="vertical"
     tools:context="tdc.edu.vn.shoesshop.Khanh.Promotions">
 
-    <LinearLayout
-        style="@style/linerlayout"
-        android:layout_weight="1"
-        android:background="@android:color/holo_blue_dark"
-        android:layout_marginBottom="5dp"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/btnBack"
-            style="@style/linerlayout2"
-            android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
-            android:src="@mipmap/back"
-            android:scaleType="fitCenter"
-            android:textColor="@android:color/white" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark"
+        tools:ignore="MissingPrefix">
 
         <TextView
-            style="@style/linerlayout2"
-            android:layout_weight="5"
-            android:gravity="center_vertical"
-            android:text="@string/promotions_program"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
-    </LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Chương trình khuyến "
+            android:textColor="#fff"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+        />
+    </android.support.v7.widget.Toolbar>
+
 
     <LinearLayout
         style="@style/linerlayout"

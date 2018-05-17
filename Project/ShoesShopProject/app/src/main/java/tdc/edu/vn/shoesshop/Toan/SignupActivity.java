@@ -53,12 +53,13 @@ public class SignupActivity extends AppCompatActivity {
 // Action bar back
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
-        mToolbar.setNavigationIcon(R.drawable.ic_chevron_left_black_24dp);
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+//                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                onBackPressed();
             }
         });
 // Write data to the database
@@ -223,6 +224,13 @@ public class SignupActivity extends AppCompatActivity {
                         });
             }
         });
+    }
+    //back trang truoc
+
+
+    @Override
+    public void onBackPressed() {
+        SignupActivity.super.onBackPressed();
     }
 
     @Override

@@ -4,6 +4,7 @@ package tdc.edu.vn.shoesshop.Bao;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,6 @@ public class PersonalOfClientLoginedFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = null;
         view = inflater.inflate(R.layout.personal_of_client_logined_fragment, container, false);
-
 
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         nameClient = (TextView) view.findViewById(R.id.txtName);

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
@@ -29,6 +30,7 @@ import java.util.HashMap;
 import Adapters.PromotionExpandableListAdapter;
 import Models.Promotion;
 import Models.PromotionsDetail;
+import tdc.edu.vn.shoesshop.Bao.PersonalOfShopFragment;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Thanh.EditingPromotionDetail;
 import tdc.edu.vn.shoesshop.Toan.HomeForShop;
@@ -57,8 +59,20 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.promotions_activity);
 
+        //back
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("");
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent(MainInfoCilent.this, HomeForClient.class);
+//                startActivity(intent);
+                onBackPressed();
+            }
+        });
         //anh xa
-        btnBack = (ImageButton) findViewById(R.id.btnBack);
         btnAdd = (ImageButton)findViewById(R.id.btnAddPromotions);
         lvPromotions = (ExpandableListView) findViewById(R.id.lvListPromotions);
         svSearchPromotions = (SearchView) findViewById(R.id.svSearch);
@@ -147,13 +161,6 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
         //nhan data tu ac khac
         intent = getIntent();
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                intent.setClass(Promotions.this, HomeForShop.class);
-                startActivity(intent);
-            }
-        });
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,6 +176,12 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
 
         //dang ky contextmenu cho list view
         registerForContextMenu(lvPromotions);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Promotions.super.onBackPressed();
+
     }
 
     //khoi tao contextmenu

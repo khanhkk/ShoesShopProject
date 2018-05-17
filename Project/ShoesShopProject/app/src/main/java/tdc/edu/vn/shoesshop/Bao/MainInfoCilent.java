@@ -23,6 +23,7 @@ import Models.Client;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Thanh.EdittingClientInformation;
 import tdc.edu.vn.shoesshop.Toan.HomeForClient;
+import tdc.edu.vn.shoesshop.Toan.HomeForShop;
 
 
 public class MainInfoCilent extends AppCompatActivity {
@@ -66,7 +67,6 @@ public class MainInfoCilent extends AppCompatActivity {
                 Toast.makeText(MainInfoCilent.this, "  ", Toast.LENGTH_SHORT).show();
             }
         });
-        //  Action bar back
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
@@ -74,15 +74,17 @@ public class MainInfoCilent extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainInfoCilent.this, HomeForClient.class);
-                startActivity(intent);
+//                Intent intent = new Intent(MainInfoCilent.this, HomeForClient.class);
+//                startActivity(intent);
+                onBackPressed();
             }
         });
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        MainInfoCilent.super.onBackPressed();
+
     }
 
     public void byBundle() {
