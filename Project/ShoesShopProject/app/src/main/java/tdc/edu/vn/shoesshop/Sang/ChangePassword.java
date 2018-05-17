@@ -1,17 +1,21 @@
 package tdc.edu.vn.shoesshop.Sang;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import tdc.edu.vn.shoesshop.R;
-import tdc.edu.vn.shoesshop.Son.ClientInformationAfterOrder;
-import tdc.edu.vn.shoesshop.Toan.HomeForClient;
 import tdc.edu.vn.shoesshop.Toan.LoginActivity;
 
 public class ChangePassword extends AppCompatActivity {
@@ -20,18 +24,23 @@ public class ChangePassword extends AppCompatActivity {
     private TextInputLayout textInputMatkhauhientai;
     private TextInputLayout textInputMatkhaumoi;
     private TextInputLayout textInputNhapmatkhaumoi;
+    Button saveChangePass;
+    private FirebaseAuth auth;
+    final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.change_password_activity);
-
+        auth = FirebaseAuth.getInstance();
         textInputTenDangnhap = findViewById(R.id.id_tendangnhap);
         textInputMatkhauhientai = findViewById(R.id.id_matkhauhientai);
         textInputMatkhaumoi = findViewById(R.id.id_matkhaumoi);
         textInputNhapmatkhaumoi = findViewById(R.id.id_nhaplaimatkhau);
-
-        final FirebaseAuth auth = FirebaseAuth.getInstance();
+        saveChangePass = (Button) findViewById(R.id.btnChangePass);
+        auth = FirebaseAuth.getInstance();
+        final String email = textInputTenDangnhap.getEditText().getText().toString().trim();
+        final String pass = textInputMatkhauhientai.getEditText().getText().toString().trim();
         //  Action bar back
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
@@ -42,13 +51,44 @@ public class ChangePassword extends AppCompatActivity {
             public void onClick(View v) {
                 auth.signOut();
                 Intent intent = new Intent(ChangePassword.this, LoginActivity.class);
-            startActivity(intent);
-        }
+                startActivity(intent);
+            }
+        });
+        saveChangePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validateTenDangnhap() && validateMatkhauhientai() && validateMatkhaumoi() &&validateNhaplaimatkhau()) {
+                    if (user != null) {
+                        user.updatePassword(textInputMatkhaumoi.getEditText().getText().toString().trim())
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(ChangePassword.this, "Password is updated, sign in with new password!", Toast.LENGTH_LONG).show();
+                                            auth.signOut();
+                                            Intent intent = new Intent(ChangePassword.this, LoginActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        } else {
+                                            Toast.makeText(ChangePassword.this, "Failed to update password!", Toast.LENGTH_LONG).show();
+
+                                        }
+                                    }
+                                });
+                    }
+                }
+            }
         });
     }
 
     private boolean validateTenDangnhap() {
         String TenDangnhapInput = textInputTenDangnhap.getEditText().getText().toString().trim();
+        if(user!= null) {
+            if (!TenDangnhapInput.equals(user.getEmail())) {
+                Toast.makeText(getApplicationContext(), "Email fail!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
         if (TenDangnhapInput.isEmpty()) {
             textInputTenDangnhap.setError("Không thể để trống");
             return false;
@@ -65,18 +105,14 @@ public class ChangePassword extends AppCompatActivity {
             textInputMatkhauhientai.setError("Không thể để trống");
             return false;
         } else {
-            if((MatkhauhientaiInput.length() < 5))
-            {
+            if ((MatkhauhientaiInput.length() < 6)) {
                 textInputMatkhauhientai.setError("Mật khẩu quá ngắn");
                 return false;
-            }else {
-                if((MatkhauhientaiInput.length() > 19))
-                {
+            } else {
+                if ((MatkhauhientaiInput.length() > 19)) {
                     textInputMatkhauhientai.setError("Mật khẩu quá dài");
                     return false;
-                }
-                else
-                {
+                } else {
                     textInputMatkhauhientai.setError(null);
                     return true;
                 }
@@ -91,20 +127,19 @@ public class ChangePassword extends AppCompatActivity {
             textInputMatkhaumoi.setError("Không thể để trống");
             return false;
         } else {
-            if((MatkhaumoiInput.length() < 5))
-            {
+            if ((MatkhaumoiInput.length() < 6)) {
                 textInputMatkhaumoi.setError("Mật khẩu quá ngắn");
                 return false;
             }
-                if((MatkhaumoiInput.length() > 19))
-                {
-                    textInputMatkhaumoi.setError("Mật khẩu quá dài");
-                    return false;
-                }
+            if ((MatkhaumoiInput.length() > 19)) {
+                textInputMatkhaumoi.setError("Mật khẩu quá dài");
+                return false;
+            }
             textInputMatkhaumoi.setError(null);
             return true;
-            }
         }
+    }
+
     private boolean validateNhaplaimatkhau() {
 
         String Nhapmatkhaumoi = textInputNhapmatkhaumoi.getEditText().getText().toString().trim();
@@ -112,43 +147,22 @@ public class ChangePassword extends AppCompatActivity {
         if (Nhapmatkhaumoi.isEmpty()) {
             textInputNhapmatkhaumoi.setError("Không thể để trống");
             return false;
-        }  else {
-            if((MatkhaumoiInput.length() < 5 ))
-            {
+        } else {
+            if ((MatkhaumoiInput.length() < 6)) {
                 textInputNhapmatkhaumoi.setError("Mật khẩu quá ngắn");
                 return false;
             }
-            if((MatkhaumoiInput.length() > 19))
-            {
+            if ((MatkhaumoiInput.length() > 19)) {
                 textInputNhapmatkhaumoi.setError("Mật khẩu quá dài");
                 return false;
             }
-            if (!Nhapmatkhaumoi.equals(MatkhaumoiInput))
-            {
+            if (!Nhapmatkhaumoi.equals(MatkhaumoiInput)) {
                 textInputNhapmatkhaumoi.setError("Mật khẩu không khớp");
                 return false;
             }
-                textInputNhapmatkhaumoi.setError(null);
+            textInputNhapmatkhaumoi.setError(null);
             return true;
         }
     }
 
-    public void confirmInput(View v) {
-        if (!validateTenDangnhap() | !validateMatkhauhientai() | !validateMatkhaumoi() | !validateNhaplaimatkhau()) {
-            return;
-        }
-
-        Intent intent = new Intent(ChangePassword.this, LoginActivity.class);
-        startActivity(intent);
-
-//        String input = "Email: " + textInputEmail.getEditText().getText().toString();
-//        input += "\n";
-//        input += "Họ Tên: " + textInputHoten.getEditText().getText().toString();
-//        input += "\n";
-//        input += "Sdt: " + textInputSdt.getEditText().getText().toString();
-//        input += "\n";
-//        input += "Địa chỉ: " + textInputDiachi.getEditText().getText().toString();
-//
-//        Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
-    }
 }

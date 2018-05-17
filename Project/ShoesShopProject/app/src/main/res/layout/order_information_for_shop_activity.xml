@@ -33,7 +33,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:orientation="vertical"
             >
 
@@ -133,6 +133,26 @@
 
                 <TextView
                     android:textSize="17sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email: "
+                    android:textColor="@android:color/holo_blue_light" />
+
+                <TextView
+                    android:textSize="17sp"
+                    android:id="@+id/tvEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0164545318" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textSize="17sp"
                     android:id="@+id/lb_tinhtrang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -165,29 +185,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.7"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="2.5"
+                android:orientation="horizontal"
                 android:gravity="center_vertical">
-
 
                 <TextView
                     android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:text="Tổng đơn hàng: " />
+                    android:text="Tổng tiền: " />
                 <TextView
                     android:id="@+id/tvMoney"
                     android:textSize="18sp"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:text="0"
+                    android:text="11111110"
                     android:textColor="@android:color/holo_red_light" />
 
             </LinearLayout>
@@ -195,18 +213,17 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-
+                android:layout_weight="1.5"
+                android:gravity="center"
                 android:orientation="horizontal">
                 <Button
                     android:id="@+id/id_vanchuyen"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
                     android:text="Vận chuyển"
                     android:background="@drawable/button_style"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textAllCaps="false" />
             </LinearLayout>
         </LinearLayout>

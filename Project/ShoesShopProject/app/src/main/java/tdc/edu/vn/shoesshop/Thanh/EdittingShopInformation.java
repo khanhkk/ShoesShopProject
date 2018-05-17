@@ -36,7 +36,7 @@ public class EdittingShopInformation extends AppCompatActivity {
     private Button btnSave;
     Intent intent;
 
-    private TextInputLayout textInputTenshop;
+    private TextInputLayout textInputTen;
     private TextInputLayout textInputNguoidaidien;
     private TextInputLayout textInputSdt;
     private TextInputLayout textInputDiachi;
@@ -51,10 +51,10 @@ public class EdittingShopInformation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editting_shop_information_activity);
 
-        textInputEmail = findViewById(R.id.id_email);
-        textInputTenshop = findViewById(R.id.id_hoten);
-        textInputSdt = findViewById(R.id.id_sdt);
-        textInputDiachi = findViewById(R.id.id_diachi);
+        textInputEmail = findViewById(R.id.email);
+        textInputTen = findViewById(R.id.ten_shop);
+        textInputSdt = findViewById(R.id.sdt);
+        textInputDiachi = findViewById(R.id.dia_chi);
         textInputNguoidaidien = findViewById(R.id.nguoidaidien_shop);
         textInputSotaikhoan = findViewById(R.id.sotaikhoan);
         textInputFacebook = findViewById(R.id.facebook);
@@ -110,76 +110,13 @@ public class EdittingShopInformation extends AppCompatActivity {
         });
 
     }
-    private boolean validateSotaikhoan() {
-        String soTkInput = textInputSotaikhoan.getEditText().getText().toString().trim();
-
-        if (soTkInput.isEmpty()) {
-            textInputSotaikhoan.setError("Không thể để trống !");
-            return false;
-        } else {
-            if(soTkInput.length() != 13)
-            {
-                textInputSotaikhoan.setError("Số tài khoản chưa đúng !");
-                return false;
-            }else
-            {
-                textInputSotaikhoan.setError(null);
-                return true;
-            }
-        }
-    }
-
-    private boolean validateEmail() {
-        String emailInput = textInputEmail.getEditText().getText().toString().trim();
-        if (emailInput.isEmpty()) {
-            textInputEmail.setError("Không thể để trống");
-            return false;
-        } else {
-            if(!emailInput.matches("[a-zA-Z0-9._-]+@[a-z]+.[a-z]+"))
-            {
-                textInputEmail.setError("Email không đúng !");
-                return false;
-            }else
-            {
-                textInputEmail.setError(null);
-                return true;
-            }
-
-        }
-    }
-
-    private boolean validateNguoiDD() {
-        String inputNguoiDD = textInputNguoidaidien.getEditText().getText().toString().trim();
-
-        if (inputNguoiDD.isEmpty()) {
-            textInputNguoidaidien.setError("Không thể để trống");
-            return false;
-        } else {
-            textInputNguoidaidien.setError(null);
-            return true;
-        }
-    }
-    private boolean validateFacebook() {
-        String inputFB = textInputFacebook.getEditText().getText().toString().trim();
-
-        if (inputFB.isEmpty()) {
-            textInputFacebook.setError("Không thể để trống");
-            return false;
-        } else {
-            textInputFacebook.setError(null);
-            return true;
-        }
-    }
-
-
     private boolean validateHoten() {
-        String usernameInput = textInputTenshop.getEditText().getText().toString().trim();
-
+        String usernameInput = textInputTen.getEditText().getText().toString().trim();
         if (usernameInput.isEmpty()) {
-            textInputTenshop.setError("Không thể để trống");
+            textInputTen.setError("Không thể để trống");
             return false;
         } else {
-            textInputTenshop.setError(null);
+            textInputTen.setError(null);
             return true;
         }
     }
@@ -215,17 +152,81 @@ public class EdittingShopInformation extends AppCompatActivity {
             return true;
         }
     }
+    private boolean validateEmail() {
+        String emailInput = textInputEmail.getEditText().getText().toString().trim();
+        if (emailInput.isEmpty()) {
+            textInputEmail.setError("Không thể để trống");
+            return false;
+        } else {
+            if(!emailInput.matches("[a-zA-Z0-9._-]+@[a-z]+.[a-z]+"))
+            {
+                textInputEmail.setError("Email không đúng !");
+                return false;
+            }else
+            {
+                textInputEmail.setError(null);
+                return true;
+            }
+
+        }
+    }
+
+    private boolean validateNguoiDD() {
+        String inputNguoiDD = textInputNguoidaidien.getEditText().getText().toString().trim();
+
+        if (inputNguoiDD.isEmpty()) {
+            textInputNguoidaidien.setError("Không thể để trống");
+            return false;
+        } else {
+            textInputNguoidaidien.setError(null);
+            return true;
+        }
+    }
+    private boolean validateSotaikhoan() {
+        String soTkInput = textInputSotaikhoan.getEditText().getText().toString().trim();
+
+        if (soTkInput.isEmpty()) {
+            textInputSotaikhoan.setError("Không thể để trống !");
+            return false;
+        } else {
+            if(soTkInput.length() != 13)
+            {
+                textInputSotaikhoan.setError("Số tài khoản chưa đúng !");
+                return false;
+            }else
+            {
+                textInputSotaikhoan.setError(null);
+                return true;
+            }
+        }
+    }
+
+
+    private boolean validateFacebook() {
+        String inputFB = textInputFacebook.getEditText().getText().toString().trim();
+
+        if (inputFB.isEmpty()) {
+            textInputFacebook.setError("Không thể để trống");
+            return false;
+        } else {
+            textInputFacebook.setError(null);
+            return true;
+        }
+    }
+
+
+
 
     public void confirmInput(View v) {
-        if (!validateEmail() | !validateHoten() | !validateSdt() | !validateDiachi() | !validateFacebook() | !validateNguoiDD() | !validateSotaikhoan()) {
+        if ( !validateHoten() | !validateSdt() | !validateDiachi()| !validateEmail()| !validateNguoiDD() | !validateSotaikhoan() | !validateFacebook() ) {
             return;
         }
 
-        String input =  "Địa chỉ: " + textInputDiachi.getEditText().getText().toString();
-        input += "\n";
-        input += "Họ Tên: " + textInputTenshop.getEditText().getText().toString();
+        String input =  "Họ Tên: " + textInputTen.getEditText().getText().toString();
         input += "\n";
         input += "Sdt: " + textInputSdt.getEditText().getText().toString();
+        input += "\n";
+        input =  "Địa chỉ: " + textInputDiachi.getEditText().getText().toString();
         input += "\n";
         input += "Email: " + textInputEmail.getEditText().getText().toString();
         input += "\n";

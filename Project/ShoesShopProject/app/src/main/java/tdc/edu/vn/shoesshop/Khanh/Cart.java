@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import Adapters.BillAdapter;
 import Controls.DateTimePicker;
@@ -33,6 +34,7 @@ import Models.Client;
 import Models.Notification;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Son.ClientInformationAfterOrder;
+import tdc.edu.vn.shoesshop.Toan.Home_User_Fragment;
 
 /**
  * Created by kk on 05/04/2018.
@@ -46,8 +48,7 @@ public class Cart extends Fragment {
     public static TextView tvMoney;
     Button btnThanhToan;
     Intent intent;
-    //final ArrayList<String> ListShop = new ArrayList<>();
-    ArrayList<Bill> bills = new ArrayList<>();
+    Client client;
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
@@ -61,46 +62,6 @@ public class Cart extends Fragment {
 
         tvMoney = (TextView) view.findViewById(R.id.tvMoney);
         btnThanhToan = (Button) view.findViewById(R.id.btnPay);
-
-//        database.child("Products").addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                Product product = dataSnapshot.getValue(Product.class);
-//                if(product.getSex() == 2)
-//                {
-//                    BillDetail billDetail = new BillDetail();
-//                    //billDetail.setCodeOfProduct(product.getId());
-//                    billDetail.setId(database.child("Cart").push().getKey());
-//                    billDetail.setQuantity(1);
-//                    //billDetail.setPrice(product.getSalePrice());
-//                    billDetail.setProduct(product.getId());
-//                    billDetail.setPrice(product.getSalePrice());
-//                    list.add(billDetail);
-//                    database.child("Clients").child(user.getUid()).child("Cart").push().setValue(billDetail);
-//                    billAdapter.notifyDataSetChanged();
-//                }
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
 
         database.child("Clients").child(user.getUid()).child("Cart").addChildEventListener(new ChildEventListener() {
             @Override
@@ -135,297 +96,10 @@ public class Cart extends Fragment {
         billAdapter = new BillAdapter(getActivity(), R.layout.bill_item, list);
         listView.setAdapter(billAdapter);
 
-//        double money = 0;
-//        for(BillDetail item : list)
-//        {
-//            money += (item.getQuantity() * item.getProduct().getSalePrice());
-//            tvMoney.setText(money + "");
-//        }
-
-        btnThanhToan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(list.size() > 0) {
-                    //ListShop.clear();
-                    //bills.clear();
-                    final ArrayList<String> listShop = new ArrayList<>();
-
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-                    alertDialog.setTitle("Thông báo");
-                    alertDialog.setIcon(R.mipmap.ic_launcher);
-                    alertDialog.setMessage("Địa chỉ trong hóa đơn được lấy từ đâu?");
-
-                    alertDialog.setPositiveButton("Mặc định", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-
-
-                            for(final BillDetail detail : list)
-                            {
-                                //Log.d("aaaa", bills.size() + "");
-                                if (listShop.size() == 0) {
-
-                                    UpBillFirebase(detail);
-                                    listShop.add(detail.getShop());
-                                } else {
-                                    int check = 0;
-                                    for (String bill : listShop) {
-                                        if (bill.equals(detail.getShop())) {
-                                            check++;
-//                                                    database.child("Clients").child(user.getUid()).child("Transactions").orderByChild("id").equalTo(bill.getId()).addChildEventListener(new ChildEventListener() {
-//                                                        @Override
-//                                                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                                                            database.child("Clients").child(user.getUid()).child("Transactions").child(dataSnapshot.getKey()).child("Details").push().setValue(detail);
-//                                                        }
-//
-//                                                        @Override
-//                                                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//                                                        }
-//
-//                                                        @Override
-//                                                        public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                                                        }
-//
-//                                                        @Override
-//                                                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                                                        }
-//
-//                                                        @Override
-//                                                        public void onCancelled(DatabaseError databaseError) {
-//
-//                                                        }
-//                                                    });
-//
-//                                                    database.child("Shops").child(product.getShop()).child("Transactions").orderByChild("id").equalTo(bill.getId()).addChildEventListener(new ChildEventListener() {
-//                                                        @Override
-//                                                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                                                            database.child("Shops").child(product.getShop()).child("Transactions").child(dataSnapshot.getKey()).child("Details").push().setValue(detail);
-//                                                        }
-//
-//                                                        @Override
-//                                                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//                                                        }
-//
-//                                                        @Override
-//                                                        public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                                                        }
-//
-//                                                        @Override
-//                                                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                                                        }
-//
-//                                                        @Override
-//                                                        public void onCancelled(DatabaseError databaseError) {
-//
-//                                                        }
-//                                                    });
-
-                                            break;
-                                        }
-                                    }
-                                    if (check == 0) {
-                                        UpBillFirebase(detail);
-                                        listShop.add(detail.getShop());
-                                        //ListShop.add(product.getShop());
-                                    }
-                                }
-
-//                                database.child("Products").orderByChild("id").equalTo(detail.getProduct()).addChildEventListener(new ChildEventListener() {
-//                                    @Override
-//                                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                                        final Product product = dataSnapshot.getValue(Product.class);
-//                                        //Log.d("aaaa", bills.size() + "");
-//
-//                                    }
-//
-//                                    @Override
-//                                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//                                    }
-//
-//                                    @Override
-//                                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                                    }
-//
-//                                    @Override
-//                                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                                    }
-//
-//                                    @Override
-//                                    public void onCancelled(DatabaseError databaseError) {
-//
-//                                    }
-//                                });
-                            }
-
-                            //clear gio hang
-                            //database.child("Clients").child(user.getUid()).child("Cart").setValue(null);
-                            //list.clear();;
-                            //billAdapter.notifyDataSetChanged();
-
-                            Toast.makeText(getContext(), "Tạo đơn hàng thành công!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                    alertDialog.setNegativeButton("Nhập mới", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                            intent = new Intent();
-                            intent.setClass(getActivity(), ClientInformationAfterOrder.class);
-                            startActivity(intent);
-                        }
-                    });
-                    alertDialog.show();
-                }
-                else
-                {
-                    Toast.makeText(getContext(), "Giỏ hàng đang trống. Không thể thanh toán!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        return view;
-    }
-
-    private void UpBillFirebase(final  BillDetail detail) {
         database.child("Clients").orderByKey().equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Client client = dataSnapshot.getValue(Client.class);
-
-                //them hoa don cho shop
-                Bill bill = new Bill();
-                bill.setAddress(client.getAddress());
-                bill.setEmail(client.getEmail());
-                bill.setNameClient(client.getName());
-                bill.setPhone(client.getPhone());
-                bill.setShop(detail.getShop());
-                bill.setStatus(0);
-                Calendar calendar = Calendar.getInstance();
-                bill.setTime(DateTimePicker.simpleDateFormat.format(calendar.getTime()));
-                bill.setId(database.child("Clients").child(user.getUid()).child("Transactions").push().getKey());
-
-                database.child("Clients").child(user.getUid()).child("Transactions").push().setValue(bill);
-                database.child("Shops").child(detail.getShop()).child("Transactions").push().setValue(bill);
-                //bills.add(bill);
-
-                //Log.d("aaaaa", bills.size() + "");
-
-
-                //them san pham vao don dat hang
-                database.child("Clients").child(user.getUid()).child("Transactions").orderByChild("id").equalTo(bill.getId()).addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        final  String string = dataSnapshot.getKey();
-
-                        database.child("Clients").child(user.getUid()).child("Transactions").child(dataSnapshot.getKey()).child("Details").addChildEventListener(new ChildEventListener() {
-                            @Override
-
-                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                BillDetail billDetail = dataSnapshot.getValue(BillDetail.class);
-                                if(!dataSnapshot.exists()){
-                                    database.child("Clients").child(user.getUid()).child("Transactions").child(string).child("Details").push().setValue(detail);
-                                }
-                                else if(!billDetail.getProduct().equals(detail.getProduct()))
-                                {
-                                    database.child("Clients").child(user.getUid()).child("Transactions").child(string).child("Details").push().setValue(detail);
-                                }
-                            }
-
-                            @Override
-                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                            }
-
-                            @Override
-                            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                            }
-
-                            @Override
-                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                database.child("Shops").child(detail.getShop()).child("Transactions").orderByChild("id").equalTo(bill.getId()).addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        database.child("Shops").child(detail.getShop()).child("Transactions").child(dataSnapshot.getKey()).child("Details").push().setValue(detail);
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                //them notify cho shop
-                Notification notification = new Notification();
-                notification.setClient(user.getUid());
-                notification.setHoatdong(client.getName() + Notification.STR_DAT_HANG);
-                notification.setStatus(false);
-                if(client.getImages() != null)
-                {
-                    notification.setHinh(client.getImages());
-                }
-                notification.setThoiGian(DateTimePicker.simpleDateFormat.format(calendar.getTime()));
-                notification.setBill(bill.getId());
-
-                database.child("Shops").child(detail.getShop()).child("Notifications").push().setValue(notification);
+                client = dataSnapshot.getValue(Client.class);
             }
 
             @Override
@@ -448,5 +122,117 @@ public class Cart extends Fragment {
 
             }
         });
+
+        btnThanhToan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (list.size() > 0) {
+                    final ArrayList<String> listShop = new ArrayList<>();
+                    final HashMap<String, ArrayList<BillDetail>> listBill = new HashMap<>();
+
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                    alertDialog.setTitle("Thông báo");
+                    alertDialog.setIcon(R.mipmap.ic_launcher);
+                    alertDialog.setMessage("Địa chỉ trong hóa đơn được lấy từ đâu?");
+                    alertDialog.setPositiveButton("Mặc định", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            for (BillDetail billDetail : list) {
+                                if (listBill.keySet().size() == 0) {
+                                    ArrayList<BillDetail> list = new ArrayList<>();
+                                    list.add(billDetail);
+                                    listBill.put(billDetail.getShop(), list);
+                                    listShop.add(billDetail.getShop());
+                                } else {
+                                    int test = 0;
+                                    for (String s : listBill.keySet()) {
+                                        if (s.equals(billDetail.getShop())) {
+                                            test++;
+                                            listBill.get(billDetail.getShop()).add(billDetail);
+                                            break;
+                                        }
+                                    }
+                                    if (test == 0) {
+                                        ArrayList<BillDetail> list = new ArrayList<>();
+                                        list.add(billDetail);
+                                        listBill.put(billDetail.getShop(), list);
+                                        listShop.add(billDetail.getShop());
+                                    }
+                                }
+                            }
+
+                            for (int a = 0; a < listShop.size(); a++) {
+                                UpBillFirebase(listShop.get(a), listBill.get(listShop.get(a)));
+                            }
+
+                            Toast.makeText(getContext(), "Tạo đơn hàng thành công!", Toast.LENGTH_SHORT).show();
+                            database.child("Clients").child(user.getUid()).child("Cart").setValue(null);
+                            list.clear();
+                            billAdapter.notifyDataSetChanged();
+
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                    new Home_User_Fragment()).commit();
+                        }
+                    });
+
+                    alertDialog.setNegativeButton("Nhập mới", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            intent = new Intent();
+                            intent.setClass(getActivity(), ClientInformationAfterOrder.class);
+                            startActivity(intent);
+                        }
+                    });
+                    alertDialog.show();
+                } else {
+                    Toast.makeText(getContext(), "Giỏ hàng đang trống. Không thể thanh toán!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        return view;
     }
+
+    private void UpBillFirebase(final String shop, final ArrayList<BillDetail> details) {
+        //them hoa don cho shop
+        final Bill bill = new Bill();
+        bill.setAddress(client.getAddress());
+        bill.setEmail(client.getEmail());
+        bill.setNameClient(client.getName());
+        bill.setPhone(client.getPhone());
+        bill.setClient_id(user.getUid());
+        bill.setShop(shop);
+        bill.setStatus(0);
+        Calendar calendar = Calendar.getInstance();
+        bill.setTime(DateTimePicker.simpleDateFormat.format(calendar.getTime()));
+        bill.setId(database.child("Clients").child(user.getUid()).push().getKey());
+
+        String key = database.child("Clients").child(user.getUid()).child("Transactions").push().getKey();
+        database.child("Clients").child(user.getUid()).child("Transactions").child(key).setValue(bill);
+        String keys = database.child("Shops").child(shop).child("Transactions").push().getKey();
+        database.child("Shops").child(shop).child("Transactions").child(keys).setValue(bill);
+
+        for (BillDetail detail : details) {
+            database.child("Clients").child(user.getUid()).child("Transactions").child(key).child("Details").push().setValue(detail);
+        }
+
+        for (BillDetail detail : details) {
+            database.child("Shops").child(shop).child("Transactions").child(keys).child("Details").push().setValue(detail);
+        }
+
+        //them notify cho shop
+        Notification notification = new Notification();
+        notification.setClient(user.getUid());
+        notification.setHoatdong(client.getName() + Notification.STR_DAT_HANG);
+        notification.setStatus(false);
+        if (client.getImages() != null) {
+            notification.setHinh(client.getImages());
+        }
+        notification.setThoiGian(DateTimePicker.simpleDateFormat.format(calendar.getTime()));
+        notification.setBill(bill.getId());
+
+        database.child("Shops").child(shop).child("Notifications").push().setValue(notification);
+    }
+
 }

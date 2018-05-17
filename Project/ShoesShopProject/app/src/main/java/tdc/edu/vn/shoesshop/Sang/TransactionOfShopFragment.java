@@ -17,7 +17,7 @@ import tdc.edu.vn.shoesshop.R;
 public class TransactionOfShopFragment extends Fragment {
 
     ListView lvContact;
-    CustumAdapterHistory adapter;
+    CustumAdapterHistory customAdapter;
     ArrayList<String> list = new ArrayList<>();
 
     @Override
@@ -45,8 +45,9 @@ public class TransactionOfShopFragment extends Fragment {
         list.add("Đơn hàng đang + vận chuyển");
         list.add("Đơn hàng đã hủy");
         list.add("đơn hàng chờ xử lí");
+      //  customAdapter.notifyDataSetChanged();
 
-        CustumAdapterHistory customAdapter = new CustumAdapterHistory(getActivity(), R.layout.listview_layout_history_transaction22,list);
+         customAdapter = new CustumAdapterHistory(getActivity(), R.layout.listview_layout_history_transaction22,list);
         lvContact.setAdapter(customAdapter);
 
         return view;

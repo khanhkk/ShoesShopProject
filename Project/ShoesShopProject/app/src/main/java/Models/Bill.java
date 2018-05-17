@@ -1,13 +1,13 @@
 package Models;
 
 public class Bill {
-    private String nameClient, phone, address, email, shop, time, id;
-    private int status; // 0:dang xy ly, 1:dang van chuyen, 2:da giao dich
+    private String nameClient, phone, address, email, shop, time, id, client_id;
+    private int status; // 0:dang xy ly, 1:dang van chuyen, 2:da giao dich , -1 : da huy
 
     public Bill() {
     }
 
-    public Bill(String id, String nameClient, String phone, String address, String email, String shop, String time, int status) {
+    public Bill(String id, String nameClient, String phone, String address, String email, String shop, String time, int status,String clientId) {
         this.nameClient = nameClient;
         this.phone = phone;
         this.address = address;
@@ -16,6 +16,7 @@ public class Bill {
         this.time = time;
         this.status = status;
         this.id = id;
+        this.client_id = clientId;
     }
 
     public Bill(String email, String time) {
@@ -85,5 +86,13 @@ public class Bill {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getClient_id() {
+        return client_id;
+    }
+
+    public void setClient_id(String client_id) {
+        this.client_id = client_id;
     }
 }

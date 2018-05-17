@@ -82,6 +82,7 @@ public class NotificationShopFragment extends Fragment {
         recyclerViewAdapter = new NotificationAdapter(getContext(),list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(recyclerViewAdapter);
+
         return v;
     }
 
