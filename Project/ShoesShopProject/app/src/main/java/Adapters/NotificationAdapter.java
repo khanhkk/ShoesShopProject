@@ -40,9 +40,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             public void onClick(View view) {
                 Toast.makeText(mContext,"TT"+String.valueOf(viewHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext,OrderInformationForShop.class);
+                String s = mData.get(viewHolder.getAdapterPosition()).getBill();
+                intent.putExtra("bill", s);
                 mContext.startActivity(intent);
             }
         });
+
         return viewHolder;
     }
 

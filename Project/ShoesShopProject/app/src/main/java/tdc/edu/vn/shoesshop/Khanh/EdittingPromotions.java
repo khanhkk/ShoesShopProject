@@ -165,6 +165,7 @@ public class EdittingPromotions extends AppCompatActivity {
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                                     child.getRef().setValue(promotion);
+                                    break;
                                 }
                                 Toast.makeText(EdittingPromotions.this, "Sửa thành công!", Toast.LENGTH_SHORT).show();
                                 intent.setClass(EdittingPromotions.this, Promotions.class);

@@ -18,13 +18,13 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import Controls.DateTimePicker;
 import Models.Bill;
 import Models.BillDetail;
 import Models.Client;
 import Models.Notification;
-import Models.Product;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Toan.HomeForClient;
 
@@ -34,9 +34,10 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
     private TextInputLayout textInputSdt;
     private TextInputLayout textInputDiachi;
 
-
+    private Client client;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+
     //ImageButton back;
     //Button btnOrder;
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,30 +54,56 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ClientInformationAfterOrder.this, HomeForClient.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("chuyen", 1);
-                intent.putExtra("chuyen", bundle);
-                startActivity(intent);
-            }
-            }
+                                                  @Override
+                                                  public void onClick(View v) {
+                                                      Intent intent = new Intent(ClientInformationAfterOrder.this, HomeForClient.class);
+                                                      Bundle bundle = new Bundle();
+                                                      bundle.putInt("chuyen", 1);
+                                                      intent.putExtra("chuyen", bundle);
+                                                      startActivity(intent);
+                                                  }
+                                              }
         );
 
+        database.child("Clients").orderByKey().equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                client = dataSnapshot.getValue(Client.class);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
+
     private boolean validateEmail() {
         String emailInput = textInputEmail.getEditText().getText().toString().trim();
         if (emailInput.isEmpty()) {
             textInputEmail.setError("Không thể để trống");
             return false;
         } else {
-            if(!emailInput.matches("[a-zA-Z0-9._-]+@[a-z]+.[a-z]+"))
-            {
+            if (!emailInput.matches("[a-zA-Z0-9._-]+@[a-z]+.[a-z]+")) {
                 textInputEmail.setError("Email không đúng !");
                 return false;
-            }else
-            {
+            } else {
                 textInputEmail.setError(null);
                 return true;
             }
@@ -103,12 +130,10 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
             textInputSdt.setError("Không thể để trống");
             return false;
         } else {
-            if(sdtInput.length() != 10 && sdtInput.length() != 11)
-            {
+            if (sdtInput.length() != 10 && sdtInput.length() != 11) {
                 textInputSdt.setError("Số điện thoại chưa đúng !");
                 return false;
-            }else
-            {
+            } else {
                 textInputSdt.setError(null);
                 return true;
             }
@@ -134,93 +159,41 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
         }
 
         final ArrayList<Bill> list = new ArrayList<>();
+        final HashMap<String, ArrayList<String>> listBill = new HashMap<>();
 
-
-        database.child("Clients").orderByKey().equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
+        database.child("Clients").child(user.getUid()).child("Cart").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                final Client client = dataSnapshot.getValue(Client.class);
+                final BillDetail billDetail = dataSnapshot.getValue(BillDetail.class);
+                if (list.size() == 0) {
+                    UpBillFirebase(list, billDetail, listBill);
+                } else {
+                    int check = 0;
+                    for (Bill bill : list) {
+                        if (bill.getShop().equals(billDetail.getShop())) {
+                            check++;
+                            String kc = listBill.get(bill.getShop()).get(0);
+                            String ks = listBill.get(bill.getShop()).get(1);
 
-                database.child("Clients").child(user.getUid()).child("Cart").addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        final BillDetail billDetail = dataSnapshot.getValue(BillDetail.class);
-                        database.child("Products").orderByChild("id").equalTo(billDetail.getProduct()).addChildEventListener(new ChildEventListener() {
-                            @Override
-                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                Product product = dataSnapshot.getValue(Product.class);
-                                if(list.size() == 0)
-                                {
-                                    UpBillFirebase(product.getShop(), list, client);
-                                }
-                                else
-                                {
-                                    int check = 0;
-                                    for(Bill bill : list)
-                                    {
-                                        if(bill.getShop().equals(product.getShop()))
-                                        {
-                                            check ++;
-                                            break;
-                                        }
-                                    }
-                                    if(check == 0)
-                                    {
-                                        UpBillFirebase(product.getShop(), list, client);
-                                    }
-                                }
-                            }
+                            database.child("Clients").child(user.getUid()).child("Transactions").child(kc).child("Details").push().setValue(billDetail);
 
-                            @Override
-                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                            database.child("Shops").child(billDetail.getShop()).child("Transactions").child(ks).child("Details").push().setValue(billDetail);
 
-                            }
-
-                            @Override
-                            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                            }
-
-                            @Override
-                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-
-                        Intent intent = new Intent(ClientInformationAfterOrder.this, HomeForClient.class);
-                        startActivity(intent);
-
-                        Toast.makeText(ClientInformationAfterOrder.this, "Tạo đơn hàng thành công!", Toast.LENGTH_SHORT).show();
-
-                        //clear gio hang
-                        //database.child("Clients").child(user.getUid()).child("Cart").setValue(null);
+                            break;
+                        }
                     }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                    if (check == 0) {
+                        UpBillFirebase(list, billDetail, listBill);
                     }
+                }
 
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Intent intent = new Intent(ClientInformationAfterOrder.this, HomeForClient.class);
+                startActivity(intent);
 
-                    }
+                Toast.makeText(ClientInformationAfterOrder.this, "Tạo đơn hàng thành công!", Toast.LENGTH_SHORT).show();
 
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                //clear gio hang
+                database.child("Clients").child(user.getUid()).child("Cart").setValue(null);
             }
 
             @Override
@@ -243,38 +216,47 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
 
             }
         });
-
-
     }
 
-    private void UpBillFirebase(String shop, ArrayList<Bill> list, Client client)
-    {
+    private void UpBillFirebase(ArrayList<Bill> list, BillDetail detail , HashMap<String, ArrayList<String>> bills) {
         Bill bill = new Bill();
         bill.setAddress(textInputDiachi.getEditText().getText().toString().trim());
         bill.setEmail(textInputEmail.getEditText().getText().toString().trim());
         bill.setNameClient(textInputHoten.getEditText().getText().toString().trim());
         bill.setPhone(textInputSdt.getEditText().getText().toString().trim());
-        bill.setShop(shop);
+        bill.setClient_id(user.getUid());
+        bill.setShop(detail.getShop());
         bill.setStatus(0);
         Calendar calendar = Calendar.getInstance();
         bill.setTime(DateTimePicker.simpleDateFormat.format(calendar.getTime()));
-        bill.setId(database.child("Clients").child(user.getUid()).child("Transactions").push().getKey());
+        bill.setId(database.child("Clients").child(user.getUid()).push().getKey());
         list.add(bill);
-        database.child("Clients").child(user.getUid()).child("Transactions").push().setValue(bill);
-        database.child("Shops").child(shop).child("Transactions").push().setValue(bill);
+
+        String key = database.child("Clients").child(user.getUid()).child("Transactions").push().getKey();
+        database.child("Clients").child(user.getUid()).child("Transactions").child(key).setValue(bill);
+        String keys = database.child("Shops").child(detail.getShop()).child("Transactions").push().getKey();
+        database.child("Shops").child(detail.getShop()).child("Transactions").child(keys).setValue(bill);
+
+        ArrayList<String> ss = new ArrayList<>();
+        ss.add(key);
+        ss.add(keys);
+        bills.put(detail.getShop(), ss);
+
+        database.child("Clients").child(user.getUid()).child("Transactions").child(key).child("Details").push().setValue(detail);
+
+        database.child("Shops").child(detail.getShop()).child("Transactions").child(keys).child("Details").push().setValue(detail);
 
         //them notify cho shop
         Notification notification = new Notification();
         notification.setClient(user.getUid());
         notification.setHoatdong(client.getName() + Notification.STR_DAT_HANG);
         notification.setStatus(false);
-        if(client.getImages() != null)
-        {
+        if (client.getImages() != null) {
             notification.setHinh(client.getImages());
         }
         notification.setThoiGian(DateTimePicker.simpleDateFormat.format(calendar.getTime()));
         notification.setBill(bill.getId());
 
-        database.child("Shops").child(shop).child("Notifications").push().setValue(notification);
+        database.child("Shops").child(detail.getShop()).child("Notifications").push().setValue(notification);
     }
 }

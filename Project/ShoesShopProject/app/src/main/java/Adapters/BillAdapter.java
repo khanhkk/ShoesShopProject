@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -101,7 +102,11 @@ public class BillAdapter extends ArrayAdapter<BillDetail> {
                 {
                     try {
                         Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage1());
-                        viewHolder.imgImage.setImageBitmap(bitmap);
+                        //viewHolder.imgImage.setImageBitmap(bitmap);
+
+                        Glide.with(context)
+                                .load(bitmap)
+                                .into(viewHolder.imgImage);
                     }catch (Exception ex)
                     {
 
@@ -111,7 +116,11 @@ public class BillAdapter extends ArrayAdapter<BillDetail> {
                 {
                     try {
                         Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage2());
-                        viewHolder.imgImage.setImageBitmap(bitmap);
+                        //viewHolder.imgImage.setImageBitmap(bitmap);
+
+                        Glide.with(context)
+                                .load(bitmap)
+                                .into(viewHolder.imgImage);
                     }catch (Exception ex)
                     {
 
@@ -121,7 +130,11 @@ public class BillAdapter extends ArrayAdapter<BillDetail> {
                 {
                     try {
                         Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage3());
-                        viewHolder.imgImage.setImageBitmap(bitmap);
+                        //viewHolder.imgImage.setImageBitmap(bitmap);
+
+                        Glide.with(context)
+                                .load(bitmap)
+                                .into(viewHolder.imgImage);
                     }catch (Exception ex)
                     {
 

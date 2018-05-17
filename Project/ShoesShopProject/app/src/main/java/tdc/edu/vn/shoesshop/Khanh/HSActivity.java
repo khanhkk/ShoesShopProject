@@ -22,6 +22,7 @@ import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -87,6 +88,7 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
         svSearch.setOnQueryTextListener(this);
+        mViewPager.setPageTransformer(true, new RotateUpTransformer());
 
         amOpen = AnimationUtils.loadAnimation(getContext(), R.anim.fab_open);
         amClose = AnimationUtils.loadAnimation(getContext(), R.anim.fab_close);
