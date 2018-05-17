@@ -146,7 +146,6 @@
             android:layout_margin="@dimen/margin_item"
             android:orientation="vertical">
             <LinearLayout
-                android:id="@+id/llTitle"
                 style="@style/linerlayout3">
                 <LinearLayout
                     style="@style/child"
@@ -189,5 +188,4 @@
                 <!--android:layout_height="300dp"-->
                 <!--&gt;</ListView>-->
         </LinearLayout>
-
 </RelativeLayout>

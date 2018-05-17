@@ -137,6 +137,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
         children.clear();
         details.clear();
         products.clear();
+        adapter.notifyDataSetChanged();
 
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("data");
@@ -163,7 +164,6 @@ public class SelectionProductToEditting extends AppCompatActivity {
                                 ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
                                 details.add(productDetail);
                                 children.get(product).add(productDetail);
-
                             }
 
                             @Override

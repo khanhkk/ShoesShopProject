@@ -13,7 +13,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +22,7 @@ import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -52,7 +52,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
     private Button btn_getimage;
     private Button btnSave;
     private EditText edttensanpham, edtthuonghieu, edtbaohanh, edtgianiemyet, edtgiaban, edtdiemtichluy, edtmota;
-    ImageView img_ava_patient1,img_infor_2,img_infor_3;
+    ImageView img_ava_patient1;
     ImageView img_ava_patient2;
     ImageView img_ava_patient3;
     RatingBar ratingBar;
@@ -121,21 +121,12 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                 chooseFromGallery();
             }
         });
-        btn_takeaphoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                takeNewProfilePicture();
-            }
-        });
-        img_ava_patient1 = (ImageView) findViewById(R.id.imgView_info1);
-        img_infor_2  = (ImageView) findViewById(R.id.imgView_info2);
-        img_infor_3  = (ImageView) findViewById(R.id.imgView_info3);
 
         //lay anh tu camera
         btn_takeaphoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                profilepictureOnClick();
+                takeNewProfilePicture();
             }
         });
 
@@ -149,8 +140,7 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         btn_getimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(DetailInformationOfProduct.this
-                        ,"Clicked",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(DetailInformationOfProduct.this,"Clicked",Toast.LENGTH_SHORT).show();
                 dialog.show();
             }
         });
@@ -430,15 +420,14 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         });
     }
 
-    public void profilepictureOnClick(){
-        General.chooseFromCamera(DetailInformationOfProduct.this);
-    }
+//    public void profilepictureOnClick(){
+//        General.chooseFromCamera(DetailInformationOfProduct.this);
+//    }
     public void chooseFromGallery() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"Select Picture"), 1);
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, 1);
+        }
     }
 
     private void takeNewProfilePicture(){
@@ -451,22 +440,25 @@ public class DetailInformationOfProduct extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == RESULT_OK && requestCode == CAM_REQUEST) {
+        if(resultCode == RESULT_OK & requestCode == CAM_REQUEST) {
             if(requestCode == CAM_REQUEST){
                 Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-                if(img_ava_patient1.getDrawable() == null)
+                if(img1 == null)
                 {
-                    img_ava_patient1.setImageBitmap(thumbnail);
+                    Glide.with(DetailInformationOfProduct.this).load(thumbnail).into(img_ava_patient1);
+                    //img_ava_patient1.setImageBitmap(thumbnail);
                     img1 = General.encodeBitmap(thumbnail);
                 }
-                else if (img_infor_2.getDrawable() == null)
+                else if (img2 == null)
                 {
-                    img_infor_2.setImageBitmap(thumbnail);
+                    //img_ava_patient2.setImageBitmap(thumbnail);
+                    Glide.with(DetailInformationOfProduct.this).load(thumbnail).into(img_ava_patient2);
                     img2 = General.encodeBitmap(thumbnail);
                 }
-                else if (img_infor_3.getDrawable() == null)
+                else if (img3 == null)
                 {
-                    img_infor_3.setImageBitmap(thumbnail);
+                    //img_infor_3.setImageBitmap(thumbnail);
+                    Glide.with(DetailInformationOfProduct.this).load(thumbnail).into(img_ava_patient3);
                     img3 = General.encodeBitmap(thumbnail);
                 }
                 dialog.dismiss();
@@ -474,25 +466,28 @@ public class DetailInformationOfProduct extends AppCompatActivity {
         }
         else if (resultCode == RESULT_OK){
             picUri = data.getData();
-            Log.i("image",picUri+"");
+            //Log.i("image",picUri+"");
             Bitmap bitmap;
             try {
                 Context applicationContext = dialog.getContext();
                 bitmap = BitmapFactory.decodeStream( applicationContext.getContentResolver().openInputStream(picUri));
 
-                if(img_ava_patient1.getDrawable() == null)
+                if(img1 == null)
                 {
-                    img_ava_patient1.setImageBitmap(bitmap);
+                    Glide.with(DetailInformationOfProduct.this).load(bitmap).into(img_ava_patient1);
+                    //img_ava_patient1.setImageBitmap(bitmap);
                     img1 = General.encodeBitmap(bitmap);
                 }
-                else if (img_infor_2.getDrawable() == null)
+                else if (img2 == null)
                 {
-                    img_infor_2.setImageBitmap(bitmap);
+                    Glide.with(DetailInformationOfProduct.this).load(bitmap).into(img_ava_patient2);
+                    //img_infor_2.setImageBitmap(bitmap);
                     img2 = General.encodeBitmap(bitmap);
                 }
-                else if (img_infor_3.getDrawable() == null)
+                else if (img3 == null)
                 {
-                    img_infor_3.setImageBitmap(bitmap);
+                    Glide.with(DetailInformationOfProduct.this).load(bitmap).into(img_ava_patient3);
+                    ///img_infor_3.setImageBitmap(bitmap);
                     img3 = General.encodeBitmap(bitmap);
                 }
 

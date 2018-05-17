@@ -254,11 +254,10 @@ public class EdittingPromotions extends AppCompatActivity {
     }
 
     //back trang truoc
-    @Override
-    public void onBackPressed() {
-        EdittingPromotions.super.onBackPressed();
-
-    }
+//    @Override
+//    public void onBackPressed() {
+//        EdittingPromotions.super.onBackPressed();
+//    }
 
 
     //nhan image tu camera/thu vien
@@ -269,9 +268,6 @@ public class EdittingPromotions extends AppCompatActivity {
         if (requestCode == General.REQUEST_IMAGE_CAPTURE && resultCode == EdittingPromotions.this.RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-
-//            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), imageBitmap);
-//            roundedBitmapDrawable.setCircular(true);
 
             RoundedBitmapDrawable roundedBitmapDrawable = General.setCircleImage(imageBitmap);
 
@@ -287,9 +283,6 @@ public class EdittingPromotions extends AppCompatActivity {
                 dialog.setTitle("Chọn ảnh đại diện");
                 Context applicationContext = dialog.getContext();
                 bitmap = BitmapFactory.decodeStream(applicationContext.getContentResolver().openInputStream(picUri));
-
-//                RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-//                roundedBitmapDrawable.setCircular(true);
 
                 RoundedBitmapDrawable roundedBitmapDrawable = General.setCircleImage(bitmap);
 

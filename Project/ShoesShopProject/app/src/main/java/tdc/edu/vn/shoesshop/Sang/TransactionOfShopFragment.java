@@ -30,9 +30,6 @@ public class TransactionOfShopFragment extends Fragment {
         lvContact.setDivider(null);
         list = new ArrayList<>();
 
-
-        list = new ArrayList<>();
-
         list.add("Đã giao");
         list.add("Đang vận chuyển");
         list.add("Đơn đã hủy");

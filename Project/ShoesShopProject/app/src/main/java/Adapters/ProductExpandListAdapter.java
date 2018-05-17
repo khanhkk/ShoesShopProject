@@ -127,7 +127,7 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
         public TextView tvSalePrice;
         public ImageView imageView;
         public ImageButton btnEdit, btnAdd, btnDelete;
-        public LinearLayout llListElement, llTitle;
+        public LinearLayout llListElement;
     }
 
     @Override
@@ -145,7 +145,7 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
             viewHolder.btnEdit = (ImageButton) convertView.findViewById(R.id.btnEditElement);
             viewHolder.btnDelete = (ImageButton) convertView.findViewById(R.id.btnDeleteElement);
             viewHolder.llListElement = (LinearLayout)convertView.findViewById(R.id.llDanhSach);
-            viewHolder.llTitle = (LinearLayout)convertView.findViewById(R.id.llTitle);
+            //viewHolder.llTitle = (LinearLayout)convertView.findViewById(R.id.llTitle);
             convertView.setTag(viewHolder);
         }
         else
@@ -167,6 +167,8 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
         viewHolder.tvListedPrice.setPaintFlags(viewHolder.tvListedPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         viewHolder.tvListedPrice.setTextColor(_context.getResources().getColor(R.color.bg_register));
         viewHolder.tvListedPrice.setPaintFlags(viewHolder.tvListedPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        viewHolder.llListElement.setVisibility(View.GONE);
+        //viewHolder.llTitle.setVisibility(View.GONE);
 
         Bitmap bitmap = null;
         if(member.getImage1() !=  null)
@@ -281,12 +283,12 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
         if(isExpanded)
         {
             viewHolder.llListElement.setVisibility(View.VISIBLE);
-            viewHolder.llTitle.setVisibility(View.VISIBLE);
+            //viewHolder.llTitle.setVisibility(View.VISIBLE);
         }
         else
         {
             viewHolder.llListElement.setVisibility(View.GONE);
-            viewHolder.llTitle.setVisibility(View.GONE);
+            //viewHolder.llTitle.setVisibility(View.GONE);
         }
 
         viewHolder.btnEdit.setOnClickListener(new View.OnClickListener() {
