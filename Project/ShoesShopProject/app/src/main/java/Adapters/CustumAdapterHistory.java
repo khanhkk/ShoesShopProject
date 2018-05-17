@@ -3,6 +3,7 @@ package Adapters;
 /**
  * Created by ACER on 4/4/2018.
  */
+
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -38,23 +40,13 @@ public class CustumAdapterHistory extends ArrayAdapter<String> {
         //convertView = LayoutInflater.from(context).inflate(R.layout.layouthistorytransaction22,parent,false);
         LayoutInflater inflater = context.getLayoutInflater();
         convertView = inflater.inflate(resource,parent,false);
-        //ImageView imgView = (ImageView) convertView.findViewById(R.id.imgView);
+        ImageView imgView = (ImageView) convertView.findViewById(R.id.imgView);
         TextView txtLichSu = (TextView) convertView.findViewById(R.id.tvNameType);
-        //ImageButton btnImg = (ImageButton) convertView.findViewById(R.id.btnImg);
 
         String contact = arrayContact.get(position);
 
 
         txtLichSu.setText(contact);
-
-//        btnImg.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //toi mang hinh 12
-//                Intent intent = new Intent(context, ListOder.class);
-//                startActivity(intent);
-//            }
-//        });
 
         return convertView;
 

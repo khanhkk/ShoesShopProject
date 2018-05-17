@@ -1,6 +1,7 @@
 package tdc.edu.vn.shoesshop.Bao;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import Controls.General;
 import Models.Account;
 import Models.Shop;
 import tdc.edu.vn.shoesshop.R;
@@ -45,6 +47,7 @@ public class MainInfoShop extends AppCompatActivity {
         email = (TextView) findViewById(R.id.txtemailshop);
         address = (TextView) findViewById(R.id.txtdcshop);
         button = (ImageButton) findViewById(R.id.btneditshop);
+        image = (ImageView) findViewById(R.id.imgshop) ;
         intent = getIntent();
         shop_id = intent.getStringExtra("shop");
         data();
@@ -145,6 +148,14 @@ public class MainInfoShop extends AppCompatActivity {
                 email.setText("Email:  " + shop.getEmail());
                 address.setText("Địa chỉ:  " + shop.getAddress());
                 button.setVisibility(View.VISIBLE);
+                if (shop.getImage() != null) {
+                    try {
+                        Bitmap bitmap = General.decodeFromFirebaseBase64(shop.getImage());
+                        image.setImageBitmap(bitmap);
+                    } catch (Exception ex) {
+
+                    }
+                }
             }
 
             @Override

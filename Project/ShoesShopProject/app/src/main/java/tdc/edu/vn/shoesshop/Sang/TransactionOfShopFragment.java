@@ -17,12 +17,11 @@ import tdc.edu.vn.shoesshop.R;
 public class TransactionOfShopFragment extends Fragment {
 
     ListView lvContact;
-    CustumAdapterHistory customAdapter;
-    ArrayList<String> list;
+    CustumAdapterHistory adapter;
+    ArrayList<String> list ;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = null;
         view = inflater.inflate(R.layout.transaction_of_shop_fragment, container, false);
@@ -31,13 +30,16 @@ public class TransactionOfShopFragment extends Fragment {
         lvContact.setDivider(null);
         list = new ArrayList<>();
 
-        list.add("Đơn hàng đã giao");
-        list.add("Đơn hàng đang vận chuyển");
-        list.add("Đơn hàng đã hủy");
-        list.add("đơn hàng chờ xử lí");
-      //  customAdapter.notifyDataSetChanged();
 
-        customAdapter = new CustumAdapterHistory(getActivity(), R.layout.listview_layout_history_transaction22,list);
+        list = new ArrayList<>();
+
+        list.add("Đã giao");
+        list.add("Đang vận chuyển");
+        list.add("Đơn đã hủy");
+        list.add("Đơn chờ xử lí");
+
+        CustumAdapterHistory customAdapter = new CustumAdapterHistory(getActivity(), R.layout.listview_layout_history_transaction22,list);
+
         lvContact.setAdapter(customAdapter);
 
         return view;

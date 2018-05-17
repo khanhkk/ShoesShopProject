@@ -33,6 +33,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".Sang.Bills"
             android:screenOrientation="portrait"/>
+        <activity android:name=".Sang.ListOder"
+            android:screenOrientation="portrait"/>
         <activity android:name=".Toan.RatingOfClient"
             android:screenOrientation="portrait"/>
         <activity android:name=".Thanh.EdittingClientInformation"

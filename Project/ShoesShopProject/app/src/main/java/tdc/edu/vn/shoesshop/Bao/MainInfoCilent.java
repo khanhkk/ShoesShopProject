@@ -1,6 +1,7 @@
 package tdc.edu.vn.shoesshop.Bao;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import Controls.General;
 import Models.Account;
 import Models.Client;
 import tdc.edu.vn.shoesshop.R;
@@ -98,40 +100,7 @@ public class MainInfoCilent extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //    public void data() {
-//        if (client_id != null) {
-//            database.child("Clients").orderByKey().equalTo(client_id).addChildEventListener(new ChildEventListener() {
-//                @Override
-//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                    Client client = dataSnapshot.getValue(Client.class);
-//                    txtnanme.setText(client.getName());
-//                    txtsdt.setText("Số điện thoại:  " + client.getPhone());
-//                    txtemail.setText("Email:  " + client.getEmail());
-//                    txtdiachi.setText("Địa chỉ:  " + client.getAddress());
-//                }
-//
-//                @Override
-//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//                }
-//
-//                @Override
-//                public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                }
-//
-//                @Override
-//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//
-//                }
-//            });
-//        }
-//    }
+
     public void checkRight() {
         database.child("Clients").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -142,6 +111,14 @@ public class MainInfoCilent extends AppCompatActivity {
                 txtsdt.setText("Số điện thoại:  " + client.getPhone());
                 txtemail.setText("Email:  " + client.getEmail());
                 txtdiachi.setText("Địa chỉ:  " + client.getAddress());
+                if (client.getImages() != null) {
+                    try {
+                        Bitmap bitmap = General.decodeFromFirebaseBase64(client.getImages());
+                        imgcilent.setImageBitmap(bitmap);
+                    } catch (Exception ex) {
+
+                    }
+                }
             }
 
             @Override
