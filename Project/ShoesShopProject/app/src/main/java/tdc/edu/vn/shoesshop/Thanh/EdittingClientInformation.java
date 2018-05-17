@@ -9,18 +9,29 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import Controls.General;
+import Models.Client;
 import tdc.edu.vn.shoesshop.Bao.MainInfoCilent;
 import tdc.edu.vn.shoesshop.R;
 
@@ -28,6 +39,7 @@ public class EdittingClientInformation extends AppCompatActivity {
     ImageView img_ava_patient;
     private static final int CAM_REQUEST = 1313;
     private Dialog dialog;
+    Bundle bundle;
     ImageButton btn_chooseImg, btn_takeaphoto;
     final int CROP_PIC = 2;
     private Uri picUri;
@@ -36,29 +48,42 @@ public class EdittingClientInformation extends AppCompatActivity {
     private TextInputLayout textInputHoten;
     private TextInputLayout textInputSdt;
     private TextInputLayout textInputDiachi;
-    private Button btnLuu;
+    private TextInputEditText txtname;
+    private TextInputEditText txtemail;
+    private TextInputEditText txtsdt;
+    private TextInputEditText txtdiachi;
+    private String img;
 
-    public static final String HOTEN = "HỌ TÊN";
-    public static final String SDT = "SỐ ĐIỆN THOẠI";
-    public static final String DIACHI = "ĐỊA CHỈ";
-    public static final String EMAIL = "EMAIL";
-    private boolean title;
+    public static final String Bundle = "bundle";
+    public static final String Name = "name";
+    public static final String Sdt = "sodienthoai";
+    public static final String Email = "email";
+    public static final String DiaChi = "diachi";
+
 
     //ImageButton back;
     //Button btnOrder;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editting_client_information_activity);
-        textInputEmail = findViewById(R.id.id_email);
+        //textInputEmail = findViewById(R.id.id_email);
         textInputHoten = findViewById(R.id.id_hoten);
         textInputSdt = findViewById(R.id.id_sdt);
         textInputDiachi = findViewById(R.id.id_diachi);
+
+        //txtemail = findViewById(R.id.id_edtemail);
+        txtname = findViewById(R.id.id_edthoten);
+        txtsdt = findViewById(R.id.id_edtsdt);
+        txtdiachi = findViewById(R.id.id_edtdiachi);
 
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog);
         dialog.setTitle("Choose Avatar Image");
 
-        btnLuu = (Button) findViewById(R.id.btnLuu);
         btn_chooseImg = (ImageButton) dialog.findViewById(R.id.img_choosenGallery);
         btn_takeaphoto = (ImageButton) dialog.findViewById(R.id.img_choosenTakephoto);
         General.setupUI(findViewById(R.id.editting_client_information), EdittingClientInformation.this);
@@ -106,46 +131,28 @@ public class EdittingClientInformation extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        btnLuu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String hoten = textInputHoten.getEditText().toString();
-                String sdt = textInputSdt.getEditText().toString();
-                String diachi = textInputDiachi.getEditText().toString();
-                String email = textInputEmail.getEditText().toString();
-                byExtras(hoten, sdt, diachi, email);
-            }
-        });
+        pullData();
     }
 
-    public void byExtras(String Hoten, String SDT, String diachi, String eMail) {
-        Intent intent = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
-        intent.putExtra(HOTEN, Hoten);
-        intent.putExtra(SDT, SDT);
-        intent.putExtra(DIACHI, diachi);
-        intent.putExtra(EMAIL, eMail);
-        startActivity(intent);
-    }
-
-    private boolean validateEmail() {
-        String emailInput = textInputEmail.getEditText().getText().toString().trim();
-        if (emailInput.isEmpty()) {
-            textInputEmail.setError("Không thể để trống");
-            return false;
-        } else {
-            if(!emailInput.matches("[a-zA-Z0-9._-]+@[a-z]+.[a-z]+"))
-            {
-                textInputEmail.setError("Email không đúng !");
-                return false;
-            }else
-            {
-                textInputEmail.setError(null);
-                return true;
-            }
-
-        }
-    }
+//
+//    private boolean validateEmail() {
+//        String emailInput = textInputEmail.getEditText().getText().toString().trim();
+//        if (emailInput.isEmpty()) {
+//            textInputEmail.setError("Không thể để trống");
+//            return false;
+//        } else {
+//            if(!emailInput.matches("[a-zA-Z0-9._-]+@[a-z]+.[a-z]+"))
+//            {
+//                textInputEmail.setError("Email không đúng !");
+//                return false;
+//            }else
+//            {
+//                textInputEmail.setError(null);
+//                return true;
+//            }
+//
+//        }
+//    }
 
     private boolean validateHoten() {
         String usernameInput = textInputHoten.getEditText().getText().toString().trim();
@@ -178,6 +185,7 @@ public class EdittingClientInformation extends AppCompatActivity {
 
         }
     }
+
     private boolean validateDiachi() {
         String passwordInput = textInputDiachi.getEditText().getText().toString().trim();
 
@@ -190,24 +198,56 @@ public class EdittingClientInformation extends AppCompatActivity {
         }
     }
 
+
     public void confirmInput(View v) {
-        if (!validateEmail() | !validateHoten() | !validateSdt() | !validateDiachi()) {
+        if ( !validateHoten() | !validateSdt() | !validateDiachi()) {
             return;
         }
 
-       String input =  "Địa chỉ: " + textInputDiachi.getEditText().getText().toString();
-        input += "\n";
-        input += "Họ Tên: " + textInputHoten.getEditText().getText().toString();
-        input += "\n";
-        input += "Sdt: " + textInputSdt.getEditText().getText().toString();
-        input += "\n";
-        input += "Email: " + textInputEmail.getEditText().getText().toString();
-        Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
 
-        Intent intent = new Intent(EdittingClientInformation.this,MainInfoCilent.class);
+
+        updateClient();
+        updateAcount();
+        Intent intent = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
         startActivity(intent);
+
     }
 
+    public void updateClient()
+    {
+        database.child("Clients").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Client client = dataSnapshot.getValue(Client.class);
+                dataSnapshot.getRef().child("name").setValue(txtname.getText().toString());
+                dataSnapshot.getRef().child("phone").setValue(txtsdt.getText().toString());
+                dataSnapshot.getRef().child("address").setValue(txtdiachi.getText().toString());
+                dataSnapshot.getRef().child("images").setValue(img.toString());
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    public void updateAcount()
+    {
+        database.child("Accounts").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Client client = dataSnapshot.getValue(Client.class);
+                dataSnapshot.getRef().child("name").setValue(txtname.getText().toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
     public void chooseFromGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -234,9 +274,8 @@ public class EdittingClientInformation extends AppCompatActivity {
         if(resultCode == RESULT_OK && requestCode == CAM_REQUEST) {
             if(requestCode == CAM_REQUEST){
                 Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-
+                img = General.encodeBitmap(thumbnail);
                 //  picUri = data.getData();
-
                 img_ava_patient.setImageBitmap(thumbnail);
                 dialog.dismiss();
             }
@@ -250,6 +289,7 @@ public class EdittingClientInformation extends AppCompatActivity {
             try {
                 Context applicationContext = dialog.getContext();
                 bitmap = BitmapFactory.decodeStream( applicationContext.getContentResolver().openInputStream(picUri));
+                img = General.encodeBitmap(bitmap);
                 img_ava_patient.setImageBitmap(bitmap);
 
                 dialog.dismiss();
@@ -257,5 +297,40 @@ public class EdittingClientInformation extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void pullData() {
+        database.child("Clients").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Client client = dataSnapshot.getValue(Client.class);
+//                txtemail.setText(client.getEmail());
+//                txtname.setText(client.getName());
+//                txtsdt.setText(client.getPhone());
+//                txtdiachi.setText(client.getAddress());
+
+                Client client = dataSnapshot.getValue(Client.class);
+                if(client != null)
+                {
+                    txtdiachi.setText(client.getAddress());
+                    //txtemail.setText(client.getEmail());
+                    txtname.setText(client.getName());
+                    txtsdt.setText(client.getPhone());
+                    if(client.getImages() != null)
+                    {
+                        try {
+                            Bitmap bitmap = General.decodeFromFirebaseBase64(client.getImages());
+                            Glide.with(EdittingClientInformation.this).load(bitmap).into(img_ava_patient);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

@@ -45,10 +45,10 @@
                     android:minHeight="30dp"
                     app:errorEnabled="true">
                     <android.support.design.widget.TextInputEditText
+                        android:id="@+id/id_edthoten"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Họ tên"
-                        android:text="Nguyễn Xuân Toàn"
                         android:inputType="text" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -61,9 +61,9 @@
                     app:errorEnabled="true">
 
                     <android.support.design.widget.TextInputEditText
+                        android:id="@+id/id_edtsdt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="0964422508"
                         android:hint="Số điện thoại"
                         android:inputType="phone" />
 
@@ -78,31 +78,15 @@
                     app:errorEnabled="true">
 
                     <android.support.design.widget.TextInputEditText
+                        android:id="@+id/id_edtdiachi"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Địa chỉ"
-                        android:text="139 đường 3 , Khu phố 2, Phường Phước Bình, Quận 9"
                         android:inputType="text"
                         />
 
                 </android.support.design.widget.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/id_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:hintTextAppearance="@style/TextLabel"
-                    android:minHeight="30dp"
-                    app:errorEnabled="true">
-
-                    <android.support.design.widget.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Email"
-                        android:text="nguyexuan425@gmail.com"
-                        android:inputType="textEmailAddress"
-                        />
-                </android.support.design.widget.TextInputLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
