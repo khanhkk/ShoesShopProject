@@ -41,11 +41,12 @@ public class TransactionOfShopFragment extends Fragment {
 //        arrayList.add(contact3);
 //        arrayList.add(contact4);
 
-        list.add("Đơn hàng đã giao");
-        list.add("Đơn hàng đang + vận chuyển");
-        list.add("Đơn hàng đã hủy");
-        list.add("đơn hàng chờ xử lí");
+        list.add("Đã giao");
+        list.add("Đang vận chuyển");
+        list.add("Đơn đã hủy");
+        list.add("Đơn chờ xử lí");
       //  customAdapter.notifyDataSetChanged();
+
 
          customAdapter = new CustumAdapterHistory(getActivity(), R.layout.listview_layout_history_transaction22,list);
         lvContact.setAdapter(customAdapter);
