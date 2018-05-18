@@ -78,7 +78,7 @@
         <activity android:name=".Bao.MainInfoCilent"
             android:screenOrientation="portrait"/>
         <receiver
-            android:name="Controls.ServerConnectInternet"
+            android:name=".Toan.ServerConnectInternet"
             android:enabled="true" >
             <intent-filter>
                 <!-- Intent filters for broadcast receiver -->

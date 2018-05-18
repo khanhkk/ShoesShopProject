@@ -28,42 +28,17 @@ import tdc.edu.vn.shoesshop.R;
 
 public class Adapter_ProductFilter_Shop extends BaseAdapter {
 
-    //vars
-//    private ArrayList<Integer> mImageUrls = new ArrayList<>();
-//    private ArrayList<String> mNames = new ArrayList<>();
-//    private ArrayList<Integer> mrate = new ArrayList<>();
-//    private ArrayList<Double> mSells = new ArrayList<>();
-//    private ArrayList<Double> mCost = new ArrayList<>();
-//    private ArrayList<Double> mPercent = new ArrayList<>();
-//    private ArrayList<Integer> mCount = new ArrayList<>();
-//    private ArrayList<Boolean> mCheck = new ArrayList<>();
     private static final String TAG = "Adapter_ProductFilter";
     private Context mContext;
     private ArrayList<Product> list;
-    private ArrayList<ProductDetail> listDetail;
-    //private ArrayList<Product> CheckedProducts;
-
-//    public Adapter_ProductFilter_Shop(ArrayList<Integer> mImageUrls, ArrayList<String> mNames, ArrayList<Integer> mrate, ArrayList<Double> mSells, ArrayList<Double> mCost, ArrayList<Integer> mCount, ArrayList<Boolean> mCheck, Context mContext) {
-//        this.mImageUrls = mImageUrls;
-//        this.mNames = mNames;
-//        this.mrate = mrate;
-//        this.mSells = mSells;
-//        this.mCost = mCost;
-//        this.mCount = mCount;
-//        this.mCheck = mCheck;
-//        this.mContext = mContext;
-//    }
 
     public Adapter_ProductFilter_Shop() {
         super();
     }
 
-    public Adapter_ProductFilter_Shop(Context mContext, ArrayList<Product> list, ArrayList<ProductDetail> listDetail) {
+    public Adapter_ProductFilter_Shop(Context mContext, ArrayList<Product> list) {
         this.mContext = mContext;
         this.list = list;
-        this.listDetail = listDetail;
-
-        //CheckedProducts = new ArrayList<>();
     }
 
     @Override
@@ -80,10 +55,6 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
     public long getItemId(int position) {
         return 0;
     }
-
-//    public ArrayList<Product> getCheckedProducts() {
-//        return CheckedProducts;
-//    }
 
     class ViewHolderGrid
     {
@@ -117,9 +88,6 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
            viewHolder = (ViewHolderGrid) convertView.getTag();
         }
 
-//        imageView.setImageResource(mImageUrls.get(position));
-//        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-
         final Product product = list.get(position);
 
         //format 1
@@ -130,25 +98,9 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
         viewHolder.tvName.setText(product.getName());
         viewHolder.ratingBar.setRating(product.getRating());
 
-        int soluong = 0;
-
-        for (ProductDetail pro : listDetail) {
-            if (pro.getProduct().equals(product.getId())) {
-                soluong += pro.getQuantity();
-            }
-            viewHolder.tvSoLuong.setText("(" + String.valueOf(soluong) + ")");
-        }
-
-        //count.setText("(" + String.valueOf(mCount.get(position)) + ")");
-        //long percent_a;
-
-        //percent_a = Math.round(100 - 100 * mSells.get(position) / mCost.get(position));
-        //percent.setText("-" + String.valueOf() + "%");
-
         viewHolder.tvSalePrice.setText(df.format(product.getSalePrice()));
         viewHolder.tvListedPrice.setText(df.format(product.getListedPrice()));
         viewHolder.tvListedPrice.setPaintFlags(viewHolder.tvListedPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        //viewHolder.chkCheck.isChecked();
         viewHolder.chkCheck.setZ(2000f);
 
         if(product.getImage1() != null)
@@ -200,20 +152,14 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
             }
         });
 
+        int soluong = 0;
 
-//        name.setText(mNames.get(position));
-//        rate_bar.setRating(Integer.valueOf(mrate.get(position)));
-//        count.setText("(" + String.valueOf(mCount.get(position)) + ")");
-//        long percent_a;
-//        percent_a = Math.round(100 - 100 * mSells.get(position) / mCost.get(position));
-//        percent.setText("-" + String.valueOf(percent_a) + "%");
-//
-//        sells.setText(df.format((mSells.get(position))));
-//        cost.setText(df.format((mCost.get(position))));
-//        cost.setPaintFlags(cost.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-//        checkBox.isChecked();
-//        checkBox.setZ(2000f);
-
+        for (ProductDetail pro : HSActivity.details) {
+            if (pro.getProduct().equals(product.getId())) {
+                soluong += pro.getQuantity();
+            }
+            viewHolder.tvSoLuong.setText("(" + String.valueOf(soluong) + ")");
+        }
 
         return convertView;
     }

@@ -39,7 +39,7 @@ import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Thanh.DetailInformationOfProduct;
 
 public class HSActivity extends Fragment implements SearchView.OnQueryTextListener {
-    private Adapters.SectionsPagerAdapter mSectionsPagerAdapter;
+    public Adapters.SectionsPagerAdapter mSectionsPagerAdapter;
     private ArrayAdapter<String> adapter;
 
     private ViewPager mViewPager;
@@ -68,7 +68,42 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
         dialog.setMessage("Loading ......");
         dialog.show();
 
+        details.clear();
         new LoadData().execute();
+
+        if(products.size() > 0)
+        {
+            for(Product pro : products)
+            {
+                database.child("ProductDetails").orderByChild("product").equalTo(pro.getId()).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        ProductDetail detail = dataSnapshot.getValue(ProductDetail.class);
+                        details.add(detail);
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        }
 
         final View view = inflater.inflate(R.layout.hs_activity, container, false);
 
@@ -330,13 +365,44 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
 
             final ArrayList<Product> list = new ArrayList<>();
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+            final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
             database.child("Products").orderByChild("shop").equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    Product product = dataSnapshot.getValue(Product.class);
+                    final Product product = dataSnapshot.getValue(Product.class);
+
+                    ///new LoadProduct().execute(product);
                     list.add(product);
+
+                    database.child("ProductDetails").orderByChild("product").equalTo(product.getId()).addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            //ProductDetail detail = dataSnapshot.getValue(ProductDetail.class);
+                            //details.add(detail);
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
                 }
 
                 @Override
@@ -370,5 +436,48 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
             HSActivity.dialog.dismiss();
         }
     }
+
+//    public class LoadProduct extends AsyncTask<Product ,Integer , ArrayList<ProductDetail>>
+//    {
+//        @Override
+//        protected ArrayList<ProductDetail> doInBackground(Product... products) {
+//            final ArrayList<ProductDetail> list = new ArrayList<>();
+//            database.child("ProductDetails").orderByChild("product").equalTo(products[0].getId()).addChildEventListener(new ChildEventListener() {
+//                @Override
+//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                    ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
+//                    list.add(productDetail);
+//                }
+//
+//                @Override
+//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                }
+//
+//                @Override
+//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
+//
+//            return list;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(ArrayList<ProductDetail> productDetails) {
+//            details.addAll(productDetails);
+//            super.onPostExecute(productDetails);
+//        }
+//    }
 }
 

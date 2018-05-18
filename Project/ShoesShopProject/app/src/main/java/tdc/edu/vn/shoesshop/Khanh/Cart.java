@@ -21,6 +21,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,9 +33,10 @@ import Models.Bill;
 import Models.BillDetail;
 import Models.Client;
 import Models.Notification;
+import Models.ProductDetail;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Son.ClientInformationAfterOrder;
-import tdc.edu.vn.shoesshop.Toan.Home_User_Fragment;
+import tdc.edu.vn.shoesshop.Toan.HomeForClient;
 
 /**
  * Created by kk on 05/04/2018.
@@ -63,6 +65,7 @@ public class Cart extends Fragment {
         tvMoney = (TextView) view.findViewById(R.id.tvMoney);
         btnThanhToan = (Button) view.findViewById(R.id.btnPay);
 
+        //lay danh sach sp trong gio hang
         list.clear();
         database.child("Clients").child(user.getUid()).child("Cart").addChildEventListener(new ChildEventListener() {
             @Override
@@ -93,10 +96,12 @@ public class Cart extends Fragment {
             }
         });
 
+        //adapter of list view
         listView = (ListView) view.findViewById(R.id.lvList);
         billAdapter = new BillAdapter(getActivity(), R.layout.bill_item, list);
         listView.setAdapter(billAdapter);
 
+        //thong tin khach hang
         database.child("Clients").orderByKey().equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -127,10 +132,12 @@ public class Cart extends Fragment {
         btnThanhToan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //kiem tra so luong san pham trong gio hang
                 if (list.size() > 0) {
                     final ArrayList<String> listShop = new ArrayList<>();
                     final HashMap<String, ArrayList<BillDetail>> listBill = new HashMap<>();
 
+                    //dung thong tin mac dinh de dat hang
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                     alertDialog.setTitle("Thông báo");
                     alertDialog.setIcon(R.mipmap.ic_launcher);
@@ -166,20 +173,44 @@ public class Cart extends Fragment {
                                 UpBillFirebase(listShop.get(a), listBill.get(listShop.get(a)));
                             }
 
-                            Toast.makeText(getContext(), "Tạo đơn hàng thành công!", Toast.LENGTH_SHORT).show();
+                            //tru so luong san pham cua shop
+                            for(final BillDetail detail : list) {
+                                database.child("ProductDetails").orderByChild("id").equalTo(detail.getDetail()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
+                                        if(productDetail != null) {
+                                            productDetail.setQuantity(productDetail.getQuantity() - detail.getQuantity());
+                                            for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                                child.getRef().setValue(productDetail);
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+
+                            //thong bao va lam moi gio hang
+                            Toast.makeText(getContext(), "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
                             database.child("Clients").child(user.getUid()).child("Cart").setValue(null);
                             list.clear();
                             billAdapter.notifyDataSetChanged();
 
-                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                    new Home_User_Fragment()).commit();
+//                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                                    new Home_User_Fragment()).commit();
+                            HomeForClient.bottomNav.setSelectedItemId(R.id.nav_home);
                         }
                     });
 
+                    // nhap thong tin khac voi thong tin dang ky
                     alertDialog.setNegativeButton("Nhập mới", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
                             intent = new Intent();
                             intent.setClass(getActivity(), ClientInformationAfterOrder.class);
                             startActivity(intent);
@@ -194,6 +225,7 @@ public class Cart extends Fragment {
         return view;
     }
 
+    //update hoa don len firebase
     private void UpBillFirebase(final String shop, final ArrayList<BillDetail> details) {
         //them hoa don cho shop
         final Bill bill = new Bill();
@@ -213,6 +245,7 @@ public class Cart extends Fragment {
         String keys = database.child("Shops").child(shop).child("Transactions").push().getKey();
         database.child("Shops").child(shop).child("Transactions").child(keys).setValue(bill);
 
+        //them san pham vao hoa don
         for (BillDetail detail : details) {
             database.child("Clients").child(user.getUid()).child("Transactions").child(key).child("Details").push().setValue(detail);
         }

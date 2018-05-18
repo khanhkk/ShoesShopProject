@@ -45,6 +45,16 @@
                 app:srcCompat="@mipmap/a2"
                 android:visibility="gone"
                 />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgshop"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ff"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="2dp"
+
+                />
             <TextView
                 android:id="@+id/txtnameshop"
                 android:layout_width="match_parent"
@@ -54,20 +64,9 @@
                 android:text="MWC Shop"
                 android:textSize="40sp"
                 android:textColor="#FF6600"/>
-
-
         </LinearLayout>
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgshop"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center"
-            android:src="@drawable/avatar"
-            app:civ_border_color="@color/white"
-            app:civ_border_width="2dp"
 
-            />
 
 
     </LinearLayout>

@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import Controls.General;
-import Controls.ServerConnectInternet;
 import Models.Account;
 import Models.Client;
 import Models.Shop;

@@ -14,14 +14,18 @@
         android:background="@drawable/background_nen"
         >
 
-        <ImageView
+
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView2"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            app:srcCompat="@mipmap/a1"
             android:layout_gravity="bottom"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ff"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp"
+            />
 
 
         <TextView
@@ -31,6 +35,8 @@
             android:textSize="20dp"
             android:layout_gravity="bottom"
             android:layout_marginLeft="10dp"
+            android:text="No Name"
+            android:textStyle="bold"
             android:layout_marginBottom="20dp"/>
 
     </LinearLayout>

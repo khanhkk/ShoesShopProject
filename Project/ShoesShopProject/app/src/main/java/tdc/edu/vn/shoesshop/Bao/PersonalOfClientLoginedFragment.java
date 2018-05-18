@@ -2,6 +2,7 @@ package tdc.edu.vn.shoesshop.Bao;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -18,6 +20,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
+
+import Controls.General;
 import Models.Client;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Sang.ChangePassword;
@@ -27,6 +32,7 @@ public class PersonalOfClientLoginedFragment extends Fragment {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     TextView nameClient;
+    ImageView img;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,11 +43,20 @@ public class PersonalOfClientLoginedFragment extends Fragment {
         final FirebaseAuth auth = FirebaseAuth.getInstance();
 
         nameClient = (TextView) view.findViewById(R.id.txtName);
+        img = (ImageView) view.findViewById(R.id.imageView2);
         database.child("Clients").orderByKey().equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Client client = dataSnapshot.getValue(Client.class);
                 nameClient.setText(client.getName());
+                if (client.getImages() != null) {
+                    try {
+                        Bitmap bitmap = General.decodeFromFirebaseBase64(client.getImages());
+                        Glide.with(PersonalOfClientLoginedFragment.this).load(bitmap).into(img);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override

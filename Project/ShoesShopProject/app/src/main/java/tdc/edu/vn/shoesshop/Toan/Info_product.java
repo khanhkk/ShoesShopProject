@@ -45,7 +45,6 @@ import Adapters.AdapterComment;
 import Adapters.Adapter_info_product;
 import Controls.DateTimePicker;
 import Controls.General;
-import Controls.ServerConnectInternet;
 import Models.BillDetail;
 import Models.Comments;
 import Models.Product;

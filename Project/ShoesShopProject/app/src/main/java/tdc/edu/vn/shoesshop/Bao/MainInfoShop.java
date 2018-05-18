@@ -134,8 +134,7 @@ public class MainInfoShop extends AppCompatActivity {
                 address.setText("Địa chỉ:  " + shop.getAddress());
                 nguoidaidien.setText("Người đại diện:  " + shop.getNguoidaidien());
                 fb.setText("Facebook:  " + shop.getFb());
-                if(shop.getImage() != null)
-                {
+                if (shop.getImage() != null) {
                     try {
                         Bitmap bitmap = General.decodeFromFirebaseBase64(shop.getImage());
                         Glide.with(MainInfoShop.this).load(bitmap).into(image);
