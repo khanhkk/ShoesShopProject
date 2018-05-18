@@ -44,6 +44,7 @@ import java.util.TimerTask;
 import Adapters.AdapterComment;
 import Adapters.Adapter_info_product;
 import Controls.DateTimePicker;
+import Controls.General;
 import Controls.ServerConnectInternet;
 import Models.BillDetail;
 import Models.Comments;
@@ -96,6 +97,7 @@ public class Info_product extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info_product);
+        General.setupUI(findViewById(R.id.layout_ttSP), Info_product.this);
         check(this);
         //get current user
         auth = FirebaseAuth.getInstance();
@@ -118,6 +120,8 @@ public class Info_product extends AppCompatActivity {
         mota = (TextView) findViewById(R.id.motasp);
         edtName = (EditText) findViewById(R.id.tenNguoiBL);
         edtCcomment = (EditText) findViewById(R.id.edtBinhLuan);
+        edtName.setText("");
+        edtCcomment.setText("");
 
         lvComment = (ListView) findViewById(R.id.lvBinhLuan);
         lvComment.setOnTouchListener(new View.OnTouchListener() {
@@ -135,7 +139,7 @@ public class Info_product extends AppCompatActivity {
         //  Action bar back
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle(getString(R.string.app_name));
-        mToolbar.setNavigationIcon(R.drawable.ic_chevron_left_black_24dp);
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         //View Pager
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         sliderDotspanel = (LinearLayout) findViewById(R.id.SlidearDots);
@@ -197,17 +201,11 @@ public class Info_product extends AppCompatActivity {
             @Override
             public boolean onLongClick(View v) {
                 dataTestComment();
+                edtName.requestFocus();
                 return false;
             }
         });
-//        btnBinhLuan.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //dataComment();
-//
-//
-//            }
-//        });
+
         btnComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -226,7 +224,7 @@ public class Info_product extends AppCompatActivity {
                                 @Override
                                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                     Comments comments = dataSnapshot.getValue(Comments.class);
-                                    if(comments != null) {
+                                    if (comments != null) {
                                         listComment.add(0, comments);
                                         customAdaper.notifyDataSetChanged();
                                     }
@@ -315,8 +313,7 @@ public class Info_product extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 auth.signOut();
-                Intent intent = new Intent(Info_product.this, HomeForClient.class);
-                startActivity(intent);
+               onBackPressed();
             }
         });
 
@@ -619,8 +616,8 @@ public class Info_product extends AppCompatActivity {
                 comments.setTen(edtName.getText() + "");
                 comments.setThoiGian(DateTimePicker.simpleDateFormat.format(calendar.getTime()));
                 comments.setNoiDung(edtCcomment.getText() + "");
-                listComment.add(0, comments);
-                customAdaper.notifyDataSetChanged();
+//                listComment.add(0, comments);
+//                customAdaper.notifyDataSetChanged();
                 database.child("Products").child(dataSnapshot.getKey()).child("Comments").push().setValue(comments);
 
                 //lay thong tin comment
@@ -658,5 +655,10 @@ public class Info_product extends AppCompatActivity {
             return;
         }
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Info_product.super.onBackPressed();
     }
 }

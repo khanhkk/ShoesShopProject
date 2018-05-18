@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Toan.Info_product">
+    tools:context=".Toan.Info_product"
+    android:id="@+id/layout_ttSP">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -18,14 +19,20 @@
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     style="@style/toolbar"
-                    android:minHeight="50dp"
+                    android:minHeight="?attr/actionBarSize"
                     app:theme="@style/ThemeOverlay.AppCompat.Dark"
                     tools:ignore="MissingPrefix">
 
                     <TextView
-                        style="@style/textOftoolbar"
-                        android:text="Thông tin sản phẩm" />
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Thông tin sản phẩm"
+                        android:textColor="#fff"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+                    />
                 </android.support.v7.widget.Toolbar>
+                <!--Toolbar-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -63,7 +70,7 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.7"
+                            android:layout_weight="0.4"
                             android:text="Màu:" />
 
                         <Spinner
@@ -84,7 +91,7 @@
                             android:id="@+id/spinner1"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1.4"
+                            android:layout_weight="1"
                             android:gravity="center" />
                     </LinearLayout>
 
@@ -232,7 +239,8 @@
                         android:layout_gravity="bottom"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
-                        android:text="Mua ngay" />
+                        android:text="Mua ngay"
+                        android:background="#939ec60f"/>
 
                     <!--<Button-->
                     <!--android:id="@+id/btnBinhLuan"-->

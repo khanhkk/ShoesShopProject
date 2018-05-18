@@ -103,7 +103,8 @@
                         android:id="@+id/imgView_info"
                         android:layout_width="180dp"
                         android:layout_height="180dp"
-                        android:layout_marginLeft="50dp" />
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"/>
 
                     <ImageButton
                         android:id="@+id/btn_infor"

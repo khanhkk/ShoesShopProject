@@ -162,7 +162,8 @@
                         android:id="@+id/imgView_info"
                         android:layout_width="180dp"
                         android:layout_height="180dp"
-                        android:layout_marginLeft="50dp" />
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"/>
 
                     <ImageButton
                         android:id="@+id/btn_infor"
@@ -170,7 +171,6 @@
                         android:layout_height="wrap_content"
                         android:background="#ffff"
                         android:src="@drawable/ic_add_a_photo_black_24dp">
-
                     </ImageButton>
                 </LinearLayout>
             </LinearLayout>
