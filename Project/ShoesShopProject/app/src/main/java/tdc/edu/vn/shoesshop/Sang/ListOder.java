@@ -112,7 +112,7 @@ public class ListOder extends AppCompatActivity implements SearchView.OnQueryTex
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     Toast.makeText(ListOder.this, i + "", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(ListOder.this, OrderInformationForClient.class);
-                    intent.putExtra("bill", list.get(i).getId());
+                    intent.putExtra("client", list.get(i).getId());
                     startActivity(intent);
                 }
             });

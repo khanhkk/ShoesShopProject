@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import Adapters.OrderShopAdapter;
@@ -49,10 +51,14 @@ public class OrderInformationForShop extends AppCompatActivity {
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+    NumberFormat nf = NumberFormat.getInstance();
+    DecimalFormat df = (DecimalFormat) nf;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_information_for_shop_activity);
+        df.applyPattern("#,### đ");
 
         back = (ImageButton) findViewById(R.id.btnBack);
         tvTotal = (TextView) findViewById(R.id.tvMoney);
@@ -81,15 +87,18 @@ public class OrderInformationForShop extends AppCompatActivity {
                         tvClient.setText(bill.getNameClient());
                         tvPhone.setText(bill.getPhone());
                         tvEmail.setText(bill.getEmail());
-                        vanchuyen.setVisibility(View.INVISIBLE);
+                        vanchuyen.setVisibility(View.GONE);
                         if (bill.getStatus() == 0) {
                             tinhtrang.setText("Đang chờ xử lý");
                             vanchuyen.setVisibility(View.VISIBLE);
                         } else if (bill.getStatus() == 1) {
+                            vanchuyen.setVisibility(View.GONE);
                             tinhtrang.setText("Đang vận chuyển");
                         } else if (bill.getStatus() == -1) {
+                            vanchuyen.setVisibility(View.GONE);
                             tinhtrang.setText("Đã hủy");
                         } else if (bill.getStatus() == 2) {
+                            vanchuyen.setVisibility(View.GONE);
                             tinhtrang.setText("Đã giao dịch");
                         }
 
@@ -157,8 +166,7 @@ public class OrderInformationForShop extends AppCompatActivity {
                 alertDialog.setTitle("Thông báo");
                 alertDialog.setIcon(R.mipmap.ic_launcher);
                 alertDialog.setMessage("Bạn muốn chuyển trạng thái đơn hàng này?");
-                alertDialog.setPositiveButton("Thay đổi", new DialogInterface.OnClickListener()
-                {
+                alertDialog.setPositiveButton("Thay đổi", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (vanchuyen.getText().equals("Vận chuyển")) {
@@ -207,11 +215,6 @@ public class OrderInformationForShop extends AppCompatActivity {
                     }
                 });
                 alertDialog.show();
-//                else {
-//                    tinhtrang.setText("Đã hủy");
-//                    vanchuyen.setBackground(getDrawable(R.drawable.button_style));
-//                    vanchuyen.setText("Vận chuyển");
-//                }
             }
         });
 
@@ -227,8 +230,5 @@ public class OrderInformationForShop extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
-
-
 }

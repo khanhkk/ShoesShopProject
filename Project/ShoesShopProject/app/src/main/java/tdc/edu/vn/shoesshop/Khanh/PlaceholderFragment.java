@@ -10,9 +10,6 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -29,8 +26,8 @@ public class PlaceholderFragment extends Fragment {
     TextView textView;
 
     private ArrayList<Product> list = new ArrayList<>();
-    private ArrayList<ProductDetail> listDetails = new ArrayList<>();
-    public static Adapter_ProductFilter_Shop adapter;
+    //public ArrayList<ProductDetail> listDetails = new ArrayList<>();
+    public Adapter_ProductFilter_Shop adapter;
     private ArrayList<String> listTrademark = new ArrayList<>();
     //private int mPage;
 
@@ -64,12 +61,13 @@ public class PlaceholderFragment extends Fragment {
         final char c = textView.getText().charAt(textView.getText().length()-1);
         list.clear();
         listTrademark.clear();
-        listDetails.clear();
+        //listDetails.clear();
 
         if(HSActivity.products.size() > 0)
         {
             for(Product product : HSActivity.products)
             {
+
                 if(HSActivity.name_product.length() == 0 ) {
                     if(HSActivity.trademark.length() == 0) {
                         setup(product, c);
@@ -95,72 +93,24 @@ public class PlaceholderFragment extends Fragment {
                     }
                 }
 
-                //adapter.notifyDataSetChanged();
-                database.child("ProductDetails").orderByChild("product").equalTo(product.getId()).addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
-                        listDetails.add(productDetail);
-                        adapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
             }
         }
 
 
+        adapter = new Adapter_ProductFilter_Shop(getContext(), list);
+        gridView.setAdapter(adapter);
 
-//        database.child("Products").orderByChild("shop").equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
+        return rootView;
+    }
+
+//    private void takeData( Product product)
+//    {
+//        database.child("ProductDetails").orderByChild("product").equalTo(product.getId()).addChildEventListener(new ChildEventListener() {
 //            @Override
 //            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                Product product = dataSnapshot.getValue(Product.class);
-//
-//                if(HSActivity.name_product.length() == 0 ) {
-//                    if(HSActivity.trademark.length() == 0) {
-//                        setup(product, c);
-//                    }
-//                    else
-//                    {
-//                        if (product.getTrademark().contains(HSActivity.name_product)) {
-//                            setup(product, c);
-//                        }
-//                    }
-//                }
-//                else {
-//                    if(HSActivity.trademark.length() == 0) {
-//                        if ( product.getName().toUpperCase().equals(HSActivity.trademark)) {
-//                            setup(product, c);
-//                        }
-//                    }
-//                    else {
-//                        if (product.getName().contains(HSActivity.name_product) && product.getTrademark().toUpperCase().equals(HSActivity.trademark)) {
-//                            setup(product, c);
-//                        }
-//                    }
-//                }
-//
-//                //setup(product, c);
+//                ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
+//                listDetails.add(productDetail);
 //                adapter.notifyDataSetChanged();
-//
 //            }
 //
 //            @Override
@@ -183,17 +133,12 @@ public class PlaceholderFragment extends Fragment {
 //
 //            }
 //        });
-
-        adapter = new Adapter_ProductFilter_Shop(getContext(), list, listDetails);
-        gridView.setAdapter(adapter);
-
-        return rootView;
-    }
+//    }
 
     private void setup(Product product, char c)
     {
         if (c == '1') {
-            if (product.getSex() == 2) {
+            if (product.getSex() == 2){
                 list.add(product);
             }
 

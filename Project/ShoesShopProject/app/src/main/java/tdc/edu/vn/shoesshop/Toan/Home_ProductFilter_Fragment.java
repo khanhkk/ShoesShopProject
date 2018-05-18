@@ -3,7 +3,6 @@ package tdc.edu.vn.shoesshop.Toan;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 
 import Adapters.Adapter_ProductFilter_Shop;
 import Models.Product;
-import tdc.edu.vn.shoesshop.Khanh.HSActivity;
 import tdc.edu.vn.shoesshop.R;
 
 /**
@@ -46,7 +44,7 @@ public class Home_ProductFilter_Fragment extends Fragment {
 //    private ArrayList<Boolean> mCheck = new ArrayList<>();
 
     private ArrayList<Product> list = new ArrayList<>();
-    private Adapter_ProductFilter_Shop  adapter;
+    public Adapter_ProductFilter_Shop  adapter;
     private ArrayList<String> listTrademark = new ArrayList<>();
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -126,7 +124,7 @@ public class Home_ProductFilter_Fragment extends Fragment {
             }
         });
 
-        adapter = new Adapter_ProductFilter_Shop(getContext(), list, HSActivity.details);
+        adapter = new Adapter_ProductFilter_Shop(getContext(), list);
         gridView.setAdapter(adapter);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -135,10 +133,6 @@ public class Home_ProductFilter_Fragment extends Fragment {
     }
 
     private void initGridView() {
-
-        Log.d(TAG, "initRecyclerView: init recyclerview");
-
-        //Adapter_ProductFilter_Shop adapter = new Adapter_ProductFilter_Shop( mImageUrls,  mNames,  mrate,  mSells,  mCost,  mCount,  mCheck,getActivity());
 
         gridView.setAdapter(adapter);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());

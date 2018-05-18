@@ -190,6 +190,26 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
                 Intent intent = new Intent(ClientInformationAfterOrder.this, HomeForClient.class);
                 startActivity(intent);
 
+//                for(final BillDetail detail : Cart.) {
+//                    database.child("ProductDetails").orderByChild("id").equalTo(detail.getDetail()).addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
+//                            productDetail.setQuantity(productDetail.getQuantity() - detail.getQuantity());
+//                            for(DataSnapshot child : dataSnapshot.getChildren())
+//                            {
+//                                child.getRef().setValue(productDetail);
+//                                break;
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//                }
+
                 Toast.makeText(ClientInformationAfterOrder.this, "Tạo đơn hàng thành công!", Toast.LENGTH_SHORT).show();
 
                 //clear gio hang

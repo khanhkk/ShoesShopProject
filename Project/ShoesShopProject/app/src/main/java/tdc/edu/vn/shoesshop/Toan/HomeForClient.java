@@ -33,15 +33,11 @@ public class HomeForClient extends AppCompatActivity {
         intent = getIntent();
 
         String s = intent.getStringExtra("action");
-        //Toast.makeText(this, s + "---", Toast.LENGTH_SHORT);
         if (s != null) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                    new Cart()).commit();
             bottomNav.setSelectedItemId(R.id.nav_cart);
         } else {
 
             //get current user
-
             if (users == null) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new Home_Client_Fragment()).commit();
@@ -63,11 +59,6 @@ public class HomeForClient extends AppCompatActivity {
                 }
             }
         };
-//        Intent intent1 = getIntent();
-//        Bundle bundle1 = intent1.getBundleExtra(LoginActivity.BUNDLE);
-//        if (bundle1 != null) {
-//            Toast.makeText(getApplicationContext(), "key: " + bundle1.getString("key"), Toast.LENGTH_LONG).show();
-//        }
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
