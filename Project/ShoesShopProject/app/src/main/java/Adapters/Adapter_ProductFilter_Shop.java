@@ -1,10 +1,10 @@
 package Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +16,13 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+import Controls.General;
 import Models.Product;
+import Models.ProductDetail;
 import tdc.edu.vn.shoesshop.Khanh.HSActivity;
 import tdc.edu.vn.shoesshop.R;
 
@@ -40,6 +40,7 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
     private static final String TAG = "Adapter_ProductFilter";
     private Context mContext;
     private ArrayList<Product> list;
+    private ArrayList<ProductDetail> listDetail;
     //private ArrayList<Product> CheckedProducts;
 
 //    public Adapter_ProductFilter_Shop(ArrayList<Integer> mImageUrls, ArrayList<String> mNames, ArrayList<Integer> mrate, ArrayList<Double> mSells, ArrayList<Double> mCost, ArrayList<Integer> mCount, ArrayList<Boolean> mCheck, Context mContext) {
@@ -57,9 +58,10 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
         super();
     }
 
-    public Adapter_ProductFilter_Shop(Context mContext, ArrayList<Product> list) {
+    public Adapter_ProductFilter_Shop(Context mContext, ArrayList<Product> list, ArrayList<ProductDetail> listDetail) {
         this.mContext = mContext;
         this.list = list;
+        this.listDetail = listDetail;
 
         //CheckedProducts = new ArrayList<>();
     }
@@ -127,6 +129,16 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
 
         viewHolder.tvName.setText(product.getName());
         viewHolder.ratingBar.setRating(product.getRating());
+
+        int soluong = 0;
+
+        for (ProductDetail pro : listDetail) {
+            if (pro.getProduct().equals(product.getId())) {
+                soluong += pro.getQuantity();
+            }
+            viewHolder.tvSoLuong.setText("(" + String.valueOf(soluong) + ")");
+        }
+
         //count.setText("(" + String.valueOf(mCount.get(position)) + ")");
         //long percent_a;
 
@@ -139,31 +151,33 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
         //viewHolder.chkCheck.isChecked();
         viewHolder.chkCheck.setZ(2000f);
 
-        if (product.getImage1() != null) {
+        if(product.getImage1() != null)
+        {
             try {
-                byte[] imageByteArray = Base64.decode(product.getImage1(), Base64.DEFAULT);
-                Glide.with(mContext)
-                        .load(imageByteArray)
-                        .into(viewHolder.imageView);
-            } catch (Exception ex) {
+                Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage1());
+                viewHolder.imageView.setImageBitmap(bitmap);
+            }catch (Exception ex)
+            {
 
             }
-        } else if (product.getImage2() != null) {
+        }
+        else if(product.getImage2() != null)
+        {
             try {
-                byte[] imageByteArray1 = Base64.decode(product.getImage2(), Base64.DEFAULT);
-                Glide.with(mContext)
-                        .load(imageByteArray1)
-                        .into(viewHolder.imageView);
-            } catch (Exception ex) {
+                Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage2());
+                viewHolder.imageView.setImageBitmap(bitmap);
+            }catch (Exception ex)
+            {
 
             }
-        } else if (product.getImage3() != null) {
+        }
+        else if(product.getImage3() != null)
+        {
             try {
-                byte[] imageByteArray2 = Base64.decode(product.getImage3(), Base64.DEFAULT);
-                Glide.with(mContext)
-                        .load(imageByteArray2)
-                        .into(viewHolder.imageView);
-            } catch (Exception ex) {
+                Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage3());
+                viewHolder.imageView.setImageBitmap(bitmap);
+            }catch (Exception ex)
+            {
 
             }
         }

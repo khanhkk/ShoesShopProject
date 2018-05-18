@@ -3,7 +3,6 @@ package tdc.edu.vn.shoesshop.Thanh;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,7 +11,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -126,7 +124,11 @@ public class EdittingClientInformation extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                Intent intent = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("chuyen", 1);
+                intent.putExtra("chuyen", bundle);
+                startActivity(intent);
             }
         });
         pullData();
@@ -206,9 +208,15 @@ public class EdittingClientInformation extends AppCompatActivity {
 
         updateClient();
         updateAcount();
-//        Intent intent = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
-//        startActivity(intent);
-onBackPressed();
+        try {
+            Intent intent = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
+            startActivity(intent);
+        }catch (Exception e)
+        {
+            Toast.makeText(EdittingClientInformation.this,"ss"+ e,Toast.LENGTH_LONG).show();
+        }
+
+
     }
 
     public void updateClient()
@@ -247,10 +255,16 @@ onBackPressed();
         });
     }
     public void chooseFromGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, 0);
-    }
+        try {
+            Intent intent = new Intent(Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, 0);
+
+        }catch (Exception e)
+        {
+            Toast.makeText(EdittingClientInformation.this,"ss"+ e,Toast.LENGTH_LONG).show();
+        }
+           }
 
 
     private void takeNewProfilePicture(){
@@ -301,11 +315,7 @@ onBackPressed();
         database.child("Clients").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                Client client = dataSnapshot.getValue(Client.class);
-//                txtemail.setText(client.getEmail());
-//                txtname.setText(client.getName());
-//                txtsdt.setText(client.getPhone());
-//                txtdiachi.setText(client.getAddress());
+
 
                 Client client = dataSnapshot.getValue(Client.class);
                 if(client != null)
@@ -330,23 +340,5 @@ onBackPressed();
 
             }
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setTitle("Lưu?")
-                .setMessage("Bạn muốn lưu không?")
-                .setNegativeButton(android.R.string.no, null)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        Intent intent_o_s = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
-                        Bundle bundle_o_s = new Bundle();
-                        setResult(RESULT_OK, intent_o_s);
-                        EdittingClientInformation.super.onBackPressed();
-                    }
-                }).create().show();
-
     }
 }

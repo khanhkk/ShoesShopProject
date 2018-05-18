@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -65,6 +66,7 @@ public class QuantityManagement extends AppCompatActivity {
         General.setupUI(llBound, QuantityManagement.this );
 
         listDetails.clear();
+
         intent = getIntent();
         productDetail = (ProductDetail) intent.getSerializableExtra("detail");
         if(productDetail != null)
@@ -72,39 +74,48 @@ public class QuantityManagement extends AppCompatActivity {
             edtSize.setText(productDetail.getSize() + "");
             edtQuantity.setText(productDetail.getQuantity() + "");
             edtColor.setText(productDetail.getColor());
+
+            for(ProductDetail detail : SelectionProductToEditting.details)
+            {
+                if(detail.getProduct().equals(productDetail.getProduct()))
+                {
+                    listDetails.add(detail);
+                }
+            }
+
+//            database.child("ProductDetails").orderByChild("product").equalTo(productDetail.getProduct()).addChildEventListener(new ChildEventListener() {
+//                @Override
+//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                    ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
+//                    listDetails.add(productDetail);
+//                }
+//
+//                @Override
+//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                }
+//
+//                @Override
+//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
+
             database.child("Products").orderByChild("id").equalTo(productDetail.getProduct()).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     product = dataSnapshot.getValue(Product.class);
                     edtProduct.setText(product.getName());
-
-                    database.child("ProductDetails").orderByChild("product").equalTo(product.getId()).addChildEventListener(new ChildEventListener() {
-                        @Override
-                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                            ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
-                            listDetails.add(productDetail);
-                        }
-
-                        @Override
-                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                        }
-
-                        @Override
-                        public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                        }
-
-                        @Override
-                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
                 }
 
                 @Override
@@ -132,6 +143,14 @@ public class QuantityManagement extends AppCompatActivity {
         else if( (product = (Product) intent.getSerializableExtra("product")) != null )
         {
             edtProduct.setText(product.getName());
+
+            for(ProductDetail detail : SelectionProductToEditting.details)
+            {
+                if(detail.getProduct().equals(product.getId()))
+                {
+                    listDetails.add(detail);
+                }
+            }
         }
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -146,7 +165,7 @@ public class QuantityManagement extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Log.d("sss", listDetails.size() + "");
                 if(TextUtils.isEmpty(edtProduct.getText().toString().trim()))
                 {
                     Toast.makeText(QuantityManagement.this, "Lỗi!", Toast.LENGTH_SHORT).show();
@@ -175,7 +194,7 @@ public class QuantityManagement extends AppCompatActivity {
                     String mau = edtColor.getText().toString().trim();
                     int size = Integer.parseInt(edtSize.getText().toString().trim());
                     int quantity = Integer.parseInt(edtQuantity.getText().toString().trim());
-                    String color = edtColor.getText() + "";
+                    //String color = edtColor.getText() + "";
 
                     if(size <= 0)
                     {
@@ -190,19 +209,19 @@ public class QuantityManagement extends AppCompatActivity {
                     }
 
                     if (productDetail == null) {
+
                         if(listDetails.size() > 0)
                         {
                             for(ProductDetail pro : listDetails)
                             {
-
-                                if(pro.getColor() == color && pro.getSize() == size)
+                                if(pro.getColor().equals(mau) && pro.getSize() == size)
                                 {
                                     Toast.makeText(getApplicationContext(), "Kiểm tra thông tin nhập!", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
-
                             }
                         }
+
                         productDetail = new ProductDetail();
                         productDetail.setProduct(product.getId());
                         productDetail.setColor(mau);
@@ -210,6 +229,7 @@ public class QuantityManagement extends AppCompatActivity {
                         productDetail.setQuantity(quantity);
                         productDetail.setId(database.child("ProductDetails").push().getKey());
                         database.child("ProductDetails").push().setValue(productDetail);
+
                         intent = new Intent(QuantityManagement.this, SelectionProductToEditting.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
@@ -219,9 +239,9 @@ public class QuantityManagement extends AppCompatActivity {
                         {
                             for(ProductDetail pro : listDetails)
                             {
-                                if(pro.getId() != productDetail.getId())
+                                if(!pro.getId().equals(productDetail.getId()))
                                 {
-                                    if(pro.getColor() == color && pro.getSize() == size)
+                                    if(pro.getColor().equals(mau) && pro.getSize() == size)
                                     {
                                         Toast.makeText(getApplicationContext(), "Kiểm tra thông tin nhập!", Toast.LENGTH_SHORT).show();
                                         return;

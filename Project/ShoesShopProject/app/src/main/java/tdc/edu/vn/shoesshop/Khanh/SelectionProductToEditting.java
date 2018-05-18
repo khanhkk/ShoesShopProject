@@ -36,11 +36,10 @@ public class SelectionProductToEditting extends AppCompatActivity {
     public static ProductExpandListAdapter adapter;
     ArrayList<Product> products = new ArrayList<>();
     HashMap<Product, ArrayList<ProductDetail>> children = new HashMap<>();
-    ArrayList<ProductDetail> details = new ArrayList<>();
-    ArrayList<String> ListProductId =  new ArrayList<>();
+    public static ArrayList<ProductDetail> details = new ArrayList<>();
+    ArrayList<String> ListProductId = new ArrayList<>();
 
     ExpandableListView lvList;
-    //Button btnFinish;
     ImageButton btnBack;
     Intent intent;
 
@@ -54,74 +53,16 @@ public class SelectionProductToEditting extends AppCompatActivity {
 
         //anh xa
         lvList = (ExpandableListView) findViewById(R.id.lvListProduct);
-        //btnFinish = (Button) findViewById(R.id.btnFinishEdition);
         btnBack = (ImageButton) findViewById(R.id.btnBack);
-
-//        btnFinish.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//            intent = new Intent();
-//            intent.setClass(SelectionProductToEditting.this, HomeForShop.class);
-//            startActivity(intent);
-//            }
-//        });
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                intent = new Intent();
-//                intent.setClass(SelectionProductToEditting.this, HomeForShop.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//                startActivity(intent);
                 intent = new Intent();
                 intent.setClass(SelectionProductToEditting.this, HomeForShop.class);
                 startActivity(intent);
             }
         });
-
-//        if(savedInstanceState != null)
-//        {
-//            products = (ArrayList<Product>) savedInstanceState.getSerializable("data");
-//        }
-
-
-
-//        database.child("ProductDetails").addChildEventListener(new ChildEventListener() {
-////            @Override
-////            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-////                ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
-////                details.add(productDetail);
-////                if(products.size() > 0) {
-////                    for (Product product : products) {
-////                        if (product.getId().equals(productDetail.getProduct())) {
-////                            children.get(product).add(productDetail);
-////                            adapter.notifyDataSetChanged();
-////                        }
-////
-////                    }
-////                }
-////            }
-////
-////            @Override
-////            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-////
-////            }
-////
-////            @Override
-////            public void onChildRemoved(DataSnapshot dataSnapshot) {
-////
-////            }
-////
-////            @Override
-////            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-////
-////            }
-////
-////            @Override
-////            public void onCancelled(DatabaseError databaseError) {
-////
-////            }
-////        });
 
         adapter = new ProductExpandListAdapter(SelectionProductToEditting.this, products, children);
 
@@ -139,161 +80,168 @@ public class SelectionProductToEditting extends AppCompatActivity {
         products.clear();
         adapter.notifyDataSetChanged();
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("data");
-        if(bundle != null)
-        {
-            ListProductId = (ArrayList<String>) bundle.getStringArrayList("list");
-//            for(Product product : products)
-//            {
-//                ArrayList<ProductDetail> list = new ArrayList<>();
-//                children.put(product, list);
+        if(ListProductId.size() == 0) {
+            String product;
+            Intent intent = getIntent();
+            Bundle bundle = intent.getBundleExtra("data");
+            if (bundle != null) {
+                ListProductId = (ArrayList<String>) bundle.getStringArrayList("list");
+            } else if ((product = intent.getStringExtra("pro")) != null) {
+                ListProductId.add(product);
+            }
+        }
+
+        //Toast.makeText(SelectionProductToEditting.this, ListProductId.size() + "", Toast.LENGTH_SHORT).show();
+        //if (ListProductId.size() > 0) {
+        for (String str : ListProductId) {
+            database.child("Products").orderByChild("id").equalTo(str).addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    final Product product = dataSnapshot.getValue(Product.class);
+                    products.add(product);
+                    final ArrayList<ProductDetail> list =  new ArrayList<ProductDetail>();
+
+                    database.child("ProductDetails").orderByChild("product").equalTo(product.getId()).addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
+                            details.add(productDetail);
+                            //children.get(product).add(productDetail);
+                            list.add(productDetail);
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                    children.put(product, list);
+                    adapter.notifyDataSetChanged();
+
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+    }
+//        } else {
+//            String product = intent.getStringExtra("pro");
+//            if (product != null) {
+//                ListProductId.add(product);
+//                database.child("Products").orderByChild("id").equalTo(product).addChildEventListener(new ChildEventListener() {
+//                    @Override
+//                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                        final Product pro = dataSnapshot.getValue(Product.class);
+//                        products.add(pro);
+//                        children.put(pro, new ArrayList<ProductDetail>());
+//                        database.child("ProductDetails").orderByChild("product").equalTo(pro.getId()).addChildEventListener(new ChildEventListener() {
+//                            @Override
+//                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                                ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
+//                                details.add(productDetail);
+//                                children.get(pro).add(productDetail);
+//                            }
+//
+//                            @Override
+//                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(DatabaseError databaseError) {
+//
+//                            }
+//                        });
+//
+//                        adapter.notifyDataSetChanged();
+//                    }
+//
+//                    @Override
+//                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//                });
 //            }
-            for(final String str : ListProductId)
-            {
-                database.child("Products").orderByChild("id").equalTo(str).addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        final Product product = dataSnapshot.getValue(Product.class);
-                        products.add(product);
-                        children.put(product, new ArrayList<ProductDetail>());
-
-                        database.child("ProductDetails").orderByChild("product").equalTo(str).addChildEventListener(new ChildEventListener() {
-                            @Override
-                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
-                                details.add(productDetail);
-                                children.get(product).add(productDetail);
-                            }
-
-                            @Override
-                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                            }
-
-                            @Override
-                            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                            }
-
-                            @Override
-                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-                        adapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-            }
-        }
-        else {
-            final String product = intent.getStringExtra("pro");
-            if (product != null) {
-                //products.add(product);
-                database.child("Products").orderByChild("id").equalTo(product).addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        final Product pro = dataSnapshot.getValue(Product.class);
-                        products.add(pro);
-                        children.put(pro, new ArrayList<ProductDetail>());
-                        database.child("ProductDetails").orderByChild("product").equalTo(product).addChildEventListener(new ChildEventListener() {
-                            @Override
-                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
-                                details.add(productDetail);
-                                children.get(pro).add(productDetail);
-                            }
-
-                            @Override
-                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                            }
-
-                            @Override
-                            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                            }
-
-                            @Override
-                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-
-                        adapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-            }
-        }
-    }
+//        }
+//    }
 
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        if(savedInstanceState != null)
-        {
-            products = (ArrayList<Product>) savedInstanceState.getSerializable("aaa");
-        }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if(products.size() > 0) {
-            outState.putSerializable("aaa", products);
-        }
-    }
+//    @Override
+////    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+////        super.onRestoreInstanceState(savedInstanceState);
+////        if (savedInstanceState != null) {
+////            ListProductId = savedInstanceState.getStringArrayList("aaa");
+////            Toast.makeText(SelectionProductToEditting.this, ListProductId.size() + "", Toast.LENGTH_SHORT).show();
+////            //Log.d("afa", ListProductId.size()+"");
+////        }
+////    }
+////
+////    @Override
+////    protected void onSaveInstanceState(Bundle outState) {
+////        super.onSaveInstanceState(outState);
+////        if (ListProductId.size() > 0) {
+////            outState.putStringArrayList("aaa", ListProductId);
+////        }
+////    }
 
     public void onCreateContextMenu(final ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -303,7 +251,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
 
         int type = ExpandableListView.getPackedPositionType(info.packedPosition);
         int group = ExpandableListView.getPackedPositionGroup(info.packedPosition);
-        int child =	ExpandableListView.getPackedPositionChild(info.packedPosition);
+        int child = ExpandableListView.getPackedPositionChild(info.packedPosition);
 
         if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
 
@@ -322,7 +270,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
                 (ExpandableListView.ExpandableListContextMenuInfo) item.getMenuInfo();
         int type = ExpandableListView.getPackedPositionType(info.packedPosition);
         final int group = ExpandableListView.getPackedPositionGroup(info.packedPosition);
-        final int child =	ExpandableListView.getPackedPositionChild(info.packedPosition);
+        final int child = ExpandableListView.getPackedPositionChild(info.packedPosition);
 
         if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
             final ProductDetail productDetail = (ProductDetail) adapter.getChild(group, child);
@@ -369,7 +317,7 @@ public class SelectionProductToEditting extends AppCompatActivity {
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     //dataSnapshot.getRef().setValue(null);
 
-                                    for (DataSnapshot child: dataSnapshot.getChildren()) {
+                                    for (DataSnapshot child : dataSnapshot.getChildren()) {
                                         child.getRef().setValue(null);
                                     }
                                 }
