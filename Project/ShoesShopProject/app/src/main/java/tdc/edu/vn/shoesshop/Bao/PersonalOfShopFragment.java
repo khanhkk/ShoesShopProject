@@ -1,6 +1,7 @@
 package tdc.edu.vn.shoesshop.Bao;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -17,6 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
+
+import Controls.General;
 import Models.Shop;
 import tdc.edu.vn.shoesshop.Khanh.Promotions;
 import tdc.edu.vn.shoesshop.R;
@@ -26,6 +31,7 @@ public class PersonalOfShopFragment extends Fragment {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     TextView nameShop;
+    ImageView img;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,6 +41,8 @@ public class PersonalOfShopFragment extends Fragment {
         View view = null;
         view = inflater.inflate(R.layout.personal_of_shop_fragment, container, false);
         nameShop = (TextView) view.findViewById(R.id.txtName);
+        img = (ImageView) view.findViewById(R.id.imgshop) ;
+
         data();
         // thông tin khuyến mãi
         ImageView imgkhuyenmai = (ImageView) view.findViewById(R.id.imgkhuyenmai);
@@ -72,22 +80,6 @@ public class PersonalOfShopFragment extends Fragment {
             }
         });
 
-        // thông báo
-        ImageView imgtbshop = (ImageView) view.findViewById(R.id.imgtbshop);
-        imgtbshop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-        TextView txttbshop = (TextView) view.findViewById(R.id.txttbshop);
-        txttbshop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
         // đăng xuát
         ImageView imglogout = (ImageView) view.findViewById(R.id.imglogout);
         imglogout.setOnClickListener(new View.OnClickListener() {
@@ -119,6 +111,15 @@ public class PersonalOfShopFragment extends Fragment {
 
                 Shop shop = dataSnapshot.getValue(Shop.class);
                 nameShop.setText(shop.getName());
+                if (shop.getImage() != null) {
+                    try {
+                        Bitmap bitmap = General.decodeFromFirebaseBase64(shop.getImage());
+                        Glide.with(PersonalOfShopFragment.this).load(bitmap).into(img);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
             }
 
             @Override

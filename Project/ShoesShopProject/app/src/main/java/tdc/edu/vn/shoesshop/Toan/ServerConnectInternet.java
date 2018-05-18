@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import tdc.edu.vn.shoesshop.Toan.MyApplication;
-
 public class ServerConnectInternet extends BroadcastReceiver{
     @Override
     public void onReceive(Context context, Intent intent) {
