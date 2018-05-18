@@ -1,5 +1,6 @@
 package tdc.edu.vn.shoesshop.Toan;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import 	android.app.ProgressDialog;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -57,6 +57,9 @@ public class LoginActivity extends AppCompatActivity {
         // set the view now
         setContentView(R.layout.activity_login);
 
+
+        check(this);
+
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         btnSignup = (Button) findViewById(R.id.btn_signup);
@@ -82,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                checkInternetConenction();
                 String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
 
@@ -129,16 +133,17 @@ public class LoginActivity extends AppCompatActivity {
                                                 if (account.getLevel() == 0) {
                                                     bundle.putString("key", user.getUid());
                                                     intent = new Intent(LoginActivity.this, HomeForShop.class);
-                                                    intent.putExtra(BUNDLE,bundle);
+                                                    intent.putExtra(BUNDLE, bundle);
                                                     startActivity(intent);
                                                 } else {
                                                     bundle.putString("key", user.getUid());
                                                     intent = new Intent(LoginActivity.this, HomeForClient.class);
-                                                    intent.putExtra(BUNDLE,bundle);
+                                                    intent.putExtra(BUNDLE, bundle);
                                                     startActivity(intent);
                                                 }
                                                 dialog.dismiss();
                                             }
+
                                             @Override
                                             public void onCancelled(DatabaseError databaseError) {
 
@@ -173,7 +178,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
     private static long back_pressed;
+
     @Override
     public void onBackPressed() {
         if (back_pressed + 3000 > System.currentTimeMillis()) {
@@ -187,4 +194,15 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    public void check(LoginActivity view) {
+        boolean ret = ServerConnectInternet.isConnected();
+        String msg;
+        if (ret == false) {
+            msg = "Thiết bị chưa kết nối internet";
+        } else {
+            return;
+            //msg = "Thiết bị chưa kết nối internet";
+        }
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
 }

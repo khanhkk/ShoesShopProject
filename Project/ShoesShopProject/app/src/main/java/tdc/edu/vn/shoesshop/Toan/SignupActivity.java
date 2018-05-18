@@ -50,6 +50,7 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        check(this);
 // Action bar back
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
@@ -79,7 +80,7 @@ public class SignupActivity extends AppCompatActivity {
         inputPhone_number = (EditText) findViewById(R.id.phone_number);
         inputAddress = (EditText) findViewById(R.id.address);
         input_bankAc = (EditText) findViewById(R.id.bank_account);
-       input_bankAc.setVisibility(View.GONE);
+        input_bankAc.setVisibility(View.GONE);
 // Radio
         client = (RadioButton) findViewById(R.id.level_client);
         shop = (RadioButton) findViewById(R.id.level_shop);
@@ -209,7 +210,7 @@ public class SignupActivity extends AppCompatActivity {
                                     if (level == 0) {
                                         Account account = new Account(name_ac, email, level);
                                         myRef.child("Accounts").child(user.getUid()).setValue(account);
-                                        Shop shop = new Shop(name_ac, email, phone_number_ac , address_ac, bank_account , null);
+                                        Shop shop = new Shop(name_ac, email, phone_number_ac, address_ac, bank_account, null);
                                         myRef.child("Shops").child(user.getUid()).setValue(shop);
                                     }
 //                                    Client client = new Client(name_ac, email, phone_number_ac, address_ac, level);
@@ -236,5 +237,16 @@ public class SignupActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    public void check(SignupActivity view) {
+        boolean ret = ServerConnectInternet.isConnected();
+        String msg;
+        if (ret == false) {
+            msg = "Thiết bị chưa kết nối internet";
+        } else {
+            return;
+        }
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }

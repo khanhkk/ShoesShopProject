@@ -1,12 +1,11 @@
 package tdc.edu.vn.shoesshop.Toan;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import tdc.edu.vn.shoesshop.R;
 
@@ -16,6 +15,7 @@ public class Comment_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.comment_layout);
+        check(this);
         //  Action bar back
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle(getString(R.string.app_name));
@@ -29,5 +29,15 @@ public class Comment_Activity extends AppCompatActivity {
             }
         });
 
+    }
+    public void check(Comment_Activity view) {
+        boolean ret = ServerConnectInternet.isConnected();
+        String msg;
+        if (ret == false) {
+            msg = "Thiết bị chưa kết nối internet";
+        } else {
+            return;
+        }
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }

@@ -104,6 +104,7 @@ public class PersonalOfShopFragment extends Fragment {
             public void onClick(View view) {
                 auth.signOut();
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
                 startActivity(intent);
             }
         });
