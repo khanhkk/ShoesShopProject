@@ -10,16 +10,18 @@ public class BillDetail {
     private String product;
     private double price;
     private String shop;
+    private String detail;
 
     public BillDetail() {
     }
 
-    public BillDetail(String id, String codeOfProduct, int quantity, double price, String shop) {
+    public BillDetail(String id, String codeOfProduct, int quantity, double price, String shop, String detail) {
         this.id = id;
         this.quantity = quantity;
         this.product = codeOfProduct;
         this.price = price;
         this.shop = shop;
+        this.detail = detail;
     }
 
     public String getId() {
@@ -60,5 +62,13 @@ public class BillDetail {
 
     public void setShop(String shop) {
         this.shop = shop;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 }

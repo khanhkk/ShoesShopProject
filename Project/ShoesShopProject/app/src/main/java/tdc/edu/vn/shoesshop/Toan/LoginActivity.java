@@ -1,5 +1,7 @@
 package tdc.edu.vn.shoesshop.Toan;
 
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import 	android.app.ProgressDialog;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,6 +27,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import Controls.General;
+import Controls.ServerConnectInternet;
 import Models.Account;
 import tdc.edu.vn.shoesshop.R;
 
@@ -42,7 +44,9 @@ public class LoginActivity extends AppCompatActivity {
     Query allShop = myRef.child("Shops");
     public static final String BUNDLE = "bundel";
     public ProgressDialog dialog;
-
+    Intent playbackServiceIntent;
+    private BroadcastReceiver broadcastReceiver;
+    public int a = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +61,10 @@ public class LoginActivity extends AppCompatActivity {
         // set the view now
         setContentView(R.layout.activity_login);
 
+        if(a == 1) {
+            check(this);
+            a++;
+        }
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         btnSignup = (Button) findViewById(R.id.btn_signup);
@@ -82,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                checkInternetConenction();
                 String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
 
@@ -186,5 +195,14 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
-
+    public void check(LoginActivity view) {
+        boolean ret = ServerConnectInternet.isConnected();
+        String msg;
+        if (ret == true) {
+            msg = "Thiết bị đã kết nối internet";
+        } else {
+            msg = "Thiết bị chưa kết nối internet";
+        }
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
 }

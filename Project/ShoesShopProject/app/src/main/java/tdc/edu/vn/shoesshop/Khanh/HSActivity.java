@@ -10,7 +10,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import Models.Product;
+import Models.ProductDetail;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Thanh.DetailInformationOfProduct;
 
@@ -51,6 +51,7 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
     Boolean isOpen = false;
     public static ArrayList<Product> ListProducts = new ArrayList<>();
     public static ArrayList<Product> products = new ArrayList<>();
+    public static ArrayList<ProductDetail> details = new ArrayList<>();
     public static ProgressDialog dialog;
     ArrayList<String> ListTradeMark = new ArrayList<>();
 
@@ -66,6 +67,7 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
         dialog = new ProgressDialog(getContext());
         dialog.setMessage("Loading ......");
         dialog.show();
+
         new LoadData().execute();
 
         final View view = inflater.inflate(R.layout.hs_activity, container, false);
@@ -251,6 +253,7 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
                 else
                 {
                     ListTradeMark.add("All");
+                    ListTradeMark.add(product.getTrademark().toUpperCase());
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -321,6 +324,7 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
 
     public class LoadData extends AsyncTask<Void ,Integer , ArrayList<Product>>
     {
+        ArrayList<ProductDetail> productDetails = new ArrayList<>();
         @Override
         protected ArrayList<Product> doInBackground(Void... voids) {
 
@@ -362,7 +366,6 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
         @Override
         protected void onPostExecute(ArrayList<Product> products) {
             super.onPostExecute(products);
-            Log.d("afdasf", products.size() + "");
             HSActivity.products = products;
             HSActivity.dialog.dismiss();
         }

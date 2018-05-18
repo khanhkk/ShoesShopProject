@@ -29,8 +29,8 @@ public class OrderInformationForClient extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.order_information_for_client_activity);
+
         tvTotal = (TextView) findViewById(R.id.tvMoney);
         huy = (Button) findViewById(R.id.id_huy);
         tinhtrang = (TextView)findViewById(R.id.txt_tinhtrang);

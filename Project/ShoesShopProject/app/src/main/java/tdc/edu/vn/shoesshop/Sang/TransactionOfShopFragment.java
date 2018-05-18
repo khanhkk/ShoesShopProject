@@ -1,11 +1,13 @@
 package tdc.edu.vn.shoesshop.Sang;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -35,10 +37,18 @@ public class TransactionOfShopFragment extends Fragment {
         list.add("Đơn đã hủy");
         list.add("Đơn chờ xử lí");
 
-
         CustumAdapterHistory customAdapter = new CustumAdapterHistory(getActivity(), R.layout.listview_layout_history_transaction22,list);
 
         lvContact.setAdapter(customAdapter);
+
+        lvContact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), ListOder.class);
+                intent.putExtra("shop", i);
+                getContext().startActivity(intent);
+            }
+        });
 
         return view;
     }

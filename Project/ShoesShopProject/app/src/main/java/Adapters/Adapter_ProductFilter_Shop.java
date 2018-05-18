@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import Controls.General;
 import Models.Product;
+import Models.ProductDetail;
 import tdc.edu.vn.shoesshop.Khanh.HSActivity;
 import tdc.edu.vn.shoesshop.R;
 
@@ -39,6 +40,7 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
     private static final String TAG = "Adapter_ProductFilter";
     private Context mContext;
     private ArrayList<Product> list;
+    private ArrayList<ProductDetail> listDetail;
     //private ArrayList<Product> CheckedProducts;
 
 //    public Adapter_ProductFilter_Shop(ArrayList<Integer> mImageUrls, ArrayList<String> mNames, ArrayList<Integer> mrate, ArrayList<Double> mSells, ArrayList<Double> mCost, ArrayList<Integer> mCount, ArrayList<Boolean> mCheck, Context mContext) {
@@ -56,9 +58,10 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
         super();
     }
 
-    public Adapter_ProductFilter_Shop(Context mContext, ArrayList<Product> list) {
+    public Adapter_ProductFilter_Shop(Context mContext, ArrayList<Product> list, ArrayList<ProductDetail> listDetail) {
         this.mContext = mContext;
         this.list = list;
+        this.listDetail = listDetail;
 
         //CheckedProducts = new ArrayList<>();
     }
@@ -126,6 +129,16 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
 
         viewHolder.tvName.setText(product.getName());
         viewHolder.ratingBar.setRating(product.getRating());
+
+        int soluong = 0;
+
+        for (ProductDetail pro : listDetail) {
+            if (pro.getProduct().equals(product.getId())) {
+                soluong += pro.getQuantity();
+            }
+            viewHolder.tvSoLuong.setText("(" + String.valueOf(soluong) + ")");
+        }
+
         //count.setText("(" + String.valueOf(mCount.get(position)) + ")");
         //long percent_a;
 

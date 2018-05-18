@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -17,6 +20,7 @@ import java.util.ArrayList;
 
 import Adapters.Adapter_ProductFilter_Shop;
 import Models.Product;
+import Models.ProductDetail;
 import tdc.edu.vn.shoesshop.R;
 
 public class PlaceholderFragment extends Fragment {
@@ -25,6 +29,7 @@ public class PlaceholderFragment extends Fragment {
     TextView textView;
 
     private ArrayList<Product> list = new ArrayList<>();
+    private ArrayList<ProductDetail> listDetails = new ArrayList<>();
     public static Adapter_ProductFilter_Shop adapter;
     private ArrayList<String> listTrademark = new ArrayList<>();
     //private int mPage;
@@ -59,6 +64,7 @@ public class PlaceholderFragment extends Fragment {
         final char c = textView.getText().charAt(textView.getText().length()-1);
         list.clear();
         listTrademark.clear();
+        listDetails.clear();
 
         if(HSActivity.products.size() > 0)
         {
@@ -90,8 +96,38 @@ public class PlaceholderFragment extends Fragment {
                 }
 
                 //adapter.notifyDataSetChanged();
+                database.child("ProductDetails").orderByChild("product").equalTo(product.getId()).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
+                        listDetails.add(productDetail);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
         }
+
+
 
 //        database.child("Products").orderByChild("shop").equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
 //            @Override
@@ -148,7 +184,7 @@ public class PlaceholderFragment extends Fragment {
 //            }
 //        });
 
-        adapter = new Adapter_ProductFilter_Shop(getContext(), list);
+        adapter = new Adapter_ProductFilter_Shop(getContext(), list, listDetails);
         gridView.setAdapter(adapter);
 
         return rootView;

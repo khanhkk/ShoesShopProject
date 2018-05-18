@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import Adapters.Adapter_ProductFilter_Shop;
 import Models.Product;
+import tdc.edu.vn.shoesshop.Khanh.HSActivity;
 import tdc.edu.vn.shoesshop.R;
 
 /**
@@ -125,7 +126,7 @@ public class Home_ProductFilter_Fragment extends Fragment {
             }
         });
 
-        adapter = new Adapter_ProductFilter_Shop(getContext(), list);
+        adapter = new Adapter_ProductFilter_Shop(getContext(), list, HSActivity.details);
         gridView.setAdapter(adapter);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.HORIZONTAL);
