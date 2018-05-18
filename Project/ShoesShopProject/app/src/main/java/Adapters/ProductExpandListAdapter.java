@@ -4,8 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Paint;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,13 +26,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import Controls.General;
 import Models.Product;
 import Models.ProductDetail;
 import tdc.edu.vn.shoesshop.Khanh.SelectionProductToEditting;
@@ -170,40 +169,35 @@ public class ProductExpandListAdapter extends BaseExpandableListAdapter {
         viewHolder.llListElement.setVisibility(View.GONE);
         //viewHolder.llTitle.setVisibility(View.GONE);
 
-        Bitmap bitmap = null;
-        if(member.getImage1() !=  null)
-        {
+        if (member.getImage1() != null) {
             try {
-                 bitmap = General.decodeFromFirebaseBase64(member.getImage1());
-            } catch (IOException e) {
-                e.printStackTrace();
+                byte[] imageByteArray = Base64.decode(member.getImage1(), Base64.DEFAULT);
+                Glide.with(_context)
+                        .load(imageByteArray)
+                        .into(viewHolder.imageView);
+            } catch (Exception ex) {
+
             }
-        }
-        else if(member.getImage2() !=  null)
-        {
+        } else if (member.getImage2() != null) {
             try {
-                bitmap = General.decodeFromFirebaseBase64(member.getImage2());
-            } catch (IOException e) {
-                e.printStackTrace();
+                byte[] imageByteArray1 = Base64.decode(member.getImage2(), Base64.DEFAULT);
+                Glide.with(_context)
+                        .load(imageByteArray1)
+                        .into(viewHolder.imageView);
+            } catch (Exception ex) {
+
             }
-        }
-        else if(member.getImage3() !=  null)
-        {
+        } else if (member.getImage3() != null) {
             try {
-                bitmap = General.decodeFromFirebaseBase64(member.getImage3());
-            } catch (IOException e) {
-                e.printStackTrace();
+                byte[] imageByteArray2 = Base64.decode(member.getImage3(), Base64.DEFAULT);
+                Glide.with(_context)
+                        .load(imageByteArray2)
+                        .into(viewHolder.imageView);
+            } catch (Exception ex) {
+
             }
         }
 
-        if(bitmap != null)
-        {
-            viewHolder.imageView.setImageBitmap(bitmap);
-        }//
-        else
-        {
-            viewHolder.imageView.setImageResource(R.mipmap.shoes4);
-        }
 
         viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override

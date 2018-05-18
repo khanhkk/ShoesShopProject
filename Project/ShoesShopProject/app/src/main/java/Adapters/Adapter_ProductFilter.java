@@ -1,10 +1,10 @@
 package Adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +13,12 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-import Controls.General;
 import Models.Product;
 import Models.ProductDetail;
 import tdc.edu.vn.shoesshop.R;
@@ -117,22 +118,28 @@ public class Adapter_ProductFilter extends BaseAdapter {
 
         if (product.getImage1() != null) {
             try {
-                Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage1());
-                viewHolder.imageView.setImageBitmap(bitmap);
+                byte[] imageByteArray = Base64.decode(product.getImage1(), Base64.DEFAULT);
+                Glide.with(mContext)
+                        .load(imageByteArray)
+                        .into(viewHolder.imageView);
             } catch (Exception ex) {
 
             }
         } else if (product.getImage2() != null) {
             try {
-                Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage2());
-                viewHolder.imageView.setImageBitmap(bitmap);
+                byte[] imageByteArray1 = Base64.decode(product.getImage2(), Base64.DEFAULT);
+                Glide.with(mContext)
+                        .load(imageByteArray1)
+                        .into(viewHolder.imageView);
             } catch (Exception ex) {
 
             }
         } else if (product.getImage3() != null) {
             try {
-                Bitmap bitmap = General.decodeFromFirebaseBase64(product.getImage3());
-                viewHolder.imageView.setImageBitmap(bitmap);
+                byte[] imageByteArray2 = Base64.decode(product.getImage3(), Base64.DEFAULT);
+                Glide.with(mContext)
+                        .load(imageByteArray2)
+                        .into(viewHolder.imageView);
             } catch (Exception ex) {
 
             }

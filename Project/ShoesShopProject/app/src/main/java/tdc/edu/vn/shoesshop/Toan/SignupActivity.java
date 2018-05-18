@@ -203,7 +203,7 @@ public class SignupActivity extends AppCompatActivity {
                                     if (level == 1) {
                                         Account account = new Account(name_ac, email, level);
                                         myRef.child("Accounts").child(user.getUid()).setValue(account);
-                                        Client client = new Client(name_ac, email, phone_number_ac, address_ac, null);
+                                        Client client = new Client(name_ac, email,address_ac,phone_number_ac, null);
                                         myRef.child("Clients").child(user.getUid()).setValue(client);
                                     }
                                     if (level == 0) {

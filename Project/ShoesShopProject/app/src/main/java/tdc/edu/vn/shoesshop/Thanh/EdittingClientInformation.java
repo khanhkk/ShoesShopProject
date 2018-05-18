@@ -3,6 +3,7 @@ package tdc.edu.vn.shoesshop.Thanh;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -124,11 +126,7 @@ public class EdittingClientInformation extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("chuyen", 1);
-                intent.putExtra("chuyen", bundle);
-                startActivity(intent);
+                onBackPressed();
             }
         });
         pullData();
@@ -208,9 +206,9 @@ public class EdittingClientInformation extends AppCompatActivity {
 
         updateClient();
         updateAcount();
-        Intent intent = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
-        startActivity(intent);
-
+//        Intent intent = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
+//        startActivity(intent);
+onBackPressed();
     }
 
     public void updateClient()
@@ -332,5 +330,23 @@ public class EdittingClientInformation extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Lưu?")
+                .setMessage("Bạn muốn lưu không?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        Intent intent_o_s = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
+                        Bundle bundle_o_s = new Bundle();
+                        setResult(RESULT_OK, intent_o_s);
+                        EdittingClientInformation.super.onBackPressed();
+                    }
+                }).create().show();
+
     }
 }
