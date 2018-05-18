@@ -91,7 +91,7 @@
     <!--Toan update-->
     <string name="filter_name">Choose a name</string>
     <string-array name="filter_name_arrays">
-        <item>(Tất cả loại giày)</item>
+        <item>Thương hiệu(All)</item>
         <item>Nike</item>
         <item>Adidas</item>
         <item>Bitits</item>
@@ -101,9 +101,9 @@
 
     <string name="Filter_Price">Choose price</string>
     <string-array name="price_arrays">
-        <item>(Tất cả giá)</item>
-        <item>Dưới 1 tr</item>
-        <item>Trên 1 tr</item>
+        <item>Giá(All)</item>
+        <item>Dưới 1 triệu</item>
+        <item>Trên 1 triệu</item>
     </string-array>
     <string name="Filter_Size">Choose price</string>
 

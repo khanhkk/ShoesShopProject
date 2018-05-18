@@ -15,10 +15,30 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <!--<ImageButton-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="" />-->
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:paddingBottom="10dp">
+    <ImageButton
+        android:id="@+id/imgAll"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/gender"
+        android:scaleType="fitEnd"/>
+    <ImageButton
+        android:id="@+id/imgWoman"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/woman"
+        android:scaleType="fitEnd"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"/>
+    <ImageButton
+        android:id="@+id/imgMan"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/man"
+        android:scaleType="fitEnd"/>
 </LinearLayout>
     <!--<android.support.design.widget.TabLayout-->
         <!--android:id="@+id/tabs"-->

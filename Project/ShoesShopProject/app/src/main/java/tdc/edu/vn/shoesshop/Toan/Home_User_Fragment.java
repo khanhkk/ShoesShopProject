@@ -2,7 +2,6 @@ package tdc.edu.vn.shoesshop.Toan;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -35,7 +34,7 @@ public class Home_User_Fragment extends Fragment {
     GridView gridView;
     Spinner spnThuongHieu, spnGia;
     TabLayout tabLayout;
-    TabItem tabItem, tabItem1, tabItem2;
+    ImageButton tabItem, tabItem1, tabItem2;
     private ArrayList<Product> list = new ArrayList<>();
     private ArrayList<Product> list1 = new ArrayList<>();
     private ArrayList<ProductDetail> listdDetails = new ArrayList<>();
@@ -61,7 +60,6 @@ public class Home_User_Fragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(), position + "", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getContext(), Info_product.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("id", list1.get(position).getId());
@@ -83,40 +81,43 @@ public class Home_User_Fragment extends Fragment {
         listdDetails.clear();
         data();
         connectAdapter();
-//        TabLayout
-//        tabItem = (TabItem) view.findViewById(R.id.tabItem);
-//        tabItem1 = (TabItem) view.findViewById(R.id.tabItem1);
-//        tabItem2 = (TabItem) view.findViewById(R.id.tabItem2);
-//        tabItem.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                for (Product pro : list) {
-//                    if (pro.getSex() == 0)
-//                        list1.add(pro);
-//                }
-//                adapter.notifyDataSetChanged();
-//            }
-//        });
-//        tabItem1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                for(Product pro : list){
-//                    if(pro.getSex() == 1)
-//                        list1.add(pro);
-//                    adapter.notifyDataSetChanged();
-//                }
-//            }
-//        });
-//        tabItem2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                for(Product pro : list){
-//                    if(pro.getSex() == 2)
-//                        list1.add(pro);
-//                    adapter.notifyDataSetChanged();
-//                }
-//            }
-//        });
+       // ImageButton
+        tabItem = (ImageButton) view.findViewById(R.id.imgAll);
+        tabItem1 = (ImageButton) view.findViewById(R.id.imgWoman);
+        tabItem2 = (ImageButton) view.findViewById(R.id.imgMan);
+        tabItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list1.clear();
+                for (Product pro : list) {
+                    if (pro.getSex() == 0)
+                        list1.add(pro);
+                }
+                adapter.notifyDataSetChanged();
+            }
+        });
+        tabItem1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list1.clear();
+                for(Product pro : list){
+                    if(pro.getSex() == 1)
+                        list1.add(pro);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+        tabItem2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list1.clear();
+                for(Product pro : list){
+                    if(pro.getSex() == 2)
+                        list1.add(pro);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
 //        spinner
         spnThuongHieu = (Spinner) view.findViewById(R.id.spin_name);
         spnGia = (Spinner) view.findViewById(R.id.spin_price);
@@ -168,9 +169,6 @@ public class Home_User_Fragment extends Fragment {
                     }
                     break;
                 }
-
-                //   Toast.makeText(getActivity(), list1.size() + "", Toast.LENGTH_SHORT).show();
-
             }
 
             @Override
