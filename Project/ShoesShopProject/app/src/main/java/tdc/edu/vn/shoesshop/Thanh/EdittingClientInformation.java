@@ -315,11 +315,7 @@ public class EdittingClientInformation extends AppCompatActivity {
         database.child("Clients").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                Client client = dataSnapshot.getValue(Client.class);
-//                txtemail.setText(client.getEmail());
-//                txtname.setText(client.getName());
-//                txtsdt.setText(client.getPhone());
-//                txtdiachi.setText(client.getAddress());
+
 
                 Client client = dataSnapshot.getValue(Client.class);
                 if(client != null)
