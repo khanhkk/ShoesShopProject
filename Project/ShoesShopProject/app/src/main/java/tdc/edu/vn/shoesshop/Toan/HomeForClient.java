@@ -15,9 +15,14 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import Models.Notification;
 import tdc.edu.vn.shoesshop.Bao.PersonalOfClientLoginedFragment;
 import tdc.edu.vn.shoesshop.Khanh.Cart;
 import tdc.edu.vn.shoesshop.R;
@@ -28,8 +33,9 @@ public class HomeForClient extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authListener;
     FirebaseUser users = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+
     Intent intent;
-    BottomNavigationView bottomNav;
+    public static BottomNavigationView bottomNav;
     BottomNavigationItemView itemView;
     View badge;
     @Override
@@ -75,6 +81,38 @@ public class HomeForClient extends AppCompatActivity {
             }
         };
 
+        database.child("Clients").child(users.getUid()).child("Notifications").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Notification notification = dataSnapshot.getValue(Notification.class);
+                if(notification != null) {
+                    if (notification.isStatus() == false) {
+                        itemView.addView(badge);
+                    }
+                }
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -85,7 +123,6 @@ public class HomeForClient extends AppCompatActivity {
                     switch (item.getItemId()) {
                         case R.id.nav_home:
                             if (users == null) {
-
                                 selectedFragment = new Home_Client_Fragment();
                             } else {
 
@@ -94,6 +131,25 @@ public class HomeForClient extends AppCompatActivity {
                             break;
                         case R.id.nav_notification:
                             itemView.removeView(badge);
+                            database.child("Clients").child(users.getUid()).child("Notifications").orderByChild("status").equalTo(false).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    Notification notification = dataSnapshot.getValue(Notification.class);
+                                    if(notification != null) {
+                                        notification.setStatus(true);
+                                        for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                            child.getRef().setValue(notification);
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
                             selectedFragment = new NotificationClientFragment();
                             break;
                         case R.id.nav_cart:

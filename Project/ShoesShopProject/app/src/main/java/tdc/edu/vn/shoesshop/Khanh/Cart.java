@@ -36,7 +36,7 @@ import Models.Notification;
 import Models.ProductDetail;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Son.ClientInformationAfterOrder;
-import tdc.edu.vn.shoesshop.Toan.Home_User_Fragment;
+import tdc.edu.vn.shoesshop.Toan.HomeForClient;
 
 /**
  * Created by kk on 05/04/2018.
@@ -173,23 +173,18 @@ public class Cart extends Fragment {
                                 UpBillFirebase(listShop.get(a), listBill.get(listShop.get(a)));
                             }
 
-                            //thong bao va lam moi gio hang
-                            Toast.makeText(getContext(), "Tạo đơn hàng thành công!", Toast.LENGTH_SHORT).show();
-                            database.child("Clients").child(user.getUid()).child("Cart").setValue(null);
-                            list.clear();
-                            billAdapter.notifyDataSetChanged();
-
                             //tru so luong san pham cua shop
                             for(final BillDetail detail : list) {
                                 database.child("ProductDetails").orderByChild("id").equalTo(detail.getDetail()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
-                                        productDetail.setQuantity(productDetail.getQuantity() - detail.getQuantity());
-                                        for(DataSnapshot child : dataSnapshot.getChildren())
-                                        {
-                                            child.getRef().setValue(productDetail);
-                                            break;
+                                        if(productDetail != null) {
+                                            productDetail.setQuantity(productDetail.getQuantity() - detail.getQuantity());
+                                            for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                                child.getRef().setValue(productDetail);
+                                                break;
+                                            }
                                         }
                                     }
 
@@ -200,8 +195,15 @@ public class Cart extends Fragment {
                                 });
                             }
 
-                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                    new Home_User_Fragment()).commit();
+                            //thong bao va lam moi gio hang
+                            Toast.makeText(getContext(), "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
+                            database.child("Clients").child(user.getUid()).child("Cart").setValue(null);
+                            list.clear();
+                            billAdapter.notifyDataSetChanged();
+
+//                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                                    new Home_User_Fragment()).commit();
+                            HomeForClient.bottomNav.setSelectedItemId(R.id.nav_home);
                         }
                     });
 

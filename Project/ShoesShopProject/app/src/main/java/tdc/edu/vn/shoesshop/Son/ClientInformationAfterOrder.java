@@ -15,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,6 +26,7 @@ import Models.Bill;
 import Models.BillDetail;
 import Models.Client;
 import Models.Notification;
+import Models.ProductDetail;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Toan.HomeForClient;
 
@@ -187,33 +189,23 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
                     }
                 }
 
-                Intent intent = new Intent(ClientInformationAfterOrder.this, HomeForClient.class);
-                startActivity(intent);
+                database.child("ProductDetails").orderByChild("id").equalTo(billDetail.getDetail()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
+                        productDetail.setQuantity(productDetail.getQuantity() - billDetail.getQuantity());
+                        for(DataSnapshot child : dataSnapshot.getChildren())
+                        {
+                            child.getRef().setValue(productDetail);
+                            break;
+                        }
+                    }
 
-//                for(final BillDetail detail : Cart.) {
-//                    database.child("ProductDetails").orderByChild("id").equalTo(detail.getDetail()).addListenerForSingleValueEvent(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                            ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
-//                            productDetail.setQuantity(productDetail.getQuantity() - detail.getQuantity());
-//                            for(DataSnapshot child : dataSnapshot.getChildren())
-//                            {
-//                                child.getRef().setValue(productDetail);
-//                                break;
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(DatabaseError databaseError) {
-//
-//                        }
-//                    });
-//                }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-                Toast.makeText(ClientInformationAfterOrder.this, "Tạo đơn hàng thành công!", Toast.LENGTH_SHORT).show();
-
-                //clear gio hang
-                database.child("Clients").child(user.getUid()).child("Cart").setValue(null);
+                    }
+                });
             }
 
             @Override
@@ -236,6 +228,13 @@ public class ClientInformationAfterOrder extends AppCompatActivity {
 
             }
         });
+
+        Intent intent = new Intent(ClientInformationAfterOrder.this, HomeForClient.class);
+        startActivity(intent);
+        Toast.makeText(ClientInformationAfterOrder.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
+
+        //clear gio hang
+        database.child("Clients").child(user.getUid()).child("Cart").setValue(null);
     }
 
     private void UpBillFirebase(ArrayList<Bill> list, BillDetail detail , HashMap<String, ArrayList<String>> bills) {

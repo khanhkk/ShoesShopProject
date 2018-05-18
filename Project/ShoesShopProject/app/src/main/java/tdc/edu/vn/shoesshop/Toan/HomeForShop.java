@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import Models.Notification;
 import tdc.edu.vn.shoesshop.Bao.PersonalOfShopFragment;
 import tdc.edu.vn.shoesshop.Khanh.HSActivity;
 import tdc.edu.vn.shoesshop.R;
@@ -68,10 +69,15 @@ public class HomeForShop extends AppCompatActivity {
         itemView = (BottomNavigationItemView) v;
         badge = LayoutInflater.from(this).inflate(R.layout.notifi_badge, bottomNavigationMenuView, false);
 
-        database.child("Shops").child(users.getUid()).child("Notifications").addValueEventListener(new ValueEventListener() {
+        database.child("Shops").child(users.getUid()).child("Notifications").orderByChild("status").equalTo(false).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                itemView.addView(badge);
+                Notification notification = dataSnapshot.getValue(Notification.class);
+                if(notification != null) {
+                    if(notification.isStatus() == false) {
+                        itemView.addView(badge);
+                    }
+                }
             }
 
             @Override
@@ -105,6 +111,25 @@ public class HomeForShop extends AppCompatActivity {
 
                         case R.id.nav_notification:
                             itemView.removeView(badge);
+                            database.child("Shops").child(users.getUid()).child("Notifications").orderByChild("status").equalTo(false).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    Notification notification = dataSnapshot.getValue(Notification.class);
+                                    if(notification != null) {
+                                        notification.setStatus(true);
+                                        for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                            child.getRef().setValue(notification);
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
                             selectedFragment = new NotificationShopFragment();
                             break;
 
