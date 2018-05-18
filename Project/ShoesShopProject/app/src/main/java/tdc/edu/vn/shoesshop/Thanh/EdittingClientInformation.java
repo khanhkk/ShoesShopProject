@@ -208,8 +208,14 @@ public class EdittingClientInformation extends AppCompatActivity {
 
         updateClient();
         updateAcount();
-        Intent intent = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
-        startActivity(intent);
+        try {
+            Intent intent = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
+            startActivity(intent);
+        }catch (Exception e)
+        {
+            Toast.makeText(EdittingClientInformation.this,"ss"+ e,Toast.LENGTH_LONG).show();
+        }
+
 
     }
 
@@ -249,10 +255,16 @@ public class EdittingClientInformation extends AppCompatActivity {
         });
     }
     public void chooseFromGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, 0);
-    }
+        try {
+            Intent intent = new Intent(Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, 0);
+
+        }catch (Exception e)
+        {
+            Toast.makeText(EdittingClientInformation.this,"ss"+ e,Toast.LENGTH_LONG).show();
+        }
+           }
 
 
     private void takeNewProfilePicture(){
