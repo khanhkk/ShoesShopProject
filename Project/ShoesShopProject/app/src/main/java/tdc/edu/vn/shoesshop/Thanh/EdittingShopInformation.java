@@ -337,7 +337,12 @@ public class EdittingShopInformation extends AppCompatActivity {
                 dataSnapshot.getRef().child("bankAccount").setValue(txt_sotk.getText().toString());
                 dataSnapshot.getRef().child("nguoidaidien").setValue(txt_nguoidd.getText().toString());
                 dataSnapshot.getRef().child("fb").setValue(txt_fb.getText().toString());
-                dataSnapshot.getRef().child("image").setValue(img.toString());
+                if(img.toString() != null)
+                {
+                    dataSnapshot.getRef().child("image").setValue(img.toString());
+                }
+
+
             }
 
             @Override

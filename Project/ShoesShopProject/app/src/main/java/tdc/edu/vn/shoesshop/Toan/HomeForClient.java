@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,14 +39,21 @@ public class HomeForClient extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_for_client_activity);
-
         bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-//        if (users == null) {
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
+        intent = getIntent();
+
+        String s = intent.getStringExtra("action");
+        //Toast.makeText(this, s + "---", Toast.LENGTH_SHORT);
+        if (s != null) {
 //            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                    new Home_Client_Fragment()).commit();
-//        } else {
+//                    new Cart()).commit();
+            bottomNav.setSelectedItemId(R.id.nav_cart);
+        } else {
 
             //get current user
 
@@ -63,6 +71,7 @@ public class HomeForClient extends AppCompatActivity {
         itemView = (BottomNavigationItemView) v;
         badge = LayoutInflater.from(this).inflate(R.layout.notifi_badge, bottomNavigationMenuView, false);
 
+        }
 
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -85,6 +94,7 @@ public class HomeForClient extends AppCompatActivity {
 
             }
         });
+
 
     }
 
