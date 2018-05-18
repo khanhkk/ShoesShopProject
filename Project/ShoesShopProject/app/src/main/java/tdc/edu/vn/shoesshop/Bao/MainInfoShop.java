@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -20,16 +20,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
+
 import Controls.General;
-import Models.Account;
 import Models.Shop;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Thanh.EdittingShopInformation;
-import tdc.edu.vn.shoesshop.Toan.HomeForShop;
 
 public class MainInfoShop extends AppCompatActivity {
     final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    TextView name, phone, email, address;
+    TextView name, phone, email, address,sotk,nguoidaidien,fb;
     ImageView image;
     ImageButton button;
     Bundle bundle;
@@ -46,6 +46,9 @@ public class MainInfoShop extends AppCompatActivity {
         phone = (TextView) findViewById(R.id.txtsdtshop);
         email = (TextView) findViewById(R.id.txtemailshop);
         address = (TextView) findViewById(R.id.txtdcshop);
+        sotk = (TextView) findViewById(R.id.txtstkshop);
+        nguoidaidien = (TextView) findViewById(R.id.txtndd);
+        fb = (TextView) findViewById(R.id.txtfbshop);
         button = (ImageButton) findViewById(R.id.btneditshop);
         image = (ImageView) findViewById(R.id.imgshop) ;
         intent = getIntent();
@@ -118,17 +121,28 @@ public class MainInfoShop extends AppCompatActivity {
             dataShop_shop();
         }
     }
-    public void checkRight()
-    {
 
-        database.child("Accounts").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        public void checkRight() {
+        database.child("Shops").child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Account account = dataSnapshot.getValue(Account.class);
-                if ((account.getLevel() == 1) || (user == null))
-                    button.setVisibility(View.GONE);
-                else
-                    button.setVisibility(View.VISIBLE);
+                Shop shop = dataSnapshot.getValue(Shop.class);
+                name.setText(shop.getName());
+                phone.setText("Số điện thoại:  " + shop.getPhone());
+                sotk.setText("Số tài khoản:  " + shop.getBankAccount());
+                email.setText("Email:  " + shop.getEmail());
+                address.setText("Địa chỉ:  " + shop.getAddress());
+                nguoidaidien.setText("Người đại diện:  " + shop.getNguoidaidien());
+                fb.setText("Facebook:  " + shop.getFb());
+                if(shop.getImage() != null)
+                {
+                    try {
+                        Bitmap bitmap = General.decodeFromFirebaseBase64(shop.getImage());
+                        Glide.with(MainInfoShop.this).load(bitmap).into(image);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -136,6 +150,7 @@ public class MainInfoShop extends AppCompatActivity {
 
             }
         });
+
     }
 
     public void dataShop_shop(){

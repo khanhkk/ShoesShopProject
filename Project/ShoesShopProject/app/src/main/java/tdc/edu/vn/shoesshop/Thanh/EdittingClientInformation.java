@@ -208,8 +208,14 @@ public class EdittingClientInformation extends AppCompatActivity {
 
         updateClient();
         updateAcount();
-        Intent intent = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
-        startActivity(intent);
+        try {
+            Intent intent = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
+            startActivity(intent);
+        }catch (Exception e)
+        {
+            Toast.makeText(EdittingClientInformation.this,"ss"+ e,Toast.LENGTH_LONG).show();
+        }
+
 
     }
 
@@ -249,10 +255,16 @@ public class EdittingClientInformation extends AppCompatActivity {
         });
     }
     public void chooseFromGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, 0);
-    }
+        try {
+            Intent intent = new Intent(Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, 0);
+
+        }catch (Exception e)
+        {
+            Toast.makeText(EdittingClientInformation.this,"ss"+ e,Toast.LENGTH_LONG).show();
+        }
+           }
 
 
     private void takeNewProfilePicture(){
@@ -303,11 +315,7 @@ public class EdittingClientInformation extends AppCompatActivity {
         database.child("Clients").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                Client client = dataSnapshot.getValue(Client.class);
-//                txtemail.setText(client.getEmail());
-//                txtname.setText(client.getName());
-//                txtsdt.setText(client.getPhone());
-//                txtdiachi.setText(client.getAddress());
+
 
                 Client client = dataSnapshot.getValue(Client.class);
                 if(client != null)

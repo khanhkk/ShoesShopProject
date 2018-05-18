@@ -18,11 +18,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import Controls.General;
+import Models.Shop;
 import tdc.edu.vn.shoesshop.Bao.MainInfoShop;
 import tdc.edu.vn.shoesshop.R;
 
@@ -32,32 +44,51 @@ public class EdittingShopInformation extends AppCompatActivity {
     ImageButton btn_chooseImg,btn_takeaphoto;
     final int CROP_PIC = 2;
     private Uri picUri;
-    private Button btn_getimage;
+    private ImageButton btn_getimage;
     private Button btnSave;
     Intent intent;
-
+    String img;
     private TextInputLayout textInputTen;
     private TextInputLayout textInputNguoidaidien;
     private TextInputLayout textInputSdt;
     private TextInputLayout textInputDiachi;
-    private TextInputLayout textInputEmail;
     private TextInputLayout textInputFacebook;
     private TextInputLayout textInputSotaikhoan;
 
+
+    private TextView txt_ten;
+    private TextView txt_nguoidd;
+    private TextView txt_fb;
+    private TextView txt_sotk;
+    private TextView txt_sdt;
+    private TextView txt_diachi;
+
+
     ImageView img_ava_patient;
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     @SuppressLint("WrongViewCast")
     @Nullable
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editting_shop_information_activity);
 
-        textInputEmail = findViewById(R.id.email);
         textInputTen = findViewById(R.id.ten_shop);
         textInputSdt = findViewById(R.id.sdt);
         textInputDiachi = findViewById(R.id.dia_chi);
         textInputNguoidaidien = findViewById(R.id.nguoidaidien_shop);
         textInputSotaikhoan = findViewById(R.id.sotaikhoan);
         textInputFacebook = findViewById(R.id.facebook);
+
+        txt_ten = (TextView) findViewById(R.id.tname);
+        txt_nguoidd = (TextView) findViewById(R.id.tndd);
+        txt_fb = (TextView) findViewById(R.id.tfb);
+        txt_sotk = (TextView) findViewById(R.id.tsotk);
+        txt_sdt = (TextView) findViewById(R.id.tphone);
+        txt_diachi = (TextView) findViewById(R.id.tdiachi);
+
+
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
@@ -73,6 +104,7 @@ public class EdittingShopInformation extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        pullData();
 
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog);
@@ -98,7 +130,7 @@ public class EdittingShopInformation extends AppCompatActivity {
         });
 
         img_ava_patient = (ImageView) findViewById(R.id.imgView_info);
-        btn_getimage = (Button) findViewById(R.id.btn_infor);
+        btn_getimage = (ImageButton) findViewById(R.id.btn_infor);
 
         btn_getimage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +140,7 @@ public class EdittingShopInformation extends AppCompatActivity {
                 dialog.show();
             }
         });
+
 
     }
     private boolean validateHoten() {
@@ -152,24 +185,7 @@ public class EdittingShopInformation extends AppCompatActivity {
             return true;
         }
     }
-    private boolean validateEmail() {
-        String emailInput = textInputEmail.getEditText().getText().toString().trim();
-        if (emailInput.isEmpty()) {
-            textInputEmail.setError("Không thể để trống");
-            return false;
-        } else {
-            if(!emailInput.matches("[a-zA-Z0-9._-]+@[a-z]+.[a-z]+"))
-            {
-                textInputEmail.setError("Email không đúng !");
-                return false;
-            }else
-            {
-                textInputEmail.setError(null);
-                return true;
-            }
 
-        }
-    }
 
     private boolean validateNguoiDD() {
         String inputNguoiDD = textInputNguoidaidien.getEditText().getText().toString().trim();
@@ -218,25 +234,11 @@ public class EdittingShopInformation extends AppCompatActivity {
 
 
     public void confirmInput(View v) {
-        if ( !validateHoten() | !validateSdt() | !validateDiachi()| !validateEmail()| !validateNguoiDD() | !validateSotaikhoan() | !validateFacebook() ) {
+        if ( !validateHoten() | !validateSdt() | !validateDiachi()| !validateNguoiDD() | !validateSotaikhoan() | !validateFacebook() ) {
             return;
         }
 
-        String input =  "Họ Tên: " + textInputTen.getEditText().getText().toString();
-        input += "\n";
-        input += "Sdt: " + textInputSdt.getEditText().getText().toString();
-        input += "\n";
-        input =  "Địa chỉ: " + textInputDiachi.getEditText().getText().toString();
-        input += "\n";
-        input += "Email: " + textInputEmail.getEditText().getText().toString();
-        input += "\n";
-        input += "Người đại diện: " + textInputNguoidaidien.getEditText().getText().toString();
-        input += "\n";
-        input += "Số tài khoản: " + textInputSotaikhoan.getEditText().getText().toString();
-        input += "\n";
-        input += "Facebook: " + textInputFacebook.getEditText().getText().toString();
-        Toast.makeText(this, input, Toast.LENGTH_LONG).show();
-
+        updateShop();
         Intent intent = new Intent(EdittingShopInformation.this,MainInfoShop.class);
         startActivity(intent);
     }
@@ -267,7 +269,7 @@ public class EdittingShopInformation extends AppCompatActivity {
         if(resultCode == RESULT_OK && requestCode == CAM_REQUEST) {
             if(requestCode == CAM_REQUEST){
                 Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-
+                img = General.encodeBitmap(thumbnail);
                 //  picUri = data.getData();
 
                 img_ava_patient.setImageBitmap(thumbnail);
@@ -283,14 +285,67 @@ public class EdittingShopInformation extends AppCompatActivity {
             try {
                 Context applicationContext = dialog.getContext();
                 bitmap = BitmapFactory.decodeStream( applicationContext.getContentResolver().openInputStream(picUri));
-                img_ava_patient.setImageBitmap(bitmap);
 
+                img_ava_patient.setImageBitmap(bitmap);
+                img = General.encodeBitmap(bitmap);
                 dialog.dismiss();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }
     }
+    public void pullData() {
+        database.child("Shops").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
+                Shop shop = dataSnapshot.getValue(Shop.class);
+                if(shop != null)
+                {
+                    txt_ten.setText(shop.getName());
+                    txt_nguoidd.setText(shop.getNguoidaidien());
+                    txt_sdt.setText(shop.getPhone());
+                    txt_fb.setText(shop.getFb());
+                    txt_sotk.setText(shop.getBankAccount());
+                    txt_diachi.setText(shop.getAddress());
+
+                    if(shop.getImage() != null)
+                    {
+                        try {
+                            Bitmap bitmap = General.decodeFromFirebaseBase64(shop.getImage());
+                            Glide.with(EdittingShopInformation.this).load(bitmap).into(img_ava_patient);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    public void updateShop()
+    {
+        database.child("Shops").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Shop shop = dataSnapshot.getValue(Shop.class);
+                dataSnapshot.getRef().child("name").setValue(txt_ten.getText().toString());
+                dataSnapshot.getRef().child("phone").setValue(txt_sdt.getText().toString());
+                dataSnapshot.getRef().child("address").setValue(txt_diachi.getText().toString());
+                dataSnapshot.getRef().child("bankAccount").setValue(txt_sotk.getText().toString());
+                dataSnapshot.getRef().child("nguoidaidien").setValue(txt_nguoidd.getText().toString());
+                dataSnapshot.getRef().child("fb").setValue(txt_fb.getText().toString());
+                dataSnapshot.getRef().child("image").setValue(img.toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 }
