@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -32,8 +33,10 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import Adapters.AdapterComment;
 import Adapters.Adapter_info_product;
 import Models.BillDetail;
+import Models.Comments;
 import Models.Product;
 import Models.ProductDetail;
 import Models.Shop;
@@ -59,6 +62,7 @@ public class Info_product extends AppCompatActivity {
     Button btnXemThem, btnBinhLuan, btnMuaHang;
     TextView tensp, nsx, sells, costs, tencuahang, mota;
     Spinner spinner, spinner1;
+    ListView lvComment;
     Bundle bundle, bundleShop;
     public static Product pro;
     // BillAdapter billAdapter;
@@ -135,7 +139,14 @@ public class Info_product extends AppCompatActivity {
         costs = (TextView) findViewById(R.id.cost);
         tencuahang = (TextView) findViewById(R.id.nameshop_info);
         mota = (TextView) findViewById(R.id.motasp);
-
+        lvComment = (ListView) findViewById(R.id.lvBinhLuan) ;
+        ArrayList<Comments>  Cment = new ArrayList<>();
+        Comments contact1 = new Comments("Trương Đình Chiến","0988 933 xxx", "thằng chó nào ngồi gần tao");
+        Comments contact2 = new Comments("Trương Đình Chiến","0988 933 xxx", "thằng chó nào ngồi gần tao");
+        Cment.add(contact1);
+        Cment.add(contact2);
+        AdapterComment customAdaper = new AdapterComment(this,R.layout.item_lv_comment,Cment);
+        lvComment.setAdapter(customAdaper);
         data();
 
 //        for (Product product : list) {
@@ -438,4 +449,5 @@ public class Info_product extends AppCompatActivity {
         database.child("Clients").child(user.getUid()).child("Cart").push().setValue(billDetail);
         //  billAdapter.notifyDataSetChanged();
     }
+
 }

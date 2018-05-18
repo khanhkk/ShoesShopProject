@@ -13,6 +13,7 @@
         android:layout_height="60dp"
         android:orientation="vertical">
 <ImageView
+    android:id="@+id/imageBL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/image_bl"

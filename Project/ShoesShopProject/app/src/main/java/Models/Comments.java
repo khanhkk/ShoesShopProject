@@ -3,7 +3,7 @@ package Models;
 public class Comments {
     private String thoiGian, noiDung, ten;
 
-    public Comments(String thoiGian, String noiDung, String ten) {
+    public Comments(String tenv,String thoiGian, String noiDung) {
         this.thoiGian = thoiGian;
         this.noiDung = noiDung;
         this.ten = ten;
