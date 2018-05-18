@@ -2,14 +2,23 @@ package tdc.edu.vn.shoesshop.Toan;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import Controls.ServerConnectInternet;
 import tdc.edu.vn.shoesshop.Bao.PersonalOfShopFragment;
@@ -21,13 +30,17 @@ import tdc.edu.vn.shoesshop.Son.NotificationShopFragment;
 public class HomeForShop extends AppCompatActivity {
 
     private FirebaseUser users = FirebaseAuth.getInstance().getCurrentUser();
+    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+
+
     private HSActivity hsActivity;
     private Home_Client_Fragment home_client_fragment;
     private TransactionOfShopFragment transaction;
     private NotificationShopFragment notificationFragment;
     private PersonalOfShopFragment personal;
 
-
+    BottomNavigationItemView itemView;
+    View badge;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +63,25 @@ public class HomeForShop extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     hsActivity).commit();
         }
+
+        BottomNavigationMenuView bottomNavigationMenuView = (BottomNavigationMenuView) bottomNav.getChildAt(0);
+        View v = bottomNavigationMenuView.getChildAt(2);
+        itemView = (BottomNavigationItemView) v;
+        badge = LayoutInflater.from(this).inflate(R.layout.notifi_badge, bottomNavigationMenuView, false);
+
+        database.child("Shops").child(users.getUid()).child("Notifications").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                itemView.addView(badge);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -73,6 +105,7 @@ public class HomeForShop extends AppCompatActivity {
                             break;
 
                         case R.id.nav_notification:
+                            itemView.removeView(badge);
                             selectedFragment = new NotificationShopFragment();
                             break;
 

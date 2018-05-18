@@ -84,9 +84,9 @@ public class Home_User_Fragment extends Fragment {
         data();
         connectAdapter();
 //        TabLayout
-        tabItem = (TabItem) view.findViewById(R.id.tabItem);
-        tabItem1 = (TabItem) view.findViewById(R.id.tabItem1);
-        tabItem2 = (TabItem) view.findViewById(R.id.tabItem2);
+//        tabItem = (TabItem) view.findViewById(R.id.tabItem);
+//        tabItem1 = (TabItem) view.findViewById(R.id.tabItem1);
+//        tabItem2 = (TabItem) view.findViewById(R.id.tabItem2);
 //        tabItem.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
