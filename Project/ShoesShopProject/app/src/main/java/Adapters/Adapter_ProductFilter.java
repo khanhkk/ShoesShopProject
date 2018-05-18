@@ -61,7 +61,6 @@ public class Adapter_ProductFilter extends BaseAdapter {
         public TextView tvThuongHieu, tvName, tvSoLuong, tvSalePrice, tvListedPrice, tvDiscount;
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

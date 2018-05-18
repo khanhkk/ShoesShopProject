@@ -63,6 +63,7 @@ public class Cart extends Fragment {
         tvMoney = (TextView) view.findViewById(R.id.tvMoney);
         btnThanhToan = (Button) view.findViewById(R.id.btnPay);
 
+        list.clear();
         database.child("Clients").child(user.getUid()).child("Cart").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -137,26 +138,25 @@ public class Cart extends Fragment {
                     alertDialog.setPositiveButton("Mặc định", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
                             for (BillDetail billDetail : list) {
-                                if (listBill.keySet().size() == 0) {
-                                    ArrayList<BillDetail> list = new ArrayList<>();
-                                    list.add(billDetail);
-                                    listBill.put(billDetail.getShop(), list);
+                                if (listShop.size() == 0) {
+                                    ArrayList<BillDetail> list2 = new ArrayList<>();
+                                    list2.add(billDetail);
+                                    listBill.put(billDetail.getShop(), list2);
                                     listShop.add(billDetail.getShop());
                                 } else {
                                     int test = 0;
-                                    for (String s : listBill.keySet()) {
+                                    for (String s : listShop) {
                                         if (s.equals(billDetail.getShop())) {
                                             test++;
-                                            listBill.get(billDetail.getShop()).add(billDetail);
+                                            listBill.get(s).add(billDetail);
                                             break;
                                         }
                                     }
                                     if (test == 0) {
-                                        ArrayList<BillDetail> list = new ArrayList<>();
-                                        list.add(billDetail);
-                                        listBill.put(billDetail.getShop(), list);
+                                        ArrayList<BillDetail> list2 = new ArrayList<>();
+                                        list2.add(billDetail);
+                                        listBill.put(billDetail.getShop(), list2);
                                         listShop.add(billDetail.getShop());
                                     }
                                 }

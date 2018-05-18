@@ -26,7 +26,9 @@ import Controls.DatePickerCustom;
 import Models.Bill;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Son.OrderInformationForClient;
+import tdc.edu.vn.shoesshop.Son.OrderInformationForShop;
 import tdc.edu.vn.shoesshop.Toan.HomeForClient;
+import tdc.edu.vn.shoesshop.Toan.HomeForShop;
 
 public class ListOder extends AppCompatActivity implements SearchView.OnQueryTextListener {
     ListView lvContact;
@@ -53,68 +55,220 @@ public class ListOder extends AppCompatActivity implements SearchView.OnQueryTex
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
 
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ListOder.this, HomeForClient.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intent);
-                //onBackPressed();
-            }
-        });
+//        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(ListOder.this, HomeForClient.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                startActivity(intent);
+//                //onBackPressed();
+//            }
+//        });
+
+        list.clear();
 
         intent = getIntent();
         String str = intent.getStringExtra("type");
-        if(str != null)
-        {
-            if(str.equals("client"))
-            {
-                database.child("Clients").child(user.getUid()).child("Transactions").addChildEventListener(new ChildEventListener() {
+        if (str != null) {
+            database.child("Clients").child(user.getUid()).child("Transactions").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    Bill bill = dataSnapshot.getValue(Bill.class);
+                    list.add(0, bill);
+                    adapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ListOder.this, HomeForClient.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
+                }
+            });
+            lvContact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Toast.makeText(ListOder.this, i + "", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(ListOder.this, OrderInformationForClient.class);
+                    intent.putExtra("bill", list.get(i).getId());
+                    startActivity(intent);
+                }
+            });
+        } else {
+            int number = intent.getIntExtra("shop", -1);
+            if (number > -1) {
+                switch (number) {
+                    case 0:
+                        database.child("Shops").child(user.getUid()).child("Transactions").orderByChild("status").equalTo(2).addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                Bill bill = dataSnapshot.getValue(Bill.class);
+                                list.add(0, bill);
+                                adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        break;
+
+                    case 1:
+                        database.child("Shops").child(user.getUid()).child("Transactions").orderByChild("status").equalTo(1).addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                Bill bill = dataSnapshot.getValue(Bill.class);
+                                list.add(0, bill);
+                                adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        break;
+
+                    case 2:
+                        database.child("Shops").child(user.getUid()).child("Transactions").orderByChild("status").equalTo(-1).addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                Bill bill = dataSnapshot.getValue(Bill.class);
+                                list.add(0, bill);
+                                adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        break;
+
+                    case 3:
+                        database.child("Shops").child(user.getUid()).child("Transactions").orderByChild("status").equalTo(0).addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                Bill bill = dataSnapshot.getValue(Bill.class);
+                                list.add(0, bill);
+                                adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        break;
+                }
+
+                mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        Bill bill = dataSnapshot.getValue(Bill.class);
-                        list.add(bill);
-                        adapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
+                    public void onClick(View v) {
+                        Intent intent = new Intent(ListOder.this, HomeForShop.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivity(intent);
+                        //onBackPressed();
                     }
                 });
-            }
-            else
-            {
 
+                lvContact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Toast.makeText(ListOder.this, i + "", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(ListOder.this, OrderInformationForShop.class);
+                        intent.putExtra("bill", list.get(i).getId());
+                        startActivity(intent);
+                    }
+                });
             }
         }
 
         adapter = new CustumAdapterOder(ListOder.this, R.layout.layout_listviewoder, list);
         lvContact.setAdapter(adapter);
-
-        lvContact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(ListOder.this, i + "", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(ListOder.this, OrderInformationForClient.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override

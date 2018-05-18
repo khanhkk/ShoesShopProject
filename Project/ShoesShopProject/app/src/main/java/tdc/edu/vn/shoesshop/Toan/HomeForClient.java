@@ -7,7 +7,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,17 +27,28 @@ public class HomeForClient extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_for_client_activity);
-        intent = getIntent();
-        Toast.makeText(this, intent.getStringExtra("action"), Toast.LENGTH_SHORT);
-        //get current user
+
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-        if (users == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new Home_Client_Fragment()).commit();
+        intent = getIntent();
+
+        String s = intent.getStringExtra("action");
+        //Toast.makeText(this, s + "---", Toast.LENGTH_SHORT);
+        if (s != null) {
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                    new Cart()).commit();
+            bottomNav.setSelectedItemId(R.id.nav_cart);
         } else {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new Home_User_Fragment()).commit();
+
+            //get current user
+
+            if (users == null) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new Home_Client_Fragment()).commit();
+            } else {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new Home_User_Fragment()).commit();
+            }
         }
 
         authListener = new FirebaseAuth.AuthStateListener() {
@@ -53,11 +63,11 @@ public class HomeForClient extends AppCompatActivity {
                 }
             }
         };
-        Intent intent1 = getIntent();
-        Bundle bundle1 = intent1.getBundleExtra(LoginActivity.BUNDLE);
-        if (bundle1 != null) {
-            Toast.makeText(getApplicationContext(), "key: " + bundle1.getString("key"), Toast.LENGTH_LONG).show();
-        }
+//        Intent intent1 = getIntent();
+//        Bundle bundle1 = intent1.getBundleExtra(LoginActivity.BUNDLE);
+//        if (bundle1 != null) {
+//            Toast.makeText(getApplicationContext(), "key: " + bundle1.getString("key"), Toast.LENGTH_LONG).show();
+//        }
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =

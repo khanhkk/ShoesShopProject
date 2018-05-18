@@ -91,6 +91,8 @@ public class BillAdapter extends ArrayAdapter<BillDetail> {
 
         viewHolder.tvPrice.setText(df.format(member.getPrice()));
 
+
+
         database.child("Products").orderByChild("id").equalTo(member.getProduct()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
