@@ -1,12 +1,10 @@
-package Controls;
+package tdc.edu.vn.shoesshop.Toan;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-
-import tdc.edu.vn.shoesshop.Toan.MyApplication;
 
 public class ServerConnectInternet extends BroadcastReceiver{
     @Override

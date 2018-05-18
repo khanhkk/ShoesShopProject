@@ -7,12 +7,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|center_horizontal"
-        android:layout_marginTop="9dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginStart="9dp"
         android:background="@drawable/badge_bg_with_shadow"
         android:gravity="center"
-        android:padding="3dp"
         android:textColor="@color/white"
-        android:textSize="11sp" />
+        android:text="N"
+        android:textStyle="bold"/>
 </FrameLayout>

@@ -7,7 +7,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
-import Controls.ServerConnectInternet;
 import tdc.edu.vn.shoesshop.R;
 
 public class Comment_Activity extends AppCompatActivity {

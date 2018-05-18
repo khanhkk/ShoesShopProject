@@ -95,7 +95,6 @@ public class MainInfoCilent extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Client client = dataSnapshot.getValue(Client.class);
                 txtnanme.setText(client.getName());
-
                 txtsdt.setText("Số điện thoại:  " + client.getPhone());
                 txtemail.setText("Email:  " + client.getEmail());
                 txtdiachi.setText("Địa chỉ:  " + client.getAddress());
