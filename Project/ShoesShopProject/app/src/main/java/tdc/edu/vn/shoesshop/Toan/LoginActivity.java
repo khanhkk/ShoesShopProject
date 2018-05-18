@@ -1,7 +1,6 @@
 package tdc.edu.vn.shoesshop.Toan;
 
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -44,9 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     Query allShop = myRef.child("Shops");
     public static final String BUNDLE = "bundel";
     public ProgressDialog dialog;
-    Intent playbackServiceIntent;
-    private BroadcastReceiver broadcastReceiver;
-    public int a = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,10 +58,9 @@ public class LoginActivity extends AppCompatActivity {
         // set the view now
         setContentView(R.layout.activity_login);
 
-        if(a == 1) {
-            check(this);
-            a++;
-        }
+
+        check(this);
+
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         btnSignup = (Button) findViewById(R.id.btn_signup);
@@ -138,16 +134,17 @@ public class LoginActivity extends AppCompatActivity {
                                                 if (account.getLevel() == 0) {
                                                     bundle.putString("key", user.getUid());
                                                     intent = new Intent(LoginActivity.this, HomeForShop.class);
-                                                    intent.putExtra(BUNDLE,bundle);
+                                                    intent.putExtra(BUNDLE, bundle);
                                                     startActivity(intent);
                                                 } else {
                                                     bundle.putString("key", user.getUid());
                                                     intent = new Intent(LoginActivity.this, HomeForClient.class);
-                                                    intent.putExtra(BUNDLE,bundle);
+                                                    intent.putExtra(BUNDLE, bundle);
                                                     startActivity(intent);
                                                 }
                                                 dialog.dismiss();
                                             }
+
                                             @Override
                                             public void onCancelled(DatabaseError databaseError) {
 
@@ -182,7 +179,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
     private static long back_pressed;
+
     @Override
     public void onBackPressed() {
         if (back_pressed + 3000 > System.currentTimeMillis()) {
@@ -195,13 +194,15 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
+
     public void check(LoginActivity view) {
         boolean ret = ServerConnectInternet.isConnected();
         String msg;
-        if (ret == true) {
-            msg = "Thiết bị đã kết nối internet";
-        } else {
+        if (ret == false) {
             msg = "Thiết bị chưa kết nối internet";
+        } else {
+            return;
+            //msg = "Thiết bị chưa kết nối internet";
         }
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }

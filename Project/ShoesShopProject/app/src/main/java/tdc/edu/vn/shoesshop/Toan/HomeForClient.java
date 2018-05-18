@@ -7,10 +7,12 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import Controls.ServerConnectInternet;
 import tdc.edu.vn.shoesshop.Bao.PersonalOfClientLoginedFragment;
 import tdc.edu.vn.shoesshop.Khanh.Cart;
 import tdc.edu.vn.shoesshop.R;
@@ -27,7 +29,7 @@ public class HomeForClient extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_for_client_activity);
-
+        check(this);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         intent = getIntent();
@@ -102,4 +104,14 @@ public class HomeForClient extends AppCompatActivity {
                 }
             };
 
+    public void check(HomeForClient view) {
+        boolean ret = ServerConnectInternet.isConnected();
+        String msg;
+        if (ret == false) {
+            msg = "Thiết bị chưa kết nối internet";
+        } else {
+            return;
+        }
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
 }

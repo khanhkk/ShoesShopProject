@@ -6,15 +6,16 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import Controls.ServerConnectInternet;
 import tdc.edu.vn.shoesshop.Bao.PersonalOfShopFragment;
 import tdc.edu.vn.shoesshop.Khanh.HSActivity;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Sang.TransactionOfShopFragment;
-import tdc.edu.vn.shoesshop.Son.NotificationClientFragment;
 import tdc.edu.vn.shoesshop.Son.NotificationShopFragment;
 
 public class HomeForShop extends AppCompatActivity {
@@ -31,7 +32,7 @@ public class HomeForShop extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_for_shop_activity);
-
+        check(this);
         //khoi tao fragment
         hsActivity = new HSActivity();
         home_client_fragment = new Home_Client_Fragment();
@@ -85,4 +86,14 @@ public class HomeForShop extends AppCompatActivity {
                 }
             };
 
+    public void check(HomeForShop view) {
+        boolean ret = ServerConnectInternet.isConnected();
+        String msg;
+        if (ret == false) {
+            msg = "Thiết bị chưa kết nối internet";
+        } else {
+            return;
+        }
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
 }

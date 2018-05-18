@@ -10,12 +10,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,11 +37,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import Adapters.AdapterComment;
 import Adapters.Adapter_info_product;
+import Controls.DateTimePicker;
+import Controls.ServerConnectInternet;
 import Models.BillDetail;
 import Models.Comments;
 import Models.Product;
@@ -65,7 +70,8 @@ public class Info_product extends AppCompatActivity {
     private ArrayList<Integer> listSize = new ArrayList<>();
     private ArrayList<String> listColor = new ArrayList<>();
     private ArrayList<ProductDetail> listProductDetail = new ArrayList<>();
-
+    private ArrayList<Comments> listComment = new ArrayList<>();
+    private String key;
     Button btnXemThem, btnMuaHang;
     TextView tensp, nsx, sells, costs, tencuahang, mota;
     ListView lvComment;
@@ -74,7 +80,9 @@ public class Info_product extends AppCompatActivity {
     ImageButton btnBinhLuan;
     FloatingActionButton btnComment;
     LinearLayout llComment;
+    EditText edtName, edtCcomment;
     private Animation amRClockwise, amRanticlockwise;
+    AdapterComment customAdaper;
 
 
     public static Product pro;
@@ -88,7 +96,7 @@ public class Info_product extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info_product);
-
+        check(this);
         //get current user
         auth = FirebaseAuth.getInstance();
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -108,14 +116,20 @@ public class Info_product extends AppCompatActivity {
         costs = (TextView) findViewById(R.id.cost);
         tencuahang = (TextView) findViewById(R.id.nameshop_info);
         mota = (TextView) findViewById(R.id.motasp);
+        edtName = (EditText) findViewById(R.id.tenNguoiBL);
+        edtCcomment = (EditText) findViewById(R.id.edtBinhLuan);
 
-        lvComment = (ListView) findViewById(R.id.lvBinhLuan) ;
-        ArrayList<Comments>  Cment = new ArrayList<>();
-        Comments contact1 = new Comments("Trương Đình Chiến","0988 933 xxx", "thằng chó nào ngồi gần tao");
-        Comments contact2 = new Comments("Trương Đình Chiến","0988 933 xxx", "thằng chó nào ngồi gần tao");
-        Cment.add(contact1);
-        Cment.add(contact2);
-        AdapterComment customAdaper = new AdapterComment(this,R.layout.item_lv_comment,Cment);
+        lvComment = (ListView) findViewById(R.id.lvBinhLuan);
+        lvComment.setOnTouchListener(new View.OnTouchListener() {
+            // Setting on Touch Listener for handling the touch inside ScrollView
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Disallow the touch request for parent scroll on touch of child view
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+        customAdaper = new AdapterComment(Info_product.this, R.layout.item_lv_comment, listComment);
         lvComment.setAdapter(customAdaper);
 
         //  Action bar back
@@ -152,8 +166,7 @@ public class Info_product extends AppCompatActivity {
                 mau = listColor.get(position);
                 listSize.clear();
                 for (ProductDetail productDetail : listProductDetail) {
-                    if(productDetail.getColor().equals(mau))
-                    {
+                    if (productDetail.getColor().equals(mau)) {
                         listSize.add(productDetail.getSize());
                         adapter.notifyDataSetChanged();
                     }
@@ -168,7 +181,7 @@ public class Info_product extends AppCompatActivity {
         spinnerSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               size = listSize.get(position);
+                size = listSize.get(position);
             }
 
             @Override
@@ -180,19 +193,89 @@ public class Info_product extends AppCompatActivity {
 
         list.clear();
         data();
-
+        btnBinhLuan.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                dataTestComment();
+                return false;
+            }
+        });
+//        btnBinhLuan.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //dataComment();
+//
+//
+//            }
+//        });
         btnComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(llComment.getVisibility() == View.VISIBLE)
-                {
+                if (llComment.getVisibility() == View.VISIBLE) {
                     llComment.setVisibility(View.GONE);
                     btnComment.startAnimation(amRanticlockwise);
-                }
-                else
-                {
+                } else {
                     llComment.setVisibility(View.VISIBLE);
                     btnComment.startAnimation(amRClockwise);
+
+
+                    database.child("Products").orderByChild("id").equalTo(ma).addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            database.child("Products").child(dataSnapshot.getKey()).child("Comments").addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                    Comments comments = dataSnapshot.getValue(Comments.class);
+                                    if(comments != null) {
+                                        listComment.add(0, comments);
+                                        customAdaper.notifyDataSetChanged();
+                                    }
+                                }
+
+                                @Override
+                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                                }
+
+                                @Override
+                                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                                }
+
+                                @Override
+                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
                 }
             }
         });
@@ -345,6 +428,7 @@ public class Info_product extends AppCompatActivity {
         database.child("Products").orderByChild("id").equalTo(ma).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                key = dataSnapshot.getKey();
                 pro = dataSnapshot.getValue(Product.class);
                 NumberFormat nf = NumberFormat.getInstance();
                 DecimalFormat df = (DecimalFormat) nf;
@@ -469,10 +553,8 @@ public class Info_product extends AppCompatActivity {
 
     public void addBilldetail() {
         ProductDetail productDetail = null;
-        for(ProductDetail detail : listProductDetail)
-        {
-            if(detail.getColor().equals(mau) && detail.getSize() == size)
-            {
+        for (ProductDetail detail : listProductDetail) {
+            if (detail.getColor().equals(mau) && detail.getSize() == size) {
                 productDetail = detail;
             }
         }
@@ -504,16 +586,14 @@ public class Info_product extends AppCompatActivity {
 //            }
 //        });
 
-        for(BillDetail detail : list)
-        {
-            if(detail.getDetail().equals(productDetail.getId()))
-            {
+        for (BillDetail detail : list) {
+            if (detail.getDetail().equals(productDetail.getId())) {
                 Toast.makeText(Info_product.this, "Sản phẩm đã có trong giỏ hàng!", Toast.LENGTH_SHORT).show();
                 return;
             }
         }
 
-        if(productDetail != null) {
+        if (productDetail != null) {
             BillDetail billDetail = new BillDetail();
             //billDetail.setCodeOfProduct(product.getId());
             billDetail.setId(database.child("Cart").push().getKey());
@@ -529,4 +609,54 @@ public class Info_product extends AppCompatActivity {
         }
     }
 
+    public void dataTestComment() {
+
+        database.child("Products").orderByChild("id").equalTo(ma).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Calendar calendar = Calendar.getInstance();
+                Comments comments = new Comments();
+                comments.setTen(edtName.getText() + "");
+                comments.setThoiGian(DateTimePicker.simpleDateFormat.format(calendar.getTime()));
+                comments.setNoiDung(edtCcomment.getText() + "");
+                listComment.add(0, comments);
+                customAdaper.notifyDataSetChanged();
+                database.child("Products").child(dataSnapshot.getKey()).child("Comments").push().setValue(comments);
+
+                //lay thong tin comment
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void check(Info_product view) {
+        boolean ret = ServerConnectInternet.isConnected();
+        String msg;
+        if (ret == false) {
+            msg = "Thiết bị chưa kết nối internet";
+        } else {
+            return;
+        }
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
 }

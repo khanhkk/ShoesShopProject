@@ -254,11 +254,17 @@
                             android:layout_height="wrap_content"
                             android:text="Viết bình luận:"
                             android:textSize="16dp" />
-
+                        <EditText
+                            android:id="@+id/tenNguoiBL"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:hint="Mời nhập tên"/>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
+
                             <EditText
                                 android:id="@+id/edtBinhLuan"
                                 android:layout_width="0dp"
@@ -279,11 +285,11 @@
                                 android:background="@android:color/transparent"
                                 />
                         </LinearLayout>
-
                         <ListView
                             android:id="@+id/lvBinhLuan"
                             android:layout_width="match_parent"
-                            android:layout_height="200dp"></ListView>
+                            android:layout_height="300dp"
+                            android:scrollbars="vertical"></ListView>
                     </LinearLayout>
                 </LinearLayout>
 
