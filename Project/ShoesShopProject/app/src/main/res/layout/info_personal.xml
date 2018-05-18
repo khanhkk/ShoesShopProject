@@ -42,12 +42,24 @@
             android:layout_marginLeft="310dp"
             app:srcCompat="@mipmap/a2" />
 
-        <ImageView
-            android:id="@+id/imginfoclient"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:srcCompat="@drawable/avatar"
-            />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imginfoclient"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:src="@drawable/avatar"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="2dp"
+
+
+
+        />
+        <!--<ImageView-->
+            <!--android:id="@+id/imginfoclient"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="200dp"-->
+            <!--app:srcCompat="@drawable/avatar"-->
+            <!--/>-->
 
         <TextView
             android:id="@+id/txtnameclient"
