@@ -55,24 +55,24 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:paddingTop="15dp">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.7"
-                android:text="Màu:" />
 
-            <Spinner
-                android:id="@+id/spinner2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1.9"
-                android:gravity="center"
-                />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="2.8"
+                android:text="Tên sản phẩm:" />
+
+            <TextView
+                android:id="@+id/tensanpham"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:textColor="#000"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Size:" />
 
             <Spinner
@@ -80,39 +80,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
-                android:layout_weight="1.4"
+                android:layout_weight="1.9"
                 android:gravity="center"
-                />
+                android:prompt="@string/filter_name" />
         </LinearLayout>
-<LinearLayout
-    android:id="@+id/tenSp"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="2"
-    android:orientation="horizontal"
-    android:layout_below="@+id/size"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    >
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="2.8"
-        android:text="Tên sản phẩm:" />
 
-    <TextView
-        android:id="@+id/tensanpham"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:textColor="#000"/>
-
-</LinearLayout>
         <LinearLayout
             android:id="@+id/nhasx"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_below="@+id/tenSp"
+            android:layout_below="@+id/size"
             android:layout_weight="2"
             android:orientation="horizontal"
             android:paddingLeft="8dp"
@@ -236,31 +213,6 @@
             android:layout_gravity="right"
             android:layout_weight="4"
             android:text="Xem bình luận" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Viết bình luận:"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:textSize="16dp"/>
-        <EditText
-            android:id="@+id/edtBinhLuan"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:maxLines="5"
-            android:scrollHorizontally="false"
-            android:ellipsize="none"
-            android:textColor="#000"
-            android:hint="Nhập bình luận"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            />
-        <ListView
-            android:id="@+id/lvBinhLuan"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"></ListView>
 
         <Button
             android:id="@+id/btnBuyProduct"

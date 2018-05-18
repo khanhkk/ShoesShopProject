@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -52,13 +51,10 @@ public class Info_product extends AppCompatActivity {
     //private ArrayList<Product> list = new ArrayList<>();
     private ArrayList<Shop> listShop = new ArrayList<>();
     private ArrayAdapter<Integer> adapter;
-    private ArrayAdapter<String> adapter1;
     private ArrayList<Integer> listSize = new ArrayList<>();
-    private ArrayList<String> listColor = new ArrayList<>();
-    private ArrayList<ProductDetail> listProductDetail = new ArrayList<>();
     Button btnXemThem, btnBinhLuan, btnMuaHang;
     TextView tensp, nsx, sells, costs, tencuahang, mota;
-    Spinner spinner, spinner1;
+    Spinner spinner;
     Bundle bundle, bundleShop;
     public static Product pro;
     // BillAdapter billAdapter;
@@ -79,54 +75,10 @@ public class Info_product extends AppCompatActivity {
 
 //      spinner
         spinner = (Spinner) findViewById(R.id.spinner1);
-        spinner1 = (Spinner) findViewById(R.id.spinner2);
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listSize);
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+
         spinner.setAdapter(adapter);
-
-        adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listColor);
-        adapter1.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-
-        spinner1.setAdapter(adapter1);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                for (ProductDetail productDetail : listProductDetail) {
-                    Log.d("proDetial:", productDetail.getColor());
-                    Log.d("select:", spinner.getSelectedItem().toString());
-                    if (spinner.getSelectedItem().toString().equals(productDetail.getSize())) {
-                        listColor.add(productDetail.getColor());
-                        adapter1.notifyDataSetChanged();
-                      //  spinner1.setPrompt(productDetail.getColor());
-                    }
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-//        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                for (ProductDetail productDetail : listProductDetail) {
-//                    if (spinner1.getSelectedItem().toString().equals((productDetail.getColor()))) {
-////                        listSize.clear();
-////                        listSize.add(productDetail.getSize());
-////                        adapter.notifyDataSetChanged();
-//                     //   spinner.setPrompt(String.valueOf(productDetail.getSize()));
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-
 
 //        TextView
         tensp = (TextView) findViewById(R.id.tensanpham);
@@ -360,7 +312,6 @@ public class Info_product extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
-                listProductDetail.add(productDetail);
                 if (listSize.size() > 0) {
                     int flag = 0;
                     for (Integer str : listSize) {
@@ -377,24 +328,7 @@ public class Info_product extends AppCompatActivity {
                 } else {
                     listSize.add(productDetail.getSize());
                 }
-//add spinner color
-//                if (listColor.size() > 0) {
-//                    int flag1 = 0;
-//                    for (String strCL : listColor) {
-//                        if (strCL == productDetail.getColor()) {
-//                            flag1++;
-//                            break;
-//                        }
-//                    }
-//
-//                    if (flag1 == 0) {
-//                        listColor.add(productDetail.getColor());
-//                        adapter1.notifyDataSetChanged();
-//                    }
-//                } else {
-//                    listColor.add(productDetail.getColor());
-//                }
-//               Log.d("Color", String.valueOf(listColor));
+                Log.d("Size", listSize.toString());
             }
 
 
