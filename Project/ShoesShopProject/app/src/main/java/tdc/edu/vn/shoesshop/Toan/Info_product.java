@@ -293,9 +293,6 @@ public class Info_product extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addBilldetail();
-                Intent intent = new Intent(Info_product.this, HomeForClient.class);
-                intent.putExtra("action", "showCart");
-                startActivity(intent);
             }
         });
 
@@ -400,7 +397,9 @@ public class Info_product extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 BillDetail detail = dataSnapshot.getValue(BillDetail.class);
-                list.add(detail);
+                if(detail != null) {
+                    list.add(detail);
+                }
             }
 
             @Override
@@ -552,61 +551,80 @@ public class Info_product extends AppCompatActivity {
 
     public void addBilldetail() {
         ProductDetail productDetail = null;
+        //tim san pham
         for (ProductDetail detail : listProductDetail) {
             if (detail.getColor().equals(mau) && detail.getSize() == size) {
                 productDetail = detail;
+                break;
             }
         }
 
-//        database.child("Clients").child(user.getUid()).child("Cart").orderByChild("product").equalTo(productDetail.getId()).addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
+        if(productDetail == null)
+        {
+            Toast.makeText(Info_product.this, "Sản phẩm chưa bán!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        for (BillDetail detail : list) {
-            if (detail.getDetail().equals(productDetail.getId())) {
-                Toast.makeText(Info_product.this, "Sản phẩm đã có trong giỏ hàng!", Toast.LENGTH_SHORT).show();
-                return;
+        //kiem tra san pham trong hang
+        if (list.size() > 0) {
+            for (BillDetail detail : list) {
+                if (detail.getDetail().equals(productDetail.getId())) {
+                    Toast.makeText(Info_product.this, "Sản phẩm đã có trong giỏ hàng!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
         }
 
-        if (productDetail != null) {
-            BillDetail billDetail = new BillDetail();
-            //billDetail.setCodeOfProduct(product.getId());
-            billDetail.setId(database.child("Cart").push().getKey());
-            billDetail.setQuantity(1);
-            //billDetail.setPrice(product.getSalePrice());
-            billDetail.setProduct(pro.getId());
-            billDetail.setDetail(productDetail.getId());
-            billDetail.setPrice(pro.getSalePrice());
-            billDetail.setShop(pro.getShop());
-            list.add(billDetail);
-            database.child("Clients").child(user.getUid()).child("Cart").push().setValue(billDetail);
-            //  billAdapter.notifyDataSetChanged();
-        }
+
+        //kiem tra so luong san pham
+        database.child("ProductDetails").orderByChild("id").equalTo(productDetail.getId()).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                ProductDetail detail = dataSnapshot.getValue(ProductDetail.class);
+                if (detail != null) {
+                    if (detail.getQuantity() > 0) {
+                        BillDetail billDetail = new BillDetail();
+                        billDetail.setId(database.child("Cart").push().getKey());
+                        billDetail.setQuantity(1);
+                        billDetail.setProduct(pro.getId());
+                        billDetail.setDetail(detail.getId());
+                        billDetail.setPrice(pro.getSalePrice());
+                        billDetail.setShop(pro.getShop());
+                        list.add(billDetail);
+                        database.child("Clients").child(user.getUid()).child("Cart").push().setValue(billDetail);
+
+                        Intent intent = new Intent(Info_product.this, HomeForClient.class);
+                        intent.putExtra("action", "showCart");
+                        startActivity(intent);
+                    }
+                } else {
+                    Toast.makeText(Info_product.this, "Sản phẩm đã hết mất rồi! huhu...", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
+
 
     public void dataTestComment() {
 
@@ -621,9 +639,6 @@ public class Info_product extends AppCompatActivity {
                 listComment.add(0, comments);
                 customAdaper.notifyDataSetChanged();
                 database.child("Products").child(dataSnapshot.getKey()).child("Comments").push().setValue(comments);
-
-                //lay thong tin comment
-
             }
 
             @Override
