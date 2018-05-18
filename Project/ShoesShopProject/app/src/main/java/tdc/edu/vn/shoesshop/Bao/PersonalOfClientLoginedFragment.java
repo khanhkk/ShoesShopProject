@@ -23,7 +23,7 @@ import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Sang.ChangePassword;
 import tdc.edu.vn.shoesshop.Sang.ListOder;
 
-public class PersonalOfClientLoginedFragment extends Fragment {
+public class   PersonalOfClientLoginedFragment extends Fragment {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     TextView nameClient;
