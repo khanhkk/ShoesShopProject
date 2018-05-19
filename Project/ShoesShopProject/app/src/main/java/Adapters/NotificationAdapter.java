@@ -11,17 +11,29 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
 import Controls.General;
+import Models.Account;
 import Models.Notification;
 import tdc.edu.vn.shoesshop.R;
+import tdc.edu.vn.shoesshop.Son.OrderInformationForClient;
 import tdc.edu.vn.shoesshop.Son.OrderInformationForShop;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.MyViewHolder> {
     Context mContext;
     ArrayList<Notification> mData;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
     public NotificationAdapter(Context mContext, ArrayList<Notification> mData) {
         this.mContext = mContext;
@@ -37,7 +49,46 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         viewHolder.item_contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(mContext,"TT"+String.valueOf(viewHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
+                database.child("Accounts").orderByKey().equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Account account = dataSnapshot.getValue(Account.class);
+                        if(account.getLevel() == 0)
+                        {
+                            Intent intent = new Intent(mContext,OrderInformationForShop.class);
+                            String ss = mData.get(viewHolder.getAdapterPosition()).getBill();
+                            intent.putExtra("bill", ss);
+                            mContext.startActivity(intent);
+                        }
+                        else
+                        {
+                            Intent intent = new Intent(mContext, OrderInformationForClient.class);
+                            String ss = mData.get(viewHolder.getAdapterPosition()).getBill();
+                            intent.putExtra("client", ss);
+                            mContext.startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
                 Intent intent = new Intent(mContext,OrderInformationForShop.class);
                 String s = mData.get(viewHolder.getAdapterPosition()).getBill();
                 intent.putExtra("bill", s);
@@ -65,7 +116,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             }
 
         }
-        //holder.img_hinh.setImageResource(mData.get(position).getHinh());
     }
 
     @Override

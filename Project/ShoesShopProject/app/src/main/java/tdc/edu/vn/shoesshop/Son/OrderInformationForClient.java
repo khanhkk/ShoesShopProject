@@ -27,10 +27,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import Adapters.OrderShopAdapter;
+import Controls.DateTimePicker;
 import Models.Bill;
 import Models.BillDetail;
+import Models.Client;
+import Models.Notification;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Sang.ListOder;
 
@@ -54,10 +58,39 @@ public class OrderInformationForClient extends AppCompatActivity {
     NumberFormat nf = NumberFormat.getInstance();
     DecimalFormat df = (DecimalFormat) nf;
 
+    Client client;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_information_for_shop_activity);
+        database.child("Clients").orderByKey().equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                client = dataSnapshot.getValue(Client.class);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         df.applyPattern("#,### đ");
 
         back = (ImageButton) findViewById(R.id.btnBack);
@@ -75,82 +108,84 @@ public class OrderInformationForClient extends AppCompatActivity {
         ListDetail = new ArrayList<>();
 
         intent = getIntent();
-        bill_id = intent.getStringExtra("bill");
-        if (bill_id != null) {
-            database.child("Shops").child(user.getUid()).child("Transactions").orderByChild("id").equalTo(bill_id).addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    bill = dataSnapshot.getValue(Bill.class);
-                    if (bill != null) {
-                        tvCode.setText(bill_id);
-                        tvAddress.setText(bill.getAddress());
-                        tvClient.setText(bill.getNameClient());
-                        tvPhone.setText(bill.getPhone());
-                        tvEmail.setText(bill.getEmail());
-                        vanchuyen.setVisibility(View.INVISIBLE);
-                        if (bill.getStatus() == 0) {
-                            tinhtrang.setText("Đang chờ xử lý");
-                            vanchuyen.setVisibility(View.VISIBLE);
-                        } else if (bill.getStatus() == 1) {
-                            tinhtrang.setText("Đang vận chuyển");
-                        } else if (bill.getStatus() == -1) {
-                            tinhtrang.setText("Đã hủy");
-                        } else if (bill.getStatus() == 2) {
-                            tinhtrang.setText("Đã giao dịch");
-                        }
-
-                        database.child("Shops").child(user.getUid()).child("Transactions").child(dataSnapshot.getKey()).child("Details").addChildEventListener(new ChildEventListener() {
-                            @Override
-                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                BillDetail billDetail = dataSnapshot.getValue(BillDetail.class);
-                                ListDetail.add(billDetail);
-                                adapter.notifyDataSetChanged();
-                            }
-
-                            @Override
-                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                            }
-
-                            @Override
-                            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                            }
-
-                            @Override
-                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-                }
-
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-        } else if ((bill_id = intent.getStringExtra("client")) != null) {
+//        bill_id = intent.getStringExtra("bill");
+//        if (bill_id != null) {
+//            database.child("Shops").child(user.getUid()).child("Transactions").orderByChild("id").equalTo(bill_id).addChildEventListener(new ChildEventListener() {
+//                @Override
+//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                    bill = dataSnapshot.getValue(Bill.class);
+//                    if (bill != null) {
+//                        tvCode.setText(bill_id);
+//                        tvAddress.setText(bill.getAddress());
+//                        tvClient.setText(bill.getNameClient());
+//                        tvPhone.setText(bill.getPhone());
+//                        tvEmail.setText(bill.getEmail());
+//                        vanchuyen.setVisibility(View.INVISIBLE);
+//                        if (bill.getStatus() == 0) {
+//                            tinhtrang.setText("Đang chờ xử lý");
+//                            vanchuyen.setVisibility(View.VISIBLE);
+//                        } else if (bill.getStatus() == 1) {
+//                            tinhtrang.setText("Đang vận chuyển");
+//                        } else if (bill.getStatus() == -1) {
+//                            tinhtrang.setText("Đã hủy");
+//                        } else if (bill.getStatus() == 2) {
+//                            tinhtrang.setText("Đã giao dịch");
+//                        }
+//
+//                        database.child("Shops").child(user.getUid()).child("Transactions").child(dataSnapshot.getKey()).child("Details").addChildEventListener(new ChildEventListener() {
+//                            @Override
+//                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                                BillDetail billDetail = dataSnapshot.getValue(BillDetail.class);
+//                                ListDetail.add(billDetail);
+//                                adapter.notifyDataSetChanged();
+//                            }
+//
+//                            @Override
+//                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(DatabaseError databaseError) {
+//
+//                            }
+//                        });
+//                    }
+//                }
+//
+//                @Override
+//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                }
+//
+//                @Override
+//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
+//        } else
+        bill_id = intent.getStringExtra("client");
+    if (bill_id != null) {
             database.child("Clients").child(user.getUid()).child("Transactions").orderByChild("id").equalTo(bill_id).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -165,15 +200,19 @@ public class OrderInformationForClient extends AppCompatActivity {
                         if (bill.getStatus() == 0) {
                             vanchuyen.setText("Hủy");
                             vanchuyen.setBackgroundColor(Color.RED);
+                            tinhtrang.setText("Đang xử lý");
                             vanchuyen.setVisibility(View.VISIBLE);
                         } else if (bill.getStatus() == 1) {
                             vanchuyen.setText("Hủy");
                             vanchuyen.setBackgroundColor(Color.RED);
                             vanchuyen.setVisibility(View.VISIBLE);
+                            tinhtrang.setText("Đang vận chuyển");
                         } else if (bill.getStatus() == -1) {
                             vanchuyen.setVisibility(View.GONE);
+                            tinhtrang.setText("Đã hủy");
                         } else if (bill.getStatus() == 2) {
                             vanchuyen.setVisibility(View.GONE);
+                            tinhtrang.setText("Đâ giao dịch");
                         }
 
                         database.child("Clients").child(user.getUid()).child("Transactions").child(dataSnapshot.getKey()).child("Details").addChildEventListener(new ChildEventListener() {
@@ -274,6 +313,19 @@ public class OrderInformationForClient extends AppCompatActivity {
 
                             }
                         });
+
+                        Notification notification = new Notification();
+                        notification.setClient(user.getUid());
+                        notification.setHoatdong(client.getName() + Notification.STR_VAN_CHUYEN);
+                        notification.setStatus(false);
+                        if (client.getImages() != null) {
+                            notification.setHinh(client.getImages());
+                        }
+                        notification.setBill(bill_id);
+                        Calendar calendar = Calendar.getInstance();
+                        notification.setThoiGian(DateTimePicker.simpleDateFormat.format(calendar.getTime()));
+
+                        database.child("Clients").child(bill.getClient_id()).child("Notifications").push().setValue(notification);
                     }
                 });
 

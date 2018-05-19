@@ -69,8 +69,6 @@ public class Adapter_info_product extends PagerAdapter {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Product product = dataSnapshot.getValue(Product.class);
 
-
-
                 if (product.getImage1() != null) {
                     try {
                         byte[] imageByteArray = Base64.decode(product.getImage1(), Base64.DEFAULT);

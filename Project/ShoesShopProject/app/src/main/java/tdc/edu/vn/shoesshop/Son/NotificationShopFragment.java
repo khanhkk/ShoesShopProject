@@ -41,10 +41,6 @@ public class NotificationShopFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-//        list = new ArrayList<>();
-//        new LoadNotify().execute();
-//        Log.d("s", list.size() + "");
-
         v = inflater.inflate(R.layout.notification_fragment, container,false);
         recyclerView = (RecyclerView) v.findViewById(R.id.id_recycleView);
         list = new ArrayList<>();
@@ -57,7 +53,6 @@ public class NotificationShopFragment extends Fragment {
                     list.add(0 , notify);
                     recyclerViewAdapter.notifyDataSetChanged();
                 }
-                //Toast.makeText(getContext(), notify.getClient(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -87,53 +82,4 @@ public class NotificationShopFragment extends Fragment {
 
         return v;
     }
-
-//    public class LoadNotify extends AsyncTask<Void ,Integer , ArrayList<Notification>>
-//    {
-//        @Override
-//        protected ArrayList<Notification> doInBackground(Void... voids) {
-//            final ArrayList<Notification> list = new ArrayList<>();
-//            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//            DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-//            //database.child("Shops").child(user.getUid()).child("Notifications").
-//
-//            database.child("Shops").child(user.getUid()).child("Notifications").addChildEventListener(new ChildEventListener() {
-//                @Override
-//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                    Notification notify = dataSnapshot.getValue(Notification.class);
-//                    list.add(notify);
-//                    //Toast.makeText(getContext(), notify.getClient(), Toast.LENGTH_SHORT).show();
-//                }
-//
-//                @Override
-//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//                }
-//
-//                @Override
-//                public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                }
-//
-//                @Override
-//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//
-//                }
-//            });
-//
-//            return list;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(ArrayList<Notification> list) {
-//            super.onPostExecute(list);
-//            Log.d("afdasfa", list.size() + "");
-//            NotificationShopFragment.list = list;
-//        }
-//    }
 }

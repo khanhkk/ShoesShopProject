@@ -26,10 +26,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import Adapters.OrderShopAdapter;
+import Controls.DateTimePicker;
 import Models.Bill;
 import Models.BillDetail;
+import Models.Notification;
+import Models.Shop;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Sang.ListOder;
 
@@ -54,11 +58,40 @@ public class OrderInformationForShop extends AppCompatActivity {
     NumberFormat nf = NumberFormat.getInstance();
     DecimalFormat df = (DecimalFormat) nf;
 
+    Shop shop;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_information_for_shop_activity);
         df.applyPattern("#,### đ");
+
+        database.child("Shops").orderByKey().equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                shop = dataSnapshot.getValue(Shop.class);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         back = (ImageButton) findViewById(R.id.btnBack);
         tvTotal = (TextView) findViewById(R.id.tvMoney);
@@ -203,6 +236,19 @@ public class OrderInformationForShop extends AppCompatActivity {
 
                                 }
                             });
+
+                            Notification notification = new Notification();
+                            notification.setClient(user.getUid());
+                            notification.setHoatdong(shop.getName() + Notification.STR_VAN_CHUYEN);
+                            notification.setStatus(false);
+                            if (shop.getImage() != null) {
+                                notification.setHinh(shop.getImage());
+                            }
+                            notification.setBill(bill_id);
+                            Calendar calendar = Calendar.getInstance();
+                            notification.setThoiGian(DateTimePicker.simpleDateFormat.format(calendar.getTime()));
+
+                            database.child("Clients").child(bill.getClient_id()).child("Notifications").push().setValue(notification);
                         }
 
                     }

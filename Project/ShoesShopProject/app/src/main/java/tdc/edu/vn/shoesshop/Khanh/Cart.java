@@ -37,6 +37,7 @@ import Models.ProductDetail;
 import tdc.edu.vn.shoesshop.R;
 import tdc.edu.vn.shoesshop.Son.ClientInformationAfterOrder;
 import tdc.edu.vn.shoesshop.Toan.HomeForClient;
+import tdc.edu.vn.shoesshop.Toan.Info_product;
 
 /**
  * Created by kk on 05/04/2018.
@@ -175,34 +176,34 @@ public class Cart extends Fragment {
 
                             //tru so luong san pham cua shop
                             for(final BillDetail detail : list) {
-                                database.child("ProductDetails").orderByChild("id").equalTo(detail.getDetail()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        ProductDetail productDetail = dataSnapshot.getValue(ProductDetail.class);
-                                        if(productDetail != null) {
+                                for(final ProductDetail productDetail : Info_product.listProductDetail) {
+                                    if (productDetail != null) {
+                                        if (productDetail.getId().equals(detail.getDetail())) {
                                             productDetail.setQuantity(productDetail.getQuantity() - detail.getQuantity());
-                                            for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                                child.getRef().setValue(productDetail);
-                                                break;
-                                            }
+                                            database.child("ProductDetails").orderByChild("id").equalTo(productDetail.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                                        child.getRef().setValue(productDetail);
+                                                        break;
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                }
+                                            });
                                         }
                                     }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-
-                                    }
-                                });
-                            }
+                                }
+                           }
 
                             //thong bao va lam moi gio hang
                             Toast.makeText(getContext(), "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
                             database.child("Clients").child(user.getUid()).child("Cart").setValue(null);
                             list.clear();
                             billAdapter.notifyDataSetChanged();
-
-//                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                                    new Home_User_Fragment()).commit();
                             HomeForClient.bottomNav.setSelectedItemId(R.id.nav_home);
                         }
                     });

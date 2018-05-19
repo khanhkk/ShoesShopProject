@@ -20,7 +20,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import Models.Notification;
 import tdc.edu.vn.shoesshop.Bao.PersonalOfClientLoginedFragment;
@@ -39,6 +38,7 @@ public class HomeForClient extends AppCompatActivity {
     BottomNavigationItemView itemView;
     BottomNavigationMenuView bottomNavigationMenuView;
     View badge;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,9 +65,9 @@ public class HomeForClient extends AppCompatActivity {
             }
 //        }
 
-        bottomNavigationMenuView = (BottomNavigationMenuView) bottomNav.getChildAt(0);
-        View v = bottomNavigationMenuView.getChildAt(1);
-        itemView = (BottomNavigationItemView) v;
+            bottomNavigationMenuView = (BottomNavigationMenuView) bottomNav.getChildAt(0);
+            View v = bottomNavigationMenuView.getChildAt(1);
+            itemView = (BottomNavigationItemView) v;
 
 
         }
@@ -81,41 +81,48 @@ public class HomeForClient extends AppCompatActivity {
                 }
             }
         };
-if(users != null) {
-    database.child("Clients").child(users.getUid()).child("Notifications").addChildEventListener(new ChildEventListener() {
-        @Override
-        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+        if (users != null) {
+            database.child("Clients").child(users.getUid()).child("Notifications").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    Notification notification = dataSnapshot.getValue(Notification.class);
+                    if (notification != null) {
+                        if (notification.isStatus() == false) {
+                            badge = LayoutInflater.from(HomeForClient.this).inflate(R.layout.notifi_badge, bottomNavigationMenuView, false);
+                            itemView.addView(badge);
+                        }
 
-        }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Notification notification = dataSnapshot.getValue(Notification.class);
-                if(notification != null) {
-                    if (notification.isStatus() == false) {
-                        badge = LayoutInflater.from(HomeForClient.this).inflate(R.layout.notifi_badge, bottomNavigationMenuView, false);
-                        itemView.addView(badge);
                     }
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    Notification notification = dataSnapshot.getValue(Notification.class);
+                    if (notification != null) {
+                        if (notification.isStatus() == false) {
+                            badge = LayoutInflater.from(HomeForClient.this).inflate(R.layout.notifi_badge, bottomNavigationMenuView, false);
+                            itemView.addView(badge);
+                        }
+
+                    }
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
 
                 }
-            }
 
-        @Override
-        public void onChildRemoved(DataSnapshot dataSnapshot) {
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         }
-
-        @Override
-        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-
-        }
-    });
-}
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -133,21 +140,31 @@ if(users != null) {
                             }
                             break;
                         case R.id.nav_notification:
-                            if(badge != null)
-                            {
+                            if (badge != null) {
                                 itemView.removeView(badge);
                             }
-                            database.child("Clients").child(users.getUid()).child("Notifications").orderByChild("status").equalTo(false).addListenerForSingleValueEvent(new ValueEventListener() {
+                            database.child("Clients").child(users.getUid()).child("Notifications").orderByChild("status").equalTo(false).addChildEventListener(new ChildEventListener() {
                                 @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                     Notification notification = dataSnapshot.getValue(Notification.class);
-                                    if(notification != null) {
-                                        notification.setStatus(true);
-                                        for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                            child.getRef().setValue(notification);
-                                            break;
-                                        }
-                                    }
+                                    notification.setStatus(true);
+                                    database.child("Clients").child(users.getUid()).child("Notifications").child(dataSnapshot.getKey()).setValue(notification);
+                                }
+
+                                @Override
+                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+
+                                }
+
+                                @Override
+                                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                                }
+
+                                @Override
+                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
                                 }
 
                                 @Override

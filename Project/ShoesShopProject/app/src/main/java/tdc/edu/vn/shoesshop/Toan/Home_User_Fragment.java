@@ -60,7 +60,7 @@ public class Home_User_Fragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getContext(), Info_product.class);
+                Intent intent = new Intent(getActivity(), Info_product.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("id", list1.get(position).getId());
                 int count = 0;
@@ -141,6 +141,7 @@ public class Home_User_Fragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
+
 //      Loc san pham theo gia
         spnGia.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

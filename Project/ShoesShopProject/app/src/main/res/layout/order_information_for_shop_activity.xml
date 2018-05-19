@@ -57,8 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="HD0001" />
+                    android:gravity="center_vertical" />
 
 
             </LinearLayout>
@@ -80,8 +79,7 @@
                     android:textSize="17sp"
                     android:id="@+id/txt_nguoidat"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Vũ Đình Khánh" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
@@ -101,8 +99,7 @@
                     android:textSize="17sp"
                     android:id="@+id/txt_diachinhanhang"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="30 Võ Văn Ngân, p.Linh Chiểu, quận Thủ Đức, TP.HCM" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
@@ -122,8 +119,7 @@
                     android:textSize="17sp"
                     android:id="@+id/txt_sdt"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0164545318" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
@@ -142,8 +138,7 @@
                     android:textSize="17sp"
                     android:id="@+id/tvEmail"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0164545318" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
@@ -163,8 +158,7 @@
                     android:textSize="17sp"
                     android:id="@+id/txt_tinhtrang"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Đang chờ xử lý" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
 
@@ -224,6 +218,7 @@
                     android:background="@drawable/button_style"
                     android:textColor="@color/white"
                     android:textSize="16sp"
+                    android:visibility="gone"
                     android:textAllCaps="false" />
             </LinearLayout>
         </LinearLayout>

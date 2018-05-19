@@ -284,10 +284,6 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Please Enter price!", Toast.LENGTH_LONG).show();
                         return;
                     }
-//                    if (TextUtils.isEmpty(edtdiemtichluy.getText()+"")) {
-//                        Toast.makeText(getApplicationContext(), "Please Enter cumulative point!", Toast.LENGTH_LONG).show();
-//                        return;
-//                    }
                     if (TextUtils.isEmpty(edtmota.getText()+"")) {
                         Toast.makeText(getApplicationContext(), "Please Enter describe!", Toast.LENGTH_LONG).show();
                         return;
@@ -298,7 +294,6 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                     String baohanh = edtbaohanh.getText().toString().trim();
                     double gianiemyet = Double.parseDouble(edtgianiemyet.getText().toString().trim());
                     double giaban = Double.parseDouble(edtgiaban.getText().toString().trim());
-                    ///int tichluy = Integer.parseInt(edtdiemtichluy.getText().toString().trim());
                     String mota = edtmota.getText().toString().trim();
                     int gioiTinh = -1;
 
@@ -321,18 +316,18 @@ public class DetailInformationOfProduct extends AppCompatActivity {
                         edtgianiemyet.requestFocus();
                         return;
                     }
-                    if (giaban <= 0 || giaban > gianiemyet) {
+                    if (giaban <= 1000 || giaban > gianiemyet) {
                         Toast.makeText(getApplicationContext(), "Please check sale price!", Toast.LENGTH_LONG).show();
                         edtgiaban.setText("");
                         edtgiaban.requestFocus();
                         return;
                     }
 
-//                    if(img1 == null || img2 == null || img3 == null)
-//                    {
-//                        Toast.makeText(getApplicationContext(), "Please check images!", Toast.LENGTH_LONG).show();
-//                        return;
-//                    }
+                    if(img1 == null || img2 == null || img3 == null)
+                    {
+                        Toast.makeText(getApplicationContext(), "Please check images!", Toast.LENGTH_LONG).show();
+                        return;
+                    }
 
                     if(ratingBar.getRating() < 1)
                     {

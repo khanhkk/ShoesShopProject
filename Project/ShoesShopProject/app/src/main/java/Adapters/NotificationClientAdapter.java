@@ -6,11 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -36,8 +34,9 @@ public class NotificationClientAdapter extends RecyclerView.Adapter<Notification
         viewHolder.item_contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext,"TT"+String.valueOf(viewHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mContext,OrderInformationForClient.class);
+                Intent intent = new Intent(mContext, OrderInformationForClient.class);
+                String ss = mData.get(viewHolder.getAdapterPosition()).getBill();
+                intent.putExtra("client", ss);
                 mContext.startActivity(intent);
             }
         });
