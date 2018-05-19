@@ -40,7 +40,9 @@ public class HomeForShop extends AppCompatActivity {
     private PersonalOfShopFragment personal;
 
     BottomNavigationItemView itemView;
+    BottomNavigationMenuView bottomNavigationMenuView;
     View badge;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,10 +66,10 @@ public class HomeForShop extends AppCompatActivity {
                     hsActivity).commit();
         }
 
-        BottomNavigationMenuView bottomNavigationMenuView = (BottomNavigationMenuView) bottomNav.getChildAt(0);
+        bottomNavigationMenuView = (BottomNavigationMenuView) bottomNav.getChildAt(0);
         View v = bottomNavigationMenuView.getChildAt(2);
         itemView = (BottomNavigationItemView) v;
-        badge = LayoutInflater.from(this).inflate(R.layout.notifi_badge, bottomNavigationMenuView, false);
+
 
         database.child("Shops").child(users.getUid()).child("Notifications").orderByChild("status").equalTo(false).addValueEventListener(new ValueEventListener() {
             @Override
@@ -75,6 +77,7 @@ public class HomeForShop extends AppCompatActivity {
                 Notification notification = dataSnapshot.getValue(Notification.class);
                 if(notification != null) {
                     if(notification.isStatus() == false) {
+                        badge = LayoutInflater.from(HomeForShop.this).inflate(R.layout.notifi_badge, bottomNavigationMenuView, false);
                         itemView.addView(badge);
                     }
                 }
@@ -110,7 +113,9 @@ public class HomeForShop extends AppCompatActivity {
                             break;
 
                         case R.id.nav_notification:
-                            itemView.removeView(badge);
+                            if(badge != null) {
+                                itemView.removeView(badge);
+                            }
                             database.child("Shops").child(users.getUid()).child("Notifications").orderByChild("status").equalTo(false).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {

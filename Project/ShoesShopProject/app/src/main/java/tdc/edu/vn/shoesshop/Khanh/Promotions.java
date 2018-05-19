@@ -119,8 +119,8 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Promotion por = dataSnapshot.getValue(Promotion.class);
-                listParent.add(por);
-                listCopy.add(por);
+                listParent.add(0, por);
+                listCopy.add(0, por);
                 list.put(por, null);
 
                 Log.d("key", listParent.size() + "");
@@ -290,7 +290,7 @@ public class Promotions extends Activity implements SearchView.OnQueryTextListen
                 listCopy.clear();
                 for (int i = 0; i < listParent.size(); i++) {
                     if (listParent.get(i).getTitle().toString().contains(newText)) {
-                        listCopy.add(listParent.get(i));
+                        listCopy.add(0, listParent.get(i));
                     }
                 }
             }

@@ -44,7 +44,6 @@ import java.util.TimerTask;
 import Adapters.AdapterComment;
 import Adapters.Adapter_info_product;
 import Controls.DateTimePicker;
-import Controls.General;
 import Models.BillDetail;
 import Models.Comments;
 import Models.Product;
@@ -96,7 +95,7 @@ public class Info_product extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info_product);
-        General.setupUI(findViewById(R.id.layout_ttSP), Info_product.this);
+        //General.setupUI(findViewById(R.id.layout_ttSP), Info_product.this);
         check(this);
         //get current user
         auth = FirebaseAuth.getInstance();
@@ -189,7 +188,6 @@ public class Info_product extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
 
             }
         });
