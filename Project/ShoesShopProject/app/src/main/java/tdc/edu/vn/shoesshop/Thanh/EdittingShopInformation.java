@@ -97,11 +97,12 @@ public class EdittingShopInformation extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EdittingShopInformation.this,MainInfoShop.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("chuyen",1);
-                intent.putExtra("chuyen",bundle);
-                startActivity(intent);
+//                Intent intent = new Intent(EdittingShopInformation.this,MainInfoShop.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("chuyen",1);
+//                intent.putExtra("chuyen",bundle);
+//                startActivity(intent);
+                onBackPressed();
             }
         });
         pullData();
@@ -143,6 +144,12 @@ public class EdittingShopInformation extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+        EdittingShopInformation.super.onBackPressed();
+    }
+
     private boolean validateHoten() {
         String usernameInput = textInputTen.getEditText().getText().toString().trim();
         if (usernameInput.isEmpty()) {

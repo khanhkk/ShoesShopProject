@@ -124,17 +124,22 @@ public class EdittingClientInformation extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("chuyen", 1);
-                intent.putExtra("chuyen", bundle);
-                startActivity(intent);
+//                Intent intent = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("chuyen", 1);
+//                intent.putExtra("chuyen", bundle);
+//                startActivity(intent);
+                onBackPressed();
             }
         });
         pullData();
     }
 
-//
+    @Override
+    public void onBackPressed() {
+        EdittingClientInformation.super.onBackPressed();
+    }
+    //
 //    private boolean validateEmail() {
 //        String emailInput = textInputEmail.getEditText().getText().toString().trim();
 //        if (emailInput.isEmpty()) {

@@ -82,7 +82,6 @@ public class MainInfoCilent extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         MainInfoCilent.super.onBackPressed();
-
     }
 
 
