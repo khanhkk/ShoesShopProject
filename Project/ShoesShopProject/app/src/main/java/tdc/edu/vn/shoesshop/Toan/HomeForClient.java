@@ -37,6 +37,7 @@ public class HomeForClient extends AppCompatActivity {
     Intent intent;
     public static BottomNavigationView bottomNav;
     BottomNavigationItemView itemView;
+    BottomNavigationMenuView bottomNavigationMenuView;
     View badge;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class HomeForClient extends AppCompatActivity {
         check(this);
         bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        final BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         intent = getIntent();
 
@@ -64,10 +65,10 @@ public class HomeForClient extends AppCompatActivity {
             }
 //        }
 
-        BottomNavigationMenuView bottomNavigationMenuView = (BottomNavigationMenuView) bottomNav.getChildAt(0);
+        bottomNavigationMenuView = (BottomNavigationMenuView) bottomNav.getChildAt(0);
         View v = bottomNavigationMenuView.getChildAt(1);
         itemView = (BottomNavigationItemView) v;
-        badge = LayoutInflater.from(this).inflate(R.layout.notifi_badge, bottomNavigationMenuView, false);
+
 
         }
 
@@ -87,15 +88,17 @@ if(users != null) {
 
         }
 
-        @Override
-        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            Notification notification = dataSnapshot.getValue(Notification.class);
-            if (notification != null) {
-                if (notification.isStatus() == false) {
-                    itemView.addView(badge);
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Notification notification = dataSnapshot.getValue(Notification.class);
+                if(notification != null) {
+                    if (notification.isStatus() == false) {
+                        badge = LayoutInflater.from(HomeForClient.this).inflate(R.layout.notifi_badge, bottomNavigationMenuView, false);
+                        itemView.addView(badge);
+                    }
+
                 }
             }
-        }
 
         @Override
         public void onChildRemoved(DataSnapshot dataSnapshot) {
@@ -130,7 +133,10 @@ if(users != null) {
                             }
                             break;
                         case R.id.nav_notification:
-                            itemView.removeView(badge);
+                            if(badge != null)
+                            {
+                                itemView.removeView(badge);
+                            }
                             database.child("Clients").child(users.getUid()).child("Notifications").orderByChild("status").equalTo(false).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {

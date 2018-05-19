@@ -95,7 +95,8 @@ public class Adapter_ProductFilter extends BaseAdapter {
         viewHolder.tvName.setText(product.getName());
         viewHolder.ratingBar.setRating(product.getRating());
         int soluong = 0;
-        if (listDetail.size() > 0){
+
+        if (listDetail.size() > 0) {
             for (ProductDetail pro : listDetail) {
                 if (pro.getProduct().equals(product.getId())) {
                     if (pro.getQuantity() != 0) {
@@ -106,7 +107,7 @@ public class Adapter_ProductFilter extends BaseAdapter {
                     viewHolder.tvSoLuong.setText("(" + String.valueOf(soluong) + ")");
                 }
             }
-    }
+        }
         //  Log.d("da", soluong+"");
         long percent_a;
 

@@ -140,7 +140,7 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
                 if(b)
                 {
                     //Log.d("tag", "y");
-                    HSActivity.ListProducts.add(product);
+                    HSActivity.ListProducts.add(0, product);
                     Toast.makeText(mContext, product.getName() + " checked - " , Toast.LENGTH_SHORT).show();
                 }
                 else
@@ -154,9 +154,11 @@ public class Adapter_ProductFilter_Shop extends BaseAdapter {
 
         int soluong = 0;
 
-        for (ProductDetail pro : HSActivity.details) {
-            if (pro.getProduct().equals(product.getId())) {
-                soluong += pro.getQuantity();
+        if(HSActivity.details.size() > 0) {
+            for (ProductDetail pro : HSActivity.details) {
+                if (pro.getProduct().equals(product.getId())) {
+                    soluong += pro.getQuantity();
+                }
             }
             viewHolder.tvSoLuong.setText("(" + String.valueOf(soluong) + ")");
         }
