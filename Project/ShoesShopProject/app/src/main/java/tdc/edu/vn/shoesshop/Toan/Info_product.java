@@ -95,7 +95,6 @@ public class Info_product extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info_product);
-        //General.setupUI(findViewById(R.id.layout_ttSP), Info_product.this);
         check(this);
         //get current user
         auth = FirebaseAuth.getInstance();
@@ -197,7 +196,12 @@ public class Info_product extends AppCompatActivity {
         btnBinhLuan.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                dataTestComment();
+                if (edtCcomment.getText().length() == 0 || edtName.getText().length() == 0) {
+                    Toast.makeText(Info_product.this, "Bạn quên nhập Tên hoặc Bình luận", Toast.LENGTH_SHORT).show();
+                }else {
+                    dataTestComment();
+                }
+
                 edtName.requestFocus();
                 return false;
             }
@@ -206,13 +210,13 @@ public class Info_product extends AppCompatActivity {
         btnComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                listComment.clear();
                 if (llComment.getVisibility() == View.VISIBLE) {
                     llComment.setVisibility(View.GONE);
                     btnComment.startAnimation(amRanticlockwise);
                 } else {
                     llComment.setVisibility(View.VISIBLE);
                     btnComment.startAnimation(amRClockwise);
-
 
                     database.child("Products").orderByChild("id").equalTo(ma).addChildEventListener(new ChildEventListener() {
                         @Override
@@ -307,7 +311,7 @@ public class Info_product extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 auth.signOut();
-               onBackPressed();
+                onBackPressed();
             }
         });
 
@@ -487,6 +491,7 @@ public class Info_product extends AppCompatActivity {
                             }
                         } else {
                             listColor.add(productDetail.getColor());
+                            spinnerColor.setSelection(0);
                         }
                         Log.d("Color", String.valueOf(listColor));
                     }
@@ -513,7 +518,7 @@ public class Info_product extends AppCompatActivity {
                     }
                 });
 
-                spinnerColor.setSelection(0);
+
             }
 
             @Override
@@ -628,12 +633,17 @@ public class Info_product extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Calendar calendar = Calendar.getInstance();
                 Comments comments = new Comments();
-                comments.setTen(edtName.getText() + "");
-                comments.setThoiGian(DateTimePicker.simpleDateFormat.format(calendar.getTime()));
-                comments.setNoiDung(edtCcomment.getText() + "");
+                if (edtName.getText() != null && edtCcomment.getText() != null) {
+                    comments.setTen(edtName.getText() + "");
+                    comments.setThoiGian(DateTimePicker.simpleDateFormat.format(calendar.getTime()));
+                    comments.setNoiDung(edtCcomment.getText() + "");
 //                listComment.add(0, comments);
 //                customAdaper.notifyDataSetChanged();
-                database.child("Products").child(dataSnapshot.getKey()).child("Comments").push().setValue(comments);
+                    database.child("Products").child(dataSnapshot.getKey()).child("Comments").push().setValue(comments);
+                }
+                edtCcomment.setText("");
+                edtName.setText("");
+                //lay thong tin comment
             }
 
             @Override

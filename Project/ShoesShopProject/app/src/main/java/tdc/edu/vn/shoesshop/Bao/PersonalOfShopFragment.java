@@ -25,6 +25,7 @@ import Controls.General;
 import Models.Shop;
 import tdc.edu.vn.shoesshop.Khanh.Promotions;
 import tdc.edu.vn.shoesshop.R;
+import tdc.edu.vn.shoesshop.Sang.ChangePassword;
 import tdc.edu.vn.shoesshop.Toan.LoginActivity;
 
 public class PersonalOfShopFragment extends Fragment {
@@ -79,7 +80,23 @@ public class PersonalOfShopFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
+// đổi mật khẩu
+        ImageView imgdoimk = (ImageView) view.findViewById(R.id.imgdoimk);
+        imgdoimk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ChangePassword.class);
+                startActivity(intent);
+            }
+        });
+        TextView txtdoimk = (TextView) view.findViewById(R.id.txtdoimk);
+        txtdoimk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ChangePassword.class);
+                startActivity(intent);
+            }
+        });
         // đăng xuát
         ImageView imglogout = (ImageView) view.findViewById(R.id.imglogout);
         imglogout.setOnClickListener(new View.OnClickListener() {

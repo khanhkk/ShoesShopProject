@@ -3,6 +3,7 @@ package tdc.edu.vn.shoesshop.Thanh;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -32,7 +34,7 @@ import java.io.IOException;
 
 import Controls.General;
 import Models.Client;
-import tdc.edu.vn.shoesshop.Bao.MainInfoCilent;
+import tdc.edu.vn.shoesshop.Bao.MainInfoShop;
 import tdc.edu.vn.shoesshop.R;
 
 public class EdittingClientInformation extends AppCompatActivity {
@@ -124,35 +126,12 @@ public class EdittingClientInformation extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("chuyen", 1);
-                intent.putExtra("chuyen", bundle);
-                startActivity(intent);
+                finish();
             }
         });
         pullData();
     }
 
-//
-//    private boolean validateEmail() {
-//        String emailInput = textInputEmail.getEditText().getText().toString().trim();
-//        if (emailInput.isEmpty()) {
-//            textInputEmail.setError("Không thể để trống");
-//            return false;
-//        } else {
-//            if(!emailInput.matches("[a-zA-Z0-9._-]+@[a-z]+.[a-z]+"))
-//            {
-//                textInputEmail.setError("Email không đúng !");
-//                return false;
-//            }else
-//            {
-//                textInputEmail.setError(null);
-//                return true;
-//            }
-//
-//        }
-//    }
 
     private boolean validateHoten() {
         String usernameInput = textInputHoten.getEditText().getText().toString().trim();
@@ -173,12 +152,10 @@ public class EdittingClientInformation extends AppCompatActivity {
             textInputSdt.setError("Không thể để trống");
             return false;
         } else {
-            if(sdtInput.length() != 10 && sdtInput.length() != 11)
-            {
+            if (sdtInput.length() != 10 && sdtInput.length() != 11) {
                 textInputSdt.setError("Số điện thoại chưa đúng !");
                 return false;
-            }else
-            {
+            } else {
                 textInputSdt.setError(null);
                 return true;
             }
@@ -200,27 +177,25 @@ public class EdittingClientInformation extends AppCompatActivity {
 
 
     public void confirmInput(View v) {
-        if ( !validateHoten() | !validateSdt() | !validateDiachi()) {
+        if (!validateHoten() | !validateSdt() | !validateDiachi()) {
             return;
         }
-
 
 
         updateClient();
         updateAcount();
         try {
-            Intent intent = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
-            startActivity(intent);
-        }catch (Exception e)
-        {
-            Toast.makeText(EdittingClientInformation.this,"ss"+ e,Toast.LENGTH_LONG).show();
+//            Intent intent = new Intent(EdittingClientInformation.this, MainInfoCilent.class);
+//            startActivity(intent);
+            onBackPressed();
+        } catch (Exception e) {
+            Toast.makeText(EdittingClientInformation.this, "ss" + e, Toast.LENGTH_LONG).show();
         }
 
 
     }
 
-    public void updateClient()
-    {
+    public void updateClient() {
         database.child("Clients").child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -228,8 +203,9 @@ public class EdittingClientInformation extends AppCompatActivity {
                 dataSnapshot.getRef().child("name").setValue(txtname.getText().toString());
                 dataSnapshot.getRef().child("phone").setValue(txtsdt.getText().toString());
                 dataSnapshot.getRef().child("address").setValue(txtdiachi.getText().toString());
-                dataSnapshot.getRef().child("images").setValue(img.toString());
-
+                if(img != null) {
+                    dataSnapshot.getRef().child("images").setValue(img.toString());
+                }
 
             }
 
@@ -239,8 +215,8 @@ public class EdittingClientInformation extends AppCompatActivity {
             }
         });
     }
-    public void updateAcount()
-    {
+
+    public void updateAcount() {
         database.child("Accounts").child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -254,28 +230,27 @@ public class EdittingClientInformation extends AppCompatActivity {
             }
         });
     }
+
     public void chooseFromGallery() {
         try {
             Intent intent = new Intent(Intent.ACTION_PICK,
                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intent, 0);
 
-        }catch (Exception e)
-        {
-            Toast.makeText(EdittingClientInformation.this,"ss"+ e,Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(EdittingClientInformation.this, "ss" + e, Toast.LENGTH_LONG).show();
         }
-           }
+    }
 
 
-    private void takeNewProfilePicture(){
+    private void takeNewProfilePicture() {
         Activity profileFrag = this;
         Intent cameraintent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         profileFrag.startActivityForResult(cameraintent, CAM_REQUEST);
     }
 
 
-
-    public void profilepictureOnClick(){
+    public void profilepictureOnClick() {
         takeNewProfilePicture();
     }
 
@@ -283,16 +258,15 @@ public class EdittingClientInformation extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == RESULT_OK && requestCode == CAM_REQUEST) {
-            if(requestCode == CAM_REQUEST){
+        if (resultCode == RESULT_OK && requestCode == CAM_REQUEST) {
+            if (requestCode == CAM_REQUEST) {
                 Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
                 img = General.encodeBitmap(thumbnail);
                 //  picUri = data.getData();
                 img_ava_patient.setImageBitmap(thumbnail);
                 dialog.dismiss();
             }
-        }
-        else if (resultCode == RESULT_OK){
+        } else if (resultCode == RESULT_OK) {
             picUri = data.getData();
 
             // Uri targetUri = data.getData();
@@ -300,7 +274,7 @@ public class EdittingClientInformation extends AppCompatActivity {
             Bitmap bitmap;
             try {
                 Context applicationContext = dialog.getContext();
-                bitmap = BitmapFactory.decodeStream( applicationContext.getContentResolver().openInputStream(picUri));
+                bitmap = BitmapFactory.decodeStream(applicationContext.getContentResolver().openInputStream(picUri));
                 img = General.encodeBitmap(bitmap);
                 img_ava_patient.setImageBitmap(bitmap);
 
@@ -318,16 +292,15 @@ public class EdittingClientInformation extends AppCompatActivity {
 
 
                 Client client = dataSnapshot.getValue(Client.class);
-                if(client != null)
-                {
+                if (client != null) {
                     txtdiachi.setText(client.getAddress());
                     //txtemail.setText(client.getEmail());
                     txtname.setText(client.getName());
                     txtsdt.setText(client.getPhone());
-                    if(client.getImages() != null)
-                    {
+                    if (client.getImages() != null) {
                         try {
                             Bitmap bitmap = General.decodeFromFirebaseBase64(client.getImages());
+                            img = client.getImages();
                             Glide.with(EdittingClientInformation.this).load(bitmap).into(img_ava_patient);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -335,10 +308,27 @@ public class EdittingClientInformation extends AppCompatActivity {
                     }
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Lưu?")
+                .setMessage("Bạn muốn lưu?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        Intent intent_o_s = new Intent(EdittingClientInformation.this, MainInfoShop.class);
+                        setResult(RESULT_OK, intent_o_s);
+                        EdittingClientInformation.super.onBackPressed();
+                    }
+                }).create().show();
     }
 }

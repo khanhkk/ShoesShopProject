@@ -87,7 +87,6 @@ public class Adapter_ProductFilter extends BaseAdapter {
         final Product product = list.get(position);
 
         //format
-        //final ProductDetail productDetail = listDetail.get(position);
         NumberFormat nf = NumberFormat.getInstance();
         DecimalFormat df = (DecimalFormat) nf;
         df.applyPattern("#,### đ");
@@ -97,15 +96,18 @@ public class Adapter_ProductFilter extends BaseAdapter {
         viewHolder.ratingBar.setRating(product.getRating());
         int soluong = 0;
 
-        if(listDetail.size() > 0) {
+        if (listDetail.size() > 0) {
             for (ProductDetail pro : listDetail) {
                 if (pro.getProduct().equals(product.getId())) {
-                    soluong += pro.getQuantity();
+                    if (pro.getQuantity() != 0) {
+                        soluong += pro.getQuantity();
+                    }
+                }
+                if (soluong != 0) {
+                    viewHolder.tvSoLuong.setText("(" + String.valueOf(soluong) + ")");
                 }
             }
-            viewHolder.tvSoLuong.setText("(" + String.valueOf(soluong) + ")");
         }
-
         //  Log.d("da", soluong+"");
         long percent_a;
 
