@@ -57,6 +57,7 @@ public class MainInfoCilent extends AppCompatActivity {
         // client_id = intent.getStringExtra("shop");
         // data();
         checkRight();
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,10 +84,6 @@ public class MainInfoCilent extends AppCompatActivity {
     public void onBackPressed() {
         MainInfoCilent.super.onBackPressed();
     }
-
-
-
-
 
     public void checkRight() {
         database.child("Clients").child(user.getUid()).addValueEventListener(new ValueEventListener() {

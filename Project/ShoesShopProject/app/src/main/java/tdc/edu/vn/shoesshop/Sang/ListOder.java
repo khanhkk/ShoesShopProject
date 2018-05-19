@@ -8,6 +8,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,7 +20,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import Adapters.CustumAdapterOder;
 import Controls.DatePickerCustom;
@@ -34,9 +37,11 @@ public class ListOder extends AppCompatActivity implements SearchView.OnQueryTex
     ListView lvContact;
     CustumAdapterOder adapter;
     ArrayList<Bill> list = new ArrayList<>();
+    ArrayList<Bill> listFilter = new ArrayList<>();
     DatePickerCustom dateTimePicker;
-    SearchView svSearchPromotions;
+    //SearchView svSearchPromotions;
     Intent intent;
+    Button btnRefresh;
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
@@ -47,13 +52,45 @@ public class ListOder extends AppCompatActivity implements SearchView.OnQueryTex
         setContentView(R.layout.layout_oder);
         lvContact = (ListView) findViewById(R.id.ListOrder);
         dateTimePicker = (DatePickerCustom) findViewById(R.id.dtDatePicker);
+        btnRefresh = (Button)findViewById(R.id.btnRef);
 
-        svSearchPromotions = (SearchView) findViewById(R.id.svSearch);
-        svSearchPromotions.setOnQueryTextListener(this);
+//        svSearchPromotions = (SearchView) findViewById(R.id.svSearch);
+//        svSearchPromotions.setOnQueryTextListener(this);
 
         //back
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+
+        btnRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                list.clear();
+                list.addAll(listFilter);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        dateTimePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                list.clear();
+                String s = DatePickerCustom.simpleDateFormat.format(dateTimePicker.getDate());
+                for(Bill bill : listFilter)
+                {
+                    try {
+                        Date date = DatePickerCustom.simpleDateFormat.parse(bill.getTime());
+                        if(DatePickerCustom.simpleDateFormat.format(date).equals(s))
+                        {
+                            list.add(bill);
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                adapter.notifyDataSetChanged();
+            }
+        });
 
 //        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -66,6 +103,7 @@ public class ListOder extends AppCompatActivity implements SearchView.OnQueryTex
 //        });
 
         list.clear();
+        listFilter.clear();
 
         intent = getIntent();
         String str = intent.getStringExtra("type");
@@ -75,6 +113,7 @@ public class ListOder extends AppCompatActivity implements SearchView.OnQueryTex
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     Bill bill = dataSnapshot.getValue(Bill.class);
                     list.add(0, bill);
+                    listFilter.add( 0, bill);
                     adapter.notifyDataSetChanged();
                 }
 
@@ -126,6 +165,7 @@ public class ListOder extends AppCompatActivity implements SearchView.OnQueryTex
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                 Bill bill = dataSnapshot.getValue(Bill.class);
                                 list.add(0, bill);
+                                listFilter.add(0, bill);
                                 adapter.notifyDataSetChanged();
                             }
 
@@ -157,6 +197,7 @@ public class ListOder extends AppCompatActivity implements SearchView.OnQueryTex
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                 Bill bill = dataSnapshot.getValue(Bill.class);
                                 list.add(0, bill);
+                                listFilter.add(0, bill);
                                 adapter.notifyDataSetChanged();
                             }
 
@@ -188,6 +229,7 @@ public class ListOder extends AppCompatActivity implements SearchView.OnQueryTex
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                 Bill bill = dataSnapshot.getValue(Bill.class);
                                 list.add(0, bill);
+                                listFilter.add(0, bill);
                                 adapter.notifyDataSetChanged();
                             }
 
@@ -219,6 +261,7 @@ public class ListOder extends AppCompatActivity implements SearchView.OnQueryTex
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                 Bill bill = dataSnapshot.getValue(Bill.class);
                                 list.add(0, bill);
+                                listFilter.add(0, bill);
                                 adapter.notifyDataSetChanged();
                             }
 

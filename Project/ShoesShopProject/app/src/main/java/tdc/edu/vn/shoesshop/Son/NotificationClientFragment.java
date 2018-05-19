@@ -32,15 +32,16 @@ public class NotificationClientFragment extends Fragment {
     private ArrayList<Notification> list;
     NotificationAdapter recyclerViewAdapter;
 
-    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    DatabaseReference database;
+    FirebaseUser user;
 
     public NotificationClientFragment(){}
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        database = FirebaseDatabase.getInstance().getReference();
+        user = FirebaseAuth.getInstance().getCurrentUser();
         list = new ArrayList<>();
         v = inflater.inflate(R.layout.notification_fragment, container,false);
         recyclerView = (RecyclerView) v.findViewById(R.id.id_recycleView);
@@ -50,8 +51,10 @@ public class NotificationClientFragment extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Notification notification = dataSnapshot.getValue(Notification.class);
-                list.add(notification);
-                recyclerViewAdapter.notifyDataSetChanged();
+                if(notification != null) {
+                    list.add(0 , notification);
+                    recyclerViewAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override

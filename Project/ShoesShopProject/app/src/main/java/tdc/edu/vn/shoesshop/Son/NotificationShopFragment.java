@@ -53,8 +53,10 @@ public class NotificationShopFragment extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Notification notify = dataSnapshot.getValue(Notification.class);
-                list.add(notify);
-                recyclerViewAdapter.notifyDataSetChanged();
+                if(notify != null) {
+                    list.add(0 , notify);
+                    recyclerViewAdapter.notifyDataSetChanged();
+                }
                 //Toast.makeText(getContext(), notify.getClient(), Toast.LENGTH_SHORT).show();
             }
 

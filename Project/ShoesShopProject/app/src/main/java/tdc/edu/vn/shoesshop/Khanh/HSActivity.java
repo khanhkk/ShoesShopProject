@@ -373,7 +373,9 @@ public class HSActivity extends Fragment implements SearchView.OnQueryTextListen
                     final Product product = dataSnapshot.getValue(Product.class);
 
                     ///new LoadProduct().execute(product);
-                    list.add(product);
+                    if(product != null) {
+                        list.add(0, product);
+                    }
 
                     database.child("ProductDetails").orderByChild("product").equalTo(product.getId()).addChildEventListener(new ChildEventListener() {
                         @Override
