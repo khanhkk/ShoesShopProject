@@ -80,39 +80,39 @@ public class HomeForClient extends AppCompatActivity {
                 }
             }
         };
+if(users != null) {
+    database.child("Clients").child(users.getUid()).child("Notifications").addChildEventListener(new ChildEventListener() {
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-        database.child("Clients").child(users.getUid()).child("Notifications").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+        }
 
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Notification notification = dataSnapshot.getValue(Notification.class);
-                if(notification != null) {
-                    if (notification.isStatus() == false) {
-                        itemView.addView(badge);
-                    }
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            Notification notification = dataSnapshot.getValue(Notification.class);
+            if (notification != null) {
+                if (notification.isStatus() == false) {
+                    itemView.addView(badge);
                 }
             }
+        }
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-            }
+        }
 
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-            }
+        }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
-
+        }
+    });
+}
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
