@@ -91,7 +91,30 @@
                 android:textSize="20dp"
                 />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
+            <ImageView
+                android:id="@+id/imgdoimk"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                app:srcCompat="@mipmap/change"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="15dp" />
+
+            <TextView
+                android:id="@+id/txtdoimk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/imgdoimk"
+                android:text="Đổi mật khẩu"
+                android:layout_marginTop="20dp"
+                android:textSize="20dp"
+                />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -97,11 +99,8 @@ public class EdittingShopInformation extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EdittingShopInformation.this,MainInfoShop.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("chuyen",1);
-                intent.putExtra("chuyen",bundle);
-                startActivity(intent);
+//                onBackPressed();
+                finish();
             }
         });
         pullData();
@@ -239,8 +238,7 @@ public class EdittingShopInformation extends AppCompatActivity {
         }
 
         updateShop();
-        Intent intent = new Intent(EdittingShopInformation.this,MainInfoShop.class);
-        startActivity(intent);
+        onBackPressed();
     }
 
     public void chooseFromGallery() {
@@ -337,7 +335,7 @@ public class EdittingShopInformation extends AppCompatActivity {
                 dataSnapshot.getRef().child("bankAccount").setValue(txt_sotk.getText().toString());
                 dataSnapshot.getRef().child("nguoidaidien").setValue(txt_nguoidd.getText().toString());
                 dataSnapshot.getRef().child("fb").setValue(txt_fb.getText().toString());
-                if(img.toString() != null)
+                if(img != null)
                 {
                     dataSnapshot.getRef().child("image").setValue(img.toString());
                 }
@@ -351,5 +349,19 @@ public class EdittingShopInformation extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Lưu?")
+                .setMessage("Bạn muốn lưu?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        Intent intent_o_s = new Intent(EdittingShopInformation.this, MainInfoShop.class);
+                        setResult(RESULT_OK, intent_o_s);
+                        EdittingShopInformation.super.onBackPressed();
+                    }
+                }).create().show();
+    }
 }
